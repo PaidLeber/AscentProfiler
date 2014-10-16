@@ -11,7 +11,7 @@ namespace AscentProfiler
 
                 public ActionExecutor actionExecutor;
                 public TriggerGuardian triggerGuardian;
-                public FlightController flightController;
+                //public FlightController flightController;
                 public FlightLog flightLog;
                 public Vessel vessel = null;
 
@@ -35,7 +35,7 @@ namespace AscentProfiler
 
                         triggerGuardian = null;
                         actionExecutor = null;
-                        flightController = null;
+                        //flightController = null;
                         flightLog = null;
 
                 }
@@ -45,7 +45,7 @@ namespace AscentProfiler
                         enabled = false;
                         actionExecutor = new ActionExecutor();
                         triggerGuardian = new TriggerGuardian(actionExecutor);
-                        flightController = new FlightController();
+                        //flightController = new FlightController();
                         flightLog = new FlightLog();
                         vessel = null;
                 }

@@ -72,7 +72,7 @@ namespace AscentProfiler
                                 lineCounter++;
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
-                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + ".*"))
+                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @".*"))
                                         {
                                                 Debug.Log("Creating Trigger line #"+ lineCounter +": "+line);
                                                 triggerFactory.CreateTrigger(trigger, line, lineCounter);

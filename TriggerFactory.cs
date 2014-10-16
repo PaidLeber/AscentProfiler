@@ -11,16 +11,33 @@ namespace AscentProfiler
         class TriggerFactory
         {
                 private int currentIndex = -1;
-                private bool ascending;
 
-                private Dictionary<string, Func<Trigger>> triggerProduct = new Dictionary<string, Func<Trigger>>();
+                private Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
+                private Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
 
                 // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
                 private Stack<int> tabCountStack = new Stack<int>();
 
+                //trigger values
+                private int index;
+                private string type;
+                private string desc;
+                private bool ascending;
+                private double value;
+
+                // Regex patterns
+                private string oneParam = @"^\t*\w+\s+(\d+)\s*$";
+
+
+
                 public TriggerFactory()
-                { 
-                        
+                {
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(index, type, desc, ascending, value); });
+
+
+
+                        triggerRegex.Add(TriggerType.ALTITUDE, oneParam);
+                        //carBuilder.Add("van", () => { return new Van(); });
                 
                 }
 
@@ -67,9 +84,9 @@ namespace AscentProfiler
                                 Debug.Log("Profile Loader: Invalid Syntax!: Line #"+lineNumber+": "+commandLine);
                         }
 
-                        Trigger temp = new Altitude(1, TriggerType.ALTITUDE.ToString(), "Altitude", true, 10000);
+                        //Trigger temp = new Altitude(1, TriggerType.ALTITUDE.ToString(), "Altitude", true, 10000);
 
-                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, temp);
+                        //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, temp);
 
 
                         //just use string.contains()!!!
@@ -87,20 +104,14 @@ namespace AscentProfiler
 
                 public bool IsValidSyntax(TriggerType trigger, string commandLine, int lineNumber)
                 {
-                        switch(trigger)
+
+                        if (Regex.IsMatch(commandLine, triggerRegex[TriggerType.ALTITUDE]))
                         {
-                                case TriggerType.ALTITUDE:
-                                        if (Regex.IsMatch(commandLine, @"^\t*" + TriggerType.ALTITUDE.ToString() + @"\s+\d+\s*$"))
-                                        {
-
-                                                return true;
-                                        }
-                                        return false;
-
-                                default:
-                                        return false;
+                                Debug.Log(TriggerType.ALTITUDE.ToString() + "Is Match!");
+                                return true;
                         }
 
+                        return false;
 
                 }
 
