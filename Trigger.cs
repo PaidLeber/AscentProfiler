@@ -23,7 +23,7 @@ namespace AscentProfiler
 
         public abstract class Trigger
         {
-                public string type;
+                public TriggerType type;
                 public string desc;
                 public int index = -1;
                 public double value;
@@ -39,7 +39,7 @@ namespace AscentProfiler
         public class Altitude : Trigger
         {
 
-                public Altitude(int index, string type, string desc, bool ascending, double value)
+                public Altitude(int index, TriggerType type, string desc, bool ascending, double value)
                 {
                         this.index = index;
                         this.type = type;
@@ -73,7 +73,7 @@ namespace AscentProfiler
         public class Countdown : Trigger
         {
 
-                public Countdown(int index, string type, string desc, double fromaxval)
+                public Countdown(int index, TriggerType type, string desc, double fromaxval)
                 {
                         this.index = index;
                         this.type = type;
@@ -112,7 +112,7 @@ namespace AscentProfiler
         public class Liftoff : Trigger
         {
 
-                public Liftoff(int index, string type, string desc, double fromaxval)
+                public Liftoff(int index, TriggerType type, string desc, double fromaxval)
                 {
                         this.index = index;
                         this.type = type;
@@ -153,7 +153,7 @@ namespace AscentProfiler
                 public double gmax;
                 public double gforce;
 
-                public Gforce(int index, string type, string desc, bool ascending, double value)
+                public Gforce(int index, TriggerType type, string desc, bool ascending, double value)
                 {
                         this.index = index;
                         this.type = type;
@@ -162,7 +162,7 @@ namespace AscentProfiler
                         this.ascending = ascending;
                 }
 
-                public Gforce(int index, string type, string desc, bool ascending, double value, double fromaxval)
+                public Gforce(int index, TriggerType type, string desc, bool ascending, double value, double fromaxval)
                 {
                         this.index = index;
                         this.type = type;
@@ -209,7 +209,7 @@ namespace AscentProfiler
         public class Burnout : Trigger
         {
 
-                public Burnout(int index, string type, string desc)
+                public Burnout(int index, TriggerType type, string desc)
                 {
                         this.index = index;
                         this.type = type;
@@ -382,7 +382,7 @@ namespace AscentProfiler
                 Vector3 up;
                 Vector3 forward;
 
-                public Attitude(int index, string type, string desc, double value)
+                public Attitude(int index, TriggerType type, string desc, double value)
                 {
                         this.index = index;
                         this.type = type;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using UnityEngine;
 
 namespace AscentProfiler
@@ -19,11 +20,11 @@ namespace AscentProfiler
                 private Stack<int> tabCountStack = new Stack<int>();
 
                 //trigger values
-                private int index;
-                private string type;
-                private string desc;
-                private bool ascending;
-                private double value;
+                private int triggerIndex;
+                private Trigger triggerType;
+                private string description;
+                private bool ascending = true;
+                private double triggerValue;
 
                 // Regex patterns
                 private string oneParam = @"^\t*\w+\s+(\d+)\s*$";
@@ -32,12 +33,12 @@ namespace AscentProfiler
 
                 public TriggerFactory()
                 {
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(index, type, desc, ascending, value); });
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, triggerType, description, ascending, triggerValue); });
 
 
 
                         triggerRegex.Add(TriggerType.ALTITUDE, oneParam);
-                        //carBuilder.Add("van", () => { return new Van(); });
+                        
                 
                 }
 
@@ -78,11 +79,20 @@ namespace AscentProfiler
                                         tabCountStack.Push(currentIndex);
                                 }
 
+
+                                triggerIndex = currentIndex;
+                                triggerType = trigger;
+                                description = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
+
                         }
                         else 
                         {
                                 Debug.Log("Profile Loader: Invalid Syntax!: Line #"+lineNumber+": "+commandLine);
                         }
+
+
+
+                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
                         //Trigger temp = new Altitude(1, TriggerType.ALTITUDE.ToString(), "Altitude", true, 10000);
 
@@ -105,9 +115,10 @@ namespace AscentProfiler
                 public bool IsValidSyntax(TriggerType trigger, string commandLine, int lineNumber)
                 {
 
-                        if (Regex.IsMatch(commandLine, triggerRegex[TriggerType.ALTITUDE]))
+                        if (Regex.IsMatch(commandLine, triggerRegex[trigger]))
                         {
-                                Debug.Log(TriggerType.ALTITUDE.ToString() + "Is Match!");
+                                Debug.Log(trigger.ToString() + " Is Match!");
+
                                 return true;
                         }
 
