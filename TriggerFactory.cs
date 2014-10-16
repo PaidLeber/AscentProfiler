@@ -21,7 +21,7 @@ namespace AscentProfiler
 
                 //trigger values
                 private int triggerIndex;
-                private Trigger triggerType;
+                private TriggerType triggerType;
                 private string description;
                 private bool ascending = true;
                 private double triggerValue;
@@ -80,17 +80,15 @@ namespace AscentProfiler
                                 }
 
 
-                                triggerIndex = currentIndex;
-                                triggerType = trigger;
-                                description = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
-
                         }
                         else 
                         {
                                 Debug.Log("Profile Loader: Invalid Syntax!: Line #"+lineNumber+": "+commandLine);
                         }
 
-
+                        triggerIndex = currentIndex;
+                        triggerType = trigger;
+                        description = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
