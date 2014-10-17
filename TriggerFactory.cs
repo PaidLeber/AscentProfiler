@@ -23,8 +23,8 @@ namespace AscentProfiler
                 private int triggerIndex;
                 private TriggerType triggerType;
                 private string description;
-                private bool ascending = true;
                 private double triggerValue;
+                private bool ascending = true;
                 private bool triggerfromMax;
 
                 // Regex patterns
@@ -47,7 +47,7 @@ namespace AscentProfiler
 
                 public int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
-
+                        //triggerProduct[trigger].Invoke();
                         if (IsValidSyntax(trigger, commandLine, lineNumber))
                         {
                                 if(trigger == TriggerType.ASCENT)
@@ -137,7 +137,7 @@ namespace AscentProfiler
                                 {
                                         case TriggerType.ALTITUDE:
 
-                                                if (match.Groups[2].Value == "FROMMAXVAL")
+                                                if (match.Groups[2].Value == "FROMMAX")
                                                 {
                                                         triggerfromMax = true;
                                                         triggerValue = Convert.ToDouble(match.Groups[1].Value);
@@ -148,6 +148,7 @@ namespace AscentProfiler
                                                         triggerValue = Convert.ToDouble(match.Groups[1].Value);
                                                 }
 
+                                                // CREATE DICTIONARY BY ACTION FUNCTION NAME, <"FROMMAXVAL", FUNC/ACTION FROMMAXVAL> ORRR
                                                 //REMEMBER TO CREATE DICTIONARY FOR TRIGGER FUNCTIONS TO GET VALUES INTO CLASS // may not need this.. just create regular methods or put into Dict.Action
 
                                                 Debug.Log("altitude captures count!: " + match.Groups[1].Captures.Count + " " + match.Captures.Count + " group 0: " + match.Groups[0].Value + "  value1: " + match.Groups[1].Value + "  value2: " + match.Groups[2].Value + "  value3: " + match.Groups[3].Value);

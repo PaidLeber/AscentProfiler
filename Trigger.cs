@@ -28,8 +28,9 @@ namespace AscentProfiler
                 public double displayValue;
                 public int index = -1;
                 public double value;
+                public double maxval;
                 public bool fromaxval;
-                public bool ascending;
+                public bool ascending; //Ascent or Descent Mode
                 public bool state = false;
                 public double countdown;
                 public abstract bool Evaluate(bool isascending);
@@ -39,6 +40,7 @@ namespace AscentProfiler
 
         public class Altitude : Trigger
         {
+                
 
                 public Altitude(int index, TriggerType type, string desc, bool ascending, bool frommaxval, double value)
                 {
@@ -52,23 +54,59 @@ namespace AscentProfiler
 
                 public override bool Evaluate(bool isascending) //do overide evaluate, change state then return bool
                 {
-                        if (FlightGlobals.ship_altitude > value && isascending && ascending)
+                        
+                        if (!fromaxval)
                         {
-                                //FlightLog.Log("ALTITUDE "+ value +"M ASCENDING");
-                                return state = true;
+                                if (ascending)
+                                {
+                                        return isIncreasing(isascending, FlightGlobals.ship_altitude, value);
+                                }
+                                else
+                                {
+                                        return isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
+                                }
 
                         }
-                        else if ((FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude) < value && !isascending && !ascending)
+                        else
                         {
-                                //FlightLog.Log("ALTITUDE " + value + "M DESCENDING");
-                                return state = true;
+                                maxval = isMaxVal(ascending, FlightGlobals.ship_altitude, maxval);
+
+                                double delta = ascending ? maxval + FlightGlobals.ship_altitude : maxval - FlightGlobals.ship_altitude;
+
+                                return isIncreasing(isascending, delta, value);
+                        
                         }
 
-                       return false;    
-                }       
-        
-        
-        
+
+
+                }
+
+
+                private bool isIncreasing(bool isascending, double vVariable, double vStatic)
+                {
+                        return vVariable > vStatic && isascending ? true : false;
+                }
+
+
+                private bool isDecreasing(bool isascending, double vVariable, double vStatic)
+                {
+                        return vVariable < vStatic && !isascending ? true : false;
+                }
+
+                private double isMaxVal(bool ascending, double currentValue, double maxValue)
+                {
+                        if (ascending)
+                        {
+                                return currentValue > maxValue ? currentValue : maxValue;
+                        }
+                        else
+                        {
+                                return currentValue < maxValue ? currentValue : maxValue;
+                        }
+                            
+                }
+
+
         }
 
 
