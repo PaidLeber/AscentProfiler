@@ -10,11 +10,11 @@ namespace AscentProfiler
         public class TriggerGuardian
         {
                 ActionExecutor actionExecutor;
-                public Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
+                internal Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
 
 
-                public bool isascending = false;
-                public double lastaltitude;
+                bool isascending = false;
+                double lastaltitude;
 
                 public TriggerGuardian(ActionExecutor ae)
                 {

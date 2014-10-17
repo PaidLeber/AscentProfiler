@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        public enum TriggerType
+        internal enum TriggerType
         {
                 None,
                 ASCENT,
@@ -21,79 +21,34 @@ namespace AscentProfiler
 
         }
 
-        public abstract class Trigger
+        abstract class Trigger
         {
-                public TriggerType type;
-                public string desc;
-                public double displayValue;
-                public int index = -1;
-                public double value;
-                public double maxval;
-                public bool fromaxval;
-                public bool ascending; //Ascent or Descent Mode
-                public bool state = false;
-                public double countdown;
-                public abstract bool Evaluate(bool isascending);
+                internal bool state = false;
 
-        }
-
-
-        public class Altitude : Trigger
-        {
-                
-
-                public Altitude(int index, TriggerType type, string desc, bool ascending, bool frommaxval, double value)
-                {
-                        this.index = index;
-                        this.type = type;
-                        this.desc = desc;
-                        this.ascending = ascending;
-                        this.value = value;
-                        this.fromaxval = frommaxval;
-                }
-
-                public override bool Evaluate(bool isascending) //do overide evaluate, change state then return bool
-                {
-                        
-                        if (!fromaxval)
-                        {
-                                if (ascending)
-                                {
-                                        return isIncreasing(isascending, FlightGlobals.ship_altitude, value);
-                                }
-                                else
-                                {
-                                        return isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
-                                }
-
-                        }
-                        else
-                        {
-                                maxval = isMaxVal(ascending, FlightGlobals.ship_altitude, maxval);
-
-                                double delta = ascending ? maxval + FlightGlobals.ship_altitude : maxval - FlightGlobals.ship_altitude;
-
-                                return isIncreasing(isascending, delta, value);
-                        
-                        }
+                protected TriggerType type;
+                protected string desc;
+                protected double displayValue;
+                protected int index = -1;
+                protected double value;
+                protected double maxval;
+                protected bool fromaxval;
+                protected bool ascending; //Ascent or Descent Mode
+                protected double countdown;
+                internal abstract bool Evaluate(bool isascending);
 
 
 
-                }
-
-
-                private bool isIncreasing(bool isascending, double vVariable, double vStatic)
+                protected bool isIncreasing(bool isascending, double vVariable, double vStatic)
                 {
                         return vVariable > vStatic && isascending ? true : false;
                 }
 
-
-                private bool isDecreasing(bool isascending, double vVariable, double vStatic)
+                protected bool isDecreasing(bool isascending, double vVariable, double vStatic)
                 {
                         return vVariable < vStatic && !isascending ? true : false;
                 }
 
-                private double isMaxVal(bool ascending, double currentValue, double maxValue)
+                protected double isMaxVal(bool ascending, double currentValue, double maxValue)
                 {
                         if (ascending)
                         {
@@ -103,14 +58,62 @@ namespace AscentProfiler
                         {
                                 return currentValue < maxValue ? currentValue : maxValue;
                         }
-                            
+
                 }
+        }
+
+
+        class Altitude : Trigger
+        {
+                
+
+                internal Altitude(int index, TriggerType type, string desc, bool ascending, bool frommaxval, double value)
+                {
+                        this.index = index;
+                        this.type = type;
+                        this.desc = desc;
+                        this.ascending = ascending;
+                        this.value = value;
+                        this.fromaxval = frommaxval;
+                }
+
+                internal override bool Evaluate(bool isascending) //do overide evaluate, change state then return bool
+                {
+                        
+                        if (!fromaxval)
+                        {
+                                if (ascending)
+                                {
+                                        return state = isIncreasing(isascending, FlightGlobals.ship_altitude, value);
+                                }
+                                else
+                                {
+                                        return state = isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
+                                }
+
+                        }
+                        else
+                        {
+                                maxval = isMaxVal(ascending, FlightGlobals.ship_altitude, maxval);
+
+                                double delta = ascending ? maxval - FlightGlobals.ship_altitude : maxval + FlightGlobals.ship_altitude;
+
+                                return state = isIncreasing(isascending, delta, value);
+                        
+                        }
+
+
+
+                }
+
+
+
 
 
         }
 
 
-        public class Countdown : Trigger
+        class Countdown : Trigger
         {
 
                 public Countdown(int index, TriggerType type, string desc, bool fromaxval)
@@ -121,7 +124,7 @@ namespace AscentProfiler
                         this.fromaxval = fromaxval;
                 }
 
-                public override bool Evaluate(bool isascending)
+                internal override bool Evaluate(bool isascending)
                 {
                         double UT = Planetarium.GetUniversalTime();
 
@@ -149,7 +152,7 @@ namespace AscentProfiler
 
 
 
-        public class Liftoff : Trigger
+        class Liftoff : Trigger
         {
 
                 public Liftoff(int index, TriggerType type, string desc, double value)
@@ -160,7 +163,7 @@ namespace AscentProfiler
                         this.fromaxval = fromaxval;
                 }
 
-                public override bool Evaluate(bool isascending)
+                internal override bool Evaluate(bool isascending)
                 {
                         double UT = Planetarium.GetUniversalTime();
                          //public static bool LiftedOff(this Vessel vessel)
@@ -188,7 +191,7 @@ namespace AscentProfiler
         }
 
 
-        public class Gforce : Trigger
+        class Gforce : Trigger
         {
                 public double gmax;
                 public double gforce;
@@ -212,7 +215,7 @@ namespace AscentProfiler
                         this.fromaxval = fromaxval;
                 }
 
-                public override bool Evaluate(bool isascending)
+                internal override bool Evaluate(bool isascending)
                 {
                         gforce = FlightGlobals.ship_geeForce;
 
@@ -246,7 +249,7 @@ namespace AscentProfiler
 
 
         
-        public class Burnout : Trigger
+        class Burnout : Trigger
         {
 
                 public Burnout(int index, TriggerType type, string desc)
@@ -257,7 +260,7 @@ namespace AscentProfiler
                         //Vessel v = FlightGlobals.ActiveVessel;
                 }
 
-                public override bool Evaluate(bool isascending)
+                internal override bool Evaluate(bool isascending)
                 {
                         //remove this if statement later
                         if (FlightGlobals.ActiveVessel.situation != Vessel.Situations.PRELAUNCH)
@@ -291,7 +294,7 @@ namespace AscentProfiler
 
 
                 //Mechjeb methods gpl3
-                public static bool HasActiveOrIdleEngineOrTankDescendant(Part p, List<int> tankResources)
+                static bool HasActiveOrIdleEngineOrTankDescendant(Part p, List<int> tankResources)
                 {
                         if ((p.State == PartStates.ACTIVE || p.State == PartStates.IDLE)
                         && p.IsEngine() && !p.IsSepratron() && p.EngineHasFuel())
@@ -317,7 +320,7 @@ namespace AscentProfiler
                 }
 
 
-                public List<int> FindBurnedResources(Vessel v)
+                List<int> FindBurnedResources(Vessel v)
                 {
                         var activeEngines = v.parts.Where(p => p.inverseStage >= Staging.CurrentStage && p.IsEngine() && !p.IsSepratron());
                         HashSet<Propellant> burnedPropellants = new HashSet<Propellant>();
@@ -336,7 +339,7 @@ namespace AscentProfiler
 
 
                 //determine whether it's safe to activate inverseStage
-                public static bool InverseStageDecouplesActiveOrIdleEngineOrTank(int inverseStage, Vessel v, List<int> tankResources)
+                static bool InverseStageDecouplesActiveOrIdleEngineOrTank(int inverseStage, Vessel v, List<int> tankResources)
                 {
                         foreach (Part p in v.parts)
                         {
@@ -351,7 +354,7 @@ namespace AscentProfiler
 
 
                 //determine whether inverseStage sheds a dead engine
-                public static bool InverseStageDecouplesDeactivatedEngineOrTank(int inverseStage, Vessel v)
+                static bool InverseStageDecouplesDeactivatedEngineOrTank(int inverseStage, Vessel v)
                 {
                         foreach (Part p in v.parts)
                         {
@@ -362,7 +365,7 @@ namespace AscentProfiler
 
 
                 //detect if a part is above a deactivated engine or fuel tank
-                public static bool HasDeactivatedEngineOrTankDescendant(Part p)
+                static bool HasDeactivatedEngineOrTankDescendant(Part p)
                 {
                         if ((p.State == PartStates.DEACTIVATED) && (p is FuelTank || p.IsEngine()) && !p.IsSepratron())
                         {
@@ -388,7 +391,7 @@ namespace AscentProfiler
 
                 //determine whether activating inverseStage will fire any sort of decoupler. This
                 //is used to tell whether we should delay activating the next stage after activating inverseStage
-                public static bool InverseStageFiresDecoupler(int inverseStage, Vessel v)
+                static bool InverseStageFiresDecoupler(int inverseStage, Vessel v)
                 {
                         foreach (Part p in v.parts)
                         {
@@ -398,7 +401,7 @@ namespace AscentProfiler
                 }
 
                 //determine if there are chutes being fired that wouldn't also get decoupled
-                public static bool HasStayingChutes(int inverseStage, Vessel v)
+                static bool HasStayingChutes(int inverseStage, Vessel v)
                 {
                         var chutes = v.parts.FindAll(p => p.inverseStage == inverseStage && p.IsParachute());
                         foreach (Part p in chutes)
@@ -413,7 +416,7 @@ namespace AscentProfiler
 
 
 
-        public class Attitude : Trigger
+        class Attitude : Trigger
         {
                 Vessel v;
                 public double yaw = 0;
@@ -422,7 +425,7 @@ namespace AscentProfiler
                 Vector3 up;
                 Vector3 forward;
 
-                public Attitude(int index, TriggerType type, string desc, double value)
+                Attitude(int index, TriggerType type, string desc, double value)
                 {
                         this.index = index;
                         this.type = type;
@@ -432,7 +435,7 @@ namespace AscentProfiler
                         
                 }
 
-                public override bool Evaluate(bool isascending)
+                internal override bool Evaluate(bool isascending)
                 {
 
 

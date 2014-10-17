@@ -11,14 +11,15 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.Flight, false)]
         public class AscentProfiler : MonoBehaviour
         {
-                public static FlightProfile ActiveProfile;
+                internal static FlightProfile ActiveProfile;
+
+                private  static string AscentProfilerDir;
+                internal static string profilesDir;
+                internal static string flightlogsDir;
+
                 private AscentProfilerGUI gui = null;
                 private bool mainWindowEnabled = true;
                 private IButton mainButton;
-
-                public static string AscentProfilerDir;
-                public static string profilesDir;
-                public static string flightlogsDir;
 
                 void Awake()
                 {

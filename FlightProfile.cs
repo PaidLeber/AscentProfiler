@@ -9,11 +9,11 @@ namespace AscentProfiler
         public class FlightProfile : MonoBehaviour
         {
 
-                public ActionExecutor actionExecutor;
-                public TriggerGuardian triggerGuardian;
-                //public FlightController flightController;
-                public FlightLog flightLog;
-                public Vessel vessel = null;
+                internal ActionExecutor actionExecutor;
+                internal TriggerGuardian triggerGuardian;
+                //internal FlightController flightController;
+                internal FlightLog flightLog;
+                internal Vessel vessel = null;
 
                 void Awake()
                 {
