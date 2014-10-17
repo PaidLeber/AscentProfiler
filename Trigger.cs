@@ -27,7 +27,7 @@ namespace AscentProfiler
 
                 protected TriggerType type;
                 protected string desc;
-                protected double displayValue;
+
                 protected int index = -1;
                 protected double value;
                 protected double maxval;
@@ -35,6 +35,7 @@ namespace AscentProfiler
                 protected bool ascentMode; //Ascent or Descent Mode
                 protected double countdown;
 
+                internal string displayValue;
                 internal bool state = false;
                 internal abstract bool Evaluate(bool isascending);
 
@@ -68,12 +69,13 @@ namespace AscentProfiler
                         this.desc = desc;
                         this.ascentMode = ascending;
                         this.value = value;
+                        this.displayValue = value.ToString();
                         this.fromaxval = frommaxval;
+
                 }
 
                 internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
                 {
-
 
                         double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
 
@@ -88,18 +90,12 @@ namespace AscentProfiler
                                 double delta;
 
                                 maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
-                                delta = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
-                                return state = isIncreasing(isascending, delta, value);
-                        
+                                delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
+
+                                return state = isIncreasing(isascending, delta, value);  
                         }
 
-
-
                 }
-
-
-
-
 
         }
 
