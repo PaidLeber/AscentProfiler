@@ -25,7 +25,7 @@ namespace AscentProfiler
                 private string description;
                 private bool ascending = true;
                 private double triggerValue;
-                private double triggerfromMax;
+                private bool triggerfromMax;
 
                 // Regex patterns
                 private string oneParamRegex = @"^\t*\w+\s+(\d+)\s*$";
@@ -35,7 +35,7 @@ namespace AscentProfiler
 
                 public TriggerFactory()
                 {
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, triggerType, description, ascending, triggerValue); });
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, triggerType, description, ascending, triggerfromMax, triggerValue); });
 
 
                         triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
@@ -106,8 +106,9 @@ namespace AscentProfiler
                         triggerType = trigger;
                         description = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
+                        Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
-
+                        Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         //Trigger temp = new Altitude(1, TriggerType.ALTITUDE.ToString(), "Altitude", true, 10000);
 
                         //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, temp);
@@ -138,14 +139,20 @@ namespace AscentProfiler
                                 {
                                         case TriggerType.ALTITUDE:
 
-                                                if(match.Groups[2].Value == "FROMMAXVAL")
+                                                if (match.Groups[2].Value == "FROMMAXVAL")
                                                 {
+                                                        triggerfromMax = true;
+                                                        triggerValue = Convert.ToDouble(match.Groups[1].Value);
+                                                }
+                                                else
+                                                {
+                                                        triggerfromMax = false;
                                                         triggerValue = Convert.ToDouble(match.Groups[1].Value);
                                                 }
 
 
                                                 Debug.Log("altitude captures count!: " + match.Groups[1].Captures.Count + " " + match.Captures.Count + " group 0: " + match.Groups[0].Value + "  value1: " + match.Groups[1].Value + "  value2: " + match.Groups[2].Value + "  value3: " + match.Groups[3].Value);
-                                                Debug.Log("altitude captures count!: " + match.Groups[2].Captures.Count);
+
                                                 return true;
                                 
                                 

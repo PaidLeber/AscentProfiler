@@ -40,7 +40,7 @@ namespace AscentProfiler
         public class Altitude : Trigger
         {
 
-                public Altitude(int index, TriggerType type, string desc, bool ascending, double value, bool frommaxval)
+                public Altitude(int index, TriggerType type, string desc, bool ascending, bool frommaxval, double value)
                 {
                         this.index = index;
                         this.type = type;
