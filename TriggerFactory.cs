@@ -20,12 +20,12 @@ namespace AscentProfiler
                 private Stack<int> tabCountStack = new Stack<int>();
 
                 //trigger values
-                private int triggerIndex;
-                private TriggerType triggerType;
-                private string description;
-                private double triggerValue;
-                private bool ascending = true;
-                private bool triggerfromMax;
+                int triggerIndex;
+                TriggerType trigger;
+                string description;
+                double triggerValue;
+                bool ascending = true;
+                bool triggerfromMax;
 
                 // Regex patterns
                 private string oneParamRegex = @"^\t*\w+\s+(\d+)\s*$";
@@ -35,7 +35,7 @@ namespace AscentProfiler
 
                 public TriggerFactory()
                 {
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, triggerType, description, ascending, triggerfromMax, triggerValue); });
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, trigger, description, ascending, triggerfromMax, triggerValue); });
 
 
                         triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
@@ -47,19 +47,94 @@ namespace AscentProfiler
 
                 public int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
+                        // Check for trigger mode switches
+                        if (trigger == TriggerType.ASCENT)
+                        {
+                                ascending = true;
+                                return -1;
+                        }
+                        else if (trigger == TriggerType.DESCENT)
+                        {
+                                ascending = false;
+                                return -1;
+                        }
+
+                        Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
+
+                        if (triggerParse.Success)
+                        {
+                                // Check for optional trigger switches
+                                switch ((TriggerSwitch)Enum.Parse(typeof(TriggerSwitch), triggerParse.Groups[2].Value))
+                                {
+                                        case TriggerSwitch.FROMMAXVAL:
+                                                triggerfromMax = true;
+                                                break;
+
+                                
+                                }
+                        }
+
+                                triggerValue = Convert.ToDouble(triggerParse.Groups[1].Value);
+
+                                switch (trigger)
+                                {
+                                        case TriggerType.ALTITUDE:
+
+                                                if (triggerParse.Groups[2].Value == "FROMMAX")
+                                                {
+                                                        triggerfromMax = true;
+                                                        
+                                                }
+                                                else
+                                                {
+                                                        triggerfromMax = false;
+                                                        triggerValue = Convert.ToDouble(triggerParse.Groups[1].Value);
+                                                }
+
+                                                // CREATE DICTIONARY BY ACTION FUNCTION NAME, <"FROMMAXVAL", FUNC/ACTION FROMMAXVAL> ORRR
+                                                //REMEMBER TO CREATE DICTIONARY FOR TRIGGER FUNCTIONS TO GET VALUES INTO CLASS // may not need this.. just create regular methods or put into Dict.Action
+
+                                                Debug.Log("altitude captures count!: " + triggerParse.Groups[1].Captures.Count + " " + triggerParse.Captures.Count + " group 0: " + triggerParse.Groups[0].Value + "  value1: " + triggerParse.Groups[1].Value + "  value2: " + triggerParse.Groups[2].Value + "  value3: " + triggerParse.Groups[3].Value);
+                                                break;
+
+                                                
+
+
+                                }
+
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         //triggerProduct[trigger].Invoke();
                         if (IsValidSyntax(trigger, commandLine, lineNumber))
                         {
-                                if(trigger == TriggerType.ASCENT)
-                                {
-                                        ascending = true;
-                                        return -1;
-                                }
-                                else if (trigger == TriggerType.DESCENT)
-                                {
-                                        ascending = false;
-                                        return -1;
-                                }
+
 
                                 currentIndex++;
 
@@ -103,7 +178,7 @@ namespace AscentProfiler
 
 
                         triggerIndex = currentIndex;
-                        triggerType = trigger;
+                        trigger = trigger;
                         description = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);

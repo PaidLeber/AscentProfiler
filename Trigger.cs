@@ -20,6 +20,12 @@ namespace AscentProfiler
                 ATTITUDE
 
         }
+        internal enum TriggerSwitch
+        { 
+                None,
+                FROMMAXVAL
+        
+        }
 
         abstract class Trigger
         {
@@ -92,7 +98,7 @@ namespace AscentProfiler
                                 maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
                                 delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
 
-                                return state = isIncreasing(isascending, delta, value);  
+                                return state = isIncreasing(isascending, delta, value);
                         }
 
                 }
