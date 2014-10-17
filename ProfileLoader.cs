@@ -113,17 +113,6 @@ namespace AscentProfiler
                         //return false;
                 }
 
-                private string RemoveEmptyLines(string lines)
-                {
-                        // Remove empty line with or without a newline/carriage return character 
-                        return Regex.Replace(lines, @"(^\s*$\n|\r)|(^\s*$)", String.Empty, RegexOptions.Multiline);
-                               
-                }
-                private string RemoveCommentLines(string lines)
-                {
-                        // Remove comment line with a newline/carriage return character or (|) no return character 
-                        return Regex.Replace(lines, @"(^\s*#.*$n|\r)|(^\s*#.*$)", String.Empty, RegexOptions.Multiline).TrimEnd();
-                }
 
 
         }

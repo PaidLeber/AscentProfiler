@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        enum TriggerType
+        public enum TriggerType
         {
                 None,
                 ASCENT,
@@ -25,6 +25,7 @@ namespace AscentProfiler
         {
                 public TriggerType type;
                 public string desc;
+                public string displayValue;
                 public int index = -1;
                 public double value;
                 public double fromaxval;

@@ -25,12 +25,13 @@ namespace AscentProfiler
                 private string description;
                 private bool ascending = true;
                 private double triggerValue;
-                private double frommaxval;
+                private double triggerfromMax;
 
                 // Regex patterns
                 private string oneParamRegex = @"^\t*\w+\s+(\d+)\s*$";
-                private string frommaxvalRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
+                private string oneParamOneOptionalRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
                 private string oneWordRegex = @"^\w+\s*";
+
 
                 public TriggerFactory()
                 {
@@ -39,7 +40,7 @@ namespace AscentProfiler
 
                         triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
                         triggerRegex.Add(TriggerType.DESCENT, oneWordRegex);
-                        triggerRegex.Add(TriggerType.ALTITUDE, frommaxvalRegex);
+                        triggerRegex.Add(TriggerType.ALTITUDE, oneParamOneOptionalRegex);
                         
                 
                 }
@@ -128,13 +129,26 @@ namespace AscentProfiler
                 public bool IsValidSyntax(TriggerType trigger, string commandLine, int lineNumber)
                 {
 
-                        if (Regex.IsMatch(commandLine, triggerRegex[trigger]))
+
+                        Match match = Regex.Match(commandLine, triggerRegex[trigger]);
+
+                        if (match.Success)
                         {
-                                Debug.Log(trigger.ToString() + " Is Match!");
+                                switch(trigger)
+                                {
+                                        case TriggerType.ALTITUDE:
+
+                                                Debug.Log("altitude captures count!: "+ match.Captures.Count);
+
+                                                return true;
+                                
+                                
+                                }
 
                                 return true;
                         }
-
+  
+   
                         return false;
 
                 }
