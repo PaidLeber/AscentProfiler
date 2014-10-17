@@ -23,7 +23,7 @@ namespace AscentProfiler
 
         abstract class Trigger
         {
-                internal bool state = false;
+
 
                 protected TriggerType type;
                 protected string desc;
@@ -34,31 +34,25 @@ namespace AscentProfiler
                 protected bool fromaxval;
                 protected bool ascending; //Ascent or Descent Mode
                 protected double countdown;
+
+                internal bool state = false;
                 internal abstract bool Evaluate(bool isascending);
 
 
 
                 protected bool isIncreasing(bool isascending, double vVariable, double vStatic)
                 {
-                        return vVariable > vStatic && isascending ? true : false;
+                        return (vVariable > vStatic && isascending) ? true : false;
                 }
 
                 protected bool isDecreasing(bool isascending, double vVariable, double vStatic)
                 {
-                        return vVariable < vStatic && !isascending ? true : false;
+                        return (vVariable < vStatic && !isascending) ? true : false;
                 }
 
                 protected double isMaxVal(bool ascending, double currentValue, double maxValue)
                 {
-                        if (ascending)
-                        {
-                                return currentValue > maxValue ? currentValue : maxValue;
-                        }
-                        else
-                        {
-                                return currentValue < maxValue ? currentValue : maxValue;
-                        }
-
+                        return ascending ? Math.Max(currentValue, maxValue) : Math.Min(currentValue, maxValue);
                 }
         }
 
@@ -77,26 +71,22 @@ namespace AscentProfiler
                         this.fromaxval = frommaxval;
                 }
 
-                internal override bool Evaluate(bool isascending) //do overide evaluate, change state then return bool
+                internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
                 {
                         
                         if (!fromaxval)
                         {
-                                if (ascending)
-                                {
-                                        return state = isIncreasing(isascending, FlightGlobals.ship_altitude, value);
-                                }
-                                else
-                                {
-                                        return state = isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
-                                }
-
+                                return state = ascending ? 
+                                        isIncreasing(isascending, FlightGlobals.ship_altitude, value) : 
+                                        isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
                         }
                         else
                         {
-                                maxval = isMaxVal(ascending, FlightGlobals.ship_altitude, maxval);
+                                double delta;
 
-                                double delta = ascending ? maxval - FlightGlobals.ship_altitude : maxval + FlightGlobals.ship_altitude;
+                                double terrainAltitude = (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
+                                maxval = isMaxVal(ascending, terrainAltitude, maxval);
+                                delta = ascending ? maxval - terrainAltitude : maxval + terrainAltitude;
 
                                 return state = isIncreasing(isascending, delta, value);
                         
