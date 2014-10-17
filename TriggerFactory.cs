@@ -109,9 +109,7 @@ namespace AscentProfiler
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
-                        //Trigger temp = new Altitude(1, TriggerType.ALTITUDE.ToString(), "Altitude", true, 10000);
-
-                        //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, temp);
+                        
 
 
                         //just use string.contains()!!!
@@ -150,6 +148,7 @@ namespace AscentProfiler
                                                         triggerValue = Convert.ToDouble(match.Groups[1].Value);
                                                 }
 
+                                                //REMEMBER TO CREATE DICTIONARY FOR TRIGGER FUNCTIONS TO GET VALUES INTO CLASS // may not need this.. just create regular methods or put into Dict.Action
 
                                                 Debug.Log("altitude captures count!: " + match.Groups[1].Captures.Count + " " + match.Captures.Count + " group 0: " + match.Groups[0].Value + "  value1: " + match.Groups[1].Value + "  value2: " + match.Groups[2].Value + "  value3: " + match.Groups[3].Value);
 
