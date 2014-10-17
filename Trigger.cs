@@ -32,7 +32,7 @@ namespace AscentProfiler
                 protected double value;
                 protected double maxval;
                 protected bool fromaxval;
-                protected bool ascending; //Ascent or Descent Mode
+                protected bool ascentMode; //Ascent or Descent Mode
                 protected double countdown;
 
                 internal bool state = false;
@@ -50,9 +50,9 @@ namespace AscentProfiler
                         return (vVariable < vStatic && !isascending) ? true : false;
                 }
 
-                protected double isMaxVal(bool ascending, double currentValue, double maxValue)
+                protected double calcMaxVal(bool ascentmode, double currentValue, double maxValue)
                 {
-                        return ascending ? Math.Max(currentValue, maxValue) : Math.Min(currentValue, maxValue);
+                        return ascentmode ? Math.Max(currentValue, maxValue) : Math.Min(currentValue, maxValue);
                 }
         }
 
@@ -66,28 +66,29 @@ namespace AscentProfiler
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
-                        this.ascending = ascending;
+                        this.ascentMode = ascending;
                         this.value = value;
                         this.fromaxval = frommaxval;
                 }
 
                 internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
                 {
-                        
+
+
+                        double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
+
                         if (!fromaxval)
                         {
-                                return state = ascending ? 
-                                        isIncreasing(isascending, FlightGlobals.ship_altitude, value) : 
-                                        isDecreasing(isascending, (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude), value);
+                                return state = ascentMode ?
+                                        isIncreasing(isascending, currentAltitude, value) :
+                                        isDecreasing(isascending, currentAltitude, value);
                         }
                         else
                         {
                                 double delta;
 
-                                double terrainAltitude = (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
-                                maxval = isMaxVal(ascending, terrainAltitude, maxval);
-                                delta = ascending ? maxval - terrainAltitude : maxval + terrainAltitude;
-
+                                maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
+                                delta = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
                                 return state = isIncreasing(isascending, delta, value);
                         
                         }
@@ -192,7 +193,7 @@ namespace AscentProfiler
                         this.type = type;
                         this.desc = desc;
                         this.value = value;
-                        this.ascending = ascending;
+                        this.ascentMode = ascending;
                 }
 
                 public Gforce(int index, TriggerType type, string desc, bool ascending, double value, bool fromaxval)
@@ -200,7 +201,7 @@ namespace AscentProfiler
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
-                        this.ascending = ascending;
+                        this.ascentMode = ascending;
                         this.value = value;
                         this.fromaxval = fromaxval;
                 }
