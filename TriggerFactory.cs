@@ -29,7 +29,7 @@ namespace AscentProfiler
 
                 // Regex patterns
                 private string oneParamRegex = @"^\t*\w+\s+(\d+)\s*$";
-                private string oneParamOneOptionalRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
+                private string oneParamFromMaxValRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
                 private string oneWordRegex = @"^\w+\s*";
 
 
@@ -40,7 +40,7 @@ namespace AscentProfiler
 
                         triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
                         triggerRegex.Add(TriggerType.DESCENT, oneWordRegex);
-                        triggerRegex.Add(TriggerType.ALTITUDE, oneParamOneOptionalRegex);
+                        triggerRegex.Add(TriggerType.ALTITUDE, oneParamFromMaxValRegex);
                         
                 
                 }
@@ -138,8 +138,14 @@ namespace AscentProfiler
                                 {
                                         case TriggerType.ALTITUDE:
 
-                                                Debug.Log("altitude captures count!: "+ match.Captures.Count);
+                                                if(match.Groups[2].Value == "FROMMAXVAL")
+                                                {
+                                                        triggerValue = Convert.ToDouble(match.Groups[1].Value);
+                                                }
 
+
+                                                Debug.Log("altitude captures count!: " + match.Groups[1].Captures.Count + " " + match.Captures.Count + " group 0: " + match.Groups[0].Value + "  value1: " + match.Groups[1].Value + "  value2: " + match.Groups[2].Value + "  value3: " + match.Groups[3].Value);
+                                                Debug.Log("altitude captures count!: " + match.Groups[2].Captures.Count);
                                                 return true;
                                 
                                 

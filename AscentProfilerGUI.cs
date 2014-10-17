@@ -109,6 +109,7 @@ namespace AscentProfiler
 
                                 }
 
+                                
 
 
                                 GUILayout.BeginVertical();
@@ -121,6 +122,7 @@ namespace AscentProfiler
                                                                 selectedProfile = pair.Key;
                                                                 selectedContent = pair.Value;
                                                                 selectedHeight = GUI.skin.GetStyle("label").CalcHeight(new GUIContent(selectedContent), 200);
+                                                                testbool = false;
                                                         }
                                                         if (GUILayout.Button(pair.Key, STYLE_WINDOW_BUTTON, GUILayout.Height(24)))
                                                         {
@@ -129,10 +131,12 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
                                                         {
+                                                                
                                                                 selectedProfile = pair.Key;
                                                                 selectedContent = profileLoader.LoadProfile(pair.Key);
 
                                                                 selectedHeight = GUI.skin.GetStyle("label").CalcHeight(new GUIContent(selectedContent), 200);
+                                                                
                                                         }
 
                                                 GUILayout.EndHorizontal();

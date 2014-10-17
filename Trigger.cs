@@ -25,10 +25,10 @@ namespace AscentProfiler
         {
                 public TriggerType type;
                 public string desc;
-                public string displayValue;
+                public double displayValue;
                 public int index = -1;
                 public double value;
-                public double fromaxval;
+                public bool fromaxval;
                 public bool ascending;
                 public bool state = false;
                 public double countdown;
@@ -40,13 +40,14 @@ namespace AscentProfiler
         public class Altitude : Trigger
         {
 
-                public Altitude(int index, TriggerType type, string desc, bool ascending, double value)
+                public Altitude(int index, TriggerType type, string desc, bool ascending, double value, bool frommaxval)
                 {
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
                         this.ascending = ascending;
                         this.value = value;
+                        this.fromaxval = frommaxval;
                 }
 
                 public override bool Evaluate(bool isascending) //do overide evaluate, change state then return bool
@@ -74,7 +75,7 @@ namespace AscentProfiler
         public class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string desc, double fromaxval)
+                public Countdown(int index, TriggerType type, string desc, bool fromaxval)
                 {
                         this.index = index;
                         this.type = type;
@@ -88,7 +89,7 @@ namespace AscentProfiler
 
                         if (countdown == 0)
                         { 
-                                countdown = UT + fromaxval;
+                                //countdown = UT + fromaxval;
                         }
 
                         value = countdown - UT;
@@ -113,7 +114,7 @@ namespace AscentProfiler
         public class Liftoff : Trigger
         {
 
-                public Liftoff(int index, TriggerType type, string desc, double fromaxval)
+                public Liftoff(int index, TriggerType type, string desc, double value)
                 {
                         this.index = index;
                         this.type = type;
@@ -130,7 +131,7 @@ namespace AscentProfiler
                         //}
                         if (countdown == 0)
                         {
-                                countdown = UT + fromaxval;
+                                countdown = UT + value;
                         }
 
                         value = countdown - UT;
@@ -138,7 +139,7 @@ namespace AscentProfiler
                         if (UT >= countdown)
                         {
                                 
-                                value = 0;
+                                //Value = 0;
                                 Staging.ActivateNextStage(); //use triggerfactory to auto add action activatenextstage() when liftoff is created
                                 //FlightLog.Log("# # # LIFTOFF # # #");
                                 return state = true;
@@ -163,7 +164,7 @@ namespace AscentProfiler
                         this.ascending = ascending;
                 }
 
-                public Gforce(int index, TriggerType type, string desc, bool ascending, double value, double fromaxval)
+                public Gforce(int index, TriggerType type, string desc, bool ascending, double value, bool fromaxval)
                 {
                         this.index = index;
                         this.type = type;
@@ -181,7 +182,7 @@ namespace AscentProfiler
                         {
                                 gmax = gforce;
                         }
-
+                        /* FIX!!!
                         if(isascending == ascending)
                         {
                                 if (fromaxval == 0 && gforce > value)
@@ -198,7 +199,7 @@ namespace AscentProfiler
                                         return state = true;
                                 }
                         
-                        }
+                        } */
                         
                         return false;
                 }
