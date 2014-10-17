@@ -25,19 +25,21 @@ namespace AscentProfiler
                 private string description;
                 private bool ascending = true;
                 private double triggerValue;
+                private double frommaxval;
 
                 // Regex patterns
-                private string oneParam = @"^\t*\w+\s+(\d+)\s*$";
-
-
+                private string oneParamRegex = @"^\t*\w+\s+(\d+)\s*$";
+                private string frommaxvalRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
+                private string oneWordRegex = @"^\w+\s*";
 
                 public TriggerFactory()
                 {
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(triggerIndex, triggerType, description, ascending, triggerValue); });
 
 
-
-                        triggerRegex.Add(TriggerType.ALTITUDE, oneParam);
+                        triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
+                        triggerRegex.Add(TriggerType.DESCENT, oneWordRegex);
+                        triggerRegex.Add(TriggerType.ALTITUDE, frommaxvalRegex);
                         
                 
                 }
@@ -47,6 +49,17 @@ namespace AscentProfiler
 
                         if (IsValidSyntax(trigger, commandLine, lineNumber))
                         {
+                                if(trigger == TriggerType.ASCENT)
+                                {
+                                        ascending = true;
+                                        return -1;
+                                }
+                                else if (trigger == TriggerType.DESCENT)
+                                {
+                                        ascending = false;
+                                        return -1;
+                                }
+
                                 currentIndex++;
 
                                 Debug.Log("IsValidSyntax: "+trigger.ToString());
@@ -85,6 +98,8 @@ namespace AscentProfiler
                         {
                                 Debug.Log("Profile Loader: Invalid Syntax!: Line #"+lineNumber+": "+commandLine);
                         }
+
+
 
                         triggerIndex = currentIndex;
                         triggerType = trigger;
