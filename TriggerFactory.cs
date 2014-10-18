@@ -11,8 +11,10 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
+                internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
+
 
                 // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
                 Stack<int> tabCountStack = new Stack<int>();
@@ -27,19 +29,19 @@ namespace AscentProfiler
 
                 int currentIndex = 0;
 
-                // Regex patterns
-                private string oneParamFromMaxValRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
-                private string oneWordRegex = @"^\w+\s*";
-
-
-                public TriggerFactory()
+                internal TriggerFactory()
                 {
+                        regexDict.Add("START", @"^START\s*");
+                        regexDict.Add("END", @"^END\s*");
+                        regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
+                        regexDict.Add("oneWordRegex", @"^\w+\s*");
+
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, TRIGGERVALUE); });
 
 
-                        triggerRegex.Add(TriggerType.ASCENT, oneWordRegex);
-                        triggerRegex.Add(TriggerType.DESCENT, oneWordRegex);
-                        triggerRegex.Add(TriggerType.ALTITUDE, oneParamFromMaxValRegex);
+                        triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
+                        triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
+                        triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         
                 
                 }
@@ -53,7 +55,7 @@ namespace AscentProfiler
                 
                 }
 
-                public int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
+                internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
                         ClearTriggerValues();
                         Debug.Log("Cleared trigger values");
@@ -69,8 +71,10 @@ namespace AscentProfiler
                                 return -1;
                         }
                         Debug.Log("pre parse");
+
                         //Check command line for valid syntax, if true then parse it
                         Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
+
                         Debug.Log("post parse");
                         if (triggerParse.Success)
                         {
@@ -181,14 +185,6 @@ namespace AscentProfiler
                         
 
 
-                        //just use string.contains()!!!
-                        //keep track of # of trigger \t tabs
-                        //keep List<int> of tabbed triggers
-                        //Place triggers in indexed list by # of tabs eg. no tabs List index 0, \t List index 1, \t\t list index 2
-                        // when new line read tab # goes down an index, add new tab entry and clear all indexed list entries above it
-                        //use dictionary for triggerproducts
-
-
 
                         return currentIndex;
                 }
@@ -196,19 +192,13 @@ namespace AscentProfiler
 
 
 
-                public int GetTabCount(string commandLine)
+                int GetTabCount(string commandLine)
                 {
                         return Regex.Match(commandLine, @"^(\t)+\w+").Groups[1].Captures.Count;
                         
                 }
 
 
-                public void Clear()
-                {
-
-
-
-                }
 
                 
 

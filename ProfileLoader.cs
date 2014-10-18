@@ -9,13 +9,13 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        public class ProfileLoader
+        class ProfileLoader
         {
-                private TriggerFactory triggerFactory = new TriggerFactory();
-                private Dictionary<string, string> profiles = new Dictionary<string, string>();
-                private List<string> activeProfile = new List<string>();
+                TriggerFactory triggerFactory = new TriggerFactory();
+                Dictionary<string, string> profiles = new Dictionary<string, string>();
 
-                private int triggerIndex = -1;
+
+                int triggerIndex = -1;
 
                 public ProfileLoader()
                 {
@@ -45,12 +45,12 @@ namespace AscentProfiler
                         foreach (string line in profileLines)
                         {
                                 lineCounter++;
-                                if (Regex.IsMatch(line, @"^START\s*.*"))
+                                if (Regex.IsMatch(line, triggerFactory.regexDict["START"]))
                                 {
                                         profileStart = lineCounter;
                                 }
 
-                                if (Regex.IsMatch(line, @"^END\s*.*"))
+                                if (Regex.IsMatch(line, triggerFactory.regexDict["END"]))
                                 {
                                         profileEnd = lineCounter;
                                 }
@@ -72,7 +72,7 @@ namespace AscentProfiler
                                 lineCounter++;
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
-                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @".*"))
+                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @"\w+\s*.*"))
                                         {
                                                 Debug.Log("Creating Trigger line #"+ lineCounter +": "+line);
                                                 triggerFactory.CreateTrigger(trigger, line, lineCounter);
