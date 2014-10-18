@@ -25,7 +25,7 @@ namespace AscentProfiler
                 bool ASCENDING = true;
                 bool FROMMAXVAL;
 
-                int currentIndex = -1;
+                int currentIndex = 0;
 
                 // Regex patterns
                 private string oneParamFromMaxValRegex = @"^\t*\w+\s+(\d+)\s*(\w*)\s*$";
@@ -144,7 +144,7 @@ namespace AscentProfiler
                         else if (tabcount < tabCountStack.Count - 1)
                         {
                                 Debug.Log("tabcountstack prior: " + Convert.ToString(tabCountStack.Count));
-                                for (int i = tabCountStack.Count - tabcount; i >= 0; i--)
+                                for (int i = tabCountStack.Count; i > tabcount; i--)
                                 {
                                         Debug.Log("elseif 4 POP: " + i);
                                         tabCountStack.Pop();
@@ -174,7 +174,7 @@ namespace AscentProfiler
                         DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
                         Debug.Log("NEW ALTITUDE VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + TRIGGERVALUE + " frommaxval: " + FROMMAXVAL);
-
+                        Debug.Log("TRIGGER INDEX: " + currentIndex);
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
