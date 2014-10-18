@@ -20,7 +20,7 @@ namespace AscentProfiler
                 ATTITUDE
 
         }
-        internal enum TriggerSwitch
+        internal enum TriggerModifier
         { 
                 None,
                 FROMMAXVAL

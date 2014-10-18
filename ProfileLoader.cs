@@ -44,14 +44,17 @@ namespace AscentProfiler
                         int lineCounter = 0;
                         foreach (string line in profileLines)
                         {
+                                //Debug.Log("regex start and stop");
                                 lineCounter++;
                                 if (Regex.IsMatch(line, triggerFactory.regexDict["START"]))
                                 {
+                                        Debug.Log("FOUND START: #"+line);
                                         profileStart = lineCounter;
                                 }
 
                                 if (Regex.IsMatch(line, triggerFactory.regexDict["END"]))
                                 {
+                                        Debug.Log("FOUND END: #" + line);
                                         profileEnd = lineCounter;
                                 }
                         }
@@ -62,6 +65,7 @@ namespace AscentProfiler
                         }
                         else if(profileStart == 0 || profileEnd == 0)
                         {
+                                Debug.Log("Profile error");
                                 // Add error log checking here then return bool
                                 //return false;
                         }
@@ -69,13 +73,27 @@ namespace AscentProfiler
                         lineCounter = 0;
                         foreach (string line in profileLines)
                         {
+                                //Debug.Log("start line check: "+ line);
                                 lineCounter++;
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
-                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @"\w+\s*.*"))
+                                        //Debug.Log("start trigger check: " + trigger.ToString());
+                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @"$|(\s+\w+\s*.*)$"))
                                         {
-                                                Debug.Log("Creating Trigger line #"+ lineCounter +": "+line);
-                                                triggerFactory.CreateTrigger(trigger, line, lineCounter);
+
+                                                Debug.Log("Creating Trigger line #" + lineCounter + ": " + line);
+
+                                                int indexer = triggerFactory.CreateTrigger(trigger, line, lineCounter);
+
+                                                if (indexer != -1) // return of -1 is a trigger switch of some sort, not an actual trigger
+                                                {
+                                                        triggerIndex = indexer;
+                                                }
+
+                                        }
+                                        else 
+                                        {
+                                                Debug.Log("NOT MATCH");
                                         }
                                         
                                 }

@@ -30,17 +30,18 @@ namespace AscentProfiler
 
                 internal TriggerFactory()
                 {
-                        regexDict.Add("START", @"^START\s*");
-                        regexDict.Add("END", @"^END\s*");
+                        regexDict.Add("START", @"^START\s*$");
+                        regexDict.Add("END", @"^END\s*$");
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
+                        regexDict.Add("tabcount", @"^(\t)+\w+");
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, TRIGGERVALUE); });
 
 
-                        triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
-                        triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
-                        triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
+                        triggerRegex.Add(TriggerType.ASCENT, "oneWordRegex");
+                        triggerRegex.Add(TriggerType.DESCENT, "oneWordRegex");
+                        triggerRegex.Add(TriggerType.ALTITUDE, "oneParamFromMaxValRegex");
                         
                 
                 }
@@ -72,7 +73,7 @@ namespace AscentProfiler
                         Debug.Log("pre parse");
 
                         //Check command line for valid syntax, if true then parse it
-                        Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
+                        Match triggerParse = Regex.Match(commandLine, regexDict[ triggerRegex[trigger] ]);
 
                         Debug.Log("post parse");
                         if (triggerParse.Success)
@@ -83,9 +84,9 @@ namespace AscentProfiler
                                 if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
                                 {
                                         // Check command line for optional trigger switches if so enable
-                                        switch ((TriggerSwitch)Enum.Parse(typeof(TriggerSwitch), triggerParse.Groups[2].Value))
+                                        switch ((TriggerModifier)Enum.Parse(typeof(TriggerModifier), triggerParse.Groups[2].Value))
                                         {
-                                                case TriggerSwitch.FROMMAXVAL:
+                                                case TriggerModifier.FROMMAXVAL:
                                                         FROMMAXVAL = true;
                                                         break;
 
@@ -193,7 +194,7 @@ namespace AscentProfiler
 
                 int GetTabCount(string commandLine)
                 {
-                        return Regex.Match(commandLine, @"^(\t)+\w+").Groups[1].Captures.Count;
+                        return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
                         
                 }
 
