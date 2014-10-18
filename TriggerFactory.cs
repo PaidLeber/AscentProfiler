@@ -17,7 +17,7 @@ namespace AscentProfiler
                 // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
                 Stack<int> tabCountStack = new Stack<int>();
 
-                //trigger values
+                //variables used for trigger contructors
                 int TRIGGERINDEX;
                 TriggerType TRIGGERTYPE;
                 string DESCRIPTION;
@@ -56,7 +56,7 @@ namespace AscentProfiler
                 public int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
                         ClearTriggerValues();
-
+                        Debug.Log("Cleared trigger values");
                         // Check for trigger mode switches
                         if (trigger == TriggerType.ASCENT)
                         {
@@ -68,21 +68,28 @@ namespace AscentProfiler
                                 ASCENDING = false;
                                 return -1;
                         }
-
+                        Debug.Log("pre parse");
                         //Check command line for valid syntax, if true then parse it
                         Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
-
+                        Debug.Log("post parse");
                         if (triggerParse.Success)
                         {
-                                // Check command line for optional trigger switches if so enable
-                                switch ((TriggerSwitch)Enum.Parse(typeof(TriggerSwitch), triggerParse.Groups[2].Value))
+                                Debug.Log("trigger parse successful");
+
+
+                                if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
                                 {
-                                        case TriggerSwitch.FROMMAXVAL:
-                                                FROMMAXVAL = true;
-                                                break;
+                                        // Check command line for optional trigger switches if so enable
+                                        switch ((TriggerSwitch)Enum.Parse(typeof(TriggerSwitch), triggerParse.Groups[2].Value))
+                                        {
+                                                case TriggerSwitch.FROMMAXVAL:
+                                                        FROMMAXVAL = true;
+                                                        break;
 
 
+                                        }                          
                                 }
+
                         }
                         else
                         {
@@ -101,28 +108,60 @@ namespace AscentProfiler
 
                         Debug.Log("tabcount: " + tabcount);
 
+
+                        // If tabcount == 0 then it is a first level trigger
+                        // tabCountStack.Count - 1 = Previous trigger tab
+                        // If tabcount == tabCountStack.Count - 1 then pop off trigger on stack, peep previous trigger and put it in new trigger's index, then replace with popped trigger
+                        // If tabcount > tabCountStack.Count then Peek index value put it in the new trigger's index and push new trigger on stack
+                        // If tabcount < tabCountStack.Count - 1 then pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+
                         if (tabcount == 0)
                         {
+                                TRIGGERINDEX = -1; //This is an unchained trigger.
                                 tabCountStack.Clear();
                                 tabCountStack.Push(currentIndex);
+                                
                         }
                         else if (tabcount == tabCountStack.Count - 1)
                         {
+                                Debug.Log("elseif 2: ");
+                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
+                                Debug.Log("tabcountstack -1: "+Convert.ToString(tabCountStack.Count - 1));
+
                                 tabCountStack.Pop();
+                                TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
                         else if (tabcount > tabCountStack.Count - 1)
                         {
+                                Debug.Log("elseif 3: ");
+                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
+                                Debug.Log("tabcountstack -1: " + Convert.ToString(tabCountStack.Count - 1));
+
+                                TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
                         else if (tabcount < tabCountStack.Count - 1)
                         {
-                                for (int i = 0; i < (tabCountStack.Count - tabcount); i++)
+                                Debug.Log("tabcountstack prior: " + Convert.ToString(tabCountStack.Count));
+                                for (int i = tabCountStack.Count - tabcount; i >= 0; i--)
                                 {
+                                        Debug.Log("elseif 4 POP: " + i);
                                         tabCountStack.Pop();
+                                        Debug.Log("tabcountstack POP during: " + Convert.ToString(tabCountStack.Count));
                                 }
+                                Debug.Log("elseif 4: ");
+                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
+                                Debug.Log("tabcountstack -1: " + Convert.ToString(tabCountStack.Count - 1));
+                                Debug.Log("tabcountstack Peek: " + Convert.ToString(tabCountStack.Peek()));
 
+                                TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
+                        }
+                        else
+                        {
+                                //Create loading error in flightlog window 
+                                Debug.Log("UNCHAINED TRIGGER ERROR: CHECK TAB STRUCTURE");
                         }
 
 
@@ -133,6 +172,8 @@ namespace AscentProfiler
                         TRIGGERTYPE = trigger;
                         TRIGGERVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
                         DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
+
+                        Debug.Log("NEW ALTITUDE VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + TRIGGERVALUE + " frommaxval: " + FROMMAXVAL);
 
                         Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
@@ -153,46 +194,7 @@ namespace AscentProfiler
                 }
 
 
-                public bool IsValidSyntax(TriggerType trigger, string commandLine, int lineNumber)
-                {
 
-
-                        Match match = Regex.Match(commandLine, triggerRegex[trigger]);
-
-                        if (match.Success)
-                        {
-                                switch(trigger)
-                                {
-                                        case TriggerType.ALTITUDE:
-
-                                                if (match.Groups[2].Value == "FROMMAX")
-                                                {
-                                                        FROMMAXVAL = true;
-                                                        TRIGGERVALUE = Convert.ToDouble(match.Groups[1].Value);
-                                                }
-                                                else
-                                                {
-                                                        FROMMAXVAL = false;
-                                                        TRIGGERVALUE = Convert.ToDouble(match.Groups[1].Value);
-                                                }
-
-                                                // CREATE DICTIONARY BY ACTION FUNCTION NAME, <"FROMMAXVAL", FUNC/ACTION FROMMAXVAL> ORRR
-                                                //REMEMBER TO CREATE DICTIONARY FOR TRIGGER FUNCTIONS TO GET VALUES INTO CLASS // may not need this.. just create regular methods or put into Dict.Action
-
-                                                Debug.Log("altitude captures count!: " + match.Groups[1].Captures.Count + " " + match.Captures.Count + " group 0: " + match.Groups[0].Value + "  value1: " + match.Groups[1].Value + "  value2: " + match.Groups[2].Value + "  value3: " + match.Groups[3].Value);
-
-                                                return true;
-                                
-                                
-                                }
-
-                                return true;
-                        }
-  
-   
-                        return false;
-
-                }
 
                 public int GetTabCount(string commandLine)
                 {
