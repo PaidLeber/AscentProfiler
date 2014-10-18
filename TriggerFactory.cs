@@ -32,6 +32,8 @@ namespace AscentProfiler
                 {
                         regexDict.Add("START", @"^START\s*$");
                         regexDict.Add("END", @"^END\s*$");
+                        regexDict.Add("CMDBEGIN", @"^\t*");
+                        regexDict.Add("CMDEND", @"\s*.*$");
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
@@ -39,9 +41,9 @@ namespace AscentProfiler
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, TRIGGERVALUE); });
 
 
-                        triggerRegex.Add(TriggerType.ASCENT, "oneWordRegex");
-                        triggerRegex.Add(TriggerType.DESCENT, "oneWordRegex");
-                        triggerRegex.Add(TriggerType.ALTITUDE, "oneParamFromMaxValRegex");
+                        triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
+                        triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
+                        triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         
                 
                 }
@@ -71,9 +73,9 @@ namespace AscentProfiler
                                 return -1;
                         }
                         Debug.Log("pre parse");
-
+                        Debug.Log("trigger is: "+trigger.ToString()+" commandline is: "+commandLine);
                         //Check command line for valid syntax, if true then parse it
-                        Match triggerParse = Regex.Match(commandLine, regexDict[ triggerRegex[trigger] ]);
+                        Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
 
                         Debug.Log("post parse");
                         if (triggerParse.Success)
@@ -121,7 +123,7 @@ namespace AscentProfiler
 
                         if (tabcount == 0)
                         {
-                                TRIGGERINDEX = -1; //This is an unchained trigger.
+                                TRIGGERINDEX = 0; // This is an unchained (root) trigger.
                                 tabCountStack.Clear();
                                 tabCountStack.Push(currentIndex);
                                 

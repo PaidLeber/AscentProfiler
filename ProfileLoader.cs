@@ -78,7 +78,7 @@ namespace AscentProfiler
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
                                         //Debug.Log("start trigger check: " + trigger.ToString());
-                                        if (Regex.IsMatch(line, @"^\t*" + trigger.ToString() + @"$|(\s+\w+\s*.*)$"))
+                                        if (Regex.IsMatch(line, triggerFactory.regexDict["CMDBEGIN"] + trigger.ToString() + triggerFactory.regexDict["CMDEND"] ))
                                         {
 
                                                 Debug.Log("Creating Trigger line #" + lineCounter + ": " + line);
@@ -91,10 +91,7 @@ namespace AscentProfiler
                                                 }
 
                                         }
-                                        else 
-                                        {
-                                                Debug.Log("NOT MATCH");
-                                        }
+
                                         
                                 }
 
