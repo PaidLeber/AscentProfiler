@@ -12,9 +12,8 @@ namespace AscentProfiler
         class TriggerFactory
         {
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
-                Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
-
+                Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
 
                 // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
                 Stack<int> tabCountStack = new Stack<int>();
