@@ -50,6 +50,7 @@ namespace AscentProfiler
 
                 void ClearTriggerValues()
                 {
+                    
                         TRIGGERTYPE = TriggerType.None;
                         DESCRIPTION = null;
                         FROMMAXVAL = false;
@@ -60,7 +61,7 @@ namespace AscentProfiler
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
                         ClearTriggerValues();
-                        Debug.Log("Cleared trigger values");
+                        
                         // Check for trigger mode switches
                         if (trigger == TriggerType.ASCENT)
                         {
@@ -72,16 +73,15 @@ namespace AscentProfiler
                                 ASCENDING = false;
                                 return -1;
                         }
-                        Debug.Log("pre parse");
-                        Debug.Log("trigger is: "+trigger.ToString()+" commandline is: "+commandLine);
+
+                        Log.Level(LogType.Verbose, "Checking Command Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
+
                         //Check command line for valid syntax, if true then parse it
                         Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
 
-                        Debug.Log("post parse");
+
                         if (triggerParse.Success)
                         {
-                                Debug.Log("trigger parse successful");
-
                                 
                                 if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
                                 {
@@ -99,6 +99,7 @@ namespace AscentProfiler
                         }
                         else
                         {
+                                Log.Script(LogType.Error, "Line #"+ lineNumber, "Check Syntax: Unable to parse command line.");
                                 Debug.Log("Profile Loader: Invalid Syntax!: Line #" + lineNumber + ": " + commandLine);
                                 //Create error log with linenumber, and commandline to flightlog window
                                 return -1;
