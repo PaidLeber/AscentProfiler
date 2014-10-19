@@ -12,14 +12,13 @@ namespace AscentProfiler
         public class AscentProfiler : MonoBehaviour
         {
                 internal static FlightProfile ActiveProfile;
-
-                private  static string AscentProfilerDir;
+                static string AscentProfilerDir;
                 internal static string profilesDir;
                 internal static string flightlogsDir;
 
-                private AscentProfilerGUI gui = null;
-                private bool mainWindowEnabled = true;
-                private IButton mainButton;
+                AscentProfilerGUI gui = null;
+                bool mainWindowEnabled = true;
+                IButton mainButton;
 
                 void Awake()
                 {

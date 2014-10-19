@@ -82,7 +82,7 @@ namespace AscentProfiler
                         {
                                 Debug.Log("trigger parse successful");
 
-
+                                
                                 if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
                                 {
                                         // Check command line for optional trigger switches if so enable
@@ -161,10 +161,10 @@ namespace AscentProfiler
                                 Debug.Log("UNCHAINED TRIGGER ERROR: CHECK TAB STRUCTURE");
                         }
 
+                        
 
 
-
-
+                        
 
                         //triggerIndex = currentIndex;
                         TRIGGERTYPE = trigger;
