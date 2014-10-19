@@ -116,10 +116,11 @@ namespace AscentProfiler
 
 
                         // If tabcount == 0 then it is a first level trigger
-                        // tabCountStack.Count - 1 = Previous trigger tab
-                        // If tabcount == tabCountStack.Count - 1 then pop off trigger on stack, peep previous trigger and put it in new trigger's index, then replace with popped trigger
-                        // If tabcount > tabCountStack.Count then Peek index value put it in the new trigger's index and push new trigger on stack
-                        // If tabcount < tabCountStack.Count - 1 then pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+                        // If (tabcount - tabCountStack.Count) == 0 then Peek index value put it in the new trigger's index and push new trigger on stack
+                        // If tabcount < tabCountStack.Count then pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+                        // If (tabcount - tabCountStack.Count) > 0 Catch unchained trigger and throw error
+
+
 
                         if (tabcount == 0)
                         {
@@ -128,17 +129,7 @@ namespace AscentProfiler
                                 tabCountStack.Push(currentIndex);
                                 
                         }
-                        else if (tabcount == tabCountStack.Count - 1)
-                        {
-                                Debug.Log("elseif 2: ");
-                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
-                                Debug.Log("tabcountstack -1: "+Convert.ToString(tabCountStack.Count - 1));
-
-                                tabCountStack.Pop();
-                                TRIGGERINDEX = tabCountStack.Peek();
-                                tabCountStack.Push(currentIndex);
-                        }
-                        else if (tabcount > tabCountStack.Count - 1)
+                        else if ((tabcount - tabCountStack.Count) == 0)
                         {
                                 Debug.Log("elseif 3: ");
                                 Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
@@ -147,7 +138,7 @@ namespace AscentProfiler
                                 TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
-                        else if (tabcount < tabCountStack.Count - 1)
+                        else if (tabcount < tabCountStack.Count)
                         {
                                 Debug.Log("tabcountstack prior: " + Convert.ToString(tabCountStack.Count));
                                 for (int i = tabCountStack.Count; i > tabcount; i--)
@@ -164,11 +155,12 @@ namespace AscentProfiler
                                 TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
-                        else
+                        else if ((tabcount - tabCountStack.Count) > 0)
                         {
                                 //Create loading error in flightlog window 
                                 Debug.Log("UNCHAINED TRIGGER ERROR: CHECK TAB STRUCTURE");
                         }
+
 
 
 

@@ -54,6 +54,7 @@
     <Compile Include="FlightLog.cs" />
     <Compile Include="FlightProfile.cs" />
     <Compile Include="ImageLoad.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="ProfileLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
