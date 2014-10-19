@@ -62,6 +62,8 @@ namespace AscentProfiler
                 {
                         ClearTriggerValues();
                         
+                        /*Check for non trigger commands*/
+
                         // Check for trigger mode switches
                         if (trigger == TriggerType.ASCENT)
                         {
@@ -99,92 +101,64 @@ namespace AscentProfiler
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Line #"+ lineNumber, "Check Syntax: Unable to parse command line.");
-                                Debug.Log("Profile Loader: Invalid Syntax!: Line #" + lineNumber + ": " + commandLine);
-                                //Create error log with linenumber, and commandline to flightlog window
-                                return -1;
-                        
+                                Log.Script(LogType.Error, "Line #"+ lineNumber +": Command: "+commandLine+":", "Check Syntax: Unable to parse command line.");
                         }
 
 
-                        currentIndex++;
+                        /*Create Trigger Classes*/
+                        // If tabcount == 0; first level trigger
+                        // If (tabcount - tabCountStack.Count) == 0, next level trigger; then Peek index value put it in the new trigger's index and push new trigger on stack
+                        // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+                        // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
 
-                        Debug.Log("IsValidSyntax: " + trigger.ToString());
+                        currentIndex++;
 
                         int tabcount = GetTabCount(commandLine);
 
-                        Debug.Log("tabcount: " + tabcount);
-
-
-                        // If tabcount == 0 then it is a first level trigger
-                        // If (tabcount - tabCountStack.Count) == 0 then Peek index value put it in the new trigger's index and push new trigger on stack
-                        // If tabcount < tabCountStack.Count then pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
-                        // If (tabcount - tabCountStack.Count) > 0 Catch unchained trigger and throw error
-
-
+                        Log.Level(LogType.Verbose, "Checking Tab Structures: " + trigger.ToString());
+                        Log.Level(LogType.Verbose, "tabcount: " + tabcount);
 
                         if (tabcount == 0)
                         {
                                 TRIGGERINDEX = 0; // This is an unchained (root) trigger.
                                 tabCountStack.Clear();
                                 tabCountStack.Push(currentIndex);
-                                
                         }
                         else if ((tabcount - tabCountStack.Count) == 0)
                         {
-                                Debug.Log("elseif 3: ");
-                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
-                                Debug.Log("tabcountstack -1: " + Convert.ToString(tabCountStack.Count - 1));
-
                                 TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
                         else if (tabcount < tabCountStack.Count)
                         {
-                                Debug.Log("tabcountstack prior: " + Convert.ToString(tabCountStack.Count));
                                 for (int i = tabCountStack.Count; i > tabcount; i--)
                                 {
-                                        Debug.Log("elseif 4 POP: " + i);
                                         tabCountStack.Pop();
-                                        Debug.Log("tabcountstack POP during: " + Convert.ToString(tabCountStack.Count));
                                 }
-                                Debug.Log("elseif 4: ");
-                                Debug.Log("tabcountstack: " + Convert.ToString(tabCountStack.Count));
-                                Debug.Log("tabcountstack -1: " + Convert.ToString(tabCountStack.Count - 1));
-                                Debug.Log("tabcountstack Peek: " + Convert.ToString(tabCountStack.Peek()));
 
                                 TRIGGERINDEX = tabCountStack.Peek();
                                 tabCountStack.Push(currentIndex);
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                //Create loading error in flightlog window 
-                                Debug.Log("UNCHAINED TRIGGER ERROR: CHECK TAB STRUCTURE");
+                                //Create loading error in flightlog window
+                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Check Tab Structure: Unchained trigger.");
                         }
 
+                        /*Populate Trigger Classes*/
 
-
-                        
-                        
-
-                        //triggerIndex = currentIndex;
                         TRIGGERTYPE = trigger;
                         TRIGGERVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
                         DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
-                        Debug.Log("NEW ALTITUDE VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + TRIGGERVALUE + " frommaxval: " + FROMMAXVAL);
-                        Debug.Log("CURRENT INDEX: " + currentIndex);
-                        Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
-                        Debug.Log("TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
+
+                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + TRIGGERVALUE + " frommaxval: " + FROMMAXVAL);
+                        Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
+                        Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         
-
-
-
                         return currentIndex;
                 }
-
-
 
 
                 int GetTabCount(string commandLine)
@@ -192,10 +166,6 @@ namespace AscentProfiler
                         return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
                         
                 }
-
-
-
-                
 
         }
 }
