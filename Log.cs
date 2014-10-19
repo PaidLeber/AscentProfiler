@@ -48,7 +48,7 @@ namespace AscentProfiler
                                 return;
                         }
 
-                        message = "AP: " + lType + ": " + message;
+                        message = "Ascent Profiler: " + lType + ": " + message;
 
                         UnityEngine.Debug.Log(message);
                 }
