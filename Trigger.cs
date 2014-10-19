@@ -78,7 +78,6 @@ namespace AscentProfiler
                         this.displayValue = value.ToString();
                         this.fromaxval = frommaxval;
                         
-                        Debug.Log("ALTITUDE CONSTRUCTOR: " + " index: " + this.index + " type: " + this.type + " desc: " + this.desc + " ascentmode: " + this.ascentMode + " value: " + this.value + " displayval: " + this.displayValue + " frommaxval: " + this.fromaxval);
                 }
 
                 internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
