@@ -6,33 +6,57 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        internal enum LogLevel
+        internal enum LogType
         { 
-                INFO,
-                WARNING,
-                ERROR,
-                VERBOSE
+                Info,
+                Warning,
+                Error,
+                Verbose
         
         }
-
+        
         internal static class Log
         {
-                internal bool debug = true;
 
-                internal void Debug()
+                LogType loglevel = LogType.Verbose;
+
+                bool _debug;
+                internal bool debug
                 {
-                        if (!debug) { return; }
-
-
-
-
+                        get
+                        {
+                                return this._debug;
+                        }
+                        set
+                        {
+                                this._debug = value;
+                                if (value)
+                                {
+                                        loglevel = LogType.Verbose;
+                                }
+                                else
+                                { 
+                                        loglevel = LogType.Error;
+                                }
+                        }
                 }
 
-                internal void Flight()
-                { 
-                
+                internal void Level(LogType lType, string message)
+                {
+                        if(lType > loglevel)
+                        {
+                                return;
+                        }
+
+                        message = "AP: " + lType + ": " + message;
+
+                        UnityEngine.Debug.Log(message);
                 }
 
+                internal void Script(LogType lType, string message)
+                {
+
+                }
 
         }
 }

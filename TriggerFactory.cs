@@ -161,9 +161,9 @@ namespace AscentProfiler
                                 Debug.Log("UNCHAINED TRIGGER ERROR: CHECK TAB STRUCTURE");
                         }
 
+
+
                         
-
-
                         
 
                         //triggerIndex = currentIndex;
