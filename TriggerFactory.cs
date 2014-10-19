@@ -38,6 +38,8 @@ namespace AscentProfiler
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
 
+                        // countdown regex |(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))$
+
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, TRIGGERVALUE); });
 
 

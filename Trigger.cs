@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
+using KSP;
 
 namespace AscentProfiler
 {
@@ -109,12 +109,12 @@ namespace AscentProfiler
         class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string desc, bool fromaxval)
+                public Countdown(int index, TriggerType type, string desc, double value)
                 {
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
-                        this.fromaxval = fromaxval;
+                        this.value = value;
                 }
 
                 internal override bool Evaluate(bool isascending)
@@ -134,11 +134,11 @@ namespace AscentProfiler
                                 //FlightLog.Log("COUNTDOWN TRIGGER EXECUTED");
                                 return state = true;
                         }
-
+                        
                        return false;
                        
                 }
-
+                
 
 
         }
