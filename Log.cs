@@ -18,18 +18,20 @@ namespace AscentProfiler
         internal static class Log
         {
 
-                LogType loglevel = LogType.Verbose;
+                static LogType loglevel = LogType.Verbose;
+                static LogType scriptlevel = LogType.Error;
 
-                bool _debug;
-                internal bool debug
+
+                static bool _debug;
+                internal static bool debug
                 {
                         get
                         {
-                                return this._debug;
+                                return _debug;
                         }
                         set
                         {
-                                this._debug = value;
+                                _debug = value;
                                 if (value)
                                 {
                                         loglevel = LogType.Verbose;
@@ -41,7 +43,7 @@ namespace AscentProfiler
                         }
                 }
 
-                internal void Level(LogType lType, string message)
+                internal static void Level(LogType lType, string message)
                 {
                         if(lType > loglevel)
                         {
@@ -50,13 +52,29 @@ namespace AscentProfiler
 
                         message = "Ascent Profiler: " + lType + ": " + message;
 
-                        UnityEngine.Debug.Log(message);
+                        UnityEngine.Debug.Log( message );
                 }
 
-                internal void Script(LogType lType, string message)
+                internal static void Script(LogType lType, string profile, string message)
                 {
+                        if (lType > loglevel)
+                        {
+                                return;
+                        }
+
+                        message = "Loading Gscript "+ profile + ": " + lType + ": " + message;
+
+                        switch (lType)
+                        { 
+                                case LogType.Error:
+
+                                        throw new Exception(message);
+                        
+                        }
+
 
                 }
+
 
         }
 }

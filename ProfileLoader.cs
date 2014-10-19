@@ -41,6 +41,8 @@ namespace AscentProfiler
 
                         List<string> profileLines = new List<string>(profiles[profile].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 
+                        Log.Level(LogType.Info, "Loading Profile: " + profile);
+
                         int lineCounter = 0;
                         foreach (string line in profileLines)
                         {
@@ -48,13 +50,13 @@ namespace AscentProfiler
                                 lineCounter++;
                                 if (Regex.IsMatch(line, triggerFactory.regexDict["START"]))
                                 {
-                                        Debug.Log("FOUND START: #"+line);
+                                        Log.Level(LogType.Verbose, "GSCRIPT START: #" + line);
                                         profileStart = lineCounter;
                                 }
 
                                 if (Regex.IsMatch(line, triggerFactory.regexDict["END"]))
                                 {
-                                        Debug.Log("FOUND END: #" + line);
+                                        Log.Level(LogType.Verbose, "GSCRIPT END: #" + line);
                                         profileEnd = lineCounter;
                                 }
                         }
@@ -63,17 +65,21 @@ namespace AscentProfiler
                         {
                                 profileLines.Reverse();
                         }
-                        else if(profileStart == 0 || profileEnd == 0)
+                        else if(profileStart == 0)
                         {
-                                Debug.Log("Profile error");
+                                Log.Script(LogType.Error, profile, "START not found.");
                                 // Add error log checking here then return bool
                                 //return false;
+                        }
+                        else if (profileEnd == 0)
+                        {
+                                Log.Script(LogType.Error, profile, "END not found.");
                         }
 
                         lineCounter = 0;
                         foreach (string line in profileLines)
                         {
-                                //Debug.Log("start line check: "+ line);
+                                
                                 lineCounter++;
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
@@ -81,7 +87,7 @@ namespace AscentProfiler
                                         if (Regex.IsMatch(line, triggerFactory.regexDict["CMDBEGIN"] + trigger.ToString() + triggerFactory.regexDict["CMDEND"] ))
                                         {
 
-                                                Debug.Log("Creating Trigger line #" + lineCounter + ": " + line);
+                                                Log.Level(LogType.Verbose, "Creating trigger line #" + lineCounter + ": " + line);
 
                                                 int indexer = triggerFactory.CreateTrigger(trigger, line, lineCounter);
 
@@ -101,31 +107,6 @@ namespace AscentProfiler
 
                         return string.Join("\n", profileLines.ToArray());
 
-
-                        /*
-	                foreach (string line in lines)
-	                {
-                                foreach (string trigger in triggers)
-                                {
-                                        if (line.ToUpper().Contains(trigger))
-                                        { 
-                                                
-                                        }
-                                        else if (line.ToUpper().Contains(trigger))
-                                        {
-                                        
-                                        }
-                                }
-                                // change everything .ToUpper
-                                // check .contains(ASCENT) for ascent/descent commmand (forget it, i'll send it to triggerfactory and flip the bit there!!!"
-                                // when you send a trigger line, it needs to return an int index
-	                }
-                         */
-
-
-                        
-
-                        //return false;
                 }
 
 

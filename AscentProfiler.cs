@@ -22,14 +22,13 @@ namespace AscentProfiler
 
                 void Awake()
                 {
-
-
+                        Log.Level(LogType.Info, "Is Awake!");
                 }
 
 
                 void Start()
                 {
-                        Debug.Log("Ascent Profiler: Is Awake!");
+
 
                         ActiveProfile = gameObject.AddComponent<FlightProfile>();
                         gui = new AscentProfilerGUI();
@@ -80,9 +79,9 @@ namespace AscentProfiler
                                 Directory.CreateDirectory(flightlogsDir);
                         }
 
-                        Debug.Log("Ascent Profiler: User Directory: " + AscentProfilerDir);
-                        Debug.Log("Ascent Profiler: Profiles Directory: " + profilesDir);
-                        Debug.Log("Ascent Profiler: Flight Logs Directory: " + flightlogsDir); 
+                        Log.Level(LogType.Info, "User Directory: " + AscentProfilerDir);
+                        Log.Level(LogType.Info, "Profiles Directory: " + profilesDir);
+                        Log.Level(LogType.Info, "Flight Logs Directory: " + flightlogsDir); 
                 }
 
 
