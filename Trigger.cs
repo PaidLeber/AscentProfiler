@@ -110,7 +110,7 @@ namespace AscentProfiler
         class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string desc, string strvalue)
+                public Countdown(int index, TriggerType type, string desc, double value)
                 {
                         this.index = index;
                         this.type = type;

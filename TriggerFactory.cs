@@ -38,17 +38,17 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
-                        regexDict.Add("timer", @"^\t*\w+\s*(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2}))\s*$");
-                        
+                        regexDict.Add("countdown", @"^\t*\w+\s+T-(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
+                        regexDict.Add("timer", @"^\t*\w+\s*(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2}))\s*$"); //fix
                         
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
-                        triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, STRVALUE); });
+                        triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, DBLVALUE); });
 
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
-                        triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["timer"]);
+                        triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
                 
                 }
                 
