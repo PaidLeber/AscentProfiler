@@ -38,9 +38,9 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
-                        regexDict.Add("timer", @"^\t*\w+\s*(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2})\s*$");
-                        regexDict.Add("clock", @"([0-9]?[0-9])+");
-                        // countdown regex      \t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(T-([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(UT\d+)|(\d+s)\s*$
+                        regexDict.Add("timer", @"^\t*\w+\s*(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2}))\s*$");
+                        regexDict.Add("liftoff", @"^(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:([01]?\d|2[0-3]):)?(?:([0-5]?\d))?)?:([0-5]?\d))$"); //fix
+                        
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
                         triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, STRVALUE); });
@@ -91,14 +91,13 @@ namespace AscentProfiler
                         {
                                 if(trigger == TriggerType.COUNTDOWN)
                                 {
-                                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value + " g1:" + triggerParse.Groups[1].Value + " g2:" + triggerParse.Groups[2].Value + " g3:" + triggerParse.Groups[3].Value);
+                                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value 
+                                                + " g1:" + triggerParse.Groups[1].Value 
+                                                + " g2:" + triggerParse.Groups[2].Value
+                                                + " g3:" + triggerParse.Groups[3].Value
+                                                + " g4:" + triggerParse.Groups[4].Value 
+                                                + " g5:" + triggerParse.Groups[5].Value);
 
-                                        Match countdownparse = Regex.Match(commandLine, triggerParse.Groups[0].Value);
-
-                                        Log.Level(LogType.Verbose, "countdown parse list");
-                                        Log.Level(LogType.Verbose, countdownparse.Groups[0].Value);
-                                        Log.Level(LogType.Verbose, countdownparse.Groups[1].Value);
-                                        Log.Level(LogType.Verbose, countdownparse.Groups[2].Value);
                                         
 
                                 }
