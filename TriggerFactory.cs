@@ -38,7 +38,7 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
-                        regexDict.Add("timer", @"^\t*\w+\s*(?:(?:(\d{1,2}):)?(\d{1,2}):)?(\d{1,2})$");
+                        regexDict.Add("timer", @"^\t*\w+\s*(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2})\s*$");
                         regexDict.Add("clock", @"([0-9]?[0-9])+");
                         // countdown regex      \t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(T-([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(UT\d+)|(\d+s)\s*$
 
