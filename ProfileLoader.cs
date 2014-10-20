@@ -42,6 +42,7 @@ namespace AscentProfiler
                         List<string> profileLines = new List<string>(profiles[profile].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 
                         Log.Level(LogType.Info, "Loading Profile: " + profile);
+                        Log.Level(LogType.Verbose, profiles[profile].ToUpper());
 
                         int lineCounter = 0;
                         foreach (string line in profileLines)

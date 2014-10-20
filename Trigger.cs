@@ -36,6 +36,7 @@ namespace AscentProfiler
 
                 protected int index = -1;
                 protected double value;
+                protected string strvalue;
                 protected double maxval;
                 protected bool fromaxval;
                 protected bool ascentMode; //Ascent or Descent Mode
@@ -108,13 +109,13 @@ namespace AscentProfiler
 
         class Countdown : Trigger
         {
-                string strValue;
 
-                public Countdown(int index, TriggerType type, string desc, string strValue)
+                public Countdown(int index, TriggerType type, string desc, string strvalue)
                 {
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
+                        this.strvalue = strvalue;
                         this.value = value;
                 }
 
