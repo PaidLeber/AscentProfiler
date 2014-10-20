@@ -38,8 +38,7 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
-                        regexDict.Add("countdown", @"^\t*\w+\s+T-(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
-                        regexDict.Add("timer", @"^\t*\w+\s*(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2}))\s*$"); //fix
+                        regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
                         
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
@@ -95,7 +94,7 @@ namespace AscentProfiler
                         {
 
                                 switch(trigger)
-                                {
+                                {       // move ascent and descent mode switch to valueparser 
                                         case TriggerType.ALTITUDE:
                                                 //get values & pull out modifiers (if any)
                                                 break;
@@ -196,6 +195,12 @@ namespace AscentProfiler
                 {
                         return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
                         
+                }
+
+                bool TriggerParser(TriggerType trigger , Match match)
+                {
+
+                        return false;
                 }
 
         }
