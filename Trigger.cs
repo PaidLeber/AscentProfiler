@@ -125,7 +125,7 @@ namespace AscentProfiler
 
                         if (countdown == 0)
                         { 
-                                //countdown = UT + fromaxval;
+                                countdown = UT + value;
                         }
 
                         value = countdown - UT;

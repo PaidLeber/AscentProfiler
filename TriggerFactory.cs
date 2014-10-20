@@ -38,8 +38,9 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
-                        regexDict.Add("timer", @"\t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*((\d?\d):(\d?\d):(\d?\d))|((\d?\d):(\d?\d):(\d?\d))|(UT\d+)|(\d+)$");
-                        // countdown regex      \t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(UT\d+)|(\d+)$
+                        regexDict.Add("timer", @"^\t*\w+\s*(?:(?:(\d{1,2}):)?(\d{1,2}):)?(\d{1,2})$");
+                        regexDict.Add("clock", @"([0-9]?[0-9])+");
+                        // countdown regex      \t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(T-([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(UT\d+)|(\d+s)\s*$
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
                         triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, STRVALUE); });
@@ -50,7 +51,7 @@ namespace AscentProfiler
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["timer"]);
                 
                 }
-
+                
                 void ClearTriggerValues()
                 {
                     
@@ -88,9 +89,23 @@ namespace AscentProfiler
 
                         if (triggerParse.Success)
                         {
-                                
+                                if(trigger == TriggerType.COUNTDOWN)
+                                {
+                                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value + " g1:" + triggerParse.Groups[1].Value + " g2:" + triggerParse.Groups[2].Value + " g3:" + triggerParse.Groups[3].Value);
+
+                                        Match countdownparse = Regex.Match(commandLine, triggerParse.Groups[0].Value);
+
+                                        Log.Level(LogType.Verbose, "countdown parse list");
+                                        Log.Level(LogType.Verbose, countdownparse.Groups[0].Value);
+                                        Log.Level(LogType.Verbose, countdownparse.Groups[1].Value);
+                                        Log.Level(LogType.Verbose, countdownparse.Groups[2].Value);
+                                        
+
+                                }
+                                        
                                 if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
                                 {
+                                        Log.Level(LogType.Verbose, "triggerParse.Groups[2].Value Is not null: " + triggerParse.Groups[2].Value);
                                         // Check command line for optional trigger switches if so enable
                                         switch ((TriggerModifier)Enum.Parse(typeof(TriggerModifier), triggerParse.Groups[2].Value))
                                         {
@@ -105,7 +120,7 @@ namespace AscentProfiler
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Line #"+ lineNumber +": Command: "+commandLine+":", "Check Syntax: Unable to parse command line.");
+                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Unable to parse command line. Check Syntax.");
                         }
 
 
@@ -150,14 +165,22 @@ namespace AscentProfiler
                         }
 
                         /*Populate Trigger Classes*/
-
+                        Log.Level(LogType.Verbose, "Populating trigger variables.");
                         TRIGGERTYPE = trigger;
-                        DBLVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
+                        Log.Level(LogType.Verbose, "converting to double: "+ triggerParse.Groups[1].Value);
+
+                        if (!string.IsNullOrEmpty(triggerParse.Groups[1].Value))
+                        {
+                                DBLVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
+                        }
+                        
+                        
                         DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
+
+                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " strvalue: "+ STRVALUE + " dblvalue: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
 
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
-                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
                         Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                         Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         
