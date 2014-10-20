@@ -96,8 +96,12 @@ namespace AscentProfiler
 
                                 switch(trigger)
                                 {
-                                        case TriggerType.COUNTDOWN:
+                                        case TriggerType.ALTITUDE:
+                                                //get values & pull out modifiers (if any)
+                                                break;
 
+                                        case TriggerType.COUNTDOWN:
+                                                //pull values and multiply to get total time in seconds
                                                 break;
                                         
 
