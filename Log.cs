@@ -57,7 +57,7 @@ namespace AscentProfiler
 
                 internal static void Script(LogType lType, string gstring, string message)
                 {
-                        if (lType > loglevel)
+                        if (lType > scriptlevel)
                         {
                                 return;
                         }

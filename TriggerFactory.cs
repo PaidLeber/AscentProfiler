@@ -22,9 +22,10 @@ namespace AscentProfiler
                 int TRIGGERINDEX;
                 TriggerType TRIGGERTYPE;
                 string DESCRIPTION;
-                double TRIGGERVALUE;
+                double DBLVALUE;
                 bool ASCENDING = true;
                 bool FROMMAXVAL;
+                string STRVALUE;
 
                 int currentIndex = 0;
 
@@ -37,16 +38,16 @@ namespace AscentProfiler
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
+                        regexDict.Add("timer", @"\t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*((\d?\d):(\d?\d):(\d?\d))|((\d?\d):(\d?\d):(\d?\d))|(UT\d+)|(\d+)$");
+                        // countdown regex      \t*\w+\s+(Y\d{1,4}\s*,\s*D\d{1,3}\s*,\s*(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))|(UT\d+)|(\d+)$
 
-                        // countdown regex |(([0-9]?[0-9]):([0-9]?[0-9]):([0-9]?[0-9]))$
-
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, TRIGGERVALUE); });
-
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
+                        triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, STRVALUE); });
 
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
-                        
+                        triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["timer"]);
                 
                 }
 
@@ -56,7 +57,8 @@ namespace AscentProfiler
                         TRIGGERTYPE = TriggerType.None;
                         DESCRIPTION = null;
                         FROMMAXVAL = false;
-                        TRIGGERVALUE = 0;
+                        DBLVALUE = 0;
+                        STRVALUE = "";
                 
                 }
 
@@ -150,12 +152,12 @@ namespace AscentProfiler
                         /*Populate Trigger Classes*/
 
                         TRIGGERTYPE = trigger;
-                        TRIGGERVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
+                        DBLVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
                         DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
 
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
-                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + TRIGGERVALUE + " frommaxval: " + FROMMAXVAL);
+                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " value: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
                         Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                         Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         

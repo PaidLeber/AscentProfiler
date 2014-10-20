@@ -108,8 +108,9 @@ namespace AscentProfiler
 
         class Countdown : Trigger
         {
+                string strValue;
 
-                public Countdown(int index, TriggerType type, string desc, double value)
+                public Countdown(int index, TriggerType type, string desc, string strValue)
                 {
                         this.index = index;
                         this.type = type;
