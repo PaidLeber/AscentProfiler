@@ -86,18 +86,19 @@ namespace AscentProfiler
                         //Check command line for valid syntax, if true then parse it
                         Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
 
+                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value
+                                + " g1:" + triggerParse.Groups[1].Value
+                                + " g2:" + triggerParse.Groups[2].Value
+                                + " g3:" + triggerParse.Groups[3].Value);
 
                         if (triggerParse.Success)
                         {
-                                if(trigger == TriggerType.COUNTDOWN)
-                                {
-                                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value 
-                                                + " g1:" + triggerParse.Groups[1].Value 
-                                                + " g2:" + triggerParse.Groups[2].Value
-                                                + " g3:" + triggerParse.Groups[3].Value
-                                                + " g4:" + triggerParse.Groups[4].Value 
-                                                + " g5:" + triggerParse.Groups[5].Value);
 
+                                switch(trigger)
+                                {
+                                        case TriggerType.COUNTDOWN:
+
+                                                break;
                                         
 
                                 }
