@@ -39,7 +39,7 @@ namespace AscentProfiler
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("timer", @"^\t*\w+\s*(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}))?)?:(\d{1,2}))\s*$");
-                        regexDict.Add("liftoff", @"^(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*)?(?:(?:(?:([01]?\d|2[0-3]):)?(?:([0-5]?\d))?)?:([0-5]?\d))$"); //fix
+                        
                         
 
                         triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
