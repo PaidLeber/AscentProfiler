@@ -83,43 +83,11 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "Checking Command Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
                         //Check command line for valid syntax, if true then parse it
-                        Match triggerParse = Regex.Match(commandLine, triggerRegex[trigger]);
+                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);
 
-                        Log.Level(LogType.Verbose, "whole value: " + triggerParse.Groups[0].Value
-                                + " g1:" + triggerParse.Groups[1].Value
-                                + " g2:" + triggerParse.Groups[2].Value
-                                + " g3:" + triggerParse.Groups[3].Value);
-
-                        if (triggerParse.Success)
+                        if (regexGrouping.Success)
                         {
-
-                                switch(trigger)
-                                {       // move ascent and descent mode switch to valueparser 
-                                        case TriggerType.ALTITUDE:
-                                                //get values & pull out modifiers (if any)
-                                                break;
-
-                                        case TriggerType.COUNTDOWN:
-                                                //pull values and multiply to get total time in seconds
-                                                break;
-                                        
-
-                                }
-                                        
-                                if (!String.IsNullOrEmpty(triggerParse.Groups[2].Value))
-                                {
-                                        Log.Level(LogType.Verbose, "triggerParse.Groups[2].Value Is not null: " + triggerParse.Groups[2].Value);
-                                        // Check command line for optional trigger switches if so enable
-                                        switch ((TriggerModifier)Enum.Parse(typeof(TriggerModifier), triggerParse.Groups[2].Value))
-                                        {
-                                                case TriggerModifier.FROMMAXVAL:
-                                                        FROMMAXVAL = true;
-                                                        break;
-
-
-                                        }                          
-                                }
-
+                                SetValues(trigger, regexGrouping);
                         }
                         else
                         {
@@ -170,11 +138,11 @@ namespace AscentProfiler
                         /*Populate Trigger Classes*/
                         Log.Level(LogType.Verbose, "Populating trigger variables.");
                         TRIGGERTYPE = trigger;
-                        Log.Level(LogType.Verbose, "converting to double: "+ triggerParse.Groups[1].Value);
+                        Log.Level(LogType.Verbose, "converting to double: "+ regexGrouping.Groups[1].Value);
 
-                        if (!string.IsNullOrEmpty(triggerParse.Groups[1].Value))
+                        if (!string.IsNullOrEmpty(regexGrouping.Groups[1].Value))
                         {
-                                DBLVALUE = Convert.ToDouble(triggerParse.Groups[1].Value);
+                                DBLVALUE = Convert.ToDouble(regexGrouping.Groups[1].Value);
                         }
                         
                         
@@ -197,11 +165,57 @@ namespace AscentProfiler
                         
                 }
 
-                bool TriggerParser(TriggerType trigger , Match match)
+                bool SetValues(TriggerType trigger, Match triggergroups)
                 {
+
+                        Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
+                        + " g1:" + triggergroups.Groups[1].Value
+                        + " g2:" + triggergroups.Groups[2].Value
+                        + " g3:" + triggergroups.Groups[3].Value);
+
+                        switch (trigger)
+                        {       
+
+                                // move ascent and descent mode switch to valueparser 
+                                case TriggerType.ALTITUDE:
+                                        //get values & pull out modifiers (if any)
+
+
+
+                                        break;
+
+                                case TriggerType.COUNTDOWN:
+                                        //pull values and multiply to get total time in seconds
+                                        break;
+
+
+                        }
+
+
 
                         return false;
                 }
+
+
+                bool SetModifier(string modifier)
+                {
+                        if (!String.IsNullOrEmpty(modifier))
+                        {
+                                Log.Level(LogType.Verbose, "triggerParse.Groups[2].Value Is not null: " + modifier);
+                                // Check command line for optional trigger switches if so enable
+                                switch ((TriggerModifier)Enum.Parse(typeof(TriggerModifier), modifier))
+                                {
+                                        case TriggerModifier.FROMMAXVAL:
+                                                FROMMAXVAL = true;
+                                                break;
+
+
+                                }
+                        }
+
+                        return false;
+                }
+
 
         }
 }
