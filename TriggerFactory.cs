@@ -58,10 +58,9 @@ namespace AscentProfiler
 
                                 Log.Level(LogType.Verbose, "Creating Trigger: " + trigger + ": ");
                                 Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
-                                Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
-                                Debug.Log(temptrigger.input.type.ToString());
-                                //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance("AscentProfiler.Altitude"));
-                                Log.Level(LogType.Verbose, "New Trigger: " + trigger + ": ");
+                                //Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput)directive);
+                                //Debug.Log(temptrigger.input.type.ToString());
+                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance( Type.GetType("AscentProfiler."+UpperFirstChar(trigger.ToString())), (TriggerInput) directive));
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                                 Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                                 
