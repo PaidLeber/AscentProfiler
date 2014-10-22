@@ -67,14 +67,13 @@ namespace AscentProfiler
 
 
                                 //TriggerInput directive = SetTriggerValues(trigger, regexGrouping, linkedIndex);
-
-
-                                Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
+                                //Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
                                 //Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
-
                                 //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive) );
-
                                 //TRIGGER temptrigger = (TRIGGER)Activator.CreateInstance(Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive);
+
+                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
+
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                                 Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                                 
@@ -106,44 +105,6 @@ namespace AscentProfiler
                                         return false;
                         }
                 }
-
-                /*
-                TriggerInput SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex)
-                {
-
-                        Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
-                        + " g1:" + triggergroups.Groups[1].Value
-                        + " g2:" + triggergroups.Groups[2].Value
-                        + " g3:" + triggergroups.Groups[3].Value);
-
-                        TriggerInput triggerinput = new TriggerInput();                 //Struct of values that is passed to new trigger class constructor
-
-                        switch (trigger)
-                        {       
-
-                                case TriggerType.ALTITUDE:
-
-                                        triggerinput.index         = linkedindex;
-                                        triggerinput.type          = trigger;
-                                        triggerinput.description   = UpperFirstChar(trigger.ToString());
-                                        triggerinput.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
-                                        triggerinput.ascentMode    = scriptAscentMode;
-                                        triggerinput.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
-                                        // return new ALTITUDE(); make triggergroups and triggerinput/triggerproduct public and put in constructor
-                                        return triggerinput;
-
-                                case TriggerType.COUNTDOWN:
-                                        //pull values and multiply to get total time in seconds
-                                        break;
-
-                                default:
-                                        return triggerinput;
-
-                        }
-
-                        return triggerinput;
-                }
-                */
 
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
                 {
