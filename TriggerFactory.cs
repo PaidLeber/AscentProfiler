@@ -15,7 +15,7 @@ namespace AscentProfiler
                 Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
 
 
-                Stack<int> tabCountStack = new Stack<int>();            // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
+                Stack<int> tabCountStack = new Stack<int>();            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
                 bool ascentMode = true;
 
@@ -50,15 +50,18 @@ namespace AscentProfiler
 
                         directive = new TriggerInput();
 
-                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                  //Check command line for valid syntax, if true then parse it
+                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
 
                         if (regexGrouping.Success)
                         {
+                                currentIndex++;                                                                          // increment trigger index value
+
+                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        // If trigger is chained, get it's parent index value and push it's value on LIFO stack
 
                                 /*Parse Trigger Values*/
-                                if(!SetTriggerValues(trigger, regexGrouping, directive))
+                                if(!SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
                                 {
-                                        return -1;                                                              // return -1 if a trigger has no index. i.e. a bit flipper.
+                                        return -1;                                                                      // return -1 if a trigger has no index. i.e. a bit flipper.
                                 }
                         }
                         else
@@ -70,14 +73,9 @@ namespace AscentProfiler
                         /*Create Trigger Classes*/
 
 
-                        currentIndex++;                                                                         // increment trigger index value
+                        
 
-                        TriggerChain(trigger, commandLine, lineNumber, currentIndex, directive);
-
-
-                        Trigger tempTrigger = (Trigger)Activator.CreateInstance(Type.GetType("Altitude"), directive);
-
-                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, tempTrigger);
+                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance(Type.GetType("Altitude"), directive) );
 
                         Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                         Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
@@ -88,7 +86,7 @@ namespace AscentProfiler
 
 
 
-                bool SetTriggerValues(TriggerType trigger, Match triggergroups, TriggerInput directive)
+                bool SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex, TriggerInput directive)
                 {
 
                         Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
@@ -111,6 +109,7 @@ namespace AscentProfiler
 
                                 case TriggerType.ALTITUDE:
 
+                                        directive.index         = linkedindex;
                                         directive.type          = trigger;
                                         directive.description   = UpperFirstChar(trigger.ToString());
                                         directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
@@ -143,28 +142,29 @@ namespace AscentProfiler
                         return false;
                 }
 
-                void TriggerChain(TriggerType trigger, string commandLine, int lineNumber, int currentIndex, TriggerInput directive)
+                int GetParentIndex(TriggerType trigger, string commandline, int linenumber, int currentindex)
                 {
                         // If tabcount == 0; first level trigger
                         // If (tabcount - tabCountStack.Count) == 0, next level trigger; then Peek index value put it in the new trigger's index and push new trigger on stack
                         // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
                         // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
 
-                        int tabcount = GetTabCount(commandLine);
+                        int tabcount = GetTabCount(commandline);
+                        int linkedindex = 0;
 
                         Log.Level(LogType.Verbose, "Checking Tab Structures: " + trigger.ToString());
                         Log.Level(LogType.Verbose, "tabcount: " + tabcount);
 
                         if (tabcount == 0)
                         {
-                                directive.index = 0;                                               // This is an unchained (root) trigger.
+                                linkedindex = 0;                                               // This is an unchained (root) trigger.
                                 tabCountStack.Clear();
-                                tabCountStack.Push(currentIndex);
+                                tabCountStack.Push(currentindex);
                         }
                         else if ((tabcount - tabCountStack.Count) == 0)
                         {
-                                directive.index = tabCountStack.Peek();
-                                tabCountStack.Push(currentIndex);
+                                linkedindex = tabCountStack.Peek();
+                                tabCountStack.Push(currentindex);
                         }
                         else if (tabcount < tabCountStack.Count)
                         {
@@ -173,13 +173,15 @@ namespace AscentProfiler
                                         tabCountStack.Pop();
                                 }
 
-                                directive.index = tabCountStack.Peek();
-                                tabCountStack.Push(currentIndex);
+                                linkedindex = tabCountStack.Peek();
+                                tabCountStack.Push(currentindex);
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Check Tab Structure: Unchained trigger.");                //Create loading error in flightlog window
+                                Log.Script(LogType.Error, "Line #" + linenumber + ": Command: " + commandline + ":", "Check Tab Structure: Unchained trigger.");                //Create loading error in flightlog window
                         }
+
+                        return linkedindex;
 
                 }
 
