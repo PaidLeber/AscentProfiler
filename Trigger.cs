@@ -42,7 +42,7 @@ namespace AscentProfiler
         }
 
 
-        internal abstract class Trigger
+        internal abstract class TRIGGER
         {
 
                 internal bool state = false;
@@ -67,11 +67,11 @@ namespace AscentProfiler
         }
 
 
-        internal class Altitude : Trigger
+        internal class ALTITUDE : TRIGGER
         {
                 
 
-                public Altitude(TriggerInput directive)
+                public ALTITUDE(TriggerInput directive)
                 {
                         this.input = directive;
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ input.index +" trigger: "+ input.type +"ascentmode: "+ input.ascentMode+" value: "+ input.value+" maxval: "+ input.maxval +" fromaxval: "+ input.fromaxval);
@@ -103,10 +103,10 @@ namespace AscentProfiler
         }
 
         
-        class Countdown : Trigger
+        class COUNTDOWN : TRIGGER
         {
 
-                public Countdown(TriggerInput directive)
+                public COUNTDOWN(TriggerInput directive)
                 {
                         this.input = directive;
                 }
