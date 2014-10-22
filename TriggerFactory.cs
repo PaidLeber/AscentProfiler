@@ -14,10 +14,12 @@ namespace AscentProfiler
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
                 Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
 
-                // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
-                Stack<int> tabCountStack = new Stack<int>();
 
-                //variables used for trigger contructors
+                Stack<int> tabCountStack = new Stack<int>();            // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
+
+                bool ascentMode = true;                                 //variables used for trigger contructors
+
+                
                 int TRIGGERINDEX;
                 TriggerType TRIGGERTYPE;
                 string DESCRIPTION;
@@ -39,56 +41,29 @@ namespace AscentProfiler
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
                         
-
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, ASCENDING, FROMMAXVAL, DBLVALUE); });
-                        triggerProduct.Add(TriggerType.COUNTDOWN, () => { return new Countdown(TRIGGERINDEX, TRIGGERTYPE, DESCRIPTION, DBLVALUE); });
-
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
                 
                 }
-                
-                void ClearTriggerValues()
-                {
-                    
-                        TRIGGERTYPE = TriggerType.None;
-                        DESCRIPTION = null;
-                        FROMMAXVAL = false;
-                        DBLVALUE = 0;
-                        STRVALUE = "";
-                
-                }
-
+              
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
-                        ClearTriggerValues();
-                        
-                        /*Check for non trigger commands*/
-
-                        // Check for trigger mode switches
-                        if (trigger == TriggerType.ASCENT)
-                        {
-
-                                return -1;
-                        }
-                        else if (trigger == TriggerType.DESCENT)
-                        {
-                                ASCENDING = false;
-                                return -1;
-                        }
 
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
-                        //Check command line for valid syntax, if true then parse it
-                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);
+                        TriggerInput directive = new TriggerInput();                                            //struct for trigger values
+
+                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                  //Check command line for valid syntax, if true then parse it
 
                         if (regexGrouping.Success)
                         {
-                                if(!SetTriggerValues(trigger, regexGrouping))
+                                
+
+                                if(!SetTriggerValues(trigger, regexGrouping, directive))
                                 {
-                                        return -1;  // return -1 if a trigger has no index. i.e. a bit flipper.
+                                        return -1;                                                              // return -1 if a trigger has no index. i.e. a bit flipper.
                                 }
                         }
                         else
@@ -98,49 +73,16 @@ namespace AscentProfiler
 
 
                         /*Create Trigger Classes*/
-                        // If tabcount == 0; first level trigger
-                        // If (tabcount - tabCountStack.Count) == 0, next level trigger; then Peek index value put it in the new trigger's index and push new trigger on stack
-                        // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
-                        // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
+
 
                         currentIndex++;
 
-                        int tabcount = GetTabCount(commandLine);
+                        TriggerChain(trigger, commandLine, lineNumber, currentIndex, directive);
 
-                        Log.Level(LogType.Verbose, "Checking Tab Structures: " + trigger.ToString());
-                        Log.Level(LogType.Verbose, "tabcount: " + tabcount);
 
-                        if (tabcount == 0)
-                        {
-                                TRIGGERINDEX = 0; // This is an unchained (root) trigger.
-                                tabCountStack.Clear();
-                                tabCountStack.Push(currentIndex);
-                        }
-                        else if ((tabcount - tabCountStack.Count) == 0)
-                        {
-                                TRIGGERINDEX = tabCountStack.Peek();
-                                tabCountStack.Push(currentIndex);
-                        }
-                        else if (tabcount < tabCountStack.Count)
-                        {
-                                for (int i = tabCountStack.Count; i > tabcount; i--)
-                                {
-                                        tabCountStack.Pop();
-                                }
+                        Trigger tempTrigger = (Trigger)Activator.CreateInstance(Type.GetType("Altitude"), directive);
 
-                                TRIGGERINDEX = tabCountStack.Peek();
-                                tabCountStack.Push(currentIndex);
-                        }
-                        else if ((tabcount - tabCountStack.Count) > 0)
-                        {
-                                //Create loading error in flightlog window
-                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Check Tab Structure: Unchained trigger.");
-                        }
-                        
-                        
-                        
-
-                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
+                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, tempTrigger);
 
                         Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                         Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
@@ -151,7 +93,7 @@ namespace AscentProfiler
 
 
 
-                bool SetTriggerValues(TriggerType trigger, Match triggergroups)
+                bool SetTriggerValues(TriggerType trigger, Match triggergroups, TriggerInput directive)
                 {
 
                         Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
@@ -164,25 +106,23 @@ namespace AscentProfiler
 
                                 case TriggerType.ASCENT:
                                         
-                                        ASCENDING = true;
+                                        ascentMode = true;
                                         return false;
 
                                 case TriggerType.DESCENT:
 
-                                        ASCENDING = false;
+                                        ascentMode = false;
                                         return false;
 
                                 case TriggerType.ALTITUDE:
 
-                                        TRIGGERTYPE = trigger;
-                                        DESCRIPTION = UpperFirstChar(trigger.ToString());
-                                        DBLVALUE = Convert.ToDouble(triggergroups.Groups[1].Value);
+                                        directive.type          = trigger;
+                                        directive.description   = UpperFirstChar(trigger.ToString());
+                                        directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
 
                                         SetTriggerModifier(triggergroups.Groups[2].Value);
 
-
-
-                                        break;
+                                        return true;
 
                                 case TriggerType.COUNTDOWN:
                                         //pull values and multiply to get total time in seconds
@@ -216,11 +156,53 @@ namespace AscentProfiler
                         return false;
                 }
 
+                void TriggerChain(TriggerType trigger, string commandLine, int lineNumber, int currentIndex, TriggerInput directive)
+                {
+                        // If tabcount == 0; first level trigger
+                        // If (tabcount - tabCountStack.Count) == 0, next level trigger; then Peek index value put it in the new trigger's index and push new trigger on stack
+                        // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+                        // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
+
+                        int tabcount = GetTabCount(commandLine);
+
+                        Log.Level(LogType.Verbose, "Checking Tab Structures: " + trigger.ToString());
+                        Log.Level(LogType.Verbose, "tabcount: " + tabcount);
+
+                        if (tabcount == 0)
+                        {
+                                directive.index = 0;                                               // This is an unchained (root) trigger.
+                                tabCountStack.Clear();
+                                tabCountStack.Push(currentIndex);
+                        }
+                        else if ((tabcount - tabCountStack.Count) == 0)
+                        {
+                                directive.index = tabCountStack.Peek();
+                                tabCountStack.Push(currentIndex);
+                        }
+                        else if (tabcount < tabCountStack.Count)
+                        {
+                                for (int i = tabCountStack.Count; i > tabcount; i--)
+                                {
+                                        tabCountStack.Pop();
+                                }
+
+                                directive.index = tabCountStack.Peek();
+                                tabCountStack.Push(currentIndex);
+                        }
+                        else if ((tabcount - tabCountStack.Count) > 0)
+                        {
+                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Check Tab Structure: Unchained trigger.");                //Create loading error in flightlog window
+                        }
+
+                }
+
+
                 int GetTabCount(string commandLine)
                 {
                         return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
 
                 }
+
 
                 static string UpperFirstChar(string s)
                 {

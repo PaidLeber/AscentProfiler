@@ -31,8 +31,8 @@ namespace AscentProfiler
         {
                 internal int index;
                 internal TriggerType type;
-                internal bool ascentMode;
-                internal bool fromaxval;
+                internal bool ascentMode = true;
+                internal bool fromaxval = false;
                 internal double value;
                 internal double maxval;
                 internal string displayvalue;
@@ -67,13 +67,13 @@ namespace AscentProfiler
         }
 
 
-        class Altitude : Trigger
+        class ALTITUDE : Trigger
         {
                 
 
-                internal Altitude(TriggerInput directive)
+                internal ALTITUDE(TriggerInput directive)
                 {
-                        this.input = directive;      
+                        this.input = directive;    
                 }
 
                 internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
@@ -101,32 +101,29 @@ namespace AscentProfiler
 
         }
 
-        /*
+        
         class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string desc, double value)
+                public Countdown(TriggerInput directive)
                 {
-                        this.index = index;
-                        this.type = type;
-                        this.desc = desc;
-                        this.value = value;
+                        this.input = directive;
                 }
 
                 internal override bool Evaluate(bool isascending)
                 {
                         double UT = Planetarium.GetUniversalTime();
 
-                        if (countdown == 0)
-                        { 
-                                countdown = UT + value;
+                        if (input.maxval == 0)
+                        {
+                                input.maxval = UT + input.value;
                         }
 
-                        value = countdown - UT;
+                        input.value = input.maxval - UT;
 
-                        if (UT >= countdown && state == false)
+                        if (UT >= input.maxval && state == false)
                         {
-                                value = 0;
+                                input.value = 0;
                                 //FlightLog.Log("COUNTDOWN TRIGGER EXECUTED");
                                 return state = true;
                         }
@@ -139,7 +136,7 @@ namespace AscentProfiler
 
         }
 
-
+        /*
 
         class Liftoff : Trigger
         {
