@@ -12,7 +12,7 @@ namespace AscentProfiler
         {
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
-                Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
+                Dictionary<TriggerType, Func<Trigger>> triggerProducts = new Dictionary<TriggerType, Func<Trigger>>();
 
                 Stack<int> tabCountStack = new Stack<int>();                                                            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
@@ -25,10 +25,6 @@ namespace AscentProfiler
 
                 internal TriggerFactory()
                 {
-                        regexDict.Add("START", @"^START\s*$");
-                        regexDict.Add("END", @"^END\s*$");
-                        regexDict.Add("CMDBEGIN", @"^\t*");
-                        regexDict.Add("CMDEND", @"\s*.*$");
                         regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w+)?\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
@@ -40,10 +36,10 @@ namespace AscentProfiler
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
 
-                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value), Convert.ToDouble(regexGrouping.Groups[1].Value)); });
+                        triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value), Convert.ToDouble(regexGrouping.Groups[1].Value)); });
                 
                 }
-              
+
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine + " : " + triggerRegex[trigger]);
@@ -61,7 +57,7 @@ namespace AscentProfiler
 
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
-                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
+                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProducts[trigger]());
 
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                                 Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);

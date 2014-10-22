@@ -9,17 +9,18 @@ namespace AscentProfiler
 
         class ActionFactory
         {
-                List<Action> actionList = new List<Action>();
+                internal List<Action> actionProducts = new List<Action>();
 
-
+                internal ActionFactory()
+                { 
+                
+                }
 
                 public void CreateAction(ActionType action, string commandLine, int lineNumber)
                 {
+
+
                         /*
-                        actionlist.Clear();
-
-
-
                         actionlist.Add(new ActionGroup (1, 1));
                         actionlist.Add(new Throttle(1, 100));
                         actionlist.Add(new ActionGroup(2, 2));

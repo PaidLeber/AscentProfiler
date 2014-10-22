@@ -48,15 +48,14 @@ namespace AscentProfiler
                         int lineCounter = 0;
                         foreach (string line in profileLines)
                         {
-                                //Debug.Log("regex start and stop");
                                 lineCounter++;
-                                if (Regex.IsMatch(line, triggerFactory.regexDict["START"]))
+                                if (Regex.IsMatch(line, @"^START\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT START: #" + line);
                                         profileStart = lineCounter;
                                 }
 
-                                if (Regex.IsMatch(line, triggerFactory.regexDict["END"]))
+                                if (Regex.IsMatch(line, @"^END\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT END: #" + line);
                                         profileEnd = lineCounter;
@@ -105,9 +104,9 @@ namespace AscentProfiler
                                 {
                                         if (IsRegexCommandMatch(line, action.ToString()))
                                         {
-
                                                 actionFactory.CreateAction(action, line, lineCounter);
-                                        
+
+
                                         }
 
 
@@ -123,7 +122,7 @@ namespace AscentProfiler
 
                 bool IsRegexCommandMatch(string line, string commandType)
                 {
-                        return Regex.IsMatch(line, triggerFactory.regexDict["CMDBEGIN"] + commandType + triggerFactory.regexDict["CMDEND"]);
+                        return Regex.IsMatch(line, @"^\t*" + commandType + @"\s*.*$");
 
                 }
 
