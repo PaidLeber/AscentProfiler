@@ -12,15 +12,10 @@ namespace AscentProfiler
         {
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
-                Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
-
 
                 Stack<int> tabCountStack = new Stack<int>();            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
                 bool ascentMode = true;
-
-                TriggerInput directive;                                 //Struct of values that is passed to new trigger class
-
                 int currentIndex = 0;
 
                 internal TriggerFactory()
@@ -44,16 +39,17 @@ namespace AscentProfiler
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
 
-                        /*Validate Trigger Values*/
-
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
-                        directive = new TriggerInput();
+                        TriggerInput directive = new TriggerInput();                                                     //Struct of values that is passed to new trigger class
 
                         Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
 
                         if (regexGrouping.Success)
                         {
+
+                                if (SetTriggerMode(trigger)) { return -1; }                                              // return -1 if a trigger has no index. i.e. a bit flipper.
+                                
                                 currentIndex++;                                                                          // increment trigger index value
 
                                 int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        // If trigger is chained, get it's parent index value and push it's value on LIFO stack
@@ -61,7 +57,7 @@ namespace AscentProfiler
                                 /*Parse Trigger Values*/
                                 if(!SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
                                 {
-                                        return -1;                                                                      // return -1 if a trigger has no index. i.e. a bit flipper.
+                                        
                                 }
                         }
                         else
@@ -70,7 +66,7 @@ namespace AscentProfiler
                         }
 
 
-                        /*Create Trigger Classes*/
+                        Log.Level(LogType.Verbose, "Creating Trigger: " + trigger + ": " );
 
 
                         
@@ -83,7 +79,23 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
+                bool SetTriggerMode(TriggerType trigger)
+                {
+                        switch (trigger)
+                        {
 
+                                case TriggerType.ASCENT:
+
+                                        ascentMode = true;      // flip ascentMode bit high
+                                        return true;
+
+                                case TriggerType.DESCENT:
+
+                                        ascentMode = false;     // flip ascentMode bit low
+                                        return true;
+                        }
+                        return false;
+                }
 
 
                 bool SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex, TriggerInput directive)
@@ -96,16 +108,6 @@ namespace AscentProfiler
 
                         switch (trigger)
                         {       
-
-                                case TriggerType.ASCENT:
-                                        
-                                        ascentMode = true;      // flip ascentMode bit high
-                                        return false;
-
-                                case TriggerType.DESCENT:
-
-                                        ascentMode = false;     // flip ascentMode bit low
-                                        return false;
 
                                 case TriggerType.ALTITUDE:
 
