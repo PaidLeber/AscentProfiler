@@ -29,11 +29,12 @@ namespace AscentProfiler
                         regexDict.Add("END", @"^END\s*$");
                         regexDict.Add("CMDBEGIN", @"^\t*");
                         regexDict.Add("CMDEND", @"\s*.*$");
-                        regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w*)\s*$");
+                        regexDict.Add("oneParamFromMaxValRegex", @"^\t*\w+\s+(\d+)\s*(\w+)?\s*$");
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
 
+                        /*Many to one Relationship*/
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
@@ -113,7 +114,7 @@ namespace AscentProfiler
                 {
                         // If tabcount == 0; first level trigger
                         // If (tabcount - tabCountStack.Count) == 0, next level trigger; Peek index value then put it in the new trigger's index and push new trigger on stack
-                        // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
+                        // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is on top of it's corresponding chained trigger
                         // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
 
                         int tabcount = GetTabCount(commandline);

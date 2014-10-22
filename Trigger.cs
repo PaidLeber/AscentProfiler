@@ -72,7 +72,7 @@ namespace AscentProfiler
                         this.fromaxval = fromaxval;
                         this.value = value;
                         
-                        Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
+                        Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
                 internal override bool Evaluate(bool isascending)
