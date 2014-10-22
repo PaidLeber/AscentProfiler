@@ -31,14 +31,17 @@ namespace AscentProfiler
         {
 
                 internal bool state = false;
-                protected int index;
+                internal int index;
+
                 protected TriggerType type;
                 protected bool ascentMode;
                 protected bool fromaxval;
+
                 protected double value;
                 protected double maxval;
-                protected string displayvalue;
-                protected string description;
+
+                internal string displayvalue;
+                internal string description;
 
                 internal abstract bool Evaluate(bool isascending);
 
@@ -71,7 +74,8 @@ namespace AscentProfiler
                         this.ascentMode = ascentMode;
                         this.fromaxval = fromaxval;
                         this.value = value;
-                        
+                        this.displayvalue = value.ToString();
+
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
@@ -104,13 +108,11 @@ namespace AscentProfiler
         class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string description, bool ascentMode, bool fromaxval, double value) // fix constructor
+                public Countdown(int index, TriggerType type, string description, double value) // fix constructor
                 {
                         this.index = index;
                         this.type = type;
                         this.description = description;
-                        this.ascentMode = ascentMode;
-                        this.fromaxval = fromaxval;
                         this.value = value;
                 }
 

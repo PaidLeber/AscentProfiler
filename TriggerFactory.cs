@@ -120,8 +120,7 @@ namespace AscentProfiler
                         int tabcount = GetTabCount(commandline);
                         int linkedindex = 0;
 
-                        Log.Level(LogType.Verbose, "Checking Tab Structures: " + trigger.ToString());
-                        Log.Level(LogType.Verbose, "tabcount: " + tabcount);
+                        Log.Level(LogType.Verbose, "Tab Count \t: " + tabcount);
 
                         if (tabcount == 0)
                         {
@@ -146,7 +145,7 @@ namespace AscentProfiler
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                Log.Script(LogType.Error, "Line #" + linenumber + ": Command: " + commandline + ":", "Check Tab Structure: Unchained trigger.");                //Create loading error in flightlog window
+                                Log.Script(LogType.Error, "Check Tab Structure: Unchained Trigger." , "Line #" + linenumber + ": Command: " + commandline );                //Create loading error in flightlog window
                         }
 
                         return linkedindex;

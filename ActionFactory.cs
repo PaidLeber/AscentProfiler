@@ -9,12 +9,11 @@ namespace AscentProfiler
 
         class ActionFactory
         {
-                //public static readonly ActionFactory _instance = new ActionFactory();
-                //List<Action> actionlist = ActionExecutor._instance.actionlist;
+                List<Action> actionList = new List<Action>();
 
 
 
-                public void CreateAction()
+                public void CreateAction(ActionType action, string commandLine, int lineNumber)
                 {
                         /*
                         actionlist.Clear();

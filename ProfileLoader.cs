@@ -12,10 +12,11 @@ namespace AscentProfiler
         class ProfileLoader
         {
                 TriggerFactory triggerFactory = new TriggerFactory();
+                ActionFactory actionFactory = new ActionFactory();
                 Dictionary<string, string> profiles = new Dictionary<string, string>();
 
 
-                int triggerIndex = -1;
+                int triggerIndex = 0;
 
                 public ProfileLoader()
                 {
@@ -82,24 +83,34 @@ namespace AscentProfiler
                         {
                                 
                                 lineCounter++;
+
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
-                                        //Debug.Log("start trigger check: " + trigger.ToString());
-                                        if (Regex.IsMatch(line, triggerFactory.regexDict["CMDBEGIN"] + trigger.ToString() + triggerFactory.regexDict["CMDEND"] ))
+                                        if ( IsRegexCommandMatch(line, trigger.ToString()) )
                                         {
-
                                                 Log.Level(LogType.Verbose, "Creating trigger line #" + lineCounter + ": " + line);
 
-                                                int indexer = triggerFactory.CreateTrigger(trigger, line, lineCounter);
+                                                int currentindex = triggerFactory.CreateTrigger(trigger, line, lineCounter);
 
-                                                if (indexer != -1) // return of -1 is a trigger switch of some sort, not an actual trigger
+                                                if (currentindex != -1) // return of -1 is a trigger switch of some sort, not an actual trigger
                                                 {
-                                                        triggerIndex = indexer;
+                                                        triggerIndex = currentindex;
                                                 }
 
+                                        }   
+
+                                }
+
+                                foreach (ActionType action in (ActionType[])Enum.GetValues(typeof(ActionType)))
+                                {
+                                        if (IsRegexCommandMatch(line, action.ToString()))
+                                        {
+
+                                                actionFactory.CreateAction(action, line, lineCounter);
+                                        
                                         }
 
-                                        
+
                                 }
 
 
@@ -110,6 +121,11 @@ namespace AscentProfiler
 
                 }
 
+                bool IsRegexCommandMatch(string line, string commandType)
+                {
+                        return Regex.IsMatch(line, triggerFactory.regexDict["CMDBEGIN"] + commandType + triggerFactory.regexDict["CMDEND"]);
+
+                }
 
 
         }
