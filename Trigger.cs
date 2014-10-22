@@ -27,7 +27,7 @@ namespace AscentProfiler
         
         }
 
-        internal struct TriggerInput
+        public struct TriggerInput
         {
                 internal int index;
                 internal TriggerType type;
@@ -42,11 +42,11 @@ namespace AscentProfiler
         }
 
 
-        abstract class Trigger
+        internal abstract class Trigger
         {
 
                 internal bool state = false;
-                protected TriggerInput input;
+                public TriggerInput input;
 
                 internal abstract bool Evaluate(bool isascending);
 
@@ -67,13 +67,14 @@ namespace AscentProfiler
         }
 
 
-        class ALTITUDE : Trigger
+        internal class Altitude : Trigger
         {
                 
 
-                internal ALTITUDE(TriggerInput directive)
+                public Altitude(TriggerInput directive)
                 {
-                        this.input = directive;    
+                        this.input = directive;
+                        Log.Level(LogType.Verbose, "constructor new trigger: index: "+ input.index +" trigger: "+ input.type +"ascentmode: "+ input.ascentMode+" value: "+ input.value+" maxval: "+ input.maxval +" fromaxval: "+ input.fromaxval);
                 }
 
                 internal override bool Evaluate(bool isascending)

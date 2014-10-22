@@ -41,7 +41,7 @@ namespace AscentProfiler
 
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
-                        TriggerInput directive = new TriggerInput();                                                     //Struct of values that is passed to new trigger class constructor
+                        
 
                         Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
 
@@ -52,16 +52,19 @@ namespace AscentProfiler
                                 
                                 currentIndex++;                                                                          
 
-                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        
+                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
-                                if(SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
-                                {
-                                        
-                                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance(Type.GetType(trigger.ToString()), directive) );
-                                        Log.Level(LogType.Verbose, "New Trigger: " + trigger + ": ");
-                                        Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
-                                        Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
-                                }
+                                TriggerInput directive = SetTriggerValues(trigger, regexGrouping, linkedIndex);
+
+                                Log.Level(LogType.Verbose, "Creating Trigger: " + trigger + ": ");
+                                Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
+                                Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
+                                Debug.Log(temptrigger.input.type.ToString());
+                                //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance("AscentProfiler.Altitude"));
+                                Log.Level(LogType.Verbose, "New Trigger: " + trigger + ": ");
+                                Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
+                                Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
+                                
                         }
                         else
                         {
@@ -92,7 +95,7 @@ namespace AscentProfiler
                 }
 
 
-                bool SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex, TriggerInput directive)
+                TriggerInput SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex)
                 {
 
                         Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
@@ -100,39 +103,45 @@ namespace AscentProfiler
                         + " g2:" + triggergroups.Groups[2].Value
                         + " g3:" + triggergroups.Groups[3].Value);
 
+                        TriggerInput triggerinput = new TriggerInput();                 //Struct of values that is passed to new trigger class constructor
+
                         switch (trigger)
                         {       
 
                                 case TriggerType.ALTITUDE:
 
-                                        directive.index         = linkedindex;
-                                        directive.type          = trigger;
-                                        directive.description   = UpperFirstChar(trigger.ToString());
-                                        directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
-                                        directive.ascentMode    = scriptAscentMode;
-                                        directive.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
+                                        triggerinput.index         = linkedindex;
+                                        triggerinput.type          = trigger;
+                                        triggerinput.description   = UpperFirstChar(trigger.ToString());
+                                        triggerinput.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
+                                        triggerinput.ascentMode    = scriptAscentMode;
+                                        triggerinput.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
 
-                                        return true;
+                                        return triggerinput;
 
                                 case TriggerType.COUNTDOWN:
                                         //pull values and multiply to get total time in seconds
                                         break;
 
                                 default:
-                                        return false;
+                                        return triggerinput;
 
                         }
 
                     
 
-                        return false;
+                        return triggerinput;
                 }
 
 
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
                 {
+                        if(String.IsNullOrEmpty(regexgroup))
+                        {
+                                return false;
+                        }
 
-                        if ( modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) && !String.IsNullOrEmpty(regexgroup) )
+                        if ( modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) )
                         {
                                 return true;
                         }
