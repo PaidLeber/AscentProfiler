@@ -28,7 +28,7 @@ namespace AscentProfiler
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
-                        
+
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
@@ -117,7 +117,7 @@ namespace AscentProfiler
                                         triggerinput.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
                                         triggerinput.ascentMode    = scriptAscentMode;
                                         triggerinput.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
-
+                                        // return new ALTITUDE(); make triggergroups and triggerinput/triggerproduct public and put in constructor
                                         return triggerinput;
 
                                 case TriggerType.COUNTDOWN:
