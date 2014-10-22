@@ -60,7 +60,7 @@ namespace AscentProfiler
                                 Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
                                 //Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
 
-                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (TRIGGER)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput)directive) );
+                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (TRIGGER)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive) );
 
                                 //TRIGGER temptrigger = (TRIGGER)Activator.CreateInstance(Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive);
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
@@ -129,8 +129,6 @@ namespace AscentProfiler
 
                         }
 
-                    
-
                         return triggerinput;
                 }
 
@@ -153,7 +151,7 @@ namespace AscentProfiler
                 int GetParentIndex(TriggerType trigger, string commandline, int linenumber, int currentindex)
                 {
                         // If tabcount == 0; first level trigger
-                        // If (tabcount - tabCountStack.Count) == 0, next level trigger; then Peek index value put it in the new trigger's index and push new trigger on stack
+                        // If (tabcount - tabCountStack.Count) == 0, next level trigger; Peek index value then put it in the new trigger's index and push new trigger on stack
                         // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is pushed on top of it's corresponding chained trigger
                         // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error
 
