@@ -62,16 +62,6 @@ namespace AscentProfiler
 
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
-
-
-
-
-                                //TriggerInput directive = SetTriggerValues(trigger, regexGrouping, linkedIndex);
-                                //Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
-                                //Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
-                                //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive) );
-                                //TRIGGER temptrigger = (TRIGGER)Activator.CreateInstance(Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive);
-
                                 AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
