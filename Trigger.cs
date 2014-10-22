@@ -31,8 +31,8 @@ namespace AscentProfiler
         {
                 internal int index;
                 internal TriggerType type;
-                internal bool ascentMode = true;
-                internal bool fromaxval = false;
+                internal bool ascentMode;
+                internal bool fromaxval;
                 internal double value;
                 internal double maxval;
                 internal string displayvalue;

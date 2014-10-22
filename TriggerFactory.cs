@@ -15,7 +15,7 @@ namespace AscentProfiler
 
                 Stack<int> tabCountStack = new Stack<int>();                                                            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
-                bool ascentMode = true;
+                bool scriptAscentMode = true;
                 int currentIndex = 0;
 
                 internal TriggerFactory()
@@ -41,7 +41,7 @@ namespace AscentProfiler
 
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
-                        TriggerInput directive = new TriggerInput();                                                     //Struct of values that is passed to new trigger class
+                        TriggerInput directive = new TriggerInput();                                                     //Struct of values that is passed to new trigger class constructor
 
                         Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
 
@@ -50,9 +50,9 @@ namespace AscentProfiler
 
                                 if (SetTriggerMode(trigger)) { return -1; }                                              // return -1 if a trigger has no index. i.e. a bit flipper.
                                 
-                                currentIndex++;                                                                          // increment trigger index value
+                                currentIndex++;                                                                          
 
-                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        // If trigger is chained, get it's parent index value and push it's value on LIFO stack
+                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        
 
                                 if(SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
                                 {
@@ -67,11 +67,6 @@ namespace AscentProfiler
                         {
                                 Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Unable to parse command line. Check Syntax.");
                         }
-
-
-                        
-
-
                         
                         return currentIndex;
                 }
@@ -83,12 +78,12 @@ namespace AscentProfiler
 
                                 case TriggerType.ASCENT:
 
-                                        ascentMode = true;
+                                        scriptAscentMode = true;
                                         return true;
 
                                 case TriggerType.DESCENT:
 
-                                        ascentMode = false;
+                                        scriptAscentMode = false;
                                         return true;
 
                                 default:
@@ -114,7 +109,7 @@ namespace AscentProfiler
                                         directive.type          = trigger;
                                         directive.description   = UpperFirstChar(trigger.ToString());
                                         directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
-                                        directive.ascentMode    = ascentMode;
+                                        directive.ascentMode    = scriptAscentMode;
                                         directive.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
 
                                         return true;
