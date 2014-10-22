@@ -135,7 +135,7 @@ namespace AscentProfiler
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
                 {
 
-                        if (modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) && !String.IsNullOrEmpty(regexgroup) )
+                        if ( modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) && !String.IsNullOrEmpty(regexgroup) )
                         {
                                 return true;
                         }
