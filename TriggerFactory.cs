@@ -12,11 +12,16 @@ namespace AscentProfiler
         {
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
+                Dictionary<TriggerType, Func<Trigger>> triggerProduct = new Dictionary<TriggerType, Func<Trigger>>();
 
                 Stack<int> tabCountStack = new Stack<int>();                                                            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
+                //values that populate prototrigger
+                Match regexGrouping;
                 bool scriptAscentMode = true;
                 int currentIndex = 0;
+                int linkedIndex;
+                TriggerType currentTrigger;
 
                 internal TriggerFactory()
                 {
@@ -33,11 +38,14 @@ namespace AscentProfiler
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
+
+                        triggerProduct.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value), Convert.ToDouble(regexGrouping.Groups[1].Value)); });
                 
                 }
               
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
+                        trigger = currentTrigger;
 
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
@@ -52,15 +60,19 @@ namespace AscentProfiler
                                 
                                 currentIndex++;                                                                          
 
-                                int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
+                                linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
-                                TriggerInput directive = SetTriggerValues(trigger, regexGrouping, linkedIndex);
+
+
+
+
+                                //TriggerInput directive = SetTriggerValues(trigger, regexGrouping, linkedIndex);
 
 
                                 Log.Level(LogType.Verbose, "factory new trigger: index: " + directive.index + " trigger: " + directive.type + "ascentmode: " + directive.ascentMode + " value: " + directive.value + " maxval: " + directive.maxval + " fromaxval: " + directive.fromaxval);
                                 //Trigger temptrigger = (Trigger)Activator.CreateInstance(Type.GetType("AscentProfiler.Altitude"), (TriggerInput) directive);
 
-                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (TRIGGER)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive) );
+                                //AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance( Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive) );
 
                                 //TRIGGER temptrigger = (TRIGGER)Activator.CreateInstance(Type.GetType("AscentProfiler." + trigger.ToString()), (TriggerInput) directive);
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
@@ -95,7 +107,7 @@ namespace AscentProfiler
                         }
                 }
 
-
+                /*
                 TriggerInput SetTriggerValues(TriggerType trigger, Match triggergroups, int linkedindex)
                 {
 
@@ -131,7 +143,7 @@ namespace AscentProfiler
 
                         return triggerinput;
                 }
-
+                */
 
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
                 {

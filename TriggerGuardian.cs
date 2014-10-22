@@ -10,7 +10,7 @@ namespace AscentProfiler
         public class TriggerGuardian
         {
                 ActionExecutor actionExecutor;
-                internal Dictionary<int, TRIGGER> tdictionary = new Dictionary<int, TRIGGER>();
+                internal Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
 
 
                 bool isascending = false;
@@ -29,7 +29,7 @@ namespace AscentProfiler
 
                         lastaltitude = FlightGlobals.ship_altitude;
 
-                        foreach (KeyValuePair<int, TRIGGER> trigger in tdictionary.Where(pair => pair.Value.state == false))
+                        foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.state == false))
                         { 
                                 if(trigger.Value.Evaluate(isascending))
                                 {

@@ -27,26 +27,18 @@ namespace AscentProfiler
         
         }
 
-        public struct TriggerInput
-        {
-                internal int index;
-                internal TriggerType type;
-                internal bool ascentMode;
-                internal bool fromaxval;
-                internal double value;
-                internal double maxval;
-                internal string displayvalue;
-                internal string description;
-                
-                
-        }
-
-
-        internal abstract class TRIGGER
+        internal abstract class Trigger
         {
 
                 internal bool state = false;
-                public TriggerInput input;
+                protected int index;
+                protected TriggerType type;
+                protected bool ascentMode;
+                protected bool fromaxval;
+                protected double value;
+                protected double maxval;
+                protected string displayvalue;
+                protected string description;
 
                 internal abstract bool Evaluate(bool isascending);
 
@@ -67,35 +59,41 @@ namespace AscentProfiler
         }
 
 
-        internal class ALTITUDE : TRIGGER
+        internal class Altitude : Trigger
         {
                 
-
-                public ALTITUDE(TriggerInput directive)
+                
+                internal Altitude(int index, TriggerType type, string description, bool ascentMode, bool fromaxval, double value)
                 {
-                        this.input = directive;
-                        Log.Level(LogType.Verbose, "constructor new trigger: index: "+ input.index +" trigger: "+ input.type +"ascentmode: "+ input.ascentMode+" value: "+ input.value+" maxval: "+ input.maxval +" fromaxval: "+ input.fromaxval);
+                        this.index = index;
+                        this.type = type;
+                        this.description = description;
+                        this.ascentMode = ascentMode;
+                        this.fromaxval = fromaxval;
+                        this.value = value;
+                        
+                        Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
                 internal override bool Evaluate(bool isascending)
                 {
 
-                        double currentAltitude = input.ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
+                        double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
 
-                        if (!input.fromaxval)
+                        if (!fromaxval)
                         {
-                                return state = input.ascentMode ?
-                                        isIncreasing(isascending, currentAltitude, input.value) :
-                                        isDecreasing(isascending, currentAltitude, input.value);
+                                return state = ascentMode ?
+                                        isIncreasing(isascending, currentAltitude, value) :
+                                        isDecreasing(isascending, currentAltitude, value);
                         }
                         else
                         {
                                 double delta;
 
-                                input.maxval = calcMaxVal(input.ascentMode, currentAltitude, input.maxval);
-                                delta  = input.ascentMode ? input.maxval - currentAltitude : input.maxval + currentAltitude;
+                                maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
+                                delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
 
-                                return state = isIncreasing(isascending, delta, input.value);
+                                return state = isIncreasing(isascending, delta, value);
                         }
 
                 }
@@ -103,28 +101,33 @@ namespace AscentProfiler
         }
 
         
-        class COUNTDOWN : TRIGGER
+        class Countdown : Trigger
         {
 
-                public COUNTDOWN(TriggerInput directive)
+                public Countdown(int index, TriggerType type, string description, bool ascentMode, bool fromaxval, double value) // fix constructor
                 {
-                        this.input = directive;
+                        this.index = index;
+                        this.type = type;
+                        this.description = description;
+                        this.ascentMode = ascentMode;
+                        this.fromaxval = fromaxval;
+                        this.value = value;
                 }
 
                 internal override bool Evaluate(bool isascending)
                 {
                         double UT = Planetarium.GetUniversalTime();
 
-                        if (input.maxval == 0)
+                        if (maxval == 0)
                         {
-                                input.maxval = UT + input.value;
+                                maxval = UT + value;
                         }
 
-                        input.value = input.maxval - UT;
+                        value = maxval - UT;
 
-                        if (UT >= input.maxval && state == false)
+                        if (UT >= maxval && state == false)
                         {
-                                input.value = 0;
+                                value = 0;
                                 //FlightLog.Log("COUNTDOWN TRIGGER EXECUTED");
                                 return state = true;
                         }
