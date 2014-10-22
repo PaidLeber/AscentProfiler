@@ -10,9 +10,7 @@ namespace AscentProfiler
         {
                 None,
                 ActionGroup,
-                ActionGroupToggle,
-                ActivateStage,
-                StageNext,
+                Stage
         }
 
         public abstract class Action

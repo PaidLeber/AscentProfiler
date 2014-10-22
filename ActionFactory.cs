@@ -10,6 +10,7 @@ namespace AscentProfiler
         class ActionFactory
         {
                 internal List<Action> actionProducts = new List<Action>();
+                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(\d+)\s*$";
 
                 internal ActionFactory()
                 { 
