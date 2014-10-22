@@ -115,7 +115,7 @@ namespace AscentProfiler
                                         directive.description   = UpperFirstChar(trigger.ToString());
                                         directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
                                         directive.ascentMode    = ascentMode;
-                                        directive.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value, directive);
+                                        directive.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value);
 
                                         return true;
 
@@ -132,7 +132,7 @@ namespace AscentProfiler
                 }
 
 
-                bool SetModifier(TriggerModifier modifier, string regexgroup, TriggerInput directive)
+                bool SetModifier(TriggerModifier modifier, string regexgroup)
                 {
 
                         if (modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) && !String.IsNullOrEmpty(regexgroup) )
