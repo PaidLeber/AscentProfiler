@@ -27,26 +27,28 @@ namespace AscentProfiler
         
         }
 
+        internal struct TriggerInput
+        {
+                internal int index;
+                internal TriggerType type;
+                internal bool ascentMode;
+                internal bool fromaxval;
+                internal double value;
+                internal double maxval;
+                internal string displayvalue;
+                internal string description;
+                
+                
+        }
+
+
         abstract class Trigger
         {
 
-
-                protected TriggerType type;
-                protected string desc;
-
-                protected int index = -1;
-                protected double value;
-                protected string strvalue;
-                protected double maxval;
-                protected bool fromaxval;
-                protected bool ascentMode; //Ascent or Descent Mode
-                protected double countdown;
-
-                internal string displayValue;
                 internal bool state = false;
+                protected TriggerInput input;
+
                 internal abstract bool Evaluate(bool isascending);
-
-
 
                 protected bool isIncreasing(bool isascending, double vVariable, double vStatic)
                 {
@@ -69,44 +71,37 @@ namespace AscentProfiler
         {
                 
 
-                internal Altitude(int index, TriggerType type, string desc, bool ascending, bool frommaxval, double value)
+                internal Altitude(TriggerInput directive)
                 {
-                        this.index = index;
-                        this.type = type;
-                        this.desc = desc;
-                        this.ascentMode = ascending;
-                        this.value = value;
-                        this.displayValue = value.ToString();
-                        this.fromaxval = frommaxval;
-                        
+                        this.input = directive;      
                 }
 
                 internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
                 {
 
-                        double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
+                        double currentAltitude = input.ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
 
-                        if (!fromaxval)
+                        if (!input.fromaxval)
                         {
-                                return state = ascentMode ?
-                                        isIncreasing(isascending, currentAltitude, value) :
-                                        isDecreasing(isascending, currentAltitude, value);
+                                return state = input.ascentMode ?
+                                        isIncreasing(isascending, currentAltitude, input.value) :
+                                        isDecreasing(isascending, currentAltitude, input.value);
                         }
                         else
                         {
                                 double delta;
 
-                                maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
-                                delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
+                                input.maxval = calcMaxVal(input.ascentMode, currentAltitude, input.maxval);
+                                delta  = input.ascentMode ? input.maxval - currentAltitude : input.maxval + currentAltitude;
 
-                                return state = isIncreasing(isascending, delta, value);
+                                return state = isIncreasing(isascending, delta, input.value);
                         }
 
                 }
 
         }
 
-
+        /*
         class Countdown : Trigger
         {
 
@@ -115,7 +110,6 @@ namespace AscentProfiler
                         this.index = index;
                         this.type = type;
                         this.desc = desc;
-                        this.strvalue = strvalue;
                         this.value = value;
                 }
 
@@ -218,7 +212,7 @@ namespace AscentProfiler
                         {
                                 gmax = gforce;
                         }
-                        /* FIX!!!
+                        // FIX!!!
                         if(isascending == ascending)
                         {
                                 if (fromaxval == 0 && gforce > value)
@@ -235,7 +229,7 @@ namespace AscentProfiler
                                         return state = true;
                                 }
                         
-                        } */
+                        } 
                         
                         return false;
                 }
@@ -472,4 +466,7 @@ namespace AscentProfiler
                 }
 
         }
+
+
+        */
 }

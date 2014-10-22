@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Globalization;
 using UnityEngine;
 
 namespace AscentProfiler
@@ -71,7 +70,7 @@ namespace AscentProfiler
                         // Check for trigger mode switches
                         if (trigger == TriggerType.ASCENT)
                         {
-                                ASCENDING = true;
+
                                 return -1;
                         }
                         else if (trigger == TriggerType.DESCENT)
@@ -80,14 +79,17 @@ namespace AscentProfiler
                                 return -1;
                         }
 
-                        Log.Level(LogType.Verbose, "Checking Command Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
+                        Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
                         //Check command line for valid syntax, if true then parse it
                         Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);
 
                         if (regexGrouping.Success)
                         {
-                                SetValues(trigger, regexGrouping);
+                                if(!SetTriggerValues(trigger, regexGrouping))
+                                {
+                                        return -1;  // return -1 if a trigger has no index. i.e. a bit flipper.
+                                }
                         }
                         else
                         {
@@ -134,21 +136,9 @@ namespace AscentProfiler
                                 //Create loading error in flightlog window
                                 Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Check Tab Structure: Unchained trigger.");
                         }
-
-                        /*Populate Trigger Classes*/
-                        Log.Level(LogType.Verbose, "Populating trigger variables.");
-                        TRIGGERTYPE = trigger;
-                        Log.Level(LogType.Verbose, "converting to double: "+ regexGrouping.Groups[1].Value);
-
-                        if (!string.IsNullOrEmpty(regexGrouping.Groups[1].Value))
-                        {
-                                DBLVALUE = Convert.ToDouble(regexGrouping.Groups[1].Value);
-                        }
                         
                         
-                        DESCRIPTION = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(trigger.ToString());
-
-                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " strvalue: "+ STRVALUE + " dblvalue: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
+                        
 
                         AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProduct[trigger]());
 
@@ -159,13 +149,9 @@ namespace AscentProfiler
                 }
 
 
-                int GetTabCount(string commandLine)
-                {
-                        return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
-                        
-                }
 
-                bool SetValues(TriggerType trigger, Match triggergroups)
+
+                bool SetTriggerValues(TriggerType trigger, Match triggergroups)
                 {
 
                         Log.Level(LogType.Verbose, "whole value: " + triggergroups.Groups[0].Value
@@ -176,9 +162,23 @@ namespace AscentProfiler
                         switch (trigger)
                         {       
 
-                                // move ascent and descent mode switch to valueparser 
+                                case TriggerType.ASCENT:
+                                        
+                                        ASCENDING = true;
+                                        return false;
+
+                                case TriggerType.DESCENT:
+
+                                        ASCENDING = false;
+                                        return false;
+
                                 case TriggerType.ALTITUDE:
-                                        //get values & pull out modifiers (if any)
+
+                                        TRIGGERTYPE = trigger;
+                                        DESCRIPTION = UpperFirstChar(trigger.ToString());
+                                        DBLVALUE = Convert.ToDouble(triggergroups.Groups[1].Value);
+
+                                        SetTriggerModifier(triggergroups.Groups[2].Value);
 
 
 
@@ -191,13 +191,13 @@ namespace AscentProfiler
 
                         }
 
-
+                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " strvalue: " + STRVALUE + " dblvalue: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
 
                         return false;
                 }
 
 
-                bool SetModifier(string modifier)
+                bool SetTriggerModifier(string modifier)
                 {
                         if (!String.IsNullOrEmpty(modifier))
                         {
@@ -216,6 +216,21 @@ namespace AscentProfiler
                         return false;
                 }
 
+                int GetTabCount(string commandLine)
+                {
+                        return Regex.Match(commandLine, regexDict["tabcount"]).Groups[1].Captures.Count;
 
+                }
+
+                static string UpperFirstChar(string s)
+                {
+                        // Check for empty string.
+                        if (string.IsNullOrEmpty(s))
+                        {
+                                return string.Empty;
+                        }
+                        // Return char and concat substring.
+                        return char.ToUpper(s[0]) + s.Substring(1);
+                }
         }
 }
