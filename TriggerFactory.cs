@@ -45,13 +45,11 @@ namespace AscentProfiler
               
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
-                        trigger = currentTrigger;
+                        Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine + " : " + triggerRegex[trigger]);
 
-                        Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
+                        currentTrigger = trigger;
 
-                        
-
-                        Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
+                        regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
 
                         if (regexGrouping.Success)
                         {
