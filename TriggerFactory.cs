@@ -13,7 +13,7 @@ namespace AscentProfiler
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
 
-                Stack<int> tabCountStack = new Stack<int>();            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
+                Stack<int> tabCountStack = new Stack<int>();                                                            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
                 bool ascentMode = true;
                 int currentIndex = 0;
@@ -54,10 +54,13 @@ namespace AscentProfiler
 
                                 int linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);        // If trigger is chained, get it's parent index value and push it's value on LIFO stack
 
-                                /*Parse Trigger Values*/
-                                if(!SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
+                                if(SetTriggerValues(trigger, regexGrouping, linkedIndex, directive))
                                 {
                                         
+                                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance(Type.GetType(trigger.ToString()), directive) );
+                                        Log.Level(LogType.Verbose, "New Trigger: " + trigger + ": ");
+                                        Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
+                                        Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                                 }
                         }
                         else
@@ -66,15 +69,9 @@ namespace AscentProfiler
                         }
 
 
-                        Log.Level(LogType.Verbose, "Creating Trigger: " + trigger + ": " );
-
-
                         
 
-                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, (Trigger)Activator.CreateInstance(Type.GetType("Altitude"), directive) );
 
-                        Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
-                        Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                         
                         return currentIndex;
                 }
@@ -86,15 +83,17 @@ namespace AscentProfiler
 
                                 case TriggerType.ASCENT:
 
-                                        ascentMode = true;      // flip ascentMode bit high
+                                        ascentMode = true;
                                         return true;
 
                                 case TriggerType.DESCENT:
 
-                                        ascentMode = false;     // flip ascentMode bit low
+                                        ascentMode = false;
                                         return true;
+
+                                default:
+                                        return false;
                         }
-                        return false;
                 }
 
 
@@ -124,6 +123,8 @@ namespace AscentProfiler
                                         //pull values and multiply to get total time in seconds
                                         break;
 
+                                default:
+                                        return false;
 
                         }
 
