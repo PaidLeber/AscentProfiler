@@ -76,7 +76,7 @@ namespace AscentProfiler
                         this.input = directive;    
                 }
 
-                internal override bool Evaluate(bool isascending) //do override evaluate, change state then return bool
+                internal override bool Evaluate(bool isascending)
                 {
 
                         double currentAltitude = input.ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);

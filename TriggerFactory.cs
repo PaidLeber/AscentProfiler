@@ -17,16 +17,9 @@ namespace AscentProfiler
 
                 Stack<int> tabCountStack = new Stack<int>();            // Use a LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
-                bool ascentMode = true;                                 //variables used for trigger contructors
+                bool ascentMode = true;
 
-                
-                int TRIGGERINDEX;
-                TriggerType TRIGGERTYPE;
-                string DESCRIPTION;
-                double DBLVALUE;
-                bool ASCENDING = true;
-                bool FROMMAXVAL;
-                string STRVALUE;
+                TriggerInput directive;                                 //Struct of values that is passed to new trigger class
 
                 int currentIndex = 0;
 
@@ -51,16 +44,18 @@ namespace AscentProfiler
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
 
+                        /*Validate Trigger Values*/
+
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine +" : "+ triggerRegex[trigger]);
 
-                        TriggerInput directive = new TriggerInput();                                            //struct for trigger values
+                        directive = new TriggerInput();
 
                         Match regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                  //Check command line for valid syntax, if true then parse it
 
                         if (regexGrouping.Success)
                         {
-                                
 
+                                /*Parse Trigger Values*/
                                 if(!SetTriggerValues(trigger, regexGrouping, directive))
                                 {
                                         return -1;                                                              // return -1 if a trigger has no index. i.e. a bit flipper.
@@ -75,7 +70,7 @@ namespace AscentProfiler
                         /*Create Trigger Classes*/
 
 
-                        currentIndex++;
+                        currentIndex++;                                                                         // increment trigger index value
 
                         TriggerChain(trigger, commandLine, lineNumber, currentIndex, directive);
 
@@ -106,12 +101,12 @@ namespace AscentProfiler
 
                                 case TriggerType.ASCENT:
                                         
-                                        ascentMode = true;
+                                        ascentMode = true;      // flip ascentMode bit high
                                         return false;
 
                                 case TriggerType.DESCENT:
 
-                                        ascentMode = false;
+                                        ascentMode = false;     // flip ascentMode bit low
                                         return false;
 
                                 case TriggerType.ALTITUDE:
@@ -119,8 +114,8 @@ namespace AscentProfiler
                                         directive.type          = trigger;
                                         directive.description   = UpperFirstChar(trigger.ToString());
                                         directive.value         = Convert.ToDouble(triggergroups.Groups[1].Value);
-
-                                        SetTriggerModifier(triggergroups.Groups[2].Value);
+                                        directive.ascentMode    = ascentMode;
+                                        directive.fromaxval     = SetModifier(TriggerModifier.FROMMAXVAL, triggergroups.Groups[2].Value, directive);
 
                                         return true;
 
@@ -131,28 +126,20 @@ namespace AscentProfiler
 
                         }
 
-                        Log.Level(LogType.Verbose, "NEW TRIGGER VARIABLES: " + " index: " + TRIGGERINDEX + " type: " + TRIGGERTYPE + " desc: " + DESCRIPTION + " ascentmode: " + ASCENDING + " strvalue: " + STRVALUE + " dblvalue: " + DBLVALUE + " frommaxval: " + FROMMAXVAL);
+                    
 
                         return false;
                 }
 
 
-                bool SetTriggerModifier(string modifier)
+                bool SetModifier(TriggerModifier modifier, string regexgroup, TriggerInput directive)
                 {
-                        if (!String.IsNullOrEmpty(modifier))
+
+                        if (modifier == (TriggerModifier)Enum.Parse(typeof(TriggerModifier), regexgroup) && !String.IsNullOrEmpty(regexgroup) )
                         {
-                                Log.Level(LogType.Verbose, "triggerParse.Groups[2].Value Is not null: " + modifier);
-                                // Check command line for optional trigger switches if so enable
-                                switch ((TriggerModifier)Enum.Parse(typeof(TriggerModifier), modifier))
-                                {
-                                        case TriggerModifier.FROMMAXVAL:
-                                                FROMMAXVAL = true;
-                                                break;
-
-
-                                }
+                                return true;
                         }
-
+                        
                         return false;
                 }
 
