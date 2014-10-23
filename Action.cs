@@ -25,7 +25,26 @@ namespace AscentProfiler
                 NEXT
         }
 
-       
+        enum ActionGroupObject
+        {
+                Stage,
+                Gear,
+                Light,
+                RCS,
+                SAS,
+                Brakes,
+                Abort,
+                Custom01,
+                Custom02,
+                Custom03,
+                Custom04,
+                Custom05,
+                Custom06,
+                Custom07,
+                Custom08,
+                Custom09,
+                Custom10
+        }   
 
         public abstract class Action
         {
@@ -46,26 +65,6 @@ namespace AscentProfiler
 
         class ActionGroup : Action
         {
-                enum ActionGroupObject
-                { 
-                        Stage,
-                        Gear,
-                        Light,
-                        RCS,
-                        SAS,
-                        Brakes,
-                        Abort,
-                        Custom01,
-                        Custom02,
-                        Custom03,
-                        Custom04,
-                        Custom05,
-                        Custom06,
-                        Custom07,
-                        Custom08,
-                        Custom09,
-                        Custom10
-                }
 
                 internal ActionGroup(int index, ActionType type, ActionGroupObject obj, ActionModifier modifier, string description, int value)
                 {
