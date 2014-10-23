@@ -155,6 +155,11 @@ namespace AscentProfiler
 
                 }
 
+                internal int GetTabStackCount()
+                {
+                        return tabCountStack.Count;
+
+                }
 
                 static string UpperFirstChar(string s)
                 {

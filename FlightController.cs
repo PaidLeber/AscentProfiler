@@ -60,7 +60,7 @@ namespace AscentProfiler
 
                         attitudeTarget = target;
                         v.ActionGroups.SetGroup(KSPActionGroup.SAS, false);
-
+                        
                         //AttitudeDriver(s);
 
                 }

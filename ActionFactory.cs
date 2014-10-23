@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace AscentProfiler
 {
@@ -10,6 +10,9 @@ namespace AscentProfiler
         class ActionFactory
         {
                 internal List<Action> actionProducts = new List<Action>();
+
+                Match regexGrouping;
+
                 string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(\d+)\s*$";
 
                 internal ActionFactory()
@@ -17,21 +20,18 @@ namespace AscentProfiler
                 
                 }
 
-                public void CreateAction(ActionType action, string commandLine, int lineNumber)
+                public void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandLine, int lineNumber)
                 {
+                        regexGrouping = Regex.Match(commandLine, actionRegex);
 
-
-                        /*
-                        actionlist.Add(new ActionGroup (1, 1));
-                        actionlist.Add(new Throttle(1, 100));
-                        actionlist.Add(new ActionGroup(2, 2));
-                        actionlist.Add(new ActionGroup(2, 3));
-                        actionlist.Add(new ActionGroup(3, 4));
-                        actionlist.Add(new ActionGroup(3, 5));
-                        actionlist.Add(new ActionGroup(4, 6));
-                        actionlist.Add(new ActionGroup(5, 7));
-                        actionlist.Add(new StageNext(10));
-                        */
+                        if (regexGrouping.Success)
+                        {
+                                
+                        }
+                        else
+                        {
+                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax.", "Line #" + lineNumber + ": Command: " + commandLine + ":");
+                        }
 
                 }
 
@@ -39,7 +39,7 @@ namespace AscentProfiler
 
 
 
-                public void Clear()
+                public void Reset()
                 {
                         //actionlist.Clear();
                 }

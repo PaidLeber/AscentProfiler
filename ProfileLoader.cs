@@ -91,7 +91,7 @@ namespace AscentProfiler
 
                                                 int currentindex = triggerFactory.CreateTrigger(trigger, line, lineCounter);
 
-                                                if (currentindex != -1) // return of -1 is a trigger switch of some sort, not an actual trigger
+                                                if (currentindex != -1)                                                         // return of -1 is a trigger switch of some sort, not an actual trigger
                                                 {
                                                         triggerIndex = currentindex;
                                                 }
@@ -104,9 +104,8 @@ namespace AscentProfiler
                                 {
                                         if (IsRegexCommandMatch(line, action.ToString()))
                                         {
-                                                actionFactory.CreateAction(action, line, lineCounter);
-
-
+                                                actionFactory.CreateAction(action, triggerIndex, triggerFactory.GetTabStackCount(), line, lineCounter);
+                                        
                                         }
 
 

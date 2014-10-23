@@ -43,7 +43,12 @@ namespace AscentProfiler
                         //FlightLog.Log(desc.ToUpper() + " " + value +" TRIGGERED");
                         FlightGlobals.ActiveVessel.ActionGroups.SetGroup(Util.SetActionGroup(value), true);
                         return state = true;
-                        
+                        //KSPActionGroup.Brakes
+                        //KSPActionGroup.Stage 
+                        // etc...
+                        //v.ActionGroups.SetGroup(KSPActionGroup.SAS, false);
+
+                        // Modifiers: ActionGroup: Activate, Deactivate, Toggle
                         
                 }
         }

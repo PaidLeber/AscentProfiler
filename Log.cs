@@ -62,7 +62,7 @@ namespace AscentProfiler
                                 return;
                         }
 
-                        message = lType + ": Loading Gscript: "+ gstring + ": " + lType + ": " + message;
+                        message = "Loading Gscript: "+ lType + ": " + message+ ": " + gstring;
 
                         switch (lType)
                         { 
