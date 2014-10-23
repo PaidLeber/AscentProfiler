@@ -9,36 +9,69 @@ namespace AscentProfiler
         enum ActionType
         {
                 None,
-                ActionGroup,
-                Stage
+                ACTIONGROUP,
+                STAGE,
+                THROTTLE
         }
 
         enum ActionModifier
         { 
-        
+                None,
+                ACTIVATE,
+                DEACTIVATE,
+                ON,
+                OFF,
+                TOGGLE,
+                NEXT
         }
+
+       
 
         public abstract class Action
         {
-                public abstract string type { get; }
-                public abstract string desc { get; }
-                public int index = -1;
-                public int value = -1;
-                public bool state = false;
+                internal bool activated = false;
+                internal int index = -1;
 
-                public abstract bool Execute(); 
+                protected ActionType type;
+
+                internal string displayvalue;
+                internal string description;
+
+                protected int value;
+                protected bool state = false;
+
+                internal abstract bool Execute(); 
 
         }
 
-        public sealed class ActionGroup : Action
+        class ActionGroup : Action
         {
-                public override string type { get { return "ACTIONGROUP"; } }
-                public override string desc { get { return "Action Group"; } }
+                enum ActionGroupObject
+                { 
+                        Stage,
+                        Gear,
+                        Light,
+                        RCS,
+                        SAS,
+                        Brakes,
+                        Abort,
+                        Custom01,
+                        Custom02,
+                        Custom03,
+                        Custom04,
+                        Custom05,
+                        Custom06,
+                        Custom07,
+                        Custom08,
+                        Custom09,
+                        Custom10
+                }
 
-
-                public ActionGroup(int index, int value)
+                internal ActionGroup(int index, ActionType type, ActionGroupObject obj, ActionModifier modifier, string description, int value)
                 {
                         this.index = index;
+                        this.state = state;
+                        this.description = description;
                         this.value = value;
                 
                 }
@@ -47,7 +80,7 @@ namespace AscentProfiler
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value +" TRIGGERED");
                         FlightGlobals.ActiveVessel.ActionGroups.SetGroup(Util.SetActionGroup(value), true);
-                        return state = true;
+                        return activated = true;
                         //KSPActionGroup.Brakes
                         //KSPActionGroup.Stage 
                         // etc...
@@ -75,7 +108,7 @@ namespace AscentProfiler
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value);
                         FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(Util.SetActionGroup(value));
-                        return state = true;
+                        return activated = true;
 
                 }
         }
@@ -96,7 +129,7 @@ namespace AscentProfiler
                 {
                         //FlightLog.Log("STAGE SEPARATION");
                         Staging.ActivateNextStage();
-                        return state = true;
+                        return activated = true;
                         
                         
                 }
@@ -118,7 +151,7 @@ namespace AscentProfiler
                 {
                         //FlightLog.Log(value + " " + desc.ToUpper());
                         Staging.ActivateStage(value);
-                        return state = true;
+                        return activated = true;
 
                 }
         }
@@ -151,7 +184,7 @@ namespace AscentProfiler
 
                         FlightInputHandler.state.mainThrottle = floatvalue;
                         //FlightLog.Log(value + "THROTTLE SET "+ value + "%");
-                        return state = true;
+                        return activated = true;
                         
 
                 }

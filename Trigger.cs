@@ -30,7 +30,7 @@ namespace AscentProfiler
         abstract class Trigger
         {
 
-                internal bool state = false;
+                internal bool activated = false;
                 internal int index;
 
                 protected TriggerType type;
@@ -86,7 +86,7 @@ namespace AscentProfiler
 
                         if (!fromaxval)
                         {
-                                return state = ascentMode ?
+                                return activated = ascentMode ?
                                         isIncreasing(isascending, currentAltitude, value) :
                                         isDecreasing(isascending, currentAltitude, value);
                         }
@@ -97,7 +97,7 @@ namespace AscentProfiler
                                 maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
                                 delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
 
-                                return state = isIncreasing(isascending, delta, value);
+                                return activated = isIncreasing(isascending, delta, value);
                         }
 
                 }
@@ -127,11 +127,11 @@ namespace AscentProfiler
 
                         value = maxval - UT;
 
-                        if (UT >= maxval && state == false)
+                        if (UT >= maxval && activated == false)
                         {
                                 value = 0;
                                 //FlightLog.Log("COUNTDOWN TRIGGER EXECUTED");
-                                return state = true;
+                                return activated = true;
                         }
                         
                        return false;

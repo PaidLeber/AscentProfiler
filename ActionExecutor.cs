@@ -17,7 +17,7 @@ namespace AscentProfiler
                 public void ExecuteActions(int index)
                 {
 
-                        foreach (var action in actionlist.Where(action => action.state == false && action.index == index))
+                        foreach (var action in actionlist.Where(action => action.activated == false && action.index == index))
                         {
                                 if ( action.Execute() )
                                 {

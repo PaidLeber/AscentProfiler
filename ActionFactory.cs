@@ -9,19 +9,23 @@ namespace AscentProfiler
 
         class ActionFactory
         {
-                internal List<Action> actionProducts = new List<Action>();
+                List<Action> actionProducts = new List<Action>();
 
                 Match regexGrouping;
 
-                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(?:(\d+)\s+)?\s*$";
+                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(?:(\d+)\s+)?(?:""[\w\s]+"")?\s*$";
+
+                int currentIndex;
 
                 internal ActionFactory()
-                { 
-                
+                {
+                        actionProducts.Add(new ActionGroup( currentIndex, true, Convert.ToInt16(regexGrouping.Groups[2].Value) ));
                 }
 
-                public void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandline, int linenumber)
+                void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandline, int linenumber)
                 {
+                        currentIndex = currentindex;
+
                         regexGrouping = Regex.Match(commandline, actionRegex);
 
                         if (regexGrouping.Success)
@@ -36,7 +40,7 @@ namespace AscentProfiler
                                 {
                                         Log.Script(LogType.Error, "Unchained Action. Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                                 }
-                                //(tabcount - tabCountStack.Count) == 0
+                                
                         }
                         else
                         {
@@ -46,6 +50,21 @@ namespace AscentProfiler
                 }
 
 
+
+                bool SetModifier(ActionModifier modifier, string regexgroup)
+                {
+                        if (String.IsNullOrEmpty(regexgroup))
+                        {
+                                return false;
+                        }
+
+                        if (modifier == (ActionModifier)Enum.Parse(typeof(ActionModifier), regexgroup))
+                        {
+                                return true;
+                        }
+
+                        return false;
+                }
 
                 int GetTabCount(string commandLine)
                 {

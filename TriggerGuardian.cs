@@ -29,7 +29,7 @@ namespace AscentProfiler
 
                         lastaltitude = FlightGlobals.ship_altitude;
 
-                        foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.state == false))
+                        foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.activated == false))
                         { 
                                 if(trigger.Value.Evaluate(isascending))
                                 {
