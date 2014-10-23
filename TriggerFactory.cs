@@ -141,7 +141,7 @@ namespace AscentProfiler
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                Log.Script(LogType.Error, "Check Tab Structure: Unchained Trigger." , "Line #" + linenumber + ": Command: " + commandline );                //Create loading error in flightlog window
+                                Log.Script(LogType.Error, "Unchained Trigger: Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                         }
 
                         return linkedindex;

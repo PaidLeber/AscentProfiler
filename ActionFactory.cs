@@ -20,29 +20,33 @@ namespace AscentProfiler
                 
                 }
 
-                public void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandLine, int lineNumber)
+                public void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandline, int linenumber)
                 {
-                        regexGrouping = Regex.Match(commandLine, actionRegex);
+                        regexGrouping = Regex.Match(commandline, actionRegex);
 
                         if (regexGrouping.Success)
                         {
-                                
+                                if (GetTabCount(commandline) - tabstackcount != 0)
+                                {
+                                        Log.Script(LogType.Error, "Unchained Action. Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                }
+                                //(tabcount - tabCountStack.Count) == 0
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax.", "Line #" + lineNumber + ": Command: " + commandLine + ":");
+                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax.", "Line #" + linenumber + ": Command: " + commandline + ":");
                         }
 
                 }
 
 
 
-
-
-                public void Reset()
+                int GetTabCount(string commandLine)
                 {
-                        //actionlist.Clear();
+                        return Regex.Match(commandLine, @"^(\t)+\w+").Groups[1].Captures.Count;
+
                 }
+
 
 
         }
