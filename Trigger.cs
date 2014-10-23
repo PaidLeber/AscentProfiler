@@ -7,7 +7,7 @@ using KSP;
 
 namespace AscentProfiler
 {
-        internal enum TriggerType
+        enum TriggerType
         {
                 None,
                 ASCENT,
@@ -20,14 +20,14 @@ namespace AscentProfiler
                 ATTITUDE
 
         }
-        internal enum TriggerModifier
+        enum TriggerModifier
         { 
                 None,
                 FROMMAXVAL
         
         }
 
-        internal abstract class Trigger
+        abstract class Trigger
         {
 
                 internal bool state = false;
@@ -62,7 +62,7 @@ namespace AscentProfiler
         }
 
 
-        internal class Altitude : Trigger
+        class Altitude : Trigger
         {
                 
                 

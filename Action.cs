@@ -13,6 +13,11 @@ namespace AscentProfiler
                 Stage
         }
 
+        enum ActionModifier
+        { 
+        
+        }
+
         public abstract class Action
         {
                 public abstract string type { get; }
