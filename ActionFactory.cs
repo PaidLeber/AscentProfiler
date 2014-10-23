@@ -13,7 +13,7 @@ namespace AscentProfiler
 
                 Match regexGrouping;
 
-                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(\d+)\s*$";
+                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(?:(\d+)\s+)?\s*$";
 
                 internal ActionFactory()
                 { 
@@ -28,6 +28,8 @@ namespace AscentProfiler
                         {
                                 if (GetTabCount(commandline) - tabstackcount == 0)
                                 {
+
+
 
                                 }
                                 else
