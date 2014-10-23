@@ -26,7 +26,11 @@ namespace AscentProfiler
 
                         if (regexGrouping.Success)
                         {
-                                if (GetTabCount(commandline) - tabstackcount != 0)
+                                if (GetTabCount(commandline) - tabstackcount == 0)
+                                {
+
+                                }
+                                else
                                 {
                                         Log.Script(LogType.Error, "Unchained Action. Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                                 }
