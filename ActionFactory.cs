@@ -13,7 +13,7 @@ namespace AscentProfiler
 
                 Match regexGrouping;
 
-                string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(?:(\d+)\s+)?(?:""[\w\s]+"")?\s*$";
+                string actionRegex = @"^\t*\w+\s+(\w+)\s+(\w+)(?:\s+""[\w\s]+"")?\s*$";
 
                 //values that populate protoaction
                 int currentIndex;
@@ -37,7 +37,7 @@ namespace AscentProfiler
                                 Log.Level(LogType.Verbose, "Action Valid. Success! Groups Next:");
                                 Log.Level(LogType.Verbose, regexGrouping.Groups[1].Value);
                                 Log.Level(LogType.Verbose, regexGrouping.Groups[2].Value);
-                                Log.Level(LogType.Verbose, regexGrouping.Groups[2].Value);
+                                Log.Level(LogType.Verbose, regexGrouping.Groups[3].Value);
                                 if (GetTabCount(commandline) - tabstackcount == 0)
                                 {
                                         currentIndex = currentindex;
