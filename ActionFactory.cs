@@ -13,7 +13,7 @@ namespace AscentProfiler
 
                 Match regexGrouping;
 
-                string actionRegex = @"^\t*\w+\s+(\w+)\s+(\w+)(?:\s+""[\w\s]+"")?\s*$";
+                string actionRegex = @"^\t*\w+\s+(\w+)\s+(\w+)(?:\s+""([\w\s]+)"")?\s*$";
 
                 //values that populate protoaction
                 int currentIndex;
