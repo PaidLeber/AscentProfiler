@@ -38,7 +38,7 @@ namespace AscentProfiler
                         int profileStart = 0;
                         int profileEnd = 0;
 
-                        AscentProfiler.ActiveProfile.Reset();
+                        
 
                         List<string> profileLines = new List<string>(profiles[profile].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 

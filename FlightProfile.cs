@@ -5,8 +5,9 @@ using System.Text;
 using UnityEngine;
 
 namespace AscentProfiler
-{
-        public class FlightProfile : MonoBehaviour
+{       
+        
+        class FlightProfile 
         {
 
                 internal ActionExecutor actionExecutor;
@@ -15,40 +16,27 @@ namespace AscentProfiler
                 internal FlightLog flightLog;
                 internal Vessel vessel = null;
 
-                void Awake()
+                public void OnAwake()
                 {
-                        this.Reset();
+
                 }
 
-                void Update()
+                public void OnStart()
+                {
+                        
+                }
+
+                public void OnUpdate()
                 { 
                       
                 }
-                
-                void FixedUpdate()
+
+                public void OnFixedUpdate()
                 {
                         triggerGuardian.TriggerLoop();
                 }
 
-                void OnDestroy()
-                {
 
-                        triggerGuardian = null;
-                        actionExecutor = null;
-                        //flightController = null;
-                        flightLog = null;
-
-                }
-
-                public void Reset()
-                {
-                        enabled = false;
-                        actionExecutor = new ActionExecutor();
-                        triggerGuardian = new TriggerGuardian(actionExecutor);
-                        //flightController = new FlightController();
-                        flightLog = new FlightLog();
-                        vessel = null;
-                }
 
         }
 }

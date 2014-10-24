@@ -119,6 +119,8 @@ namespace AscentProfiler
 
                 internal override bool Evaluate(bool isascending)
                 {
+
+                        //May need to use Timefixed.delta
                         double UT = Planetarium.GetUniversalTime();
 
                         if (maxval == 0)

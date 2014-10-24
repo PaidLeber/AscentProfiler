@@ -50,6 +50,7 @@
     <Compile Include="ActionFactory.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
+    <Compile Include="AscentProGuidanceControlSystemsModule.cs" />
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightLog.cs" />
     <Compile Include="FlightProfile.cs" />
@@ -62,6 +63,9 @@
     <Compile Include="TriggerFactory.cs" />
     <Compile Include="TriggerGuardian.cs" />
     <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AscentProfiler.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

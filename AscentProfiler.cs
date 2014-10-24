@@ -30,7 +30,7 @@ namespace AscentProfiler
                 {
 
 
-                        ActiveProfile = gameObject.AddComponent<FlightProfile>();
+                        
                         gui = new AscentProfilerGUI();
 
                         if (ToolbarManager.ToolbarAvailable)
@@ -103,7 +103,7 @@ namespace AscentProfiler
                 void onDestroy()
                 {
                         mainButton.Destroy();
-                        Destroy(GetComponent<FlightProfile>());
+                       
                         
                 }
 
