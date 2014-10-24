@@ -76,9 +76,9 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
-                internal TriggerGuardian GetNewTriggerGuardian(ActionExecutor ae)
+                internal TriggerGuardian GetNewTriggerGuardian(ActionExecutor NewActionExecutor)
                 {
-                        return new TriggerGuardian(NewTriggerProfile, ae);
+                        return new TriggerGuardian(NewTriggerProfile, NewActionExecutor);
                 }
 
                 bool SetTriggerMode(TriggerType trigger)

@@ -62,7 +62,7 @@ namespace AscentProfiler
 
                 }
 
-                List<Action> GetNewActionList()
+                List<Action> GetNewActionExecutor()
                 {
                         return NewActionList;
                 }

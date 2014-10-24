@@ -14,9 +14,9 @@ namespace AscentProfiler
                 internal FlightLog flightLog;
                 //internal Vessel vessel = null;
 
-                internal FlightProfile(TriggerGuardian tdictionary, ActionExecutor ae)
-                { 
-                
+                internal FlightProfile(TriggerGuardian tGuard)
+                {
+                        this.triggerGuardian = tGuard;
                 }
 
                 public void OnAwake()

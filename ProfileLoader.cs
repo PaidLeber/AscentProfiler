@@ -125,9 +125,9 @@ namespace AscentProfiler
                 }
 
 
-                bool SendProfileToVessel()
+                bool UploadProfileToActiveVessel()
                 {
-                        tempprofileval = new FlightProfile();
+                        tempprofileval = new FlightProfile(triggerFactory.GetNewTriggerGuardian());
 
                         return false;
                 }

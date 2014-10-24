@@ -16,10 +16,10 @@ namespace AscentProfiler
                 bool isascending = false;
                 double lastaltitude;
 
-                internal TriggerGuardian(Dictionary<int, Trigger> tdictionary, ActionExecutor ae)
+                internal TriggerGuardian(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
                 {
-                        this.actionExecutor = ae;
-
+                        this.actionExecutor = actionloop;
+                        this.tdictionary = triggerdictionary;
                 }
 
                 public void TriggerLoop()

@@ -10,7 +10,7 @@ namespace AscentProfiler
         {
                 internal List<Action> actionlist;
 
-                public ActionExecutor()
+                internal ActionExecutor()
                 {
                 }
 
