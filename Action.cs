@@ -67,7 +67,7 @@ namespace AscentProfiler
         {
                 KSPActionGroup actionObject;
 
-                internal ActionGroup(int index, ActionType type, KSPActionGroup actionobject, ActionModifier modifier, string description, int value)
+                internal ActionGroup(int index, ActionType type, KSPActionGroup actionobject, ActionModifier modifier, string description)
                 {
                         this.index = index;
                         this.type = type;
@@ -75,7 +75,6 @@ namespace AscentProfiler
                         this.actionObject = actionobject;
 
                         this.description = description;
-                        this.value = value;
                 
                 }
 

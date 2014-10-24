@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+
 namespace AscentProfiler
 {
 
@@ -15,16 +16,13 @@ namespace AscentProfiler
 
                 string actionRegex = @"^\t*\w+\s+(\w+)\s+(\w+)(?:\s+""([\w\s]+)"")?\s*$";
 
-                //values that populate protoaction
+                //values that populate proto-action
                 int currentIndex;
                 ActionType currentAction;
-                KSPActionGroup kspactiongroup = new KSPActionGroup();
-                ActionModifier currentModifier;
-                string currentDescription;
 
                 internal ActionFactory()
                 {
-                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, KSPActionGroup.Stage, currentModifier, regexGrouping.Groups[3].Value.ToString(), Convert.ToInt16(regexGrouping.Groups[2].Value)); });
+                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, (KSPActionGroup)Enum.Parse(typeof(KSPActionGroup), regexGrouping.Groups[1].Value), (ActionModifier)Enum.Parse(typeof(ActionModifier), regexGrouping.Groups[2].Value), regexGrouping.Groups[3].Value.ToString()); });
 
                 }
 
@@ -45,11 +43,16 @@ namespace AscentProfiler
 
                                         currentIndex = currentindex;
                                         currentAction = action;
-                                        if(IsValidActionParameter(kspactiongroup, regexGrouping.Groups[1].Value.ToString()))
+
+                                        if (!IsValidActionParameter(new KSPActionGroup(), regexGrouping.Groups[1].Value.ToString()))
                                         {
-                                                Log.Level(LogType.Verbose, "Is Valid Parameter");
+                                                Log.Script(LogType.Error, regexGrouping.Groups[1].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
                                         }
 
+                                        if (!IsValidActionParameter(new ActionModifier(), regexGrouping.Groups[2].Value.ToString()))
+                                        {
+                                                Log.Script(LogType.Error, regexGrouping.Groups[2].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
+                                        }
 
                                         //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
@@ -86,17 +89,24 @@ namespace AscentProfiler
                 
                 bool IsValidActionParameter(Enum e, string enumstring)
                 {
+
                         var enumList = Enum.GetNames(e.GetType());
 
                         foreach (var enumvalue in enumList)
                         {
                                 Log.Level(LogType.Verbose, "enumvalue: " + enumvalue + " enumstring: " + enumstring);
-                                if( enumvalue.ToUpper() == enumstring)
+                                if( enumvalue.ToUpper() == enumstring.ToUpper())
                                 {
                                         return true;
                                 }
                         }
+
                         return false;
+                }
+
+                T ParseEnum<T>(string value)
+                {
+                        return (T)Enum.Parse(typeof(T), value, true);
                 }
                 
                 int GetTabCount(string commandLine)
