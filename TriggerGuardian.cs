@@ -10,13 +10,13 @@ namespace AscentProfiler
         internal class TriggerGuardian
         {
                 ActionExecutor actionExecutor;
-                internal Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
-
+                //internal Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
+                internal Dictionary<int, Trigger> tdictionary;
 
                 bool isascending = false;
                 double lastaltitude;
 
-                internal TriggerGuardian(ActionExecutor ae)
+                internal TriggerGuardian(Dictionary<int, Trigger> tdictionary, ActionExecutor ae)
                 {
                         this.actionExecutor = ae;
 

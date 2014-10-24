@@ -11,7 +11,7 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.Flight, false)]
         public class AscentProfiler : MonoBehaviour
         {
-                internal static FlightProfile ActiveProfile;
+                internal static Vessel currentVessel = null;
                 static string AscentProfilerDir;
                 internal static string profilesDir;
                 internal static string flightlogsDir;
@@ -91,8 +91,13 @@ namespace AscentProfiler
                 }
 
                 void Update()
-                {
-                 
+                {                       
+                        if (FlightGlobals.ActiveVessel != currentVessel)
+                        {
+                                currentVessel = FlightGlobals.ActiveVessel;
+                                Log.Script(LogType.Info, "New Active Vessel is: " + FlightGlobals.ActiveVessel.vesselName);
+                                return;
+                        }
                 }
 
                 void FixedUpdate() {

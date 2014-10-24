@@ -8,7 +8,7 @@ namespace AscentProfiler
 {
         class ActionExecutor
         {
-                internal List<Action> actionlist = new List<Action>();
+                internal List<Action> actionlist;
 
                 public ActionExecutor()
                 {

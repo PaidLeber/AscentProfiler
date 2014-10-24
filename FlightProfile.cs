@@ -7,14 +7,17 @@ using UnityEngine;
 namespace AscentProfiler
 {       
         
-        class FlightProfile 
+        class FlightProfile
         {
-
-                internal ActionExecutor actionExecutor;
                 internal TriggerGuardian triggerGuardian;
-                //internal FlightController flightController;
+                //FlightController flightController;
                 internal FlightLog flightLog;
-                internal Vessel vessel = null;
+                //internal Vessel vessel = null;
+
+                internal FlightProfile(TriggerGuardian tdictionary, ActionExecutor ae)
+                { 
+                
+                }
 
                 public void OnAwake()
                 {

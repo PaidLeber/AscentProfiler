@@ -11,6 +11,8 @@ namespace AscentProfiler
 {
         class ProfileLoader
         {
+                FlightProfile tempprofileval;
+
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
                 Dictionary<string, string> profiles = new Dictionary<string, string>();
@@ -18,7 +20,7 @@ namespace AscentProfiler
 
                 int triggerIndex = 0;
 
-                public ProfileLoader()
+                internal ProfileLoader()
                 {
                         List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.profilesDir, "*.profile"));
 
@@ -28,12 +30,12 @@ namespace AscentProfiler
                         }
                 }
 
-                public Dictionary<string, string> GetProfiles()
+                internal Dictionary<string, string> GetProfiles()
                 {
                         return profiles;
                 }
 
-                public string LoadProfile(string profile)
+                internal bool LoadProfile(string profile)
                 {
                         int profileStart = 0;
                         int profileEnd = 0;
@@ -115,8 +117,19 @@ namespace AscentProfiler
                         }
 
 
-                        return string.Join("\n", profileLines.ToArray());
 
+
+
+                        return true;
+
+                }
+
+
+                bool SendProfileToVessel()
+                {
+                        tempprofileval = new FlightProfile();
+
+                        return false;
                 }
 
                 bool IsRegexCommandMatch(string line, string commandType)

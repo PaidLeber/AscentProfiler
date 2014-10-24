@@ -10,6 +10,8 @@ namespace AscentProfiler
 
         class ActionFactory
         {
+                List<Action> NewActionList = new List<Action>();
+
                 Dictionary<ActionType, Func<Action>> actionProducts = new Dictionary<ActionType, Func<Action>>();
 
                 Match regexGrouping;
@@ -44,7 +46,7 @@ namespace AscentProfiler
                                         currentIndex = currentindex;
                                         currentAction = action;
 
-                                        AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
+                                        NewActionList.Add(actionProducts[action]());
 
                                 }
                                 else
@@ -59,7 +61,13 @@ namespace AscentProfiler
                         }
 
                 }
-              
+
+                List<Action> GetNewActionList()
+                {
+                        return NewActionList;
+                }
+
+
                 T ParseEnum<T>(string value)
                 {
                         try

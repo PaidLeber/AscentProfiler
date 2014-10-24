@@ -9,6 +9,7 @@ namespace AscentProfiler
 {
         class AscentProfilerGUI
         {
+                private ProfileLoader profileLoader;
                 private bool profileLoaded = false;
 
                 Texture2D loadIcon;
@@ -41,7 +42,7 @@ namespace AscentProfiler
 
                 //test values
                 private bool testbool = false;
-                private ProfileLoader profileLoader;
+
 
 
 
@@ -102,18 +103,14 @@ namespace AscentProfiler
                                 //test code
                                 if(!testbool)
                                 {
-                                        AscentProfiler.ActiveProfile.actionExecutor.actionlist.Clear();
-                                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Clear();
                                         profileLoader = new ProfileLoader();
-
-
 
                                         testbool = true;
 
 
                                 }
 
-                                
+                             
 
 
                                 GUILayout.BeginVertical();
@@ -131,15 +128,14 @@ namespace AscentProfiler
                                                         if (GUILayout.Button(pair.Key, STYLE_WINDOW_BUTTON, GUILayout.Height(24)))
                                                         {
                                                                 //profileLoaded = profileLoader.LoadProfile(pair.Key);
+                                                                profileLoader.LoadProfile(pair.Key);
                                                         }
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
                                                         {
-                                                                
-                                                                selectedProfile = pair.Key;
-                                                                selectedContent = profileLoader.LoadProfile(pair.Key);
+                                                                testbool = false;
 
-                                                                selectedHeight = GUI.skin.GetStyle("label").CalcHeight(new GUIContent(selectedContent), 200);
+                                                                Log.Level(LogType.Verbose, "Reset ProfileLoader Class");
                                                                 
                                                         }
 

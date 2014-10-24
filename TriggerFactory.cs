@@ -10,9 +10,12 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
+                Dictionary<int, Trigger> NewTriggerProfile = new Dictionary<int, Trigger>();
+
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
                 Dictionary<TriggerType, Func<Trigger>> triggerProducts = new Dictionary<TriggerType, Func<Trigger>>();
+
 
                 Stack<int> tabCountStack = new Stack<int>();                                                            // LIFO stack to convert, track and chain tabs (\t) to trigger indexes.
 
@@ -57,10 +60,11 @@ namespace AscentProfiler
 
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
-                                AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Add(currentIndex, triggerProducts[trigger]());
+
+                                NewTriggerProfile.Add(currentIndex, triggerProducts[trigger]());
 
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
-                                Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
+                                //Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                                 
                         }
                         else
@@ -70,6 +74,11 @@ namespace AscentProfiler
                         
 
                         return currentIndex;
+                }
+
+                internal TriggerGuardian GetNewTriggerGuardian(ActionExecutor ae)
+                {
+                        return new TriggerGuardian(NewTriggerProfile, ae);
                 }
 
                 bool SetTriggerMode(TriggerType trigger)
