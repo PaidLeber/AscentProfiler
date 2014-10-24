@@ -25,57 +25,61 @@ namespace AscentProfiler
                 NEXT
         }
 
-        enum ActionGroupObject
-        {
-                Stage,
-                Gear,
-                Light,
-                RCS,
-                SAS,
-                Brakes,
-                Abort,
-                Custom01,
-                Custom02,
-                Custom03,
-                Custom04,
-                Custom05,
-                Custom06,
-                Custom07,
-                Custom08,
-                Custom09,
-                Custom10
-        }   
 
-        public abstract class Action
-        {
-                internal bool activated = false;
-                internal int index = -1;
 
+        abstract class Action
+        {
                 protected ActionType type;
 
-                internal string displayvalue;
-                internal string description;
+                internal bool activated = false;
+                internal int index = -1;
 
                 protected int value;
                 protected bool state = false;
 
+                internal string displayvalue;
+                internal string description;
+
                 internal abstract bool Execute(); 
+
+                protected bool SetModifierState(ActionModifier modifier)
+                {
+                        switch (modifier)
+                        {
+                                case ActionModifier.ACTIVATE:
+                                        return true;
+                                case ActionModifier.ON:
+                                        return true;
+                                case ActionModifier.DEACTIVATE:
+                                        return false;
+                                case ActionModifier.OFF:
+                                        return false;
+                                default:
+                                        return false;
+                        }
+
+                }
+
 
         }
 
         class ActionGroup : Action
         {
+                KSPActionGroup actionObject;
 
-                internal ActionGroup(int index, ActionType type, ActionGroupObject obj, ActionModifier modifier, string description, int value)
+                internal ActionGroup(int index, ActionType type, KSPActionGroup actionobject, ActionModifier modifier, string description, int value)
                 {
                         this.index = index;
-                        this.state = state;
+                        this.type = type;
+                        this.state = SetModifierState(modifier);
+                        this.actionObject = actionobject;
+
                         this.description = description;
                         this.value = value;
                 
                 }
 
-                public override bool Execute()
+                internal override bool Execute()
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value +" TRIGGERED");
                         FlightGlobals.ActiveVessel.ActionGroups.SetGroup(Util.SetActionGroup(value), true);
@@ -88,14 +92,14 @@ namespace AscentProfiler
                         // Modifiers: ActionGroup: Activate, Deactivate, Toggle
                         
                 }
+
         }
 
-        public sealed class ActionGroupToggle : Action
+        class ActionGroupToggle : Action
         {
-                public override string type { get { return "AGTOGGLE"; } }
-                public override string desc { get { return "Action Group Toggle"; } }
 
-                public ActionGroupToggle(int index, int value)
+
+                internal ActionGroupToggle(int index, int value)
                 {
                         this.index = index;
                         this.value = value;
@@ -103,7 +107,7 @@ namespace AscentProfiler
                 }
 
 
-                public override bool Execute()
+                internal override bool Execute()
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value);
                         FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(Util.SetActionGroup(value));
@@ -112,19 +116,18 @@ namespace AscentProfiler
                 }
         }
 
-        public sealed class StageNext : Action
+        class StageNext : Action
         {
-                public override string type { get { return "STAGENEXT"; } }
-                public override string desc { get { return "Stage Separation"; } }
 
-                public StageNext(int index)
+
+                internal StageNext(int index)
                 {
                         this.index = index;
                 
                 }
 
 
-                public override bool Execute()
+                internal override bool Execute()
                 {
                         //FlightLog.Log("STAGE SEPARATION");
                         Staging.ActivateNextStage();
@@ -134,19 +137,17 @@ namespace AscentProfiler
                 }
         }
 
-        public sealed class ActivateStage : Action
+        class ActivateStage : Action
         {
-                public override string type { get { return "STAGE"; } }
-                public override string desc { get { return "Stage Separation"; } }
 
-                public ActivateStage(int index, int value)
+                internal ActivateStage(int index, int value)
                 {
                         this.index = index;
                         this.value = value;
                 
                 }
 
-                public override bool Execute()
+                internal override bool Execute()
                 {
                         //FlightLog.Log(value + " " + desc.ToUpper());
                         Staging.ActivateStage(value);
@@ -156,13 +157,11 @@ namespace AscentProfiler
         }
 
 
-        public sealed class Throttle : Action
+        class Throttle : Action
         {
-                public override string type { get { return "THROTTLE"; } }
-                public override string desc { get { return "Throttle Set"; } }
-                public float floatvalue;
+                float floatvalue;
 
-                public Throttle(int index, int value)
+                internal Throttle(int index, int value)
                 {
                         this.index = index;
                         this.value = value;
@@ -178,7 +177,7 @@ namespace AscentProfiler
 
                 }
 
-                public override bool Execute()
+                internal override bool Execute()
                 {
 
                         FlightInputHandler.state.mainThrottle = floatvalue;

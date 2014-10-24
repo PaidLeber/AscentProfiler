@@ -99,7 +99,7 @@ namespace AscentProfiler
                                         }   
 
                                 }
-                                /*
+                                
                                 foreach (ActionType action in (ActionType[])Enum.GetValues(typeof(ActionType)))
                                 {
                                         if (IsRegexCommandMatch(line, action.ToString()))
@@ -110,7 +110,7 @@ namespace AscentProfiler
 
 
                                 }
-                                */
+                                
 
                         }
 

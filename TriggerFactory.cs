@@ -68,6 +68,7 @@ namespace AscentProfiler
                                 Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Unable to parse command line. Check Syntax.");
                         }
                         
+
                         return currentIndex;
                 }
 

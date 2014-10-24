@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        public class ActionExecutor
+        class ActionExecutor
         {
-                public List<Action> actionlist = new List<Action>();
+                internal List<Action> actionlist = new List<Action>();
 
                 public ActionExecutor()
                 {

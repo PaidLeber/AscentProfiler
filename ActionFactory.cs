@@ -9,36 +9,47 @@ namespace AscentProfiler
 
         class ActionFactory
         {
-                List<Action> actionProducts = new List<Action>();
+                Dictionary<ActionType, Func<Action>> actionProducts = new Dictionary<ActionType, Func<Action>>();
 
                 Match regexGrouping;
 
                 string actionRegex = @"^\t*\w+\s+(?:(\w+)\s+)?(?:(\d+)\s+)?(?:""[\w\s]+"")?\s*$";
 
+                //values that populate protoaction
                 int currentIndex;
+                ActionType currentAction;
+                KSPActionGroup currentActionGroupObject;
+                ActionModifier currentModifier;
+                string currentDescription;
 
                 internal ActionFactory()
                 {
-                        actionProducts.Add(new ActionGroup( currentIndex, true, Convert.ToInt16(regexGrouping.Groups[2].Value) ));
+                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, currentActionGroupObject, currentModifier, currentDescription, Convert.ToInt16(regexGrouping.Groups[2].Value)); });
+
                 }
 
-                void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandline, int linenumber)
+                internal void CreateAction(ActionType action, int currentindex, int tabstackcount, string commandline, int linenumber)
                 {
-                        currentIndex = currentindex;
-
                         regexGrouping = Regex.Match(commandline, actionRegex);
 
                         if (regexGrouping.Success)
                         {
+                                Log.Level(LogType.Verbose, "Action Valid. Success! Groups Next:");
+                                Log.Level(LogType.Verbose, regexGrouping.Groups[1].Value);
+                                Log.Level(LogType.Verbose, regexGrouping.Groups[2].Value);
+                                Log.Level(LogType.Verbose, regexGrouping.Groups[2].Value);
                                 if (GetTabCount(commandline) - tabstackcount == 0)
                                 {
+                                        currentIndex = currentindex;
+                                        currentAction = action;
 
 
+                                        //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
                                 }
                                 else
                                 {
-                                        Log.Script(LogType.Error, "Unchained Action. Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                        Log.Script(LogType.Error, "Unchained Action: Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                                 }
                                 
                         }
@@ -65,7 +76,21 @@ namespace AscentProfiler
 
                         return false;
                 }
+                
+                bool IsValidActionParameter(Enum e, string enumstring)
+                {
+                        var enumList = Enum.GetNames(e.GetType());
 
+                        foreach (var enumvalue in enumList)
+                        {
+                                if( enumvalue.ToUpper() == enumstring)
+                                {
+                                        return true;
+                                }
+                        }
+                        return false;
+                }
+                
                 int GetTabCount(string commandLine)
                 {
                         return Regex.Match(commandLine, @"^(\t)+\w+").Groups[1].Captures.Count;

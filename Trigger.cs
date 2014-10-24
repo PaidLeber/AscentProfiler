@@ -30,10 +30,11 @@ namespace AscentProfiler
         abstract class Trigger
         {
 
+                protected TriggerType type;
+                
                 internal bool activated = false;
                 internal int index;
 
-                protected TriggerType type;
                 protected bool ascentMode;
                 protected bool fromaxval;
 

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        public class TriggerGuardian
+        internal class TriggerGuardian
         {
                 ActionExecutor actionExecutor;
                 internal Dictionary<int, Trigger> tdictionary = new Dictionary<int, Trigger>();
@@ -16,7 +16,7 @@ namespace AscentProfiler
                 bool isascending = false;
                 double lastaltitude;
 
-                public TriggerGuardian(ActionExecutor ae)
+                internal TriggerGuardian(ActionExecutor ae)
                 {
                         this.actionExecutor = ae;
 

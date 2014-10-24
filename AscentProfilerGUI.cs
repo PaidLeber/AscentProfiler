@@ -98,8 +98,12 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
+
+                                //test code
                                 if(!testbool)
-                                { 
+                                {
+                                        AscentProfiler.ActiveProfile.actionExecutor.actionlist.Clear();
+                                        AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Clear();
                                         profileLoader = new ProfileLoader();
 
 
