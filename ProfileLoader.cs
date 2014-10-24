@@ -68,13 +68,13 @@ namespace AscentProfiler
                         }
                         else if(profileStart == 0)
                         {
-                                Log.Script(LogType.Error, profile, "START not found.");
+                                Log.Script(LogType.Error, profile + " START not found.");
                                 // Add error log checking here then return bool
                                 //return false;
                         }
                         else if (profileEnd == 0)
                         {
-                                Log.Script(LogType.Error, profile, "END not found.");
+                                Log.Script(LogType.Error, profile+ " END not found.");
                         }
 
                         lineCounter = 0;

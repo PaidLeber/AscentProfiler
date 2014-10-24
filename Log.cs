@@ -55,14 +55,14 @@ namespace AscentProfiler
                         UnityEngine.Debug.Log( message );
                 }
 
-                internal static void Script(LogType lType, string message, string gstring)
+                internal static void Script(LogType lType, string message)
                 {
                         if (lType > scriptlevel)
                         {
                                 return;
                         }
 
-                        message = "Loading Gscript: "+ lType + ": " + message+ ": " + gstring;
+                        message = "Loading Gscript: "+ lType + ": " + message;
 
                         switch (lType)
                         { 

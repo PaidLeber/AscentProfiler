@@ -65,7 +65,7 @@ namespace AscentProfiler
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Line #" + lineNumber + ": Command: " + commandLine + ":", "Unable to parse command line. Check Syntax.");
+                                Log.Script(LogType.Error,"Unable to parse command line. Check Syntax. "+ "Line #" + lineNumber + ": Command: " + commandLine );
                         }
                         
 
@@ -142,7 +142,7 @@ namespace AscentProfiler
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                Log.Script(LogType.Error, "Unchained Trigger: Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                Log.Script(LogType.Error, "Unchained Trigger: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                         }
 
                         return linkedindex;

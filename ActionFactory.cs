@@ -22,7 +22,7 @@ namespace AscentProfiler
 
                 internal ActionFactory()
                 {
-                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, (KSPActionGroup)Enum.Parse(typeof(KSPActionGroup), regexGrouping.Groups[1].Value), (ActionModifier)Enum.Parse(typeof(ActionModifier), regexGrouping.Groups[2].Value), regexGrouping.Groups[3].Value.ToString()); });
+                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value), ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value), regexGrouping.Groups[3].Value.ToString()); });
 
                 }
 
@@ -44,6 +44,9 @@ namespace AscentProfiler
                                         currentIndex = currentindex;
                                         currentAction = action;
 
+                                        Log.Level(LogType.Verbose,"parse kspactiongroup: "+ ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value).ToString());
+                                        Log.Level(LogType.Verbose, "parse actionmodifier: " + ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value));
+                                        /*
                                         if (!IsValidActionParameter(new KSPActionGroup(), regexGrouping.Groups[1].Value.ToString()))
                                         {
                                                 Log.Script(LogType.Error, regexGrouping.Groups[1].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
@@ -52,20 +55,20 @@ namespace AscentProfiler
                                         if (!IsValidActionParameter(new ActionModifier(), regexGrouping.Groups[2].Value.ToString()))
                                         {
                                                 Log.Script(LogType.Error, regexGrouping.Groups[2].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
-                                        }
+                                        } */
 
                                         //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
                                 }
                                 else
                                 {
-                                        Log.Script(LogType.Error, "Unchained Action: Check Tab Structure.", "Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                        Log.Script(LogType.Error, "Unchained Action: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                                 }
                                 
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax.", "Line #" + linenumber + ": Command: " + commandline + ":");
+                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax. Line #" + linenumber + ": Command: " + commandline);
                         }
 
                 }
@@ -89,7 +92,7 @@ namespace AscentProfiler
                 
                 bool IsValidActionParameter(Enum e, string enumstring)
                 {
-
+                        
                         var enumList = Enum.GetNames(e.GetType());
 
                         foreach (var enumvalue in enumList)
@@ -106,7 +109,18 @@ namespace AscentProfiler
 
                 T ParseEnum<T>(string value)
                 {
+                        
+                        try
+                        {
+                                return (T)Enum.Parse(typeof(T), value, true);
+                        }
+                        catch
+                        {
+                                Log.Script(LogType.Error, value + " is not a valid action parameter");
+                        }
+
                         return (T)Enum.Parse(typeof(T), value, true);
+                        
                 }
                 
                 int GetTabCount(string commandLine)
