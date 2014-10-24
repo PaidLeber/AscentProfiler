@@ -10,11 +10,12 @@ namespace AscentProfiler
         {
                 internal List<Action> actionlist;
 
-                internal ActionExecutor()
+                internal ActionExecutor(List<Action> newactionlist)
                 {
+                        this.actionlist = newactionlist;
                 }
 
-                public void ExecuteActions(int index)
+                internal void ExecuteActions(int index)
                 {
 
                         foreach (var action in actionlist.Where(action => action.activated == false && action.index == index))
