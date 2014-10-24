@@ -18,13 +18,13 @@ namespace AscentProfiler
                 //values that populate protoaction
                 int currentIndex;
                 ActionType currentAction;
-                KSPActionGroup currentActionGroupObject;
+                KSPActionGroup kspactiongroup = new KSPActionGroup();
                 ActionModifier currentModifier;
                 string currentDescription;
 
                 internal ActionFactory()
                 {
-                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, currentActionGroupObject, currentModifier, currentDescription, Convert.ToInt16(regexGrouping.Groups[2].Value)); });
+                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, KSPActionGroup.Stage, currentModifier, regexGrouping.Groups[3].Value.ToString(), Convert.ToInt16(regexGrouping.Groups[2].Value)); });
 
                 }
 
@@ -38,10 +38,17 @@ namespace AscentProfiler
                                 Log.Level(LogType.Verbose, regexGrouping.Groups[1].Value);
                                 Log.Level(LogType.Verbose, regexGrouping.Groups[2].Value);
                                 Log.Level(LogType.Verbose, regexGrouping.Groups[3].Value);
+
                                 if (GetTabCount(commandline) - tabstackcount == 0)
                                 {
+                                        Log.Level(LogType.Verbose, action.ToString() + " :tabcount: "+GetTabCount(commandline)+ " tabstackcount: "+ tabstackcount);
+
                                         currentIndex = currentindex;
                                         currentAction = action;
+                                        if(IsValidActionParameter(kspactiongroup, regexGrouping.Groups[1].Value.ToString()))
+                                        {
+                                                Log.Level(LogType.Verbose, "Is Valid Parameter");
+                                        }
 
 
                                         //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
@@ -83,6 +90,7 @@ namespace AscentProfiler
 
                         foreach (var enumvalue in enumList)
                         {
+                                Log.Level(LogType.Verbose, "enumvalue: " + enumvalue + " enumstring: " + enumstring);
                                 if( enumvalue.ToUpper() == enumstring)
                                 {
                                         return true;

@@ -36,7 +36,7 @@ namespace AscentProfiler
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
 
-                        triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value), Convert.ToDouble(regexGrouping.Groups[1].Value)); });
+                        triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value.ToString()), Convert.ToDouble(regexGrouping.Groups[1].Value.ToString())); });
                 
                 }
 
