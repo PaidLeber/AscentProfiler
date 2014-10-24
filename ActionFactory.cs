@@ -44,10 +44,6 @@ namespace AscentProfiler
                                         currentIndex = currentindex;
                                         currentAction = action;
 
-                                        Log.Level(LogType.Verbose,"parse kspactiongroup: "+ ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value).ToString());
-                                        Log.Level(LogType.Verbose, "parse actionmodifier: " + ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value));
-
-
                                         //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
                                 }
@@ -63,44 +59,9 @@ namespace AscentProfiler
                         }
 
                 }
-
-
-
-                bool SetModifier(ActionModifier modifier, string regexgroup)
-                {
-                        if (String.IsNullOrEmpty(regexgroup))
-                        {
-                                return false;
-                        }
-
-                        if (modifier == (ActionModifier)Enum.Parse(typeof(ActionModifier), regexgroup))
-                        {
-                                return true;
-                        }
-
-                        return false;
-                }
-                
-                bool IsValidActionParameter(Enum e, string enumstring)
-                {
-                        
-                        var enumList = Enum.GetNames(e.GetType());
-
-                        foreach (var enumvalue in enumList)
-                        {
-                                Log.Level(LogType.Verbose, "enumvalue: " + enumvalue + " enumstring: " + enumstring);
-                                if( enumvalue.ToUpper() == enumstring.ToUpper())
-                                {
-                                        return true;
-                                }
-                        }
-
-                        return false;
-                }
-
+              
                 T ParseEnum<T>(string value)
                 {
-                        
                         try
                         {
                                 return (T)Enum.Parse(typeof(T), value, true);
