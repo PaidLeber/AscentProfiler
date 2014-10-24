@@ -22,7 +22,7 @@ namespace AscentProfiler
 
                 internal ActionFactory()
                 {
-                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value), ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value), regexGrouping.Groups[3].Value.ToString()); });
+                        actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value), ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value), regexGrouping.Groups[3].Value.ToString()); });
 
                 }
 
@@ -44,7 +44,7 @@ namespace AscentProfiler
                                         currentIndex = currentindex;
                                         currentAction = action;
 
-                                        //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
+                                        AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
                                 }
                                 else

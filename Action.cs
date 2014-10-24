@@ -8,7 +8,6 @@ namespace AscentProfiler
 {
         enum ActionType
         {
-                None,
                 ACTIONGROUP,
                 STAGE,
                 THROTTLE
@@ -16,7 +15,6 @@ namespace AscentProfiler
 
         enum ActionModifier
         { 
-                None,
                 ACTIVATE,
                 DEACTIVATE,
                 ON,
@@ -30,6 +28,7 @@ namespace AscentProfiler
         abstract class Action
         {
                 protected ActionType type;
+                protected ActionModifier modifier;
 
                 internal bool activated = false;
                 internal int index = -1;
@@ -65,24 +64,39 @@ namespace AscentProfiler
 
         class ActionGroup : Action
         {
-                KSPActionGroup actionObject;
+                KSPActionGroup actiongroupValue;
 
-                internal ActionGroup(int index, ActionType type, KSPActionGroup actionobject, ActionModifier modifier, string description)
+                internal ActionGroup(int index, ActionType type, ActionModifier modifier, KSPActionGroup kspactiongroupEnum, string description)
                 {
                         this.index = index;
                         this.type = type;
                         this.state = SetModifierState(modifier);
-                        this.actionObject = actionobject;
-
+                        this.modifier = modifier;
+                        this.actiongroupValue = kspactiongroupEnum;
                         this.description = description;
                 
                 }
 
                 internal override bool Execute()
                 {
-                        //FlightLog.Log(desc.ToUpper() + " " + value +" TRIGGERED");
-                        FlightGlobals.ActiveVessel.ActionGroups.SetGroup(Util.SetActionGroup(value), true);
-                        return activated = true;
+                        switch(modifier)
+                        {
+
+                                case ActionModifier.TOGGLE:
+
+                                        FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(actiongroupValue);
+                                        return activated = true;
+
+                                default:
+
+                                        FlightGlobals.ActiveVessel.ActionGroups.SetGroup(actiongroupValue, state);
+                                        return activated = true;
+                        }
+
+                        
+                        
+                        //FlightGlobals.ActiveVessel.ActionGroups.SetGroup(Util.SetActionGroup(value), true);
+                        
                         //KSPActionGroup.Brakes
                         //KSPActionGroup.Stage 
                         // etc...
