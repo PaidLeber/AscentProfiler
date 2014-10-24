@@ -46,16 +46,7 @@ namespace AscentProfiler
 
                                         Log.Level(LogType.Verbose,"parse kspactiongroup: "+ ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value).ToString());
                                         Log.Level(LogType.Verbose, "parse actionmodifier: " + ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value));
-                                        /*
-                                        if (!IsValidActionParameter(new KSPActionGroup(), regexGrouping.Groups[1].Value.ToString()))
-                                        {
-                                                Log.Script(LogType.Error, regexGrouping.Groups[1].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
-                                        }
 
-                                        if (!IsValidActionParameter(new ActionModifier(), regexGrouping.Groups[2].Value.ToString()))
-                                        {
-                                                Log.Script(LogType.Error, regexGrouping.Groups[2].Value.ToString() + " is not a valid " + action.ToString() + " parameter.", "Line #" + linenumber + ": Command: " + commandline);
-                                        } */
 
                                         //AscentProfiler.ActiveProfile.actionExecutor.actionlist.Add( actionProducts[action]());
 
