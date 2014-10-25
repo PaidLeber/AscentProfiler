@@ -8,7 +8,8 @@ namespace AscentProfiler
 {
         public class AscentProAPGCSModule : PartModule
         {
-                internal TriggerGuardian FlightProfile = null;
+                TriggerGuardian flightProfile = null;
+                FlightRecorder flightRecorder = null;
 
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
@@ -17,7 +18,7 @@ namespace AscentProfiler
                 internal bool RXProfile(TriggerGuardian newprofile)
                 {
 
-                        this.FlightProfile = newprofile;
+                        this.flightProfile = newprofile;
 
                         Log.Level(LogType.Verbose, "Profile loaded");
 
@@ -42,7 +43,7 @@ namespace AscentProfiler
                  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        //test = part.AddModule("hello");
+                        
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);

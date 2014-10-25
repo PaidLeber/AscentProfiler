@@ -31,7 +31,10 @@ namespace AscentProfiler
         {
 
                 protected TriggerType type;
-                
+
+                protected bool isascending;
+                protected double lastaltitude;
+
                 internal bool activated = false;
                 internal int index;
 
@@ -44,7 +47,16 @@ namespace AscentProfiler
                 internal string displayvalue;
                 internal string description;
 
-                internal abstract bool Evaluate(bool isascending);
+                internal abstract bool Evaluate(Vessel v);
+
+                protected bool IsAscending(Vessel v)
+                {
+                        isascending = (v.altitude > lastaltitude ? true : false);
+
+                        lastaltitude = v.altitude;
+
+                        return isascending;
+                }
 
                 protected bool isIncreasing(bool isascending, double vVariable, double vStatic)
                 {
@@ -80,9 +92,10 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
-                internal override bool Evaluate(bool isascending)
+                internal override bool Evaluate(Vessel v, bool isascending)
                 {
-
+                        IsAscending(v);
+                        
                         double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
 
                         if (!fromaxval)
@@ -117,7 +130,7 @@ namespace AscentProfiler
                         this.value = value;
                 }
 
-                internal override bool Evaluate(bool isascending)
+                internal override bool Evaluate(Vessel v, bool isascending)
                 {
 
                         //May need to use Timefixed.delta
