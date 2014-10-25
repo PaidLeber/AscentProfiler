@@ -14,6 +14,12 @@ namespace AscentProfiler
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
 
+                internal bool RXProfile(TriggerGuardian newprofile)
+                {
+
+                        return true;
+                }
+
                 /*
                 * Called after the scene is loaded.
                 */

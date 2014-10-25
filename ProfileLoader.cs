@@ -116,21 +116,17 @@ namespace AscentProfiler
 
                         }
 
-                        
 
-
-
-                        return true;
+                        return TXAscentProAPGCSModule(triggerFactory.GetNewTriggerGuardian(actionFactory.GetNewActionExecutor()));
 
                 }
 
 
-                bool UploadProfileToActiveVessel()
+                bool TXAscentProAPGCSModule(TriggerGuardian newprofile)
                 {
-                        //FlightGlobals.ActiveVessel.parts
-                        tempprofileval = triggerFactory.GetNewTriggerGuardian( actionFactory.GetNewActionExecutor() ) ;
+                        AscentProAPGCSModule APGCSmodule = FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
-                        return false;
+                        return APGCSmodule.RXProfile(newprofile);
                 }
 
                 bool IsRegexCommandMatch(string line, string commandType)
