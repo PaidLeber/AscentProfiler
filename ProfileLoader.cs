@@ -11,7 +11,7 @@ namespace AscentProfiler
 {
         class ProfileLoader
         {
-                FlightProfile tempprofileval;
+                TriggerGuardian tempprofileval;
 
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
@@ -127,7 +127,8 @@ namespace AscentProfiler
 
                 bool UploadProfileToActiveVessel()
                 {
-                        tempprofileval = new FlightProfile( triggerFactory.GetNewTriggerGuardian( actionFactory.GetNewActionExecutor() ) );
+                        //FlightGlobals.ActiveVessel.parts
+                        tempprofileval = triggerFactory.GetNewTriggerGuardian( actionFactory.GetNewActionExecutor() ) ;
 
                         return false;
                 }

@@ -48,9 +48,9 @@
     <Compile Include="Action.cs" />
     <Compile Include="ActionExecutor.cs" />
     <Compile Include="ActionFactory.cs" />
+    <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
-    <Compile Include="AscentProGuidanceControlSystemsModule.cs" />
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightLog.cs" />
     <Compile Include="FlightProfile.cs" />
