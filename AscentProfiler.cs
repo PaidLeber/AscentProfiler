@@ -26,7 +26,6 @@ namespace AscentProfiler
                 bool RT = false;
                 bool KAC = false;
                 bool TRAJ = false;
-                bool DRE = false;
 
                 void Awake()
                 {
