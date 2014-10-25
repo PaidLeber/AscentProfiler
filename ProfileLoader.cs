@@ -131,6 +131,16 @@ namespace AscentProfiler
 
                 }
 
+                bool TXRemoteTechNetwork()
+                {
+                        ScreenMessages.PostScreenMessage("Transmitting GCodes to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
+
+
+
+                        
+                        return false;
+                }
+
                 bool IsRegexCommandMatch(string line, string commandType)
                 {
                         return Regex.IsMatch(line, @"^\t*" + commandType + @"\s*.*$");
