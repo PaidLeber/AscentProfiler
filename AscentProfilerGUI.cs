@@ -9,13 +9,13 @@ namespace AscentProfiler
 {
         class AscentProfilerGUI
         {
-                private ProfileLoader profileLoader;
-                private bool profileLoaded = false;
+                ProfileLoader profileLoader;
+                bool profileLoaded = false;
 
                 Texture2D loadIcon;
 
                 //GUI Styles
-                private GUIStyle STYLE_WINDOW_BUTTON;
+                GUIStyle STYLE_WINDOW_BUTTON;
 
 
 
@@ -36,13 +36,12 @@ namespace AscentProfiler
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
 
                 //Profiling loading
-                private string selectedProfile = "";
-                private string selectedContent = "";
-                private float selectedHeight = 0;
+                string selectedProfile = "";
+                string selectedContent = "";
+                float selectedHeight = 0;
 
                 //test values
-                private bool testbool = false;
-
+                bool testbool = false;
 
 
 
@@ -128,7 +127,10 @@ namespace AscentProfiler
                                                         if (GUILayout.Button(pair.Key, STYLE_WINDOW_BUTTON, GUILayout.Height(24)))
                                                         {
                                                                 //profileLoaded = profileLoader.LoadProfile(pair.Key);
-                                                                profileLoader.LoadProfile(pair.Key);
+                                                                if (profileLoader.LoadProfile(pair.Key))
+                                                                {
+                                                                        Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfiler.currentVessel.vesselName);
+                                                                }
                                                         }
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
