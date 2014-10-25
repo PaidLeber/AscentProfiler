@@ -17,6 +17,10 @@ namespace AscentProfiler
                 internal bool RXProfile(TriggerGuardian newprofile)
                 {
 
+                        this.FlightProfile = newprofile;
+
+                        Log.Script(LogType.Info, "Profile loaded");
+
                         return true;
                 }
 
