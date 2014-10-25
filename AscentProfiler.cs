@@ -20,6 +20,14 @@ namespace AscentProfiler
                 bool mainWindowEnabled = true;
                 IButton mainButton;
 
+                //Loaded Assemblies check
+                bool assemblycheck = false;
+                bool FAR = false;
+                bool RT = false;
+                bool KAC = false;
+                bool TRAJ = false;
+                bool DRE = false;
+
                 void Awake()
                 {
                         Log.Level(LogType.Info, "Is Awake!");
@@ -28,7 +36,7 @@ namespace AscentProfiler
 
                 void Start()
                 {
-
+                        CheckforAPIs();
 
                         
                         gui = new AscentProfilerGUI();
@@ -84,6 +92,25 @@ namespace AscentProfiler
                         Log.Level(LogType.Info, "Flight Logs Directory: " + flightlogsDir); 
                 }
 
+                void CheckforAPIs()
+                {
+                        foreach (var loadedAssembly in AssemblyLoader.loadedAssemblies)
+                        { 
+                                switch(loadedAssembly.name)
+                                {
+                                        case "FerramAerospaceResearch":
+                                                FAR = true;
+                                                break;
+
+                                        case "RemoteTech":
+                                                RT = true;
+                                                break;
+                                
+                                }
+                        }
+
+                        assemblycheck = true;
+                }
 
                 void OnGUI()
                 {

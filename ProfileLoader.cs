@@ -116,7 +116,7 @@ namespace AscentProfiler
 
                         }
 
-
+                        
                         return TXAscentProAPGCSModule(triggerFactory.GetNewTriggerGuardian(actionFactory.GetNewActionExecutor()));
 
                 }
