@@ -125,7 +125,7 @@ namespace AscentProfiler
                 bool TXAscentProAPGCSModule(TriggerGuardian newprofile)
                 {
                         AscentProAPGCSModule APGCSmodule = FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
-
+                        APGCSmodule.Test();
                         Log.Level(LogType.Verbose, APGCSmodule.RXProfile(newprofile).ToString());
                         return false;
 

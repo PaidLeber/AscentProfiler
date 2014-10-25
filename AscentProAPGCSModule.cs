@@ -19,11 +19,15 @@ namespace AscentProfiler
 
                         this.FlightProfile = newprofile;
 
-                        Log.Script(LogType.Info, "Profile loaded");
+                        Log.Level(LogType.Verbose, "Profile loaded");
 
                         return true;
                 }
 
+                internal void Test()
+                {
+                        Log.Level(LogType.Verbose, "AscentProAPGCSModule TEST1");
+                }
                 /*
                 * Called after the scene is loaded.
                 */

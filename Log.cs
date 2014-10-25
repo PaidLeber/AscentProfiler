@@ -23,7 +23,7 @@ namespace AscentProfiler
 
 
                 private static bool _debug;
-                internal static bool debug
+                static bool debug
                 {
                         get
                         {
@@ -57,7 +57,7 @@ namespace AscentProfiler
 
                 internal static void Script(LogType lType, string message)
                 {
-                        if (lType > scriptlevel)
+                        if ( scriptlevel >= lType)
                         {
                                 return;
                         }
