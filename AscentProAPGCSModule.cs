@@ -8,7 +8,8 @@ namespace AscentProfiler
 {
         public class AscentProAPGCSModule : PartModule
         {
-                internal TriggerGuardian flightProfile;
+                internal TriggerGuardian FlightProfile;
+
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
