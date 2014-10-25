@@ -22,7 +22,7 @@ namespace AscentProfiler
                 static LogType scriptlevel = LogType.Error;
 
 
-                static bool _debug;
+                private static bool _debug;
                 internal static bool debug
                 {
                         get

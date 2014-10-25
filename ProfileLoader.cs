@@ -126,7 +126,9 @@ namespace AscentProfiler
                 {
                         AscentProAPGCSModule APGCSmodule = FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
-                        return APGCSmodule.RXProfile(newprofile);
+                        Log.Level(LogType.Verbose, APGCSmodule.RXProfile(newprofile).ToString());
+                        return false;
+
                 }
 
                 bool IsRegexCommandMatch(string line, string commandType)

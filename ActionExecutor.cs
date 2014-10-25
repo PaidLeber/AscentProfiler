@@ -12,6 +12,7 @@ namespace AscentProfiler
 
                 internal ActionExecutor(List<Action> newactionlist)
                 {
+                        Log.Level(LogType.Verbose, "Action Executor constructor!");
                         this.actionlist = newactionlist;
                 }
 

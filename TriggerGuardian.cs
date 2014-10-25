@@ -18,6 +18,7 @@ namespace AscentProfiler
 
                 internal TriggerGuardian(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
                 {
+                        Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         this.actionExecutor = actionloop;
                         this.tdictionary = triggerdictionary;
                 }

@@ -78,6 +78,7 @@ namespace AscentProfiler
 
                 internal TriggerGuardian GetNewTriggerGuardian(ActionExecutor NewActionExecutor)
                 {
+                        Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
                         return new TriggerGuardian(NewTriggerProfile, NewActionExecutor);
                 }
 

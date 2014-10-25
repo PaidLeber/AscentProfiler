@@ -131,6 +131,10 @@ namespace AscentProfiler
                                                                 {
                                                                         Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfiler.currentVessel.vesselName);
                                                                 }
+                                                                else
+                                                                {
+                                                                        Log.Script(LogType.Info, "Unable to Upload Profile: " + AscentProfiler.currentVessel.vesselName);
+                                                                }
                                                         }
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
