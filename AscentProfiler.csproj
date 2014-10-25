@@ -56,8 +56,8 @@
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
     <Compile Include="FlightController.cs" />
-    <Compile Include="FlightLog.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="MissionLog.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="ProfileLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
