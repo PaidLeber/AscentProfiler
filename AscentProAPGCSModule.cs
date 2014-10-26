@@ -114,7 +114,7 @@ namespace AscentProfiler
                 public override void OnUpdate()
                 {
                         RXProfileReceiverSequence();
-                        TXToMissionLog();
+                        Transmit();
 
 
 
@@ -186,7 +186,7 @@ namespace AscentProfiler
                         return isNewProfile = true;
                 }
 
-                void TXToMissionLog()
+                void Transmit()
                 {
                         if (!isConnectedtoKSC) 
                                 { return; }
@@ -231,6 +231,8 @@ namespace AscentProfiler
                                                 profileSequenceDelay = RandGenerator.Next(3, 15);
                                                 break;
                                         case 3:
+                                                flightProfile.AssignToModule(this);
+                                                Log.Level(LogType.Verbose, "Profile Loaded");
                                                 profileSequenceDelay = 0;
                                                 break;
                                         case 4:
@@ -250,10 +252,6 @@ namespace AscentProfiler
                                                 return;
                                 }
 
-                                if (profileMessageSequence == 3 && vessel.missionTime > profileTransmissionTime + profileSequenceDelay)
-                                { 
-                                        flightProfile.AssignToModule(this);                                                             //Load Flight Profile
-                                }
 
                                 profileMessageSequence++;
                         }
