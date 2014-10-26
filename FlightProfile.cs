@@ -23,7 +23,7 @@ namespace AscentProfiler
                         this.tdictionary = triggerdictionary;
                 }
 
-                internal void AssignToVessel(AscentProAPGCSModule module)
+                internal void AssignToModule(AscentProAPGCSModule module)
                 {
                         this.module = module;
                 }

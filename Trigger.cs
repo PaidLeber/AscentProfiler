@@ -94,8 +94,8 @@ namespace AscentProfiler
                 internal override bool Evaluate(AscentProAPGCSModule module)
                 {
                         IsAscending(module);
-                        
-                        double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
+
+                        double currentAltitude = ascentMode ? module.vessel.altitude : (module.vessel.altitude - module.vessel.terrainAltitude);
 
                         if (!fromaxval)
                         {
