@@ -42,7 +42,7 @@ namespace AscentProfiler
                 private System.Random RandGenerator = new System.Random();
 
                 private bool isNewProfile = false;
-                private int profileSequenceDelay = 0;
+                private double profileSequenceDelay = 0;
                 private double profileTransmissionTime = 0;
                 private int profileMessageSequence = 0;
 
@@ -231,9 +231,7 @@ namespace AscentProfiler
                                                 profileSequenceDelay = RandGenerator.Next(3, 15);
                                                 break;
                                         case 3:
-                                                flightProfile.AssignToModule(this);
                                                 profileSequenceDelay = 0;
-                                                Log.Level(LogType.Verbose, "Profile loaded");
                                                 break;
                                         case 4:
                                                 profileSequenceDelay = RandGenerator.Next(4, 7);
@@ -251,7 +249,12 @@ namespace AscentProfiler
                                                 profileTransmissionTime = 0;
                                                 return;
                                 }
-                                
+
+                                if (profileMessageSequence == 3 && vessel.missionTime > profileTransmissionTime + profileSequenceDelay)
+                                { 
+                                        flightProfile.AssignToModule(this);                                                             //Load Flight Profile
+                                }
+
                                 profileMessageSequence++;
                         }
 
