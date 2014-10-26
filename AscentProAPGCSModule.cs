@@ -44,7 +44,7 @@ namespace AscentProfiler
                  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        
+                        flightRecorder = new FlightRecorder(this.vessel);
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);

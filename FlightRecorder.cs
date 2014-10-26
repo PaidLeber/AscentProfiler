@@ -8,17 +8,15 @@ namespace AscentProfiler
         class FlightRecorder
         {
 
-                List<string> Log;
-                SortedDictionary<float, int> index;
-                List<List<double>> data;
+                List<string> Log = new List<string>();
+                SortedDictionary<float, int> index = new SortedDictionary<float,int>();
+                List<List<double>> data = new List<List<double>>();
                 Vessel vessel;
 
                 internal FlightRecorder(Vessel v)
                 {
                         this.vessel = v;
                 }
-
-                string output;
 
                 string timeStamp(double secs)
                 {
@@ -28,10 +26,10 @@ namespace AscentProfiler
                         
                 }
                 
-                void LogOutput(string log)
+                void Report(string log)
                 {
 
-                        output = timeStamp(FlightGlobals.ActiveVessel.missionTime) + " - " + log + "\n" + output;
+                        Log.Add( timeStamp(vessel.missionTime) + " - " + log);
 
                 }
         }
