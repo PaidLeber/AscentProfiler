@@ -19,6 +19,7 @@ namespace AscentProfiler
                 {
 
                         this.flightProfile = newprofile;
+                        this.flightProfile.AssignToVessel(this.vessel);
 
                         Log.Level(LogType.Verbose, "Profile loaded");
 

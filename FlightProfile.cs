@@ -9,12 +9,12 @@ namespace AscentProfiler
 
         internal class FlightProfile
         {
+                internal bool isEnabled;
+
                 ActionExecutor actionExecutor;
                 internal Dictionary<int, Trigger> tdictionary;
-                Vessel vessel;
 
-                bool isascending = false;
-                double lastaltitude;
+                Vessel vessel;
 
                 internal FlightProfile(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
                 {
@@ -30,10 +30,6 @@ namespace AscentProfiler
                 public void TriggerLoop()
                 {
                         
-                        isascending = (vessel.altitude > lastaltitude ? true : false);
-
-                        lastaltitude = vessel.altitude;
-
                         foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.activated == false))
                         { 
                                 
