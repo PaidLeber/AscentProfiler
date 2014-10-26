@@ -28,9 +28,19 @@ namespace AscentProfiler
                 void TXToMissionLog()
                 { 
                   
-                        if(   RemoteTech.API.HasConnectionToKSC(vessel.id))
+                        if(AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) )
                         {
-                        
+                                if(flightRecorder.Log.Any() && RemoteTech.API.HasConnectionToKSC(vessel.id))
+                                {
+
+
+                                        double transitime = RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime;
+                                }
+
+
+                                
+
+
                         }
 
 

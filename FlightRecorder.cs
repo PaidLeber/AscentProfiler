@@ -8,7 +8,7 @@ namespace AscentProfiler
         class FlightRecorder
         {
 
-                List<string> Log = new List<string>();
+                internal List<string> Log = new List<string>();
                 SortedDictionary<float, int> index = new SortedDictionary<float,int>();
                 List<List<double>> telemetry = new List<List<double>>();
                 AscentProAPGCSModule module;
