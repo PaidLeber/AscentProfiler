@@ -228,7 +228,7 @@ namespace AscentProfiler
                                                 profileSequenceDelay = 0;
                                                 break;
                                         case 2:
-                                                profileSequenceDelay = RandGenerator.Next(7, 15);
+                                                profileSequenceDelay = RandGenerator.Next(3, 15);
                                                 break;
                                         case 3:
                                                 flightProfile.AssignToModule(this);
