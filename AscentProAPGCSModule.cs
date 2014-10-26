@@ -264,14 +264,14 @@ namespace AscentProfiler
 
                 void InitNewProfileSequence()
                 {
-                        listRXReceiverMessage.Add("RX: APGCS Receiver Version " + AscentProfiler.version +" Ready");
-                        listRXReceiverMessage.Add("RX: Reconfiguration packets received");
+                        listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version +" Ready");
+                        listRXReceiverMessage.Add("RX: Reconfiguration packets received from frame");
                         listRXReceiverMessage.Add("RX: Checksum verification in progress, please standby ");
                         listRXReceiverMessage.Add("RX: Reconfiguration successful: Profile loaded");
-                        listRXReceiverMessage.Add("RX: Flashing to failsafe ROM");
+                        listRXReceiverMessage.Add("RX: Flashing to failsafe EEPROM device");
                         listRXReceiverMessage.Add("RX: Rebooting APGCS failsafe...");
                         listRXReceiverMessage.Add("RX: I feel fine. How about you?");
-                        listRXReceiverMessage.Add("RX: APGCS Receiver Version " + AscentProfiler.version + " Ready");
+                        listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready");
 
                 
                 }

@@ -58,7 +58,6 @@
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MissionLog.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="ProfileLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
