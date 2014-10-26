@@ -47,12 +47,12 @@ namespace AscentProfiler
                 internal string displayvalue;
                 internal string description;
 
-                internal abstract bool Evaluate(Vessel vessel);
+                internal abstract bool Evaluate(AscentProAPGCSModule module);
 
-                protected bool IsAscending(Vessel vessel)
+                protected bool IsAscending(AscentProAPGCSModule module)
                 {
-                        isascending = (vessel.altitude > lastaltitude ? true : false);
-                        lastaltitude = vessel.altitude;
+                        isascending = (module.vessel.altitude > lastaltitude ? true : false);
+                        lastaltitude = module.vessel.altitude;
 
                         return isascending;
                 }
@@ -91,9 +91,9 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
-                internal override bool Evaluate(Vessel vessel)
+                internal override bool Evaluate(AscentProAPGCSModule module)
                 {
-                        IsAscending(vessel);
+                        IsAscending(module);
                         
                         double currentAltitude = ascentMode ? FlightGlobals.ship_altitude : (FlightGlobals.ship_altitude - FlightGlobals.ActiveVessel.terrainAltitude);
 
@@ -129,7 +129,7 @@ namespace AscentProfiler
                         this.value = value;
                 }
 
-                internal override bool Evaluate(Vessel vessel)
+                internal override bool Evaluate(AscentProAPGCSModule module)
                 {
 
                         //May need to use Timefixed.delta

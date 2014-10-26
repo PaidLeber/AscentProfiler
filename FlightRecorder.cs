@@ -10,7 +10,7 @@ namespace AscentProfiler
 
                 List<string> Log = new List<string>();
                 SortedDictionary<float, int> index = new SortedDictionary<float,int>();
-                List<List<double>> data = new List<List<double>>();
+                List<List<double>> telemetry = new List<List<double>>();
                 Vessel vessel;
 
                 internal FlightRecorder(Vessel v)

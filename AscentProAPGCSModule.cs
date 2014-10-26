@@ -17,9 +17,9 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
-
+                        
                         this.flightProfile = newprofile;
-                        this.flightProfile.AssignToVessel(this.vessel);
+                        this.flightProfile.AssignToVessel(this);
 
                         Log.Level(LogType.Verbose, "Profile loaded");
 

@@ -9,12 +9,13 @@ namespace AscentProfiler
 
         internal class FlightProfile
         {
-                internal bool isEnabled;
+                internal bool isEnabled = false;
 
                 ActionExecutor actionExecutor;
                 internal Dictionary<int, Trigger> tdictionary;
 
                 Vessel vessel;
+                AscentProAPGCSModule module;
 
                 internal FlightProfile(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
                 {
@@ -23,9 +24,10 @@ namespace AscentProfiler
                         this.tdictionary = triggerdictionary;
                 }
 
-                internal void AssignToVessel(Vessel v)
+                internal void AssignToVessel(AscentProAPGCSModule module)
                 {
-                        this.vessel = v;
+                        this.module = module;
+                        this.vessel = module.vessel;
                 }
                 public void TriggerLoop()
                 {
