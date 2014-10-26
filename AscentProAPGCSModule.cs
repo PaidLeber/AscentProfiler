@@ -37,9 +37,19 @@ namespace AscentProfiler
                 FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder;
 
+                private UnityEngine.Random random = new UnityEngine.Random(); //int randomNumber = random.Next(0, 100);
+                private double rxprofilercvd = 0;
+                private int rxsequencenum = 0;
+                
+                
+
+
+
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
+
+
                 private bool isConnectedtoKSC
                 {
                         get
@@ -55,6 +65,7 @@ namespace AscentProfiler
                         }
 
                 }
+
                 internal bool RXProfile(FlightProfile newprofile)
                 {
                         
@@ -84,6 +95,22 @@ namespace AscentProfiler
 
                 }
 
+
+                void RXProfileReceiverSequence()
+                {
+                        if (rxprofilercvd == 0)
+                        {
+                                rxprofilercvd = vessel.missionTime;
+                        }
+
+
+
+                        if( rxprofilercvd + RemoteTech.API.GetSignalDelayToKSC(vessel.id) > vessel.missionTime && rxsequencenum == 0 )
+                        {
+                                
+                        }
+
+                }
 
                 internal void Test()
                 {
