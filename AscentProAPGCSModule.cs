@@ -45,12 +45,9 @@ namespace AscentProfiler
                 private int profileMessageSequence = 0;
                 private bool isNewProfile = false;
 
-
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
-
-
 
                 private bool isConnectedtoKSC
                 {
@@ -74,86 +71,6 @@ namespace AscentProfiler
                         flightRecorder = new FlightRecorder(this); 
                 }
 
-                internal bool RXProfile(FlightProfile newprofile)
-                {
-                        
-                        flightProfile = newprofile;
-                        isNewProfile = true;
-
-                        Log.Level(LogType.Verbose, "Profile loaded");
-
-                        return true;
-                }
-
-                void TXToMissionLog()
-                {
-                        if (!isConnectedtoKSC) 
-                                { return; }
-
-                                if(flightRecorder.Log.Any())
-                                {
-                                        APGCSDataPacket packet = new APGCSDataPacket(
-                                                vessel.id, APGCSTransmit.FLIGHT, 
-                                                RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
-                                                flightRecorder.Log.Count(), 
-                                                flightRecorder.Log
-                                                );
-                                        
-                                        //if transmit true, flightRecorder.Log.Clear();
-                                }
-
-
-                }
-
-
-                void RXProfileReceiverSequence()
-                {
-                        if (!isNewProfile)
-                                { return; }
-
-                        if (profileTransmissionReceived == 0) 
-                                { profileTransmissionReceived = vessel.missionTime;}
-
-                        if ( vessel.missionTime > profileTransmissionReceived + profileDelayRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
-                        {
-                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[profileMessageSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
-
-                                switch (profileMessageSequence)
-                                {
-                                        case 0:
-                                                profileDelayRand = RandGenerator.Next(2, 9);
-                                                break;
-                                        case 1:
-                                                profileDelayRand = 0;
-                                                break;
-                                        case 2:
-                                                profileDelayRand = RandGenerator.Next(7, 15);
-                                                break;
-                                        case 3:
-                                                flightProfile.AssignToModule(this);
-                                                profileDelayRand = 0;
-                                                break;
-                                        case 4:
-                                                profileDelayRand = RandGenerator.Next(4, 7);
-                                                break;
-                                        case 5:
-                                                profileDelayRand = 10;
-                                                break;
-                                        case 6:
-                                                profileDelayRand = 0;
-                                                break;
-                                        case 7:
-                                                profileDelayRand = 0;
-                                                break;
-                                }
-                                
-                                profileMessageSequence++;
-                        }
-
-
-
-
-                }
 
                 internal void Test()
                 {
@@ -260,6 +177,92 @@ namespace AscentProfiler
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
                 }
+
+
+                internal bool RXProfile(FlightProfile newprofile)
+                {
+                        
+                        flightProfile = newprofile;
+                        isNewProfile = true;
+
+                        return true;
+                }
+
+                void TXToMissionLog()
+                {
+                        if (!isConnectedtoKSC) 
+                                { return; }
+
+                                if(flightRecorder.Log.Any())
+                                {
+                                        APGCSDataPacket packet = new APGCSDataPacket(
+                                                vessel.id, APGCSTransmit.FLIGHT, 
+                                                RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
+                                                flightRecorder.Log.Count(), 
+                                                flightRecorder.Log
+                                                );
+                                        
+                                        //if transmit true, flightRecorder.Log.Clear();
+                                }
+
+
+                }
+
+
+                void RXProfileReceiverSequence()
+                {
+                        if (!isNewProfile)
+                                { return; }
+
+                        if (profileTransmissionReceived == 0) 
+                                { profileTransmissionReceived = vessel.missionTime;}
+
+                        if ( vessel.missionTime > profileTransmissionReceived + profileDelayRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
+                        {
+                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[profileMessageSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
+
+                                switch (profileMessageSequence)
+                                {
+                                        case 0:
+                                                profileDelayRand = RandGenerator.Next(2, 9);
+                                                break;
+                                        case 1:
+                                                profileDelayRand = 0;
+                                                break;
+                                        case 2:
+                                                profileDelayRand = RandGenerator.Next(7, 15);
+                                                break;
+                                        case 3:
+                                                flightProfile.AssignToModule(this);
+                                                profileDelayRand = 0;
+                                                Log.Level(LogType.Verbose, "Profile loaded");
+                                                break;
+                                        case 4:
+                                                profileDelayRand = RandGenerator.Next(4, 7);
+                                                break;
+                                        case 5:
+                                                profileDelayRand = 10;
+                                                break;
+                                        case 6:
+                                                profileDelayRand = 0;
+                                                break;
+                                        case 7:
+                                                isNewProfile = false;
+                                                profileDelayRand = 0;
+                                                profileMessageSequence = 0;
+                                                profileTransmissionReceived = 0;
+                                                return;
+                                }
+                                
+                                profileMessageSequence++;
+                        }
+
+
+
+
+                }
+
+
 
                 void InitNewProfileSequence()
                 {
