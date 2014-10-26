@@ -40,7 +40,21 @@ namespace AscentProfiler
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
+                private bool isConnectedtoKSC
+                {
+                        get
+                        {
+                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                                {
+                                        return RemoteTech.API.HasConnectionToKSC(vessel.id);
+                                }
+                                else
+                                {
+                                        return true;
+                                }
+                        }
 
+                }
                 internal bool RXProfile(FlightProfile newprofile)
                 {
                         
@@ -51,12 +65,11 @@ namespace AscentProfiler
 
                         return true;
                 }
+
                 void TXToMissionLog()
                 { 
                   
-                        if(AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) )
-                        {
-                                if(flightRecorder.Log.Any() && RemoteTech.API.HasConnectionToKSC(vessel.id))
+                                if(flightRecorder.Log.Any())
                                 {
                                         APGCSDataPacket packet = new APGCSDataPacket(
                                                 vessel.id, APGCSTransmit.FLIGHT, 
@@ -65,15 +78,8 @@ namespace AscentProfiler
                                                 flightRecorder.Log
                                                 );
                                         
-                                        flightRecorder.Log.Clear();
+                                        //if transmit true, flightRecorder.Log.Clear();
                                 }
-
-
-                                
-
-
-                        }
-
 
 
                 }
@@ -119,6 +125,12 @@ namespace AscentProfiler
                  */
                 public override void OnUpdate()
                 {
+                        if(isConnectedtoKSC)
+                        {
+                                TXToMissionLog();
+                        }
+
+
                         if ((Time.time - lastUpdate) > logInterval)
                         {
                                 lastUpdate = Time.time;
