@@ -107,7 +107,7 @@ namespace AscentProfiler
                                 {
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Above ALT"+value);
+                                                module.flightRecorder.Report("Ascending Above Altitude " + value);
                                                 return activated = true;
                                         }
                                 }
@@ -115,7 +115,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Below ALT" + value);
+                                                module.flightRecorder.Report("Descending Below Altitude " + value);
                                                 return activated = true;
                                         }
                                 }
