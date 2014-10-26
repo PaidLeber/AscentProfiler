@@ -8,8 +8,8 @@ namespace AscentProfiler
 {
         public class AscentProAPGCSModule : PartModule
         {
-                FlightProfile flightProfile = null;
-                FlightRecorder flightRecorder = null;
+                FlightProfile flightProfile;
+                internal FlightRecorder flightRecorder;
 
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
@@ -18,8 +18,8 @@ namespace AscentProfiler
                 internal bool RXProfile(FlightProfile newprofile)
                 {
                         
-                        this.flightProfile = newprofile;
-                        this.flightProfile.AssignToModule(this);
+                        flightProfile = newprofile;
+                        flightProfile.AssignToModule(this);
 
                         Log.Level(LogType.Verbose, "Profile loaded");
 
@@ -35,6 +35,8 @@ namespace AscentProfiler
                 */
                 public override void OnAwake()
                 {
+                        flightRecorder = new FlightRecorder(this); 
+
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
                 }
@@ -44,8 +46,6 @@ namespace AscentProfiler
                  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        flightRecorder = new FlightRecorder(this.vessel);
-
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
                 }

@@ -11,11 +11,11 @@ namespace AscentProfiler
                 List<string> Log = new List<string>();
                 SortedDictionary<float, int> index = new SortedDictionary<float,int>();
                 List<List<double>> telemetry = new List<List<double>>();
-                Vessel vessel;
+                AscentProAPGCSModule module;
 
-                internal FlightRecorder(Vessel v)
+                internal FlightRecorder(AscentProAPGCSModule module)
                 {
-                        this.vessel = v;
+                        this.module = module;
                 }
 
                 string timeStamp(double secs)
@@ -26,10 +26,10 @@ namespace AscentProfiler
                         
                 }
                 
-                void Report(string log)
+                internal void Report(string log)
                 {
 
-                        Log.Add( timeStamp(vessel.missionTime) + " - " + log);
+                        Log.Add( timeStamp(module.vessel.missionTime) + " - " + log);
 
                 }
         }

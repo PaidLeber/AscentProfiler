@@ -99,9 +99,28 @@ namespace AscentProfiler
 
                         if (!fromaxval)
                         {
-                                return activated = ascentMode ?
+                                /* return activated = ascentMode ?
                                         isIncreasing(isascending, currentAltitude, value) :
-                                        isDecreasing(isascending, currentAltitude, value);
+                                        isDecreasing(isascending, currentAltitude, value); */
+
+                                if (ascentMode)
+                                {
+                                        if (isIncreasing(isascending, currentAltitude, value))
+                                        {
+                                                module.flightRecorder.Report("Above ALT"+value);
+                                                return activated = true;
+                                        }
+                                }
+                                else
+                                {
+                                        if (isDecreasing(isascending, currentAltitude, value))
+                                        {
+                                                module.flightRecorder.Report("Below ALT" + value);
+                                                return activated = true;
+                                        }
+                                }
+
+
                         }
                         else
                         {
@@ -110,8 +129,24 @@ namespace AscentProfiler
                                 maxval = calcMaxVal(ascentMode, currentAltitude, maxval);
                                 delta  = ascentMode ? maxval - currentAltitude : maxval + currentAltitude;
 
-                                return activated = isIncreasing(isascending, delta, value);
+                                if (isIncreasing(isascending, delta, value))
+                                {
+                                        if (ascentMode)
+                                        {
+                                                module.flightRecorder.Report("Altitude has dropped below "+ value +" from " + maxval);
+                                        }
+                                        else
+                                        {
+                                                module.flightRecorder.Report("Altitude" + value + " reached");
+                                        }
+
+                                        
+                                        return activated = true;
+                                }
+
                         }
+
+                        return false;
 
                 }
 
