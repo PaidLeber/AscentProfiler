@@ -37,12 +37,13 @@ namespace AscentProfiler
                 FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder;
 
+                //On RX of New Profile
                 private List<string> listRXReceiverMessage = new List<string>();
                 private System.Random RandGenerator = new System.Random();
-                private int rxproRand = 0;
-                private double rxproRcvd = 0;
-                private int rxproSequence = 0;
-
+                private int profileDelayRand = 0;
+                private double profileTransmissionReceived = 0;
+                private int profileMessageSequence = 0;
+                private bool isNewProfile = false;
 
 
                 private float lastUpdate = 0.0f;
@@ -77,7 +78,7 @@ namespace AscentProfiler
                 {
                         
                         flightProfile = newprofile;
-                        flightProfile.AssignToModule(this);
+                        isNewProfile = true;
 
                         Log.Level(LogType.Verbose, "Profile loaded");
 
@@ -85,8 +86,10 @@ namespace AscentProfiler
                 }
 
                 void TXToMissionLog()
-                { 
-                  
+                {
+                        if (!isConnectedtoKSC) 
+                                { return; }
+
                                 if(flightRecorder.Log.Any())
                                 {
                                         APGCSDataPacket packet = new APGCSDataPacket(
@@ -105,41 +108,46 @@ namespace AscentProfiler
 
                 void RXProfileReceiverSequence()
                 {
-                        if (rxproRcvd == 0) { rxproRcvd = vessel.missionTime;}
+                        if (!isNewProfile)
+                                { return; }
 
-                        if ( vessel.missionTime > rxproRcvd + rxproRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
+                        if (profileTransmissionReceived == 0) 
+                                { profileTransmissionReceived = vessel.missionTime;}
+
+                        if ( vessel.missionTime > profileTransmissionReceived + profileDelayRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
                         {
-                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[rxproSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
+                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[profileMessageSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
 
-                                switch (rxproSequence)
+                                switch (profileMessageSequence)
                                 {
                                         case 0:
-                                                rxproRand = RandGenerator.Next(2, 9);
+                                                profileDelayRand = RandGenerator.Next(2, 9);
                                                 break;
                                         case 1:
-                                                rxproRand = 0;
+                                                profileDelayRand = 0;
                                                 break;
                                         case 2:
-                                                rxproRand = RandGenerator.Next(7, 15);
+                                                profileDelayRand = RandGenerator.Next(7, 15);
                                                 break;
                                         case 3:
-                                                rxproRand = 0;
+                                                flightProfile.AssignToModule(this);
+                                                profileDelayRand = 0;
                                                 break;
                                         case 4:
-                                                rxproRand = RandGenerator.Next(4, 7);
+                                                profileDelayRand = RandGenerator.Next(4, 7);
                                                 break;
                                         case 5:
-                                                rxproRand = 10;
+                                                profileDelayRand = 10;
                                                 break;
                                         case 6:
-                                                rxproRand = 0;
+                                                profileDelayRand = 0;
                                                 break;
                                         case 7:
-                                                rxproRand = 0;
+                                                profileDelayRand = 0;
                                                 break;
                                 }
                                 
-                                rxproSequence++;
+                                profileMessageSequence++;
                         }
 
 
@@ -187,10 +195,9 @@ namespace AscentProfiler
                  */
                 public override void OnUpdate()
                 {
-                        if(isConnectedtoKSC)
-                        {
-                                TXToMissionLog();
-                        }
+                        RXProfileReceiverSequence();
+                        TXToMissionLog();
+
 
 
                         if ((Time.time - lastUpdate) > logInterval)
