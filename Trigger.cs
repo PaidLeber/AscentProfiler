@@ -107,7 +107,7 @@ namespace AscentProfiler
                                 {
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Ascending Above Altitude " + value);
+                                                module.flightRecorder.Report("Ascending Above " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -115,7 +115,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Descending Below Altitude " + value);
+                                                module.flightRecorder.Report("Descending Below " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -133,11 +133,11 @@ namespace AscentProfiler
                                 {
                                         if (ascentMode)
                                         {
-                                                module.flightRecorder.Report("Altitude has dropped below "+ value +" from " + maxval);
+                                                module.flightRecorder.Report("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
                                         }
                                         else
                                         {
-                                                module.flightRecorder.Report("Altitude" + value + " reached");
+                                                module.flightRecorder.Report("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
                                         }
 
                                         
