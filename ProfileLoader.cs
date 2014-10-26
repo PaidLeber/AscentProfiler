@@ -11,7 +11,7 @@ namespace AscentProfiler
 {
         class ProfileLoader
         {
-                TriggerGuardian tempprofileval;
+                FlightProfile tempprofileval;
 
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
@@ -117,12 +117,12 @@ namespace AscentProfiler
                         }
                         
                         
-                        return TXAscentProAPGCSModule(triggerFactory.GetNewTriggerGuardian(actionFactory.GetNewActionExecutor()));
+                        return TXAscentProAPGCSModule(triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionExecutor()));
 
                 }
                 
 
-                bool TXAscentProAPGCSModule(TriggerGuardian newprofile)
+                bool TXAscentProAPGCSModule(FlightProfile newprofile)
                 {
                         AscentProAPGCSModule APGCSmodule = FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
                         APGCSmodule.Test();

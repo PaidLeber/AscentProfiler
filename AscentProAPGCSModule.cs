@@ -8,14 +8,14 @@ namespace AscentProfiler
 {
         public class AscentProAPGCSModule : PartModule
         {
-                TriggerGuardian flightProfile = null;
+                FlightProfile flightProfile = null;
                 FlightRecorder flightRecorder = null;
 
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
 
-                internal bool RXProfile(TriggerGuardian newprofile)
+                internal bool RXProfile(FlightProfile newprofile)
                 {
 
                         this.flightProfile = newprofile;

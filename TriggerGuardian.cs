@@ -7,7 +7,7 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        internal class TriggerGuardian
+        internal class FlightProfile
         {
                 ActionExecutor actionExecutor;
                 internal Dictionary<int, Trigger> tdictionary;
@@ -16,7 +16,7 @@ namespace AscentProfiler
                 bool isascending = false;
                 double lastaltitude;
 
-                internal TriggerGuardian(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
+                internal FlightProfile(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         this.actionExecutor = actionloop;
