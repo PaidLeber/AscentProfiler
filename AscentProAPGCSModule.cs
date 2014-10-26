@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        enum APGCSTransmit
+        enum APGCSDecoder
         {
                 FLIGHT,
                 TELEMETRY
@@ -14,16 +14,16 @@ namespace AscentProfiler
 
         struct APGCSDataPacket
         {
-                Guid source;
-                APGCSTransmit destination;
-                double transitime;
-                int datacount;
-                object data;
+                internal Guid source;
+                internal APGCSDecoder type;
+                internal double transitime;
+                internal int datacount;
+                internal object data;
 
-                internal APGCSDataPacket(Guid source, APGCSTransmit destination, double transitime, int datacount, object data)
+                internal APGCSDataPacket(Guid source, APGCSDecoder destination, double transitime, int datacount, object data)
                 {
                         this.source = source;
-                        this.destination = destination;
+                        this.type = destination;
                         this.transitime = transitime;
                         this.datacount = datacount;
                         this.data = data;
@@ -194,7 +194,7 @@ namespace AscentProfiler
                                 if(flightRecorder.Log.Any())
                                 {
                                         APGCSDataPacket packet = new APGCSDataPacket(
-                                                vessel.id, APGCSTransmit.FLIGHT, 
+                                                vessel.id, APGCSDecoder.FLIGHT, 
                                                 RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
                                                 flightRecorder.Log.Count(), 
                                                 flightRecorder.Log
