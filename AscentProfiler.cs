@@ -7,6 +7,12 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
+        enum RegisteredAddons
+        {
+                FerramAerospaceResearch,
+                RemoteTech
+        }
+
 
         [KSPAddon(KSPAddon.Startup.Flight, false)]
         public class AscentProfiler : MonoBehaviour
@@ -20,12 +26,8 @@ namespace AscentProfiler
                 bool mainWindowEnabled = true;
                 IButton mainButton;
 
-                //Loaded Assemblies check
-                bool assemblycheck = false;
-                bool FAR = false;
-                bool RT = false;
-                bool KAC = false;
-                bool TRAJ = false;
+                //Loaded Assemblies list
+                internal List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
 
                 void Awake()
                 {
@@ -94,21 +96,17 @@ namespace AscentProfiler
                 void CheckforAPIs()
                 {
                         foreach (var loadedAssembly in AssemblyLoader.loadedAssemblies)
-                        { 
-                                switch(loadedAssembly.name)
+                        {
+                                foreach (RegisteredAddons addon in (RegisteredAddons[])Enum.GetValues(typeof(RegisteredAddons)))
                                 {
-                                        case "FerramAerospaceResearch":
-                                                FAR = true;
-                                                break;
-
-                                        case "RemoteTech":
-                                                RT = true;
-                                                break;
-                                
+                                        if (loadedAssembly.name == addon.ToString())
+                                        {
+                                                listRegisteredAddons.Add(addon);
+                                        }
                                 }
+     
                         }
 
-                        assemblycheck = true;
                 }
 
                 void OnGUI()
@@ -135,7 +133,6 @@ namespace AscentProfiler
                 {
                         mainButton.Destroy();
                        
-                        
                 }
 
 

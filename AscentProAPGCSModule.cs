@@ -25,6 +25,11 @@ namespace AscentProfiler
 
                         return true;
                 }
+                void TransmitToKSC()
+                { 
+                        
+                }
+
 
                 internal void Test()
                 {

@@ -12,7 +12,7 @@ namespace AscentProfiler
                 internal bool isEnabled = false;
 
                 ActionExecutor actionExecutor;
-                Dictionary<int, Trigger> tdictionary;
+                Dictionary<int, Trigger> dictTrigger;
 
                 AscentProAPGCSModule module;
 
@@ -20,13 +20,13 @@ namespace AscentProfiler
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         this.actionExecutor = actionloop;
-                        this.tdictionary = triggerdictionary;
+                        this.dictTrigger = triggerdictionary;
                 }
 
                 public void TriggerLoop()
                 {
                         
-                        foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.activated == false))
+                        foreach (KeyValuePair<int, Trigger> trigger in dictTrigger.Where(pair => pair.Value.activated == false))
                         { 
                                 
                                 if(trigger.Value.Evaluate(module))
@@ -37,7 +37,7 @@ namespace AscentProfiler
                         
                         }
 
-
+                        
                 }
 
                 internal void AssignToModule(AscentProAPGCSModule module)
