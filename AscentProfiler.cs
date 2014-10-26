@@ -17,6 +17,7 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.Flight, false)]
         public class AscentProfiler : MonoBehaviour
         {
+                internal static string version = "0.01";
                 //Loaded Assemblies list
                 internal static List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
 

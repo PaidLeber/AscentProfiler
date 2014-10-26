@@ -37,17 +37,18 @@ namespace AscentProfiler
                 FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder;
 
-                private UnityEngine.Random random = new UnityEngine.Random(); //int randomNumber = random.Next(0, 100);
-                private double rxprofilercvd = 0;
-                private int rxsequencenum = 0;
-                
-                
+                private List<string> listRXReceiverMessage = new List<string>();
+                private System.Random RandGenerator = new System.Random();
+                private int rxproRand = 0;
+                private double rxproRcvd = 0;
+                private int rxproSequence = 0;
 
 
 
                 private float lastUpdate = 0.0f;
                 private float lastFixedUpdate = 0.0f;
                 private float logInterval = 5.0f;
+
 
 
                 private bool isConnectedtoKSC
@@ -64,6 +65,12 @@ namespace AscentProfiler
                                 }
                         }
 
+                }
+
+                public AscentProAPGCSModule()
+                {
+                        InitNewProfileSequence();
+                        flightRecorder = new FlightRecorder(this); 
                 }
 
                 internal bool RXProfile(FlightProfile newprofile)
@@ -98,17 +105,45 @@ namespace AscentProfiler
 
                 void RXProfileReceiverSequence()
                 {
-                        if (rxprofilercvd == 0)
+                        if (rxproRcvd == 0) { rxproRcvd = vessel.missionTime;}
+
+                        if ( vessel.missionTime > rxproRcvd + rxproRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
                         {
-                                rxprofilercvd = vessel.missionTime;
-                        }
+                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[rxproSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
 
-
-
-                        if( rxprofilercvd + RemoteTech.API.GetSignalDelayToKSC(vessel.id) > vessel.missionTime && rxsequencenum == 0 )
-                        {
+                                switch (rxproSequence)
+                                {
+                                        case 0:
+                                                rxproRand = RandGenerator.Next(2, 9);
+                                                break;
+                                        case 1:
+                                                rxproRand = 0;
+                                                break;
+                                        case 2:
+                                                rxproRand = RandGenerator.Next(7, 15);
+                                                break;
+                                        case 3:
+                                                rxproRand = 0;
+                                                break;
+                                        case 4:
+                                                rxproRand = RandGenerator.Next(4, 7);
+                                                break;
+                                        case 5:
+                                                rxproRand = 10;
+                                                break;
+                                        case 6:
+                                                rxproRand = 0;
+                                                break;
+                                        case 7:
+                                                rxproRand = 0;
+                                                break;
+                                }
                                 
+                                rxproSequence++;
                         }
+
+
+
 
                 }
 
@@ -121,7 +156,7 @@ namespace AscentProfiler
                 */
                 public override void OnAwake()
                 {
-                        flightRecorder = new FlightRecorder(this); 
+
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
@@ -217,6 +252,20 @@ namespace AscentProfiler
                 {
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
+                }
+
+                void InitNewProfileSequence()
+                {
+                        listRXReceiverMessage.Add("RX: APGCS Receiver Version " + AscentProfiler.version +" Ready");
+                        listRXReceiverMessage.Add("RX: Reconfiguration packets received");
+                        listRXReceiverMessage.Add("RX: Checksum verification in progress, please standby ");
+                        listRXReceiverMessage.Add("RX: Reconfiguration successful: Profile loaded");
+                        listRXReceiverMessage.Add("RX: Flashing to failsafe ROM");
+                        listRXReceiverMessage.Add("RX: Rebooting APGCS failsafe...");
+                        listRXReceiverMessage.Add("RX: I feel fine. How about you?");
+                        listRXReceiverMessage.Add("RX: APGCS Receiver Version " + AscentProfiler.version + " Ready");
+
+                
                 }
 
         }
