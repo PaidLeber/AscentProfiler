@@ -37,23 +37,21 @@ namespace AscentProfiler
                 FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder;
 
-                //On RX of New Profile
+                //On RX Sequence of New Profile
                 private List<string> listRXReceiverMessage = new List<string>();
                 private System.Random RandGenerator = new System.Random();
-                private int profileDelayRand = 0;
-                private double profileTransmissionReceived = 0;
-                private int profileMessageSequence = 0;
+
                 private bool isNewProfile = false;
+                private int profileSequenceDelay = 0;
+                private double profileTransmissionTime = 0;
+                private int profileMessageSequence = 0;
 
-                private float lastUpdate = 0.0f;
-                private float lastFixedUpdate = 0.0f;
-                private float logInterval = 5.0f;
 
-                private bool isConnectedtoKSC
+                private bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
                 {
                         get
                         {
-                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))                  
                                 {
                                         return RemoteTech.API.HasConnectionToKSC(vessel.id);
                                 }
@@ -71,6 +69,9 @@ namespace AscentProfiler
                         flightRecorder = new FlightRecorder(this); 
                 }
 
+                private float lastUpdate = 0.0f;
+                private float lastFixedUpdate = 0.0f;
+                private float logInterval = 5.0f;
 
                 internal void Test()
                 {
@@ -180,12 +181,9 @@ namespace AscentProfiler
 
 
                 internal bool RXProfile(FlightProfile newprofile)
-                {
-                        
+                {   
                         flightProfile = newprofile;
-                        isNewProfile = true;
-
-                        return true;
+                        return isNewProfile = true;
                 }
 
                 void TXToMissionLog()
@@ -214,43 +212,43 @@ namespace AscentProfiler
                         if (!isNewProfile)
                                 { return; }
 
-                        if (profileTransmissionReceived == 0) 
-                                { profileTransmissionReceived = vessel.missionTime;}
+                        if (profileTransmissionTime == 0) 
+                                { profileTransmissionTime = vessel.missionTime;}
 
-                        if ( vessel.missionTime > profileTransmissionReceived + profileDelayRand + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
+                        if ( vessel.missionTime > profileTransmissionTime + profileSequenceDelay + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
                         {
                                 ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[profileMessageSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
 
                                 switch (profileMessageSequence)
                                 {
                                         case 0:
-                                                profileDelayRand = RandGenerator.Next(2, 9);
+                                                profileSequenceDelay = RandGenerator.Next(2, 9);
                                                 break;
                                         case 1:
-                                                profileDelayRand = 0;
+                                                profileSequenceDelay = 0;
                                                 break;
                                         case 2:
-                                                profileDelayRand = RandGenerator.Next(7, 15);
+                                                profileSequenceDelay = RandGenerator.Next(7, 15);
                                                 break;
                                         case 3:
                                                 flightProfile.AssignToModule(this);
-                                                profileDelayRand = 0;
+                                                profileSequenceDelay = 0;
                                                 Log.Level(LogType.Verbose, "Profile loaded");
                                                 break;
                                         case 4:
-                                                profileDelayRand = RandGenerator.Next(4, 7);
+                                                profileSequenceDelay = RandGenerator.Next(4, 7);
                                                 break;
                                         case 5:
-                                                profileDelayRand = 10;
+                                                profileSequenceDelay = 10;
                                                 break;
                                         case 6:
-                                                profileDelayRand = 0;
+                                                profileSequenceDelay = 0;
                                                 break;
                                         case 7:
                                                 isNewProfile = false;
-                                                profileDelayRand = 0;
+                                                profileSequenceDelay = 0;
                                                 profileMessageSequence = 0;
-                                                profileTransmissionReceived = 0;
+                                                profileTransmissionTime = 0;
                                                 return;
                                 }
                                 
