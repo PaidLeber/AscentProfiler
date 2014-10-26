@@ -14,7 +14,6 @@ namespace AscentProfiler
                 ActionExecutor actionExecutor;
                 internal Dictionary<int, Trigger> tdictionary;
 
-                Vessel vessel;
                 AscentProAPGCSModule module;
 
                 internal FlightProfile(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
@@ -27,7 +26,6 @@ namespace AscentProfiler
                 internal void AssignToVessel(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        this.vessel = module.vessel;
                 }
                 public void TriggerLoop()
                 {
@@ -35,7 +33,7 @@ namespace AscentProfiler
                         foreach (KeyValuePair<int, Trigger> trigger in tdictionary.Where(pair => pair.Value.activated == false))
                         { 
                                 
-                                if(trigger.Value.Evaluate(vessel))
+                                if(trigger.Value.Evaluate(module))
                                 {
                                         Debug.Log(trigger.Key);
                                         actionExecutor.ExecuteActions(trigger.Key);
