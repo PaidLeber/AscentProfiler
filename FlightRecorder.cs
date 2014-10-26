@@ -11,11 +11,11 @@ namespace AscentProfiler
                 List<string> Log;
                 SortedDictionary<float, int> index;
                 List<List<double>> data;
-                Vessel v = null;
+                Vessel vessel = null;
 
-                internal FlightRecorder(Vessel vessel)
+                internal FlightRecorder(Vessel v)
                 {
-                        this.v = vessel;
+                        this.vessel = v;
                 }
 
                 string output;
