@@ -6,31 +6,6 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        enum APGCSDecoder
-        {
-                FLIGHT,
-                TELEMETRY
-        }
-
-        struct APGCSDataPacket
-        {
-                internal Guid source;
-                internal APGCSDecoder type;
-                internal double transitime;
-                internal int datacount;
-                internal object data;
-
-                internal APGCSDataPacket(Guid source, APGCSDecoder destination, double transitime, int datacount, object data)
-                {
-                        this.source = source;
-                        this.type = destination;
-                        this.transitime = transitime;
-                        this.datacount = datacount;
-                        this.data = data;
-                }
-
-
-        }
 
         public class AscentProAPGCSModule : PartModule
         {
