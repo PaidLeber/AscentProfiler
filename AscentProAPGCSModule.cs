@@ -6,6 +6,32 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
+        enum APGCSTransmit
+        {
+                FLIGHT,
+                TELEMETRY
+        }
+
+        struct APGCSDataPacket
+        {
+                Guid source;
+                APGCSTransmit destination;
+                double transitime;
+                int datacount;
+                object data;
+
+                internal APGCSDataPacket(Guid source, APGCSTransmit destination, double transitime, int datacount, object data)
+                {
+                        this.source = source;
+                        this.destination = destination;
+                        this.transitime = transitime;
+                        this.datacount = datacount;
+                        this.data = data;
+                }
+
+
+        }
+
         public class AscentProAPGCSModule : PartModule
         {
                 FlightProfile flightProfile;
@@ -32,9 +58,14 @@ namespace AscentProfiler
                         {
                                 if(flightRecorder.Log.Any() && RemoteTech.API.HasConnectionToKSC(vessel.id))
                                 {
-
-
-                                        double transitime = RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime;
+                                        APGCSDataPacket packet = new APGCSDataPacket(
+                                                vessel.id, APGCSTransmit.FLIGHT, 
+                                                RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
+                                                flightRecorder.Log.Count(), 
+                                                flightRecorder.Log
+                                                );
+                                        
+                                        flightRecorder.Log.Clear();
                                 }
 
 
@@ -150,4 +181,6 @@ namespace AscentProfiler
                 }
 
         }
+
+
 }
