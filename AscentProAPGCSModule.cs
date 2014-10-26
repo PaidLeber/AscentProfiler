@@ -25,9 +25,16 @@ namespace AscentProfiler
 
                         return true;
                 }
-                void TransmitToKSC()
+                void TXToMissionLog()
                 { 
+                  
+                        if(   RemoteTech.API.HasConnectionToKSC(vessel.id))
+                        {
                         
+                        }
+
+
+
                 }
 
 

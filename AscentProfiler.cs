@@ -17,6 +17,9 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.Flight, false)]
         public class AscentProfiler : MonoBehaviour
         {
+                //Loaded Assemblies list
+                internal static List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
+
                 internal static Vessel currentVessel = null;
                 static string AscentProfilerDir;
                 internal static string profilesDir;
@@ -26,8 +29,7 @@ namespace AscentProfiler
                 bool mainWindowEnabled = true;
                 IButton mainButton;
 
-                //Loaded Assemblies list
-                internal List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
+
 
                 void Awake()
                 {
