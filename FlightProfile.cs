@@ -7,12 +7,12 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        internal class FlightProfile
+        class FlightProfile
         {
                 internal bool isEnabled = false;
 
                 ActionExecutor actionExecutor;
-                internal Dictionary<int, Trigger> tdictionary;
+                Dictionary<int, Trigger> tdictionary;
 
                 AscentProAPGCSModule module;
 
@@ -23,10 +23,6 @@ namespace AscentProfiler
                         this.tdictionary = triggerdictionary;
                 }
 
-                internal void AssignToModule(AscentProAPGCSModule module)
-                {
-                        this.module = module;
-                }
                 public void TriggerLoop()
                 {
                         
@@ -44,6 +40,10 @@ namespace AscentProfiler
 
                 }
 
+                internal void AssignToModule(AscentProAPGCSModule module)
+                {
+                        this.module = module;
+                }
 
 
 

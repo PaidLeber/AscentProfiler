@@ -18,6 +18,13 @@ namespace AscentProfiler
                         this.module = module;
                 }
 
+                internal void Report(string log)
+                {
+
+                        Log.Add(timeStamp(module.vessel.missionTime) + " - " + log);
+
+                }
+
                 string timeStamp(double secs)
                 {
                         TimeSpan t = TimeSpan.FromSeconds(secs);
@@ -26,11 +33,6 @@ namespace AscentProfiler
                         
                 }
                 
-                internal void Report(string log)
-                {
 
-                        Log.Add( timeStamp(module.vessel.missionTime) + " - " + log);
-
-                }
         }
 }

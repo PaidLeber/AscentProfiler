@@ -134,14 +134,16 @@ namespace AscentProfiler
                                         if (ascentMode)
                                         {
                                                 module.flightRecorder.Report("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
+                                                return activated = true;
                                         }
                                         else
                                         {
                                                 module.flightRecorder.Report("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
+                                                return activated = true;
                                         }
 
                                         
-                                        return activated = true;
+                                        
                                 }
 
                         }
