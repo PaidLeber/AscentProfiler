@@ -26,7 +26,7 @@ namespace AscentProfiler
                 {
                         get
                         {
-                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))                  
+                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) && vessel.GetCrewCount() == 0)                  
                                 {
                                         return RemoteTech.API.HasConnectionToKSC(vessel.id);
                                 }
@@ -226,7 +226,7 @@ namespace AscentProfiler
                                                 profileTransmissionTime = 0;
                                                 return;
                                 }
-
+                                
 
                                 profileMessageSequence++;
                         }

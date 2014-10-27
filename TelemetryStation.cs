@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace AscentProfiler
 {
@@ -32,14 +33,14 @@ namespace AscentProfiler
 
         }
 
-        class TelemetryStation
+        class TelemetryStation : MonoBehaviour
         {
                 List<string> FlightLog = new List<string>();
+                int flightLogReadCount = 0;
 
 
 
-
-                void Receive(APGCSDataPacket datapacket)
+                internal bool Receive(APGCSDataPacket datapacket)
                 { 
 
 
@@ -48,10 +49,15 @@ namespace AscentProfiler
                         {
                         
                         }
-                
+                        return false;
                 }
 
 
+
+                void Update()
+                {
+
+                }
 
         }
 }
