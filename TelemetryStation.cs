@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         enum APGCSDecoder
         {
-                FLIGHT,
+                FLIGHTLOG,
                 TELEMETRY
         }
 
@@ -45,7 +45,7 @@ namespace AscentProfiler
 
 
 
-                        if(datapacket.type == APGCSDecoder.FLIGHT)
+                        if(datapacket.type == APGCSDecoder.FLIGHTLOG)
                         {
                         
                         }

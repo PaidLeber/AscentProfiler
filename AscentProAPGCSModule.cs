@@ -169,7 +169,7 @@ namespace AscentProfiler
                                 if(flightRecorder.Log.Any())
                                 {
                                         APGCSDataPacket packet = new APGCSDataPacket(
-                                                vessel.id, APGCSDecoder.FLIGHT, 
+                                                vessel.id, APGCSDecoder.FLIGHTLOG, 
                                                 RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
                                                 flightRecorder.Log.Count(), 
                                                 flightRecorder.Log
