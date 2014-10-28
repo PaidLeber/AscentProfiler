@@ -166,7 +166,7 @@ namespace AscentProfiler
                 {
                         if(isConnectedtoKSC)
                                 if (flightrecorder.logEnabled && flightrecorder.FlightLog.Count > flightrecorder.lastFlightLogTransmitCount)
-                                        if (AscentProfiler.telemetryReceiver. FlightLog(TransitTimeUT(), flightrecorder))
+                                        if (AscentProfiler.telemetryReceiver.ReceiveFlightLog(TransitTimeUT(), flightrecorder))
                                                 flightrecorder.lastFlightLogTransmitCount = flightrecorder.FlightLog.Count;
 
                 }
