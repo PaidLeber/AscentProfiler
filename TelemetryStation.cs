@@ -7,49 +7,20 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        enum APGCSDecoder
-        {
-                FLIGHTLOG,
-                TELEMETRY
-        }
-
-        struct APGCSDataPacket
-        {
-                internal Guid source;
-                internal APGCSDecoder type;
-                internal double transitime;
-                internal int datacount;
-                internal object data;
-
-                internal APGCSDataPacket(Guid source, APGCSDecoder destination, double transitime, int datacount, object data)
-                {
-                        this.source = source;
-                        this.type = destination;
-                        this.transitime = transitime;
-                        this.datacount = datacount;
-                        this.data = data;
-                }
-
-
-        }
-
         class TelemetryStation : MonoBehaviour
         {
                 List<string> FlightLog = new List<string>();
-                int flightLogReadCount = 0;
+                Dictionary<double, int> signalDelay = new Dictionary<double, int>();
 
 
-
-                internal bool Receive(APGCSDataPacket datapacket)
-                { 
-
-
-                        if(datapacket.type == APGCSDecoder.FLIGHTLOG)
-                        {
-                                
+                internal bool Receive(double signaldelay ,FlightRecorder flightrecorder)
+                {
 
 
-                        }
+                        FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count + 1, flightrecorder.FlightLog.Count));
+                        
+
+
                         return false;
                 }
 

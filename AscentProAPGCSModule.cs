@@ -91,8 +91,7 @@ namespace AscentProfiler
                 public override void OnUpdate()
                 {
                         RXProfileReceiverSequence();
-                        Transmit();
-
+                        Transmit(flightRecorder);
 
 
                         if ((Time.time - lastUpdate) > logInterval)
@@ -163,27 +162,14 @@ namespace AscentProfiler
                         return isNewProfile = true;
                 }
 
-                void Transmit()
+                void Transmit(FlightRecorder flightrecorder)
                 {
-                        if (!isConnectedtoKSC) 
-                                { return; }
-
-                                if(flightRecorder.Log.Any())
-                                {
-                                        APGCSDataPacket packet = new APGCSDataPacket(
-                                                vessel.id, APGCSDecoder.FLIGHTLOG, 
-                                                RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
-                                                flightRecorder.Log.Count(), 
-                                                flightRecorder.Log.GetRange(flightLogLastTransmitCount, flightRecorder.Log.Count - flightLogLastTransmitCount)
-                                                );
-
-                                        flightLogLastTransmitCount = flightRecorder.Log.Count;
-                                       
-                                }
-
+                        if(isConnectedtoKSC)
+                                if (flightrecorder.logEnabled && flightrecorder.FlightLog.Count > flightrecorder.lastFlightLogTransmitCount)
+                                        if (AscentProfiler.telemetryStation.Receive(RemoteTech.API.GetSignalDelayToKSC(vessel.id), flightrecorder))
+                                                flightrecorder.lastFlightLogTransmitCount = flightrecorder.FlightLog.Count;
 
                 }
-
 
                 void RXProfileReceiverSequence()
                 {

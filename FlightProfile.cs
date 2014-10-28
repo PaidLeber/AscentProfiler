@@ -19,8 +19,8 @@ namespace AscentProfiler
                 internal FlightProfile(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
-                        this.listAction = actionlist;
-                        this.listTrigger = triggerlist;
+                        listAction = actionlist;
+                        listTrigger = triggerlist;
                 }
 
                 public void TriggerLoop()
@@ -52,7 +52,7 @@ namespace AscentProfiler
                         {
                                 if (action.Execute())
                                 {
-                                        Debug.Log("ActionExecutor.ExecuteActions " + index);
+                                        Debug.Log("Flight Profile ExecuteActions " + index);
 
 
                                 }

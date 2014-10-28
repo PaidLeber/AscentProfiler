@@ -110,7 +110,7 @@ namespace AscentProfiler
                                 {
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Ascending Above " + value + "m");
+                                                module.flightRecorder.Log("Ascending Above " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -118,7 +118,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightRecorder.Report("Descending Below " + value + "m");
+                                                module.flightRecorder.Log("Descending Below " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -136,12 +136,12 @@ namespace AscentProfiler
                                 {
                                         if (ascentMode)
                                         {
-                                                module.flightRecorder.Report("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
+                                                module.flightRecorder.Log("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
                                                 return activated = true;
                                         }
                                         else
                                         {
-                                                module.flightRecorder.Report("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
+                                                module.flightRecorder.Log("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
                                                 return activated = true;
                                         }
 
