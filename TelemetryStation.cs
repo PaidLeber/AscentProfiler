@@ -13,26 +13,31 @@ namespace AscentProfiler
                 List<string> FlightLog = new List<string>();
                 Queue<double> transmitDelay = new Queue<double>();
                 Queue<int> delayedFlightLogReadCount = new Queue<int>();
+                int currentflightlogReadCount = 0;
 
 
-                internal bool Receive(double tranmitime ,FlightRecorder flightrecorder)
+                internal bool ReceiveFlightLog(double transmitdelay ,FlightRecorder flightrecorder)
                 {
-                        transmitDelay.Enqueue(tranmitime);
+
+                        transmitDelay.Enqueue(transmitdelay);
                         delayedFlightLogReadCount.Enqueue(flightrecorder.FlightLog.Count);
 
                         FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count + 1, flightrecorder.FlightLog.Count));
                         
-
-
-                        return false;
+                        return true;
                 }
 
 
 
                 void Update()
                 {
-                        if(transmitDelay.Peek() )
+                        if (Planetarium.GetUniversalTime() > transmitDelay.Peek())
+                        {
+                                transmitDelay.Dequeue();
+                                currentflightlogReadCount = delayedFlightLogReadCount.Peek();
+                                delayedFlightLogReadCount.Dequeue();
 
+                        }
 
                 }
 

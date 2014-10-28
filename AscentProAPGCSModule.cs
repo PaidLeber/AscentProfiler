@@ -166,14 +166,17 @@ namespace AscentProfiler
                 {
                         if(isConnectedtoKSC)
                                 if (flightrecorder.logEnabled && flightrecorder.FlightLog.Count > flightrecorder.lastFlightLogTransmitCount)
-                                        if (AscentProfiler.telemetryStation.Receive(TransitTime(), flightrecorder))
+                                        if (AscentProfiler.telemetryStation.ReceiveFlightLog(TransitTimeUT(), flightrecorder))
                                                 flightrecorder.lastFlightLogTransmitCount = flightrecorder.FlightLog.Count;
 
                 }
 
-                double TransitTime()
+                double TransitTimeUT()
                 {
-                        return vessel.missionTime + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
+                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                                { return 0; }
+
+                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
                 
                 }
 
