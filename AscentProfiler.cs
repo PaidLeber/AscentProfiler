@@ -30,7 +30,7 @@ namespace AscentProfiler
                 bool mainWindowEnabled = true;
                 IButton mainButton;
 
-                internal static TelemetryStation telemetryStation;
+                internal static TelemetryReceiver telemetryReceiver;
 
                 void Awake()
                 {
@@ -44,7 +44,7 @@ namespace AscentProfiler
 
                         
                         gui = new AscentProfilerGUI();
-                        telemetryStation = new TelemetryStation();
+                        telemetryReceiver = new TelemetryReceiver();
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
