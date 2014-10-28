@@ -10,7 +10,7 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
-                Dictionary<int, Trigger> NewTriggerProfile = new Dictionary<int, Trigger>();
+                List<Trigger> NewTriggerProfile = new List<Trigger>();
 
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
@@ -39,7 +39,7 @@ namespace AscentProfiler
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
 
-                        triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value.ToString()), Convert.ToDouble(regexGrouping.Groups[1].Value.ToString())); });
+                        triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(currentIndex, linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value.ToString()), Convert.ToDouble(regexGrouping.Groups[1].Value.ToString())); });
                 
                 }
 
@@ -61,7 +61,7 @@ namespace AscentProfiler
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
 
-                                NewTriggerProfile.Add(currentIndex, triggerProducts[trigger]());
+                                NewTriggerProfile.Add(triggerProducts[trigger]());
 
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                                 //Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);

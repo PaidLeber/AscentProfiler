@@ -12,27 +12,27 @@ namespace AscentProfiler
                 internal bool isEnabled = false;
 
                 ActionExecutor actionExecutor;
-                Dictionary<int, Trigger> dictTrigger;
+                List<Trigger> listTrigger;
 
                 AscentProAPGCSModule module;
 
-                internal FlightProfile(Dictionary<int, Trigger> triggerdictionary, ActionExecutor actionloop)
+                internal FlightProfile(List<Trigger> triggerlist, ActionExecutor actionloop)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         this.actionExecutor = actionloop;
-                        this.dictTrigger = triggerdictionary;
+                        this.listTrigger = triggerlist;
                 }
 
                 public void TriggerLoop()
                 {
                         
-                        foreach (KeyValuePair<int, Trigger> trigger in dictTrigger.Where(pair => pair.Value.activated == false))
+                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false))
                         { 
                                 
-                                if(trigger.Value.Evaluate(module))
+                                if(trigger.Evaluate(module))
                                 {
-                                        Debug.Log(trigger.Key);
-                                        actionExecutor.ExecuteActions(trigger.Key);
+                                        Debug.Log(trigger.type);
+                                        actionExecutor.ExecuteActions(trigger.index);
                                 }
                         
                         }

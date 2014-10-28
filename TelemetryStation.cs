@@ -44,10 +44,11 @@ namespace AscentProfiler
                 { 
 
 
-
                         if(datapacket.type == APGCSDecoder.FLIGHTLOG)
                         {
-                        
+                                
+
+
                         }
                         return false;
                 }

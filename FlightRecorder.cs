@@ -9,6 +9,7 @@ namespace AscentProfiler
         {
 
                 internal List<string> Log = new List<string>();
+                int lastTransmissionCount = 0;
                 SortedDictionary<float, int> index = new SortedDictionary<float,int>();
                 List<List<double>> telemetry = new List<List<double>>();
                 AscentProAPGCSModule module;

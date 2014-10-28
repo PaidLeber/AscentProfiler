@@ -11,6 +11,8 @@ namespace AscentProfiler
         {
                 FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder;
+                int flightLogLastTransmitCount = 0;
+
 
                 //On RX Sequence of New Profile
                 private List<string> listRXReceiverMessage = new List<string>();
@@ -172,10 +174,11 @@ namespace AscentProfiler
                                                 vessel.id, APGCSDecoder.FLIGHTLOG, 
                                                 RemoteTech.API.GetSignalDelayToKSC(vessel.id) + vessel.missionTime, 
                                                 flightRecorder.Log.Count(), 
-                                                flightRecorder.Log
+                                                flightRecorder.Log.GetRange(flightLogLastTransmitCount, flightRecorder.Log.Count - flightLogLastTransmitCount)
                                                 );
-                                        
-                                        //if transmit true, flightRecorder.Log.Clear();
+
+                                        flightLogLastTransmitCount = flightRecorder.Log.Count;
+                                       
                                 }
 
 

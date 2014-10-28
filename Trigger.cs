@@ -26,17 +26,19 @@ namespace AscentProfiler
                 FROMMAXVAL
         
         }
-
+        
         abstract class Trigger
         {
 
-                protected TriggerType type;
+
 
                 protected bool isascending;
                 protected double lastaltitude;
 
+                internal TriggerType type;
                 internal bool activated = false;
                 internal int index;
+                internal int linkedIndex;
 
                 protected bool ascentMode;
                 protected bool fromaxval;
@@ -78,9 +80,10 @@ namespace AscentProfiler
         {
                 
                 
-                internal Altitude(int index, TriggerType type, string description, bool ascentMode, bool fromaxval, double value)
+                internal Altitude(int index, int linkedIndex, TriggerType type, string description, bool ascentMode, bool fromaxval, double value)
                 {
                         this.index = index;
+                        this.linkedIndex = linkedIndex;
                         this.type = type;
                         this.description = description;
                         this.ascentMode = ascentMode;
