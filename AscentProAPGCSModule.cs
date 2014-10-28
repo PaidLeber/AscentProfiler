@@ -157,7 +157,8 @@ namespace AscentProfiler
 
 
                 internal bool RXProfile(FlightProfile newprofile)
-                {   
+                {
+                        flightProfile.isEnabled = false;
                         flightProfile = newprofile;
                         return isNewProfile = true;
                 }
@@ -205,6 +206,7 @@ namespace AscentProfiler
                                                 break;
                                         case 3:
                                                 flightProfile.AssignToModule(this);
+                                                flightProfile.isEnabled = true;
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
                                                 profileSequenceDelay = 0;
                                                 break;
