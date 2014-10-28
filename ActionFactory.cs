@@ -62,10 +62,10 @@ namespace AscentProfiler
 
                 }
 
-                internal ActionExecutor GetNewActionExecutor()
+                internal List<Action> GetNewActionList()
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating action executor");
-                        return new ActionExecutor(NewActionList);
+                        return NewActionList;
                 }
 
 

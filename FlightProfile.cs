@@ -11,15 +11,15 @@ namespace AscentProfiler
         {
                 internal bool isEnabled = false;
 
-                ActionExecutor actionExecutor;
                 List<Trigger> listTrigger;
+                List<Action> listAction;
 
                 AscentProAPGCSModule module;
 
-                internal FlightProfile(List<Trigger> triggerlist, ActionExecutor actionloop)
+                internal FlightProfile(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
-                        this.actionExecutor = actionloop;
+                        this.listAction = actionlist;
                         this.listTrigger = triggerlist;
                 }
 
@@ -32,7 +32,7 @@ namespace AscentProfiler
                                 if(trigger.Evaluate(module))
                                 {
                                         Debug.Log(trigger.type);
-                                        actionExecutor.ExecuteActions(trigger.index);
+                                        ExecuteActions(trigger.index);
                                 }
                         
                         }
@@ -45,7 +45,22 @@ namespace AscentProfiler
                         this.module = module;
                 }
 
+                internal void ExecuteActions(int index)
+                {
 
+                        foreach (var action in listAction.Where(action => action.activated == false && action.index == index))
+                        {
+                                if (action.Execute())
+                                {
+                                        Debug.Log("ActionExecutor.ExecuteActions " + index);
+
+
+                                }
+
+                        }
+
+
+                }
 
         }
 
