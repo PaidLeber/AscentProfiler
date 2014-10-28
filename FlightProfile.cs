@@ -25,17 +25,18 @@ namespace AscentProfiler
 
                 public void TriggerLoop()
                 {
-                        
-                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
-                        { 
-                                
-                                if(trigger.Evaluate(module))
+                        if (!isEnabled) { return; }
+
+                                foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                                 {
-                                        Debug.Log(trigger.type);
-                                        ExecuteActions(trigger.index);
+
+                                        if (trigger.Evaluate(module))
+                                        {
+                                                Debug.Log(trigger.type);
+                                                ExecuteActions(trigger.index);
+                                        }
+
                                 }
-                        
-                        }
 
                         
                 }
