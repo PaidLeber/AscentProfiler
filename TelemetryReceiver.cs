@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class TelemetryReceiver
+        class TelemetryReceiver : MonoBehaviour
         {
 
                 internal List<string> FlightLog = new List<string>();
