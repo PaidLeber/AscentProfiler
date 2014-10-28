@@ -10,7 +10,7 @@ namespace AscentProfiler
         class TelemetryStation : MonoBehaviour
         {
 
-                List<string> FlightLog = new List<string>();
+                internal List<string> FlightLog = new List<string>();
                 Queue<double> transmitDelay = new Queue<double>();
                 Queue<int> delayedFlightLogReadCount = new Queue<int>();
                 int currentflightlogReadCount = 0;
