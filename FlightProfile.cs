@@ -26,7 +26,7 @@ namespace AscentProfiler
                 public void TriggerLoop()
                 {
                         
-                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false))
+                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         { 
                                 
                                 if(trigger.Evaluate(module))

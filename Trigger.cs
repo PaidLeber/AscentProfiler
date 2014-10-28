@@ -157,7 +157,7 @@ namespace AscentProfiler
 
         }
 
-        
+        [Serializable]
         class Countdown : Trigger
         {
 
