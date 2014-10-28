@@ -9,13 +9,16 @@ namespace AscentProfiler
 
         class TelemetryStation : MonoBehaviour
         {
+
                 List<string> FlightLog = new List<string>();
-                Dictionary<double, int> signalDelay = new Dictionary<double, int>();
+                Queue<double> transmitDelay = new Queue<double>();
+                Queue<int> delayedFlightLogReadCount = new Queue<int>();
 
 
-                internal bool Receive(double signaldelay ,FlightRecorder flightrecorder)
+                internal bool Receive(double tranmitime ,FlightRecorder flightrecorder)
                 {
-
+                        transmitDelay.Enqueue(tranmitime);
+                        delayedFlightLogReadCount.Enqueue(flightrecorder.FlightLog.Count);
 
                         FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count + 1, flightrecorder.FlightLog.Count));
                         
@@ -28,6 +31,8 @@ namespace AscentProfiler
 
                 void Update()
                 {
+                        if(transmitDelay.Peek() )
+
 
                 }
 

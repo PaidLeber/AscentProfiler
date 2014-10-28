@@ -166,9 +166,15 @@ namespace AscentProfiler
                 {
                         if(isConnectedtoKSC)
                                 if (flightrecorder.logEnabled && flightrecorder.FlightLog.Count > flightrecorder.lastFlightLogTransmitCount)
-                                        if (AscentProfiler.telemetryStation.Receive(RemoteTech.API.GetSignalDelayToKSC(vessel.id), flightrecorder))
+                                        if (AscentProfiler.telemetryStation.Receive(TransitTime(), flightrecorder))
                                                 flightrecorder.lastFlightLogTransmitCount = flightrecorder.FlightLog.Count;
 
+                }
+
+                double TransitTime()
+                {
+                        return vessel.missionTime + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
+                
                 }
 
                 void RXProfileReceiverSequence()
