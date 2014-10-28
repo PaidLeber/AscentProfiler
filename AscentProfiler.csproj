@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
-    <Compile Include="ActionExecutor.cs" />
     <Compile Include="ActionFactory.cs" />
     <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
