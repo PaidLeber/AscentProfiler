@@ -111,6 +111,7 @@ namespace AscentProfiler
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
                                                 module.flightRecorder.Log("Ascending Above " + value + "m");
+                                                Debug.Log("Ascending Above " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -119,6 +120,7 @@ namespace AscentProfiler
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
                                                 module.flightRecorder.Log("Descending Below " + value + "m");
+                                                Debug.Log("Descending Below " + value + "m");
                                                 return activated = true;
                                         }
                                 }

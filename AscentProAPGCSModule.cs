@@ -106,7 +106,7 @@ namespace AscentProfiler
                  */
                 public override void OnFixedUpdate()
                 {
-
+                        flightProfile.TriggerLoop();
 
                         if ((Time.time - lastFixedUpdate) > logInterval)
                         {
@@ -158,7 +158,7 @@ namespace AscentProfiler
                 internal bool RXProfile(FlightProfile newprofile)
                 {
                         flightProfile = newprofile;
-                        flightProfile.isEnabled = false;
+                        flightProfile.isEnabled = true;
                         Debug.Log("RX Profile successful");
                         return isNewProfile = true;
                 }
