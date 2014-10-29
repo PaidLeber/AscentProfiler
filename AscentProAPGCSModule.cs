@@ -9,10 +9,8 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                FlightProfile flightProfile;
-                internal FlightRecorder flightRecorder;
-                int flightLogLastTransmitCount = 0;
-
+                FlightProfile flightProfile = null;
+                internal FlightRecorder flightRecorder = null;
 
                 //On RX Sequence of New Profile
                 private List<string> listRXReceiverMessage = new List<string>();
@@ -44,6 +42,7 @@ namespace AscentProfiler
                 {
                         InitNewProfileSequence();
                         flightRecorder = new FlightRecorder(this); 
+                        
                 }
 
                 private float lastUpdate = 0.0f;
@@ -158,8 +157,9 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
-                        flightProfile.isEnabled = false;
                         flightProfile = newprofile;
+                        flightProfile.isEnabled = false;
+                        Debug.Log("RX Profile successful");
                         return isNewProfile = true;
                 }
 

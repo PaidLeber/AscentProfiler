@@ -24,6 +24,9 @@ namespace AscentProfiler
                 Vector2 minProfileWindowSize = new Vector2(280, 400);
                 Vector2 mainWindowScrollPos = new Vector2(0,0);
 
+                Vector2 logWindowScrollPos = new Vector2(0, 0);
+
+
                 // Unique window id
                 int windowId = 93971;
 
@@ -160,6 +163,27 @@ namespace AscentProfiler
                         GUILayout.EndScrollView();
 
                         GUILayout.Space(10);
+
+
+                        logWindowScrollPos = GUILayout.BeginScrollView(logWindowScrollPos);
+
+                                GUILayout.BeginVertical();
+
+                                        foreach(string log in AscentProfiler.telemetryReceiver.FlightLog)
+                                        {
+                                                GUILayout.Label(log);
+                                        }
+
+
+
+
+
+                        GUILayout.EndVertical();
+
+
+
+
+                        GUILayout.EndScrollView();
 
                         mainWindowPos = ResizeWindow(id, mainWindowPos, minProfileWindowSize);
                         GUI.DragWindow(titleBarRect);

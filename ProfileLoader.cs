@@ -115,8 +115,9 @@ namespace AscentProfiler
                                 
 
                         }
-                        
-                        
+
+
+
                         return TXAscentProAPGCSModule(triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
 
                 }
@@ -126,8 +127,8 @@ namespace AscentProfiler
                 {
                         AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
                         APGCSmodule.Test();
-                        Log.Level(LogType.Verbose, APGCSmodule.RXProfile(newprofile).ToString());
-                        return false;
+                        
+                        return APGCSmodule.RXProfile(newprofile);
 
                 }
 

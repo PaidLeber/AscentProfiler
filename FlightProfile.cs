@@ -21,6 +21,17 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         listAction = actionlist;
                         listTrigger = triggerlist;
+
+                        Debug.Log("FLIGHT PROFILE CONTRUCTOR!");
+                        foreach(Trigger item in listTrigger )
+                        {
+                                Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue);
+                        }
+
+                        foreach (Action item in listAction)
+                        {
+                                Debug.Log(item.activated + " linked index: " + item.index + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue +" modifier: "+ item.modifier);
+                        }
                 }
 
                 public void TriggerLoop()

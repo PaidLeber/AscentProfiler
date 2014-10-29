@@ -22,6 +22,14 @@ namespace AscentProfiler
                 internal FlightRecorder(AscentProAPGCSModule module)
                 {
                         this.module = module;
+                        FlightLog.Add("TEST0");
+                        FlightLog.Add("TEST1");
+                        FlightLog.Add("TEST2");
+                        FlightLog.Add("TEST3");
+                        FlightLog.Add("TEST4");
+                        FlightLog.Add("TEST5");
+                        FlightLog.Add("TEST6");
+                        FlightLog.Add("TEST7");
                 }
 
                 internal void Log(string log)

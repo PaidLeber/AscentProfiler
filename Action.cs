@@ -27,8 +27,8 @@ namespace AscentProfiler
 
         abstract class Action
         {
-                protected ActionType type;
-                protected ActionModifier modifier;
+                internal ActionType type;
+                internal ActionModifier modifier;
 
                 internal bool activated = false;
                 internal int index = -1;
