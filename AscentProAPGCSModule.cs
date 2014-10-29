@@ -176,6 +176,7 @@ namespace AscentProfiler
                 {
                         if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
                                 { return 0; }
+                        Debug.Log("UT: " + Planetarium.GetUniversalTime());
                         Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id));
                         return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
                 
