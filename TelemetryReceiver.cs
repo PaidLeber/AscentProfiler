@@ -17,12 +17,19 @@ namespace AscentProfiler
 
                 internal bool ReceiveFlightLog(double transmitdelay, FlightRecorder flightrecorder)
                 {
-
+                        Debug.Log("Received Flight Log");
                         transmitDelay.Enqueue(transmitdelay);
+                        Debug.Log("Transmit delay: "+ transmitdelay);
                         delayedFlightLogReadCount.Enqueue(flightrecorder.FlightLog.Count);
-
-                        FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count + 1, flightrecorder.FlightLog.Count));
-
+                        Debug.Log("TelemetryReceiver.flightlog Count: " + FlightLog.Count);
+                        Debug.Log("flightrecorder.flightlog Count: " + flightrecorder.FlightLog.Count);
+                        var thislist = flightrecorder.FlightLog.GetRange(FlightLog.Count , flightrecorder.FlightLog.Count);
+                        foreach (string item in thislist)
+                        {
+                                Debug.Log(item);
+                        
+                        }
+                        Debug.Log("GetRange: " + flightrecorder.FlightLog.GetRange(FlightLog.Count + 1, flightrecorder.FlightLog.Count));
                         return true;
                 }
 
