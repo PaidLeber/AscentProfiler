@@ -197,10 +197,10 @@ namespace AscentProfiler
                                 return;
                         }
 
-                        var tmp = listRXReceiverMessage[profileMessageSequence];
+                        var messagearray = listRXReceiverMessage[profileMessageSequence];
 
                         //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
-                        if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(tmp[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
+                        if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                         {
                                 if (profileMessageSequence == 3)
                                 {
@@ -210,9 +210,9 @@ namespace AscentProfiler
                                         Log.Level(LogType.Verbose, "Profile Loaded");
                                 }
 
-                                ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(tmp[2]), (float)tmp[0], ScreenMessageStyle.UPPER_LEFT));
+                                ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
                                 profileMessageSequence++;
-                                
+
                         }
 
 
