@@ -174,7 +174,7 @@ namespace AscentProfiler
 
                                 GUILayout.BeginVertical();
 
-                                        foreach(string log in AscentProfiler.telemetryReceiver.FlightLog)
+                                        foreach (var log in Enumerable.Reverse(AscentProfiler.telemetryReceiver.FlightLog))
                                         {
                                                 GUILayout.Label(log);
                                         }
