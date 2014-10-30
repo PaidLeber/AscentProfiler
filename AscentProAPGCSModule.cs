@@ -108,7 +108,7 @@ namespace AscentProfiler
 
                 void RXProfileReceiverSequence(FlightProfile newprofile)
                 {
-                        isNewProfile = true;
+                        
                         profileMessageSequence = 0;
                         profileTransmissionTime = 0;
 
