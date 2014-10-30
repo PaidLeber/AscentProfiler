@@ -9,9 +9,8 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal FlightProfile flightProfile = null;
-                private FlightProfile profileChecksum;
-                internal FlightRecorder flightRecorder = null;
+                internal FlightProfile flightProfile;
+                internal FlightRecorder flightRecorder;
 
                 //On RX Sequence of New Profile
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
@@ -51,6 +50,112 @@ namespace AscentProfiler
                 {
                         Log.Level(LogType.Verbose, "AscentProAPGCSModule TEST1");
                 }
+
+
+
+
+
+                void Transmit(FlightRecorder flightrecorder)
+                {
+                        if(isConnectedtoKSC)
+                                if (flightrecorder.logEnabled && flightrecorder.MissionLog.Count > flightrecorder.lastFlightLogTransmitCount)
+                                        if (AscentProfiler.telemetryReceiver.ReceiveFlightLog(TransitTimeUT(), flightrecorder))
+                                                flightrecorder.lastFlightLogTransmitCount = flightrecorder.MissionLog.Count;
+
+                }
+
+                double TransitTimeUT()
+                {
+                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                                { return 0; }
+                        Debug.Log("UT: " + Planetarium.GetUniversalTime());
+                        Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id));
+                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
+                
+                }
+
+                /*
+* Called every frame
+*/
+                public override void OnUpdate()
+                {
+
+                        Transmit(flightRecorder);
+
+                        if (flightProfile != null && flightProfile.isEnabled)
+                        {
+                                flightProfile.TriggerLoop();
+                        }
+
+                        if ((Time.time - lastUpdate) > logInterval)
+                        {
+                                lastUpdate = Time.time;
+                                Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
+                                    + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
+                        }
+                }
+
+                internal bool RXProfile(FlightProfile newprofile)
+                {
+                        Debug.Log("RX Profile successful");
+                        //RXProfileReceiverSequence(newprofile);
+
+                        flightProfile = newprofile;
+                        flightProfile.AssignToModule(this);
+                        flightProfile.isEnabled = true;
+                        return isNewProfile = true;
+                }
+
+                void RXProfileReceiverSequence(FlightProfile newprofile)
+                {
+                        isNewProfile = true;
+                        profileMessageSequence = 0;
+                        profileTransmissionTime = 0;
+
+
+                                if (profileTransmissionTime == 0)
+                                { profileTransmissionTime = Planetarium.GetUniversalTime(); }
+
+
+                                if (profileMessageSequence == 5)
+                                {
+                                        isNewProfile = false;
+                                }
+
+
+                                var messagearray = listRXReceiverMessage[profileMessageSequence];
+
+                                //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
+                                if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
+                                {
+                                        if (profileMessageSequence == 3)
+                                        {
+                                                flightProfile = null;
+                                                flightProfile.AssignToModule(this);
+                                                flightProfile.isEnabled = true;
+                                                Log.Level(LogType.Verbose, "Profile Loaded");
+                                                Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
+                                        }
+
+                                        ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
+                                        profileMessageSequence++;
+
+                                }
+
+                }
+                
+
+                void InitNewProfileSequence()
+                {
+
+                        listRXReceiverMessage.Add(new object[] { 2.0f, 0, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Reconfiguration packets received from frame" });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
+                        listRXReceiverMessage.Add(new object[] { 8.0f, 8, "RX: Reconfiguration successful: Profile loaded" });
+                        listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
+                
+                }
+
                 /*
                 * Called after the scene is loaded.
                 */
@@ -67,7 +172,7 @@ namespace AscentProfiler
                  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        
+
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
                 }
@@ -83,33 +188,14 @@ namespace AscentProfiler
                             + "][" + Time.time.ToString("0.0000") + "]: OnActive");
                 }
 
-                /*
-                 * Called every frame
-                 */
-                public override void OnUpdate()
-                {
-                        RXProfileReceiverSequence();
-                        Transmit(flightRecorder);
 
-                        if (flightProfile != null) 
-                        {
-                                flightProfile.TriggerLoop();
-                        }
-
-                        if ((Time.time - lastUpdate) > logInterval)
-                        {
-                                lastUpdate = Time.time;
-                                Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
-                                    + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
-                        }
-                }
 
                 /*
-                 * Called at a fixed time interval determined by the physics time step.
-                 */
+                * Called at a fixed time interval determined by the physics time step.
+                */
                 public override void OnFixedUpdate()
                 {
-                        
+
 
                         if ((Time.time - lastFixedUpdate) > logInterval)
                         {
@@ -157,89 +243,6 @@ namespace AscentProfiler
                             + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
                 }
 
-
-                void Transmit(FlightRecorder flightrecorder)
-                {
-                        if(isConnectedtoKSC)
-                                if (flightrecorder.logEnabled && flightrecorder.MissionLog.Count > flightrecorder.lastFlightLogTransmitCount)
-                                        if (AscentProfiler.telemetryReceiver.ReceiveFlightLog(TransitTimeUT(), flightrecorder))
-                                                flightrecorder.lastFlightLogTransmitCount = flightrecorder.MissionLog.Count;
-
-                }
-
-                double TransitTimeUT()
-                {
-                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
-                                { return 0; }
-                        Debug.Log("UT: " + Planetarium.GetUniversalTime());
-                        Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id));
-                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
-                
-                }
-
-                internal bool RXProfile(FlightProfile newprofile)
-                {
-                        if (flightProfile != null)
-                        { 
-                                flightProfile.isEnabled = false; 
-                        }
-
-                        profileChecksum = newprofile;
-                        Debug.Log("RX Profile successful");
-                        return isNewProfile = true;
-                }
-
-                void RXProfileReceiverSequence()
-                {
-                        if (!isNewProfile)
-                                { return; }
-
-                        if (profileTransmissionTime == 0)
-                        { profileTransmissionTime = Planetarium.GetUniversalTime(); }
-
-
-
-                        if (profileMessageSequence == 5)
-                        {
-                                isNewProfile = false;
-                                profileMessageSequence = 0;
-                                profileTransmissionTime = 0;
-                                return;
-                        }
-
-                        var messagearray = listRXReceiverMessage[profileMessageSequence];
-
-                        //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
-                        if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
-                        {
-                                if (profileMessageSequence == 3)
-                                {
-                                        flightProfile = profileChecksum;
-                                        flightProfile.AssignToModule(this);
-                                        flightProfile.isEnabled = true;
-                                        Log.Level(LogType.Verbose, "Profile Loaded");
-                                        Log.Level(LogType.Verbose, "this module enabled: "+ this.isEnabled);
-                                }
-
-                                ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
-                                profileMessageSequence++;
-
-                        }
-
-
-                }
-                
-
-                void InitNewProfileSequence()
-                {
-
-                        listRXReceiverMessage.Add(new object[] { 2.0f, 0, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Reconfiguration packets received from frame" });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
-                        listRXReceiverMessage.Add(new object[] { 8.0f, 8, "RX: Reconfiguration successful: Profile loaded" });
-                        listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
-                
-                }
 
         }
 

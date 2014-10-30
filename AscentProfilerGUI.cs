@@ -98,14 +98,19 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
-                                {
-                                        AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                        {
+                                profileLoaded = false;
+                        }
 
-                                        foreach (Trigger item in APGCSmodule.flightProfile.listTrigger)
-                                        {
-                                                Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " value: " + item.value);
-                                        }
+                        if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
+                        {
+                                AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                                        
+                                foreach (Trigger item in APGCSmodule.flightProfile.listTrigger)
+                                {
+                                        Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " value: " + item.value);
                                 }
+                        }
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
@@ -120,19 +125,8 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
-
-                                //test code
-                                if(!testbool)
-                                {
-                                        profileLoader = new ProfileLoader();
-
-                                        testbool = true;
-
-
-                                }
-
-                             
-
+                                profileLoader = new ProfileLoader();
+                            
 
                                 GUILayout.BeginVertical();
 
@@ -151,6 +145,7 @@ namespace AscentProfiler
                                                                 //profileLoaded = profileLoader.LoadProfile(pair.Key);
                                                                 if (profileLoader.LoadProfile(pair.Key))
                                                                 {
+                                                                        profileLoaded = true;
                                                                         Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfiler.currentVessel.vesselName);
                                                                 }
                                                                 else
@@ -161,8 +156,7 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
                                                         {
-                                                                testbool = false;
-
+                                                                
                                                                 Log.Level(LogType.Verbose, "Reset ProfileLoader Class");
                                                                 
                                                         }
@@ -176,7 +170,7 @@ namespace AscentProfiler
                                         }
                                 GUILayout.EndVertical();
 
-                                
+                                  
                         }
 
                         GUILayout.EndScrollView();
@@ -184,7 +178,7 @@ namespace AscentProfiler
                         GUILayout.Space(10);
 
                         GUILayout.Label("Mission Log:");
-                        logWindowScrollPos = GUILayout.BeginScrollView(logWindowScrollPos);
+                        logWindowScrollPos = GUILayout.BeginScrollView(logWindowScrollPos, STYLE_MENU_SCROLL_VERTICAL);
 
                                 GUILayout.BeginVertical();
 

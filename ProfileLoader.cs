@@ -11,8 +11,6 @@ namespace AscentProfiler
 {
         class ProfileLoader
         {
-                FlightProfile tempprofileval;
-
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
                 Dictionary<string, string> profiles = new Dictionary<string, string>();
@@ -39,8 +37,6 @@ namespace AscentProfiler
                 {
                         int profileStart = 0;
                         int profileEnd = 0;
-
-                        
 
                         List<string> profileLines = new List<string>(profiles[profile].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 

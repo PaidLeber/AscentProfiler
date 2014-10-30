@@ -36,8 +36,6 @@ namespace AscentProfiler
 
                 public void TriggerLoop()
                 {
-                        if (!isEnabled)
-                                { return; }
 
                         //Debug.Log("Trigger Loop test");
                         foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
