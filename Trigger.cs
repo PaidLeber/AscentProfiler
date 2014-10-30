@@ -43,7 +43,7 @@ namespace AscentProfiler
                 protected bool ascentMode;
                 protected bool fromaxval;
 
-                protected double value;
+                internal double value;
                 protected double maxval;
 
                 internal string displayvalue;
@@ -112,6 +112,7 @@ namespace AscentProfiler
                                         {
                                                 module.flightRecorder.Log("Ascending Above " + value + "m");
                                                 Debug.Log("Ascending Above " + value + "m");
+
                                                 return activated = true;
                                         }
                                 }

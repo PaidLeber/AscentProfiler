@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                private FlightProfile flightProfile = null;
+                internal FlightProfile flightProfile = null;
                 private FlightProfile profileChecksum;
                 internal FlightRecorder flightRecorder = null;
 

@@ -30,6 +30,10 @@ namespace AscentProfiler
                         FlightLog.Add("TEST5");
                         FlightLog.Add("TEST6");
                         FlightLog.Add("TEST7");
+                        FlightLog.Add("TEST8");
+                        FlightLog.Add("TEST9");
+                        FlightLog.Add("TEST10");
+                        FlightLog.Add("TEST11");
                 }
 
                 internal void Log(string log)

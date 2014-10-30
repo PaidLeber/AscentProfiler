@@ -6,14 +6,13 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        public class TelemetryReceiver : MonoBehaviour
+        class TelemetryReceiver : MonoBehaviour
         {
 
                 internal List<string> FlightLog = new List<string>();
-                public Queue<double> transmitDelay = new Queue<double>();
-                public Queue<int> delayedFlightLogReadCount = new Queue<int>();
-                public int currentflightlogReadCount = 0;
-                
+                internal int currentflightlogReadCount = 0;
+                Queue<double> transmitDelay = new Queue<double>();
+                Queue<int> delayedFlightLogReadCount = new Queue<int>();
 
                 internal bool ReceiveFlightLog(double transmitdelay, FlightRecorder flightrecorder)
                 {

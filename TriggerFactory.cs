@@ -119,7 +119,7 @@ namespace AscentProfiler
 
                 int GetParentIndex(TriggerType trigger, string commandline, int linenumber, int currentindex)
                 {
-                        // If tabcount == 0; first level trigger
+                        // If tabcount == 0; first level trigger, has no parent index
                         // If (tabcount - tabCountStack.Count) == 0, next level trigger; Peek index value then put it in the new trigger's index and push new trigger on stack
                         // If tabcount < tabCountStack.Count; lower level trigger; pop triggers off stack until current trigger is on top of it's corresponding chained trigger
                         // If (tabcount - tabCountStack.Count) > 0: tab error; Catch unchained trigger and throw error

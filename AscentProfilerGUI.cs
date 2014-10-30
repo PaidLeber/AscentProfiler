@@ -92,7 +92,12 @@ namespace AscentProfiler
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                                 {
-                                        //AscentProfiler.telemetryReceiver.enabled = !AscentProfiler.telemetryReceiver.enabled;
+                                        AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+
+                                        foreach (Trigger item in APGCSmodule.flightProfile.listTrigger)
+                                        {
+                                                Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " value: " + item.value);
+                                        }
                                 }
 
                         GUILayout.EndHorizontal();

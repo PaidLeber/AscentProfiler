@@ -11,8 +11,8 @@ namespace AscentProfiler
         {
                 internal bool isEnabled = false;
 
-                List<Trigger> listTrigger;
-                List<Action> listAction;
+                internal List<Trigger> listTrigger;
+                internal List<Action> listAction;
 
                 AscentProAPGCSModule module;
 
@@ -45,6 +45,14 @@ namespace AscentProfiler
 
                                 if (trigger.Evaluate(module))
                                 {
+                                        foreach (Trigger linkedtrigger in listTrigger.Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
+                                        {
+                                                if(linkedtrigger.linkedIndex == trigger.index)
+                                                {
+                                                        linkedtrigger.index = 0;
+                                                }
+
+                                        }
                                         Debug.Log(trigger.type);
                                         ExecuteActions(trigger.index);
                                 }
