@@ -47,7 +47,7 @@ namespace AscentProfiler
                                         currentAction = action;
 
                                         NewActionList.Add(actionProducts[action]());
-
+                                        
                                 }
                                 else
                                 {

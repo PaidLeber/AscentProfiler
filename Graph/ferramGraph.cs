@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace AscentProfiler
+namespace AscentProfiler.Graph
 {
         public class ferramGraph
         {

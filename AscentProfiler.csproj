@@ -57,6 +57,7 @@
     <Compile Include="Graph\ferramGraph.cs" />
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightRecorder.cs" />
+    <Compile Include="Graph\GraphGUI.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="ProfileLoader.cs" />

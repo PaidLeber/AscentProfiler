@@ -9,9 +9,11 @@ namespace AscentProfiler
 {
         class AscentProfilerGUI
         {
+                GraphGUI graphGui = new GraphGUI();
+
                 ProfileLoader profileLoader;
                 bool profileLoaded = false;
-
+                bool graphWindowEnabled = false;
                 Texture2D loadIcon;
 
                 //GUI Styles
@@ -64,6 +66,8 @@ namespace AscentProfiler
 
                 public void OnGUI()
                 {
+                        graphGui.OnGUI();
+
                         GUI.skin = null;
                         
                         STYLE_WINDOW_BUTTON = new GUIStyle(GUI.skin.GetStyle("button"));
@@ -102,7 +106,9 @@ namespace AscentProfiler
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-
+                               
+                                graphGui.ChangeState(!graphWindowEnabled);
+                                graphWindowEnabled = !graphWindowEnabled;
                         }
 
                         GUILayout.EndHorizontal();
