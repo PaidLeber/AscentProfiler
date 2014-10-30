@@ -92,7 +92,7 @@ namespace AscentProfiler
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                                 {
-                                        AscentProfiler.telemetryReceiver.enabled = !AscentProfiler.telemetryReceiver.enabled;
+                                        //AscentProfiler.telemetryReceiver.enabled = !AscentProfiler.telemetryReceiver.enabled;
                                 }
 
                         GUILayout.EndHorizontal();
