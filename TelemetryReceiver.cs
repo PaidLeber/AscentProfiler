@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class TelemetryReceiver : MonoBehaviour
+        public class TelemetryReceiver : MonoBehaviour
         {
 
                 internal List<string> FlightLog = new List<string>();
@@ -25,36 +25,32 @@ namespace AscentProfiler
                         Debug.Log("Transmit delay count: " + transmitDelay.Count);
                         Debug.Log("TelemetryReceiver.flightlog Count: " + FlightLog.Count);
                         Debug.Log("flightrecorder.flightlog Count: " + flightrecorder.FlightLog.Count);
-                        int tempflcount;
-                        int tempfrcount;
-                        if (FlightLog.Count > 0)
-                        {
-                                tempflcount = FlightLog.Count - 1;
-                                tempfrcount = flightrecorder.FlightLog.Count - FlightLog.Count;
-                        }
-                        else 
-                        {
-                                tempflcount = FlightLog.Count;
-                                tempfrcount = flightrecorder.FlightLog.Count;
-                        }
-                        FlightLog.AddRange(flightrecorder.FlightLog.GetRange(tempflcount, tempfrcount));
+
+                        FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count, flightrecorder.FlightLog.Count - FlightLog.Count));
                         Debug.Log("NEW TelemetryReceiver.flightlog Count: " + FlightLog.Count);
                         return true;
                 }
 
-
-
-                void Update()
+                void CheckDataInTransit()
                 {
-                        Debug.Log("TELEMETRY RECEIVE UPDATE");
-                        if (Planetarium.GetUniversalTime() > transmitDelay.Peek())
+                        if (transmitDelay.Count != 0)
                         {
-                                transmitDelay.Dequeue();
-                                currentflightlogReadCount = delayedFlightLogReadCount.Peek();
-                                delayedFlightLogReadCount.Dequeue();
-                                Debug.Log("transmit delay count: "+transmitDelay.Count);
+                                if (Planetarium.GetUniversalTime() > transmitDelay.Peek())
+                                {
+                                        transmitDelay.Dequeue();
+                                        currentflightlogReadCount = delayedFlightLogReadCount.Peek();
+                                        delayedFlightLogReadCount.Dequeue();
+                                        Debug.Log("transmit delay count: " + transmitDelay.Count);
 
+                                }
                         }
+
+                }
+
+                public void Update()
+                {
+                        //Debug.Log("TELEMETRY RECEIVE UPDATE");
+                        CheckDataInTransit();
 
                 }
                 

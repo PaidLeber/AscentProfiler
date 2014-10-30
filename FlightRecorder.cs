@@ -43,7 +43,7 @@ namespace AscentProfiler
                 {
                         TimeSpan t = TimeSpan.FromSeconds(secs);
 
-                        return string.Format("{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
+                        return string.Format("T+{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
                         
                 }
 

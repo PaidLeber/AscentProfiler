@@ -45,7 +45,7 @@ namespace AscentProfiler
                         
                         gui = new AscentProfilerGUI();
                         telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
-                        telemetryReceiver.enabled = false;
+                        //telemetryReceiver = new TelemetryReceiver();
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
@@ -120,7 +120,8 @@ namespace AscentProfiler
                 }
 
                 void Update()
-                {                       
+                {                    
+                        
                         if (FlightGlobals.ActiveVessel != currentVessel)
                         {
                                 currentVessel = FlightGlobals.ActiveVessel;
