@@ -9,15 +9,13 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                FlightProfile flightProfile;
+                private FlightProfile flightProfile = null;
+                private FlightProfile profileChecksum;
                 internal FlightRecorder flightRecorder = null;
 
                 //On RX Sequence of New Profile
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private System.Random RandGenerator = new System.Random();
-
                 private bool isNewProfile = false;
-                private double profileSequenceDelay = 0;
                 private double profileTransmissionTime = 0;
                 private int profileMessageSequence = 0;
 
@@ -176,7 +174,7 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
-                        flightProfile = newprofile;
+                        profileChecksum = newprofile;
                         Debug.Log("RX Profile successful");
                         return isNewProfile = true;
                 }
@@ -186,17 +184,14 @@ namespace AscentProfiler
                         if (!isNewProfile)
                                 { return; }
 
-                        
-                        
-                        
                         if (profileTransmissionTime == 0)
                         { profileTransmissionTime = Planetarium.GetUniversalTime(); }
+
 
 
                         if (profileMessageSequence == 5)
                         {
                                 isNewProfile = false;
-                                profileSequenceDelay = 0;
                                 profileMessageSequence = 0;
                                 profileTransmissionTime = 0;
                                 return;
@@ -207,49 +202,22 @@ namespace AscentProfiler
                         //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
                         if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(tmp[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                         {
-
-                                
-                                
-
-
-                                switch (profileMessageSequence)
+                                if (profileMessageSequence == 3)
                                 {
-                                        case 0:
-
-                                                break;
-                                        case 1:
-
-                                                break;
-                                        case 2:
-
-                                                break;
-                                        case 3:
-                                                Debug.Log("CASE3");
-                                                flightProfile.AssignToModule(this);
-                                                flightProfile.isEnabled = true;
-                                                Log.Level(LogType.Verbose, "Profile Loaded");
-
-                                                break;
-                                        case 4:
-                                                break;
-
-
+                                        flightProfile = profileChecksum;
+                                        flightProfile.AssignToModule(this);
+                                        flightProfile.isEnabled = true;
+                                        Log.Level(LogType.Verbose, "Profile Loaded");
                                 }
 
                                 ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(tmp[2]), (float)tmp[0], ScreenMessageStyle.UPPER_LEFT));
-
-
-
                                 profileMessageSequence++;
                                 
                         }
 
 
-
-
                 }
-
-
+                
 
                 void InitNewProfileSequence()
                 {
@@ -259,13 +227,6 @@ namespace AscentProfiler
                         listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
                         listRXReceiverMessage.Add(new object[] { 8.0f, 8, "RX: Reconfiguration successful: Profile loaded" });
                         listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
-                        /*
-                        listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version +" Ready");
-                        listRXReceiverMessage.Add("RX: Reconfiguration packets received from frame");
-                        listRXReceiverMessage.Add("RX: Checksum verification in progress, please standby ");
-                        listRXReceiverMessage.Add("RX: Reconfiguration successful: Profile loaded");                     
-                        listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready");
-                        */
                 
                 }
 
