@@ -67,6 +67,7 @@ namespace AscentProfiler
                  */
                 public override void OnStart(PartModule.StartState state)
                 {
+                        
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
                 }
@@ -89,7 +90,11 @@ namespace AscentProfiler
                 {
                         RXProfileReceiverSequence();
                         Transmit(flightRecorder);
-                        
+
+                        if (flightProfile != null) 
+                        {
+                                flightProfile.TriggerLoop();
+                        }
 
                         if ((Time.time - lastUpdate) > logInterval)
                         {
@@ -174,6 +179,11 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
+                        if (flightProfile != null)
+                        { 
+                                flightProfile.isEnabled = false; 
+                        }
+
                         profileChecksum = newprofile;
                         Debug.Log("RX Profile successful");
                         return isNewProfile = true;
@@ -208,6 +218,7 @@ namespace AscentProfiler
                                         flightProfile.AssignToModule(this);
                                         flightProfile.isEnabled = true;
                                         Log.Level(LogType.Verbose, "Profile Loaded");
+                                        Log.Level(LogType.Verbose, "this module enabled: "+ this.isEnabled);
                                 }
 
                                 ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));

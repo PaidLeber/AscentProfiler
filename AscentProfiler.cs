@@ -44,7 +44,8 @@ namespace AscentProfiler
 
                         
                         gui = new AscentProfilerGUI();
-                        telemetryReceiver = new TelemetryReceiver();
+                        telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
+                        telemetryReceiver.enabled = false;
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
