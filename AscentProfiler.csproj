@@ -54,6 +54,7 @@
     <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
+    <Compile Include="Graph\ferramGraph.cs" />
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightRecorder.cs" />
     <Compile Include="Log.cs" />
@@ -69,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AscentProfiler.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Control Loops\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
