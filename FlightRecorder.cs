@@ -36,10 +36,11 @@ namespace AscentProfiler
                         FlightLog.Add("TEST11");
                 }
 
-                internal void Log(string log)
+                internal void AddLog(string log)
                 {
-
-                        FlightLog.Add(timeStamp(module.vessel.missionTime) + " - " + log);
+                        var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
+                        FlightLog.Add(transferlog);
+                        Log.Level(LogType.Verbose, transferlog);
 
                 }
 
