@@ -7,7 +7,7 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        class FlightProfile
+        public class FlightProfile : MonoBehaviour
         {
                 internal bool isEnabled = false;
 
@@ -34,23 +34,31 @@ namespace AscentProfiler
                         }
                 }
 
-                public void TriggerLoop()
+                void TriggerLoop()
                 {
-                        if (!isEnabled) { return; }
+                        
                         Debug.Log("Trigger Loop test");
-                                foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
+                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
+                        {
+
+                                if (trigger.Evaluate(module))
                                 {
-
-                                        if (trigger.Evaluate(module))
-                                        {
-                                                Debug.Log(trigger.type);
-                                                ExecuteActions(trigger.index);
-                                        }
-
+                                        Debug.Log(trigger.type);
+                                        ExecuteActions(trigger.index);
                                 }
 
+                        }
                         
+
                 }
+
+                public void FixedUpdate()
+                {
+                        if (!isEnabled) { return; }
+                                TriggerLoop();
+                }
+
+
 
                 internal void AssignToModule(AscentProAPGCSModule module)
                 {

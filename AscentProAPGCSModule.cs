@@ -9,11 +9,11 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                FlightProfile flightProfile = null;
+                FlightProfile flightProfile;
                 internal FlightRecorder flightRecorder = null;
 
                 //On RX Sequence of New Profile
-                private List<string> listRXReceiverMessage = new List<string>();
+                private List<object[]> listRXReceiverMessage = new List<object[]>();
                 private System.Random RandGenerator = new System.Random();
 
                 private bool isNewProfile = false;
@@ -91,7 +91,7 @@ namespace AscentProfiler
                 {
                         RXProfileReceiverSequence();
                         Transmit(flightRecorder);
-
+                        
 
                         if ((Time.time - lastUpdate) > logInterval)
                         {
@@ -106,7 +106,7 @@ namespace AscentProfiler
                  */
                 public override void OnFixedUpdate()
                 {
-                        flightProfile.TriggerLoop();
+                        
 
                         if ((Time.time - lastFixedUpdate) > logInterval)
                         {
@@ -155,14 +155,6 @@ namespace AscentProfiler
                 }
 
 
-                internal bool RXProfile(FlightProfile newprofile)
-                {
-                        flightProfile = newprofile;
-                        flightProfile.isEnabled = true;
-                        Debug.Log("RX Profile successful");
-                        return isNewProfile = true;
-                }
-
                 void Transmit(FlightRecorder flightrecorder)
                 {
                         if(isConnectedtoKSC)
@@ -182,54 +174,74 @@ namespace AscentProfiler
                 
                 }
 
+                internal bool RXProfile(FlightProfile newprofile)
+                {
+                        flightProfile = newprofile;
+                        Debug.Log("RX Profile successful");
+                        return isNewProfile = true;
+                }
+
                 void RXProfileReceiverSequence()
                 {
                         if (!isNewProfile)
                                 { return; }
 
-                        if (profileTransmissionTime == 0) 
-                                { profileTransmissionTime = vessel.missionTime;}
+                        
+                        
+                        
+                        if (profileTransmissionTime == 0)
+                        { profileTransmissionTime = Planetarium.GetUniversalTime(); }
 
-                        if ( vessel.missionTime > profileTransmissionTime + profileSequenceDelay + RemoteTech.API.GetSignalDelayToKSC(vessel.id) )
+
+                        if (profileMessageSequence == 5)
                         {
-                                ScreenMessages.PostScreenMessage(new ScreenMessage(listRXReceiverMessage[profileMessageSequence], 4.0f, ScreenMessageStyle.UPPER_LEFT));
+                                isNewProfile = false;
+                                profileSequenceDelay = 0;
+                                profileMessageSequence = 0;
+                                profileTransmissionTime = 0;
+                                return;
+                        }
+
+                        var tmp = listRXReceiverMessage[profileMessageSequence];
+
+                        //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
+                        if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(tmp[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
+                        {
+
+                                
+                                
+
 
                                 switch (profileMessageSequence)
                                 {
                                         case 0:
-                                                profileSequenceDelay = RandGenerator.Next(2, 9);
+
                                                 break;
                                         case 1:
-                                                profileSequenceDelay = 0;
+
                                                 break;
                                         case 2:
-                                                profileSequenceDelay = RandGenerator.Next(3, 15);
+
                                                 break;
                                         case 3:
+                                                Debug.Log("CASE3");
                                                 flightProfile.AssignToModule(this);
                                                 flightProfile.isEnabled = true;
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
-                                                profileSequenceDelay = 0;
+
                                                 break;
                                         case 4:
-                                                profileSequenceDelay = RandGenerator.Next(4, 7);
                                                 break;
-                                        case 5:
-                                                profileSequenceDelay = 10;
-                                                break;
-                                        case 6:
-                                                profileSequenceDelay = 0;
-                                                break;
-                                        case 7:
-                                                isNewProfile = false;
-                                                profileSequenceDelay = 0;
-                                                profileMessageSequence = 0;
-                                                profileTransmissionTime = 0;
-                                                return;
+
+
                                 }
-                                
+
+                                ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(tmp[2]), (float)tmp[0], ScreenMessageStyle.UPPER_LEFT));
+
+
 
                                 profileMessageSequence++;
+                                
                         }
 
 
@@ -241,15 +253,19 @@ namespace AscentProfiler
 
                 void InitNewProfileSequence()
                 {
+
+                        listRXReceiverMessage.Add(new object[] { 2.0f, 0, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Reconfiguration packets received from frame" });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
+                        listRXReceiverMessage.Add(new object[] { 8.0f, 8, "RX: Reconfiguration successful: Profile loaded" });
+                        listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
+                        /*
                         listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version +" Ready");
                         listRXReceiverMessage.Add("RX: Reconfiguration packets received from frame");
                         listRXReceiverMessage.Add("RX: Checksum verification in progress, please standby ");
-                        listRXReceiverMessage.Add("RX: Reconfiguration successful: Profile loaded");
-                        listRXReceiverMessage.Add("RX: Flashing to failsafe EEPROM device");
-                        listRXReceiverMessage.Add("RX: Rebooting APGCS failsafe...");
-                        listRXReceiverMessage.Add("RX: I feel fine. How about you?");
+                        listRXReceiverMessage.Add("RX: Reconfiguration successful: Profile loaded");                     
                         listRXReceiverMessage.Add("RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready");
-
+                        */
                 
                 }
 

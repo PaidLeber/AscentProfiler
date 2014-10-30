@@ -99,7 +99,7 @@ namespace AscentProfiler
                         IsAscending(module);
 
                         double currentAltitude = ascentMode ? module.vessel.altitude : (module.vessel.altitude - module.vessel.terrainAltitude);
-
+                        Debug.Log("Evaluating Altitude: "+ value +" fmval: "+ fromaxval);
                         if (!fromaxval)
                         {
                                 /* return activated = ascentMode ?
