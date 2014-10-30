@@ -49,7 +49,7 @@ namespace AscentProfiler
                                         {
                                                 if(linkedtrigger.linkedIndex == trigger.index)
                                                 {
-                                                        linkedtrigger.index = 0;
+                                                        linkedtrigger.linkedIndex = 0;
                                                 }
 
                                         }
