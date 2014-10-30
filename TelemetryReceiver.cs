@@ -20,12 +20,12 @@ namespace AscentProfiler
                         transmitDelay.Enqueue(transmitdelay);
                         Debug.Log("Transmit delay: "+ transmitdelay);
                         
-                        delayedFlightLogReadCount.Enqueue(flightrecorder.FlightLog.Count);
+                        delayedFlightLogReadCount.Enqueue(flightrecorder.MissionLog.Count);
                         Debug.Log("Transmit delay count: " + transmitDelay.Count);
                         Debug.Log("TelemetryReceiver.flightlog Count: " + FlightLog.Count);
-                        Debug.Log("flightrecorder.flightlog Count: " + flightrecorder.FlightLog.Count);
+                        Debug.Log("flightrecorder.flightlog Count: " + flightrecorder.MissionLog.Count);
 
-                        FlightLog.AddRange(flightrecorder.FlightLog.GetRange(FlightLog.Count, flightrecorder.FlightLog.Count - FlightLog.Count));
+                        FlightLog.AddRange(flightrecorder.MissionLog.GetRange(FlightLog.Count, flightrecorder.MissionLog.Count - FlightLog.Count));
                         Debug.Log("NEW TelemetryReceiver.flightlog Count: " + FlightLog.Count);
                         return true;
                 }

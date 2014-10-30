@@ -10,7 +10,7 @@ namespace AscentProfiler
 
                 AscentProAPGCSModule module;
 
-                internal List<string> FlightLog = new List<string>();
+                internal List<string> MissionLog = new List<string>();
                 internal int lastFlightLogTransmitCount = 0;
                 internal bool logEnabled = true;
 
@@ -22,24 +22,24 @@ namespace AscentProfiler
                 internal FlightRecorder(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        FlightLog.Add("TEST0");
-                        FlightLog.Add("TEST1");
-                        FlightLog.Add("TEST2");
-                        FlightLog.Add("TEST3");
-                        FlightLog.Add("TEST4");
-                        FlightLog.Add("TEST5");
-                        FlightLog.Add("TEST6");
-                        FlightLog.Add("TEST7");
-                        FlightLog.Add("TEST8");
-                        FlightLog.Add("TEST9");
-                        FlightLog.Add("TEST10");
-                        FlightLog.Add("TEST11");
+                        MissionLog.Add("TEST0");
+                        MissionLog.Add("TEST1");
+                        MissionLog.Add("TEST2");
+                        MissionLog.Add("TEST3");
+                        MissionLog.Add("TEST4");
+                        MissionLog.Add("TEST5");
+                        MissionLog.Add("TEST6");
+                        MissionLog.Add("TEST7");
+                        MissionLog.Add("TEST8");
+                        MissionLog.Add("TEST9");
+                        MissionLog.Add("TEST10");
+                        MissionLog.Add("TEST11");
                 }
 
                 internal void AddLog(string log)
                 {
                         var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
-                        FlightLog.Add(transferlog);
+                        MissionLog.Add(transferlog);
                         Log.Level(LogType.Verbose, transferlog);
 
                 }

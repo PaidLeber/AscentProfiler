@@ -10,21 +10,23 @@ namespace AscentProfiler
         class GraphGUI
         {
 
-                //GUI Styles
-                GUIStyle STYLE_WINDOW_BUTTON;
                 Texture2D loadIcon;
 
+                //GUI Styles
+                GUIStyle STYLE_WINDOW_BUTTON;
 
-                Rect mainWindowPos = new Rect(60, 50, 280, 400);
+
+
+                Rect mainWindowPos = new Rect(60, 50, 480, 320);
                 bool mainWindowEnabled = false;
-                Vector2 minProfileWindowSize = new Vector2(280, 400);
+                Vector2 minProfileWindowSize = new Vector2(480, 320);
                 Vector2 mainWindowScrollPos = new Vector2(0, 0);
 
                 Vector2 logWindowScrollPos = new Vector2(0, 0);
 
 
                 // Unique window id
-                int windowId = 93974;
+                int windowId = 93972;
 
                 // For dragging windows
                 Rect titleBarRect = new Rect(0, 0, 10000, 20);
@@ -33,8 +35,6 @@ namespace AscentProfiler
                 int resizing = 0;
                 Rect resizeStart = new Rect();
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
-
-
 
                 public GraphGUI()
                 {
@@ -52,6 +52,7 @@ namespace AscentProfiler
 
                 public void OnGUI()
                 {
+
                         GUI.skin = null;
 
                         STYLE_WINDOW_BUTTON = new GUIStyle(GUI.skin.GetStyle("button"));
@@ -60,7 +61,7 @@ namespace AscentProfiler
 
                         if (mainWindowEnabled)
                         {
-                                mainWindowPos = GUILayout.Window(windowId + 1, mainWindowPos, DrawMainWindow, "Ascent Profiler");
+                                mainWindowPos = GUILayout.Window(windowId + 1, mainWindowPos, DrawMainWindow, "Telemetry");
                         }
 
                 }
@@ -69,15 +70,26 @@ namespace AscentProfiler
                 public void DrawMainWindow(int id)
                 {
 
-
-
-
                         mainWindowEnabled = !GUI.Toggle(new Rect(mainWindowPos.width - 25, 0, 20, 20), !mainWindowEnabled, "");
 
 
+                        GUIStyle defaultButton = new GUIStyle(GUI.skin.GetStyle("button"));
+
+                        GUILayout.BeginHorizontal();
+
+                        if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
+                        {
+
+                        }
 
 
- 
+                        GUILayout.EndHorizontal();
+
+
+
+                        GUILayout.Space(10);
+
+
 
 
                         mainWindowPos = ResizeWindow(id, mainWindowPos, minProfileWindowSize);

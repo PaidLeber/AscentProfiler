@@ -19,7 +19,7 @@ namespace AscentProfiler
                 //GUI Styles
                 GUIStyle STYLE_WINDOW_BUTTON;
 
-
+                private GUIStyle STYLE_MENU_SCROLL_VERTICAL;
 
                 Rect mainWindowPos = new Rect(60, 50, 280, 400);
                 bool mainWindowEnabled = false;
@@ -84,7 +84,10 @@ namespace AscentProfiler
 
                 public void DrawMainWindow(int id) {
 
-
+                        STYLE_MENU_SCROLL_VERTICAL = new GUIStyle(HighLogic.Skin.box);
+                        STYLE_MENU_SCROLL_VERTICAL.alignment = TextAnchor.UpperLeft;
+                        STYLE_MENU_SCROLL_VERTICAL.margin = new RectOffset(0, 0, 0, 0);
+                        STYLE_MENU_SCROLL_VERTICAL.padding = new RectOffset(0, 0, 0, 0);
 
                         
                         mainWindowEnabled = !GUI.Toggle(new Rect(mainWindowPos.width - 25, 0, 20, 20), !mainWindowEnabled, "");
@@ -180,7 +183,7 @@ namespace AscentProfiler
 
                         GUILayout.Space(10);
 
-
+                        GUILayout.Label("Mission Log:");
                         logWindowScrollPos = GUILayout.BeginScrollView(logWindowScrollPos);
 
                                 GUILayout.BeginVertical();
