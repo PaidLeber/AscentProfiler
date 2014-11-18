@@ -297,6 +297,8 @@ namespace AscentProfiler
                         }
 
                 }
+
+
                 protected Texture2D graph;
                 protected Rect displayRect = new Rect(0, 0, 0, 0);
 
@@ -750,9 +752,9 @@ namespace AscentProfiler
 
                         int rightofarea = (int)displayRect.width + 2 * horizontalBorder + 30;
                         int bottomofarea = (int)displayRect.height + 2 * verticalBorder + 30;
-
                         GUILayout.Space(bottomofarea);
                         GUILayout.EndScrollView();
+                        GUILayout.Label("roa: " + rightofarea + " boa: " + bottomofarea);
 
                 }
 

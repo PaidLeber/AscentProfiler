@@ -18,12 +18,16 @@ namespace AscentProfiler
                 Rect rectLook;
                 Vector2 mousecheck;
 
-                Rect mainWindowPos = new Rect(60, 50, 440, 320);
-                bool mainWindowEnabled = false;
-                Vector2 minProfileWindowSize = new Vector2(440, 320);
-                Vector2 mainWindowScrollPos = new Vector2(0, 0);
+                GUIStyle BackgroundStyle;
+                int paddingWidth = 10;
+                int paddingHeight = 10;
 
-                Vector2 logWindowScrollPos = new Vector2(0, 0);
+                Rect mainWindowPos = new Rect(60, 50, 500, 400);
+                Vector2 minProfileWindowSize = new Vector2(500, 400);
+
+                bool mainWindowEnabled = false;
+
+                Vector2 mainWindowScrollPos = new Vector2(0, 0);
 
                 //
                 // Unique window id
@@ -37,12 +41,9 @@ namespace AscentProfiler
                 Rect resizeStart = new Rect();
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
 
-                GUIStyle BackgroundStyle;
-                int graphWidth = 320;
-                int graphHeight = 240;
-                bool graphRedraw = false;
-      
-                ferramGraph graph = new ferramGraph( 320, 240 );
+
+
+                ferramGraph graph;
 
                 public GraphGUI()
                 {
@@ -61,15 +62,21 @@ namespace AscentProfiler
                 public void OnGUI()
                 {
 
+                        if(graph == null)
+                        {
+
+                                graph = new ferramGraph(320, 240);
+                        }
+
                         if (BackgroundStyle == null )
                         {
                                 // DM: initialize styles on first use
                                 BackgroundStyle = new GUIStyle(GUI.skin.box);
                                 BackgroundStyle.richText = true;
                                 BackgroundStyle.hover = BackgroundStyle.active = BackgroundStyle.normal;
-                                BackgroundStyle.padding = new RectOffset(2, 2, 2, 2);
+                                BackgroundStyle.padding = new RectOffset(0, 0, 0, 0);
 
-                                graph.SetBoundaries(0, 500, -10, 10);
+                                graph.SetBoundaries(0, 50, -10, 10);
                                 graph.SetGridScaleUsingValues(1, 5);
                                 graph.horizontalLabel = "time";
                                 graph.verticalLabel = "value";
@@ -111,33 +118,33 @@ namespace AscentProfiler
 
 
 
-                        GUILayout.Space(10);
+                        GUILayout.Space(1);
 
-                        if ((Convert.ToInt32(rectLook.width) - 279) != graph.width)
+                        if (Convert.ToInt32(rectLook.width) - 220 != graph.width || Convert.ToInt32(rectLook.height) - 100 != graph.height)
                         {
-                                graphWidth = Convert.ToInt32(rectLook.width) - 279;
-                                graphHeight = graph.height;
+                                int graphWidth = Convert.ToInt32(rectLook.width) - 220;
+                                int graphHeight = Convert.ToInt32(rectLook.height) - 100;
                                 //graphHeight = Convert.ToInt32(rectLook.height) - 250;
                                 graph.resizeGraph(graphWidth, graphHeight);
-                                graph.SetBoundaries(0, 500, -10, 10);
-                                graph.SetGridScaleUsingValues(1, 5);
-                                graph.horizontalLabel = "time";
-                                graph.verticalLabel = "value";
                                 graph.Update();
-                                graphRedraw = !graphRedraw;
                         }
                         
                         graph.Display(BackgroundStyle, 0, 0);
 
                         GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
                         GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
+
+                        GUI.Label(new Rect(10, 10, 150, 20), "This text is not rotated.");
+                        GUIUtility.RotateAroundPivot(-90, new Vector2(160, 30));
+                        GUI.Label(new Rect(10, 30, 150, 20), "This text is rotated.");
+
                         GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
-                        if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
+                        /* if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
                                 
                                 //graph.resizeGraph(800, 600);
                                 
-                        }
+                        }*/
                         mainWindowPos = ResizeWindow(id, mainWindowPos, minProfileWindowSize);
                         GUI.DragWindow(titleBarRect);
                 }
