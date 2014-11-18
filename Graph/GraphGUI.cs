@@ -16,6 +16,7 @@ namespace AscentProfiler
                 GUIStyle STYLE_WINDOW_BUTTON;
 
                 Rect rectLook;
+                Vector2 mousecheck;
 
                 Rect mainWindowPos = new Rect(60, 50, 480, 320);
                 bool mainWindowEnabled = false;
@@ -39,8 +40,9 @@ namespace AscentProfiler
                 GUIStyle BackgroundStyle;
                 int graphWidth = 320;
                 int graphHeight = 240;
-                      
-                ferramGraph graph = new ferramGraph( 320, 240 );
+                bool graphRedraw = false;
+      
+                ferramGraph graph = new ferramGraph( 240, 240 );
 
                 public GraphGUI()
                 {
@@ -111,10 +113,24 @@ namespace AscentProfiler
 
                         GUILayout.Space(10);
 
+                        if (graphRedraw)
+                        {
+                                graphWidth = Convert.ToInt32(rectLook.width) - 61;
+                                graphHeight = Convert.ToInt32(rectLook.height) - 250;
+                                graph.resizeGraph(graphWidth, graphHeight);
+                                graph.SetBoundaries(0, 500, -10, 10);
+                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.horizontalLabel = "time";
+                                graph.verticalLabel = "value";
+                                graph.Update();
+                                graphRedraw = !graphRedraw;
+                        }
+
                         graph.Display(BackgroundStyle, 0, 0);
 
                         GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
                         GUILayout.Label("gw: " + graphWidth + " gh: " + graphHeight);
+                        GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
                                 
@@ -128,6 +144,7 @@ namespace AscentProfiler
                 Rect ResizeWindow(int id, Rect windowRect, Vector2 minWindowSize)
                 {
                         Vector2 mouse = GUIUtility.ScreenToGUIPoint(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y));
+                        mousecheck = mouse;
                         //Rect r = GUILayoutUtility.GetRect(gcDrag, GUI.skin.window);
                         Rect r = new Rect(windowRect.width - 20, windowRect.height - 20, 20, 20);
                         if (Event.current.type == EventType.mouseDown && r.Contains(mouse))
@@ -154,14 +171,7 @@ namespace AscentProfiler
                         }
                         if (GUI.Button(r, gcDrag, GUI.skin.label))
                         {
-                                graphWidth = Convert.ToInt16(rectLook.width) - 80;
-                                graphHeight = Convert.ToInt16(rectLook.height) - 80;
-                                graph.resizeGraph( graphWidth, graphHeight);
-                                graph.SetBoundaries(0, 500, -10, 10);
-                                graph.SetGridScaleUsingValues(1, 5);
-                                graph.horizontalLabel = "time";
-                                graph.verticalLabel = "value";
-                                graph.Update();
+                                graphRedraw = true;
                         }
                         return windowRect;
                 }
