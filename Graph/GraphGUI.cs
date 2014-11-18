@@ -15,7 +15,7 @@ namespace AscentProfiler
                 //GUI Styles
                 GUIStyle STYLE_WINDOW_BUTTON;
 
-
+                Rect rectLook;
 
                 Rect mainWindowPos = new Rect(60, 50, 480, 320);
                 bool mainWindowEnabled = false;
@@ -36,6 +36,12 @@ namespace AscentProfiler
                 Rect resizeStart = new Rect();
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
 
+                GUIStyle BackgroundStyle;
+                int graphWidth = 320;
+                int graphHeight = 240;
+                      
+                ferramGraph graph = new ferramGraph( 320, 240 );
+
                 public GraphGUI()
                 {
                         loadIcon = GetTexture("load");
@@ -52,6 +58,22 @@ namespace AscentProfiler
 
                 public void OnGUI()
                 {
+
+                        if (BackgroundStyle == null )
+                        {
+                                // DM: initialize styles on first use
+                                BackgroundStyle = new GUIStyle(GUI.skin.box);
+                                BackgroundStyle.richText = true;
+                                BackgroundStyle.hover = BackgroundStyle.active = BackgroundStyle.normal;
+                                BackgroundStyle.padding = new RectOffset(2, 2, 2, 2);
+
+                                graph.SetBoundaries(0, 500, -10, 10);
+                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.horizontalLabel = "time";
+                                graph.verticalLabel = "value";
+                                graph.Update();
+
+                        }
 
                         GUI.skin = null;
 
@@ -89,9 +111,16 @@ namespace AscentProfiler
 
                         GUILayout.Space(10);
 
+                        graph.Display(BackgroundStyle, 0, 0);
 
-
-
+                        GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
+                        GUILayout.Label("gw: " + graphWidth + " gh: " + graphHeight);
+                        if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
+                        {
+                                
+                                //graph.resizeGraph(800, 600);
+                                
+                        }
                         mainWindowPos = ResizeWindow(id, mainWindowPos, minProfileWindowSize);
                         GUI.DragWindow(titleBarRect);
                 }
@@ -117,8 +146,23 @@ namespace AscentProfiler
                                 windowRect.xMax = Mathf.Min(Screen.width, windowRect.xMax); // modifying xMax affects width, not x
                                 windowRect.yMax = Mathf.Min(Screen.height, windowRect.yMax); // modifying yMax affects height, not y
 
+                                rectLook.width = windowRect.width;
+                                rectLook.height = windowRect.height;
+                                rectLook.xMax = windowRect.xMax;
+                                rectLook.yMax = windowRect.yMax;
+
                         }
-                        GUI.Button(r, gcDrag, GUI.skin.label);
+                        if (GUI.Button(r, gcDrag, GUI.skin.label))
+                        {
+                                graphWidth = Convert.ToInt16(rectLook.width) - 80;
+                                graphHeight = Convert.ToInt16(rectLook.height) - 80;
+                                graph.resizeGraph( graphWidth, graphHeight);
+                                graph.SetBoundaries(0, 500, -10, 10);
+                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.horizontalLabel = "time";
+                                graph.verticalLabel = "value";
+                                graph.Update();
+                        }
                         return windowRect;
                 }
 

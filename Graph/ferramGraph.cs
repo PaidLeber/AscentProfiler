@@ -30,7 +30,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace AscentProfiler.Graph
+namespace AscentProfiler
 {
         public class ferramGraph
         {
@@ -71,7 +71,7 @@ namespace AscentProfiler.Graph
                                 int elements = xValues.Length;
                                 rawDataX = new double[elements];
                                 rawDataY = new double[elements];
-
+                                
                                 for (int i = 0; i < elements; i++)
                                 {
                                         if (double.IsNaN(xValues[i]))
@@ -280,7 +280,6 @@ namespace AscentProfiler.Graph
                 }
 
 
-
                 protected Texture2D graph;
                 protected Rect displayRect = new Rect(0, 0, 0, 0);
 
@@ -317,6 +316,19 @@ namespace AscentProfiler.Graph
                         displayRect = new Rect(1, 1, graph.width, graph.height);
                         GridInit();
                 }
+                #endregion
+
+                #region ResizeMethods
+                public void resizeGraph(int width, int height)
+                {
+                        //Clear();
+                        graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
+                        SetBoundaries(0, 1, 0, 1);
+                        displayRect = new Rect(1, 1, graph.width, graph.height);
+                        GridInit();
+                }
+
+
                 #endregion
 
                 #region Scaling Functions
