@@ -113,9 +113,10 @@ namespace AscentProfiler
 
                         GUILayout.Space(10);
 
-                        if (graphRedraw)
+                        if ((Convert.ToInt32(rectLook.width) - 279) != graph.width)
                         {
-                                //graphWidth = Convert.ToInt32(rectLook.width) - 61;
+                                graphWidth = Convert.ToInt32(rectLook.width) - 279;
+                                graphHeight = graph.height;
                                 //graphHeight = Convert.ToInt32(rectLook.height) - 250;
                                 graph.resizeGraph(graphWidth, graphHeight);
                                 graph.SetBoundaries(0, 500, -10, 10);
@@ -125,7 +126,7 @@ namespace AscentProfiler
                                 graph.Update();
                                 graphRedraw = !graphRedraw;
                         }
-
+                        
                         graph.Display(BackgroundStyle, 0, 0);
 
                         GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
@@ -153,7 +154,19 @@ namespace AscentProfiler
                                 resizeStart = new Rect(mouse.x, mouse.y, windowRect.width, windowRect.height);
                         }
                         else if (Event.current.type == EventType.mouseUp && resizing == id)
+                        {
                                 resizing = 0;
+
+                                windowRect.width = Mathf.Max(minWindowSize.x, resizeStart.width + (mouse.x - resizeStart.x));
+                                windowRect.height = Mathf.Max(minWindowSize.y, resizeStart.height + (mouse.y - resizeStart.y));
+                                windowRect.xMax = Mathf.Min(Screen.width, windowRect.xMax); // modifying xMax affects width, not x
+                                windowRect.yMax = Mathf.Min(Screen.height, windowRect.yMax); // modifying yMax affects height, not y
+
+                                rectLook.width = windowRect.width;
+                                rectLook.height = windowRect.height;
+                                rectLook.xMax = windowRect.xMax;
+                                rectLook.yMax = windowRect.yMax;
+                        }
                         else if (!Input.GetMouseButton(0))
                                 resizing = 0;
                         else if (resizing == id)
@@ -171,7 +184,7 @@ namespace AscentProfiler
                         }
                         if (GUI.Button(r, gcDrag, GUI.skin.label))
                         {
-                                graphRedraw = true;
+                                
                         }
                         return windowRect;
                 }
