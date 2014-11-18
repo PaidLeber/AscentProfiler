@@ -18,14 +18,14 @@ namespace AscentProfiler
                 Rect rectLook;
                 Vector2 mousecheck;
 
-                Rect mainWindowPos = new Rect(60, 50, 480, 320);
+                Rect mainWindowPos = new Rect(60, 50, 440, 320);
                 bool mainWindowEnabled = false;
-                Vector2 minProfileWindowSize = new Vector2(480, 320);
+                Vector2 minProfileWindowSize = new Vector2(440, 320);
                 Vector2 mainWindowScrollPos = new Vector2(0, 0);
 
                 Vector2 logWindowScrollPos = new Vector2(0, 0);
 
-
+                //
                 // Unique window id
                 int windowId = 93972;
 
@@ -42,7 +42,7 @@ namespace AscentProfiler
                 int graphHeight = 240;
                 bool graphRedraw = false;
       
-                ferramGraph graph = new ferramGraph( 240, 240 );
+                ferramGraph graph = new ferramGraph( 320, 240 );
 
                 public GraphGUI()
                 {
@@ -115,8 +115,8 @@ namespace AscentProfiler
 
                         if (graphRedraw)
                         {
-                                graphWidth = Convert.ToInt32(rectLook.width) - 61;
-                                graphHeight = Convert.ToInt32(rectLook.height) - 250;
+                                //graphWidth = Convert.ToInt32(rectLook.width) - 61;
+                                //graphHeight = Convert.ToInt32(rectLook.height) - 250;
                                 graph.resizeGraph(graphWidth, graphHeight);
                                 graph.SetBoundaries(0, 500, -10, 10);
                                 graph.SetGridScaleUsingValues(1, 5);
@@ -129,7 +129,7 @@ namespace AscentProfiler
                         graph.Display(BackgroundStyle, 0, 0);
 
                         GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
-                        GUILayout.Label("gw: " + graphWidth + " gh: " + graphHeight);
+                        GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
                         GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {

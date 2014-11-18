@@ -279,7 +279,24 @@ namespace AscentProfiler
                         }
                 }
 
+                int _width;
+                int _height;
+                public int width
+                {
+                        get 
+                        {
+                                return this._width;
+                        }
+                
+                }
+                public int height
+                {
+                        get
+                        {
+                                return this._height;
+                        }
 
+                }
                 protected Texture2D graph;
                 protected Rect displayRect = new Rect(0, 0, 0, 0);
 
@@ -303,6 +320,8 @@ namespace AscentProfiler
                 #region Constructors
                 public ferramGraph(int width, int height)
                 {
+                        this._width = width;
+                        this._height = height;
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(0, 1, 0, 1);
                         displayRect = new Rect(1, 1, graph.width, graph.height);
@@ -311,6 +330,8 @@ namespace AscentProfiler
 
                 public ferramGraph(int width, int height, double minx, double maxx, double miny, double maxy)
                 {
+                        this._width = width;
+                        this._height = height;
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(minx, maxx, miny, maxy);
                         displayRect = new Rect(1, 1, graph.width, graph.height);
@@ -321,6 +342,8 @@ namespace AscentProfiler
                 #region ResizeMethods
                 public void resizeGraph(int width, int height)
                 {
+                        this._width = width;
+                        this._height = height;
                         //Clear();
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(0, 1, 0, 1);
