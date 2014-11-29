@@ -678,11 +678,18 @@ namespace AscentProfiler
                 /// </summary>
                 public void Display(GUIStyle AreaStyle, int horizontalBorder, int verticalBorder)
                 {
-                        ScrollView = GUILayout.BeginScrollView(ScrollView, false, false);
+                        //ScrollView = GUILayout.BeginScrollView(ScrollView, false, false);
                         GUIStyle BackgroundStyle = new GUIStyle(GUI.skin.box);
                         BackgroundStyle.hover = BackgroundStyle.active = BackgroundStyle.normal;
 
-                        GUILayout.Space(verticalBorder);
+                        //GUILayout.Space(verticalBorder);
+
+
+                        GUIStyle LabelStyle = new GUIStyle(GUI.skin.label);
+                        LabelStyle.alignment = TextAnchor.UpperCenter;
+                        int pixelspace = (int)displayRect.height / 2 - 72;
+
+                        /*
                         //Vertical axis and labels
 
                         GUILayout.BeginVertical();
@@ -700,12 +707,12 @@ namespace AscentProfiler
 
                         GUILayout.EndArea();
                         GUILayout.EndVertical();
-
+                        */
 
                         //Graph itself
 
                         GUILayout.BeginVertical();
-                        Rect areaRect = new Rect(50 + horizontalBorder, 15 + verticalBorder, displayRect.width + 2 * horizontalBorder, displayRect.height + 2 * verticalBorder);
+                        Rect areaRect = new Rect(horizontalBorder, verticalBorder, displayRect.width + 2 * horizontalBorder, displayRect.height + 2 * verticalBorder);
                         GUILayout.BeginArea(areaRect);
 
                         GUI.DrawTexture(displayRect, graph);
@@ -713,6 +720,9 @@ namespace AscentProfiler
                                 GUI.DrawTexture(displayRect, pair.Value.Line());
                         GUILayout.EndArea();
 
+                        GUILayout.EndVertical();
+
+                        /*
                         //Horizontal Axis and Labels
 
                         GUILayout.BeginArea(new Rect(50 + horizontalBorder, displayRect.height + verticalBorder + 15, displayRect.width + 2 * horizontalBorder, 30));
@@ -728,7 +738,10 @@ namespace AscentProfiler
 
                         GUILayout.EndHorizontal();
                         GUILayout.EndArea();
-                        GUILayout.EndVertical();
+
+                         */
+                        //GUILayout.EndVertical();
+                        
 
                         GUILayout.BeginVertical();
 
@@ -750,10 +763,16 @@ namespace AscentProfiler
                         }
                         GUILayout.EndVertical();
 
-                        int rightofarea = (int)displayRect.width + 2 * horizontalBorder + 30;
-                        int bottomofarea = (int)displayRect.height + 2 * verticalBorder + 30;
-                        GUILayout.Space(bottomofarea);
-                        GUILayout.EndScrollView();
+                        int rightofarea = (int)displayRect.width + 2 * horizontalBorder;
+                        int bottomofarea = (int)displayRect.height + 2 * verticalBorder;
+                        //GUILayout.Space(bottomofarea);
+                        //GUILayout.EndScrollView();
+
+                        //GUI.Label(new Rect(10, 10, 150, 20), "This text is not rotated.");
+                        //GUIUtility.RotateAroundPivot(-90, new Vector2(160, 30));
+                        //GUI.Label(new Rect(10, 30, 150, 20), "This text is rotated.");
+                        //GUI.matrix = Matrix4x4.identity;
+
                         GUILayout.Label("roa: " + rightofarea + " boa: " + bottomofarea);
 
                 }

@@ -19,15 +19,17 @@ namespace AscentProfiler
                 Vector2 mousecheck;
 
                 GUIStyle BackgroundStyle;
-                int paddingWidth = 10;
-                int paddingHeight = 10;
 
-                Rect mainWindowPos = new Rect(60, 50, 500, 400);
-                Vector2 minProfileWindowSize = new Vector2(500, 400);
 
+                Rect mainWindowPos;
+                Vector2 minDefaultWindowSize = new Vector2(500, 400);
+                Vector2 mainWindowScrollPos = new Vector2(0, 0);
                 bool mainWindowEnabled = false;
 
-                Vector2 mainWindowScrollPos = new Vector2(0, 0);
+                Vector2 deltaResize = new Vector2(0, 0);
+
+                Vector2 defaultGraphSize = new Vector2(320, 240);
+                ferramGraph graph = new ferramGraph(320, 240);
 
                 //
                 // Unique window id
@@ -43,7 +45,7 @@ namespace AscentProfiler
 
 
 
-                ferramGraph graph;
+
 
                 public GraphGUI()
                 {
@@ -61,12 +63,12 @@ namespace AscentProfiler
 
                 public void OnGUI()
                 {
-
-                        if(graph == null)
+                        if (mainWindowPos == null)
                         {
-
-                                graph = new ferramGraph(320, 240);
+                                mainWindowPos = new Rect(60, 50, minDefaultWindowSize.x, minDefaultWindowSize.y);
+                                
                         }
+
 
                         if (BackgroundStyle == null )
                         {
@@ -118,34 +120,26 @@ namespace AscentProfiler
 
 
 
-                        GUILayout.Space(1);
+                        //GUILayout.Space(1);
 
-                        if (Convert.ToInt32(rectLook.width) - 220 != graph.width || Convert.ToInt32(rectLook.height) - 100 != graph.height)
-                        {
-                                int graphWidth = Convert.ToInt32(rectLook.width) - 220;
-                                int graphHeight = Convert.ToInt32(rectLook.height) - 100;
-                                //graphHeight = Convert.ToInt32(rectLook.height) - 250;
-                                graph.resizeGraph(graphWidth, graphHeight);
-                                graph.Update();
-                        }
+
+                        graph.resizeGraph((int)mainWindowPos.width - (int)minDefaultWindowSize.x + (int)defaultGraphSize.x, (int)mainWindowPos.height - (int)minDefaultWindowSize.y + (int)defaultGraphSize.y);
+                        graph.Update();
+
                         
-                        graph.Display(BackgroundStyle, 0, 0);
-
-                        GUILayout.Label("w: " + rectLook.width + " h: " + rectLook.height + " xMax: " + rectLook.xMax + " yMax: " + rectLook.yMax);
+                        //graph.Display(BackgroundStyle, 0, 0);
+                        
+                        GUILayout.Label("w: " + mainWindowPos.width + " h: " + mainWindowPos.height);
                         GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
-
-                        GUI.Label(new Rect(10, 10, 150, 20), "This text is not rotated.");
-                        GUIUtility.RotateAroundPivot(-90, new Vector2(160, 30));
-                        GUI.Label(new Rect(10, 30, 150, 20), "This text is rotated.");
-
                         GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
+                        GUILayout.Label("deltaw: " + Convert.ToInt16(mainWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x) + " deltah: " + Convert.ToInt16(mainWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
                         /* if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
                                 
                                 //graph.resizeGraph(800, 600);
                                 
                         }*/
-                        mainWindowPos = ResizeWindow(id, mainWindowPos, minProfileWindowSize);
+                        mainWindowPos = ResizeWindow(id, mainWindowPos, minDefaultWindowSize);
                         GUI.DragWindow(titleBarRect);
                 }
 
@@ -182,11 +176,6 @@ namespace AscentProfiler
                                 windowRect.height = Mathf.Max(minWindowSize.y, resizeStart.height + (mouse.y - resizeStart.y));
                                 windowRect.xMax = Mathf.Min(Screen.width, windowRect.xMax); // modifying xMax affects width, not x
                                 windowRect.yMax = Mathf.Min(Screen.height, windowRect.yMax); // modifying yMax affects height, not y
-
-                                rectLook.width = windowRect.width;
-                                rectLook.height = windowRect.height;
-                                rectLook.xMax = windowRect.xMax;
-                                rectLook.yMax = windowRect.yMax;
 
                         }
                         if (GUI.Button(r, gcDrag, GUI.skin.label))
