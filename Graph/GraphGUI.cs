@@ -15,14 +15,12 @@ namespace AscentProfiler
                 //GUI Styles
                 GUIStyle STYLE_WINDOW_BUTTON;
 
-                Rect rectLook;
-                Vector2 mousecheck;
-
                 GUIStyle BackgroundStyle;
 
 
                 Rect mainWindowPos = new Rect(60, 50, 500, 400);
                 Rect mainWindowPosLast = new Rect(0, 0, 0, 0);
+
                 Vector2 minDefaultWindowSize = new Vector2(500, 400);
                 Vector2 mainWindowScrollPos = new Vector2(0, 0);
                 bool mainWindowEnabled = false;
@@ -132,8 +130,8 @@ namespace AscentProfiler
                         graph.Display(BackgroundStyle, 0, 0);
                         
                         GUILayout.Label("w: " + mainWindowPos.width + " h: " + mainWindowPos.height);
-                        GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
-                        GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
+                        //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
+                        //GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
                         GUILayout.Label("deltaw: " + (int)(mainWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x) + " deltah: " + (int)(mainWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
                         /* if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {

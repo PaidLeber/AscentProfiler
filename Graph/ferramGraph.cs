@@ -23,7 +23,6 @@ Copyright 2014, Michael Ferrara, aka Ferram4
  * Ascent Profiler: Date Modified: 10/30/14
  */
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +70,7 @@ namespace AscentProfiler
                                 int elements = xValues.Length;
                                 rawDataX = new double[elements];
                                 rawDataY = new double[elements];
-                                
+
                                 for (int i = 0; i < elements; i++)
                                 {
                                         if (double.IsNaN(xValues[i]))
@@ -279,24 +278,6 @@ namespace AscentProfiler
                         }
                 }
 
-                int _width;
-                int _height;
-                public int width
-                {
-                        get 
-                        {
-                                return this._width;
-                        }
-                
-                }
-                public int height
-                {
-                        get
-                        {
-                                return this._height;
-                        }
-
-                }
 
 
                 protected Texture2D graph;
@@ -322,8 +303,6 @@ namespace AscentProfiler
                 #region Constructors
                 public ferramGraph(int width, int height)
                 {
-                        this._width = width;
-                        this._height = height;
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(0, 1, 0, 1);
                         displayRect = new Rect(1, 1, graph.width, graph.height);
@@ -332,11 +311,9 @@ namespace AscentProfiler
 
                 public ferramGraph(int width, int height, double minx, double maxx, double miny, double maxy)
                 {
-                        this._width = width;
-                        this._height = height;
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(minx, maxx, miny, maxy);
-                        displayRect = new Rect(1, 1, width, height);
+                        displayRect = new Rect(1, 1, graph.width, graph.height);
                         GridInit();
                 }
                 #endregion
@@ -344,17 +321,13 @@ namespace AscentProfiler
                 #region ResizeMethods
                 public void resizeGraph(int width, int height)
                 {
-                        this._width = width;
-                        this._height = height;
-                        //Clear();
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(0, 1, 0, 1);
                         displayRect = new Rect(1, 1, width, height);
                         GridInit();
                 }
-
-
                 #endregion
+
 
                 #region Scaling Functions
                 public void SetBoundaries(double minx, double maxx, double miny, double maxy)
@@ -682,14 +655,7 @@ namespace AscentProfiler
                         GUIStyle BackgroundStyle = new GUIStyle(GUI.skin.box);
                         BackgroundStyle.hover = BackgroundStyle.active = BackgroundStyle.normal;
 
-                        //GUILayout.Space(verticalBorder);
-
-
-                        GUIStyle LabelStyle = new GUIStyle(GUI.skin.label);
-                        LabelStyle.alignment = TextAnchor.UpperCenter;
-                        int pixelspace = (int)displayRect.height / 2 - 72;
-
-                        /*
+                        GUILayout.Space(verticalBorder);
                         //Vertical axis and labels
 
                         GUILayout.BeginVertical();
@@ -707,12 +673,12 @@ namespace AscentProfiler
 
                         GUILayout.EndArea();
                         GUILayout.EndVertical();
-                        */
+
 
                         //Graph itself
 
                         GUILayout.BeginVertical();
-                        Rect areaRect = new Rect(horizontalBorder, verticalBorder, displayRect.width + 2 * horizontalBorder, displayRect.height + 2 * verticalBorder);
+                        Rect areaRect = new Rect(50 + horizontalBorder, 15 + verticalBorder, displayRect.width + 2 * horizontalBorder, displayRect.height + 2 * verticalBorder);
                         GUILayout.BeginArea(areaRect);
 
                         GUI.DrawTexture(displayRect, graph);
@@ -720,9 +686,6 @@ namespace AscentProfiler
                                 GUI.DrawTexture(displayRect, pair.Value.Line());
                         GUILayout.EndArea();
 
-                        GUILayout.EndVertical();
-
-                        /*
                         //Horizontal Axis and Labels
 
                         GUILayout.BeginArea(new Rect(50 + horizontalBorder, displayRect.height + verticalBorder + 15, displayRect.width + 2 * horizontalBorder, 30));
@@ -738,10 +701,7 @@ namespace AscentProfiler
 
                         GUILayout.EndHorizontal();
                         GUILayout.EndArea();
-
-                         */
-                        //GUILayout.EndVertical();
-                        
+                        GUILayout.EndVertical();
 
                         GUILayout.BeginVertical();
 
@@ -763,20 +723,13 @@ namespace AscentProfiler
                         }
                         GUILayout.EndVertical();
 
-                        int rightofarea = (int)displayRect.width + 2 * horizontalBorder;
-                        int bottomofarea = (int)displayRect.height + 2 * verticalBorder;
-                        //GUILayout.Space(bottomofarea);
+                        int rightofarea = (int)displayRect.width + 2 * horizontalBorder + 30;
+                        int bottomofarea = (int)displayRect.height + 2 * verticalBorder + 30;
+
+                        GUILayout.Space(bottomofarea);
                         //GUILayout.EndScrollView();
-
-                        //GUI.Label(new Rect(10, 10, 150, 20), "This text is not rotated.");
-                        //GUIUtility.RotateAroundPivot(-90, new Vector2(160, 30));
-                        //GUI.Label(new Rect(10, 30, 150, 20), "This text is rotated.");
-                        //GUI.matrix = Matrix4x4.identity;
-
-                        GUILayout.Label("roa: " + rightofarea + " boa: " + bottomofarea);
 
                 }
 
         }
 }
-
