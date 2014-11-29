@@ -336,7 +336,7 @@ namespace AscentProfiler
                         this._height = height;
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(minx, maxx, miny, maxy);
-                        displayRect = new Rect(1, 1, graph.width, graph.height);
+                        displayRect = new Rect(1, 1, width, height);
                         GridInit();
                 }
                 #endregion
@@ -349,7 +349,7 @@ namespace AscentProfiler
                         //Clear();
                         graph = new Texture2D(width, height, TextureFormat.ARGB32, false);
                         SetBoundaries(0, 1, 0, 1);
-                        displayRect = new Rect(1, 1, graph.width, graph.height);
+                        displayRect = new Rect(1, 1, width, height);
                         GridInit();
                 }
 
