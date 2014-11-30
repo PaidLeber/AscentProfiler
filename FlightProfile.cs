@@ -22,15 +22,15 @@ namespace AscentProfiler
                         listAction = actionlist;
                         listTrigger = triggerlist;
 
-                        Debug.Log("FLIGHT PROFILE CONTRUCTOR!");
+                        Debug.Log("FLIGHT PROFILE TRIGGER CONTRUCTOR!");
                         foreach(Trigger item in listTrigger )
                         {
-                                Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue);
+                                Debug.Log("TRIGGER: activated: " + item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue);
                         }
-
+                        Debug.Log("FLIGHT PROFILE ACTION CONTRUCTOR!");
                         foreach (Action item in listAction)
                         {
-                                Debug.Log(item.activated + " linked index: " + item.index + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue +" modifier: "+ item.modifier);
+                                Debug.Log("ACTION: activated: " + item.activated + " linked index: " + item.index + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " modifier: " + item.modifier);
                         }
                 }
 
