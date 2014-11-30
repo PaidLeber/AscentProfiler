@@ -7,26 +7,7 @@ using KSP;
 
 namespace AscentProfiler
 {
-        enum TriggerType
-        {
-                None,
-                ASCENT,
-                DESCENT,
-                ALTITUDE,
-                COUNTDOWN,
-                LIFTOFF,
-                GFORCE,
-                BURNOUT,
-                ATTITUDE
-
-        }
-        enum TriggerModifier
-        { 
-                None,
-                FROMMAXVAL
-        
-        }
-        
+       
         abstract class Trigger
         {
 

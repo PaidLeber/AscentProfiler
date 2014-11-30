@@ -6,18 +6,6 @@ using System.Text;
 namespace AscentProfiler
 {
 
-        enum SensorType
-        { 
-                TRANSMIT,
-                OFF,
-                ON,
-                TIME,
-                ALTITUDE,
-                GFORCE
-
-        }
-
-
         class SensorPackage
         {
                 AscentProAPGCSModule module;

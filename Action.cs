@@ -6,24 +6,6 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        enum ActionType
-        {
-                ACTIONGROUP,
-                STAGE,
-                THROTTLE
-        }
-
-        enum ActionModifier
-        { 
-                ACTIVATE,
-                DEACTIVATE,
-                ON,
-                OFF,
-                TOGGLE,
-                NEXT
-        }
-
-
 
         abstract class Action
         {
@@ -87,7 +69,9 @@ namespace AscentProfiler
                                 case SensorType.TRANSMIT:
                                         module.flightTelemetry.isSensorsDataReadyToTransmit = true;
                                         break;
-
+                                default:
+                                        module.flightTelemetry.AddSensor(sensor);
+                                        break;
                         }
 
 

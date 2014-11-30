@@ -31,7 +31,6 @@ namespace AscentProfiler
                 internal bool AddSensor(SensorType sensor)
                 {
                         sensorsOnBoard.Add(sensor, new double[]{});
-                        sensorsOnBoard[sensor][1] = 2;
                         return true;
                 }
 

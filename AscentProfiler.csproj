@@ -54,6 +54,7 @@
     <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Graph\ferramGraph.cs" />
     <Compile Include="FlightController.cs" />
     <Compile Include="FlightTelemetry.cs" />
