@@ -30,6 +30,7 @@ namespace AscentProfiler
                 
                 internal bool AddSensor(SensorType sensor)
                 {
+
                         sensorsOnBoard.Add(sensor, new double[]{});
                         return true;
                 }
@@ -51,6 +52,9 @@ namespace AscentProfiler
 
                 internal void AddLog(string log)
                 {
+                        if (!isMissionLogEnabled)
+                                { return; }
+
                         var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
                         missionLog.Add(transferlog);
                         Log.Level(LogType.Verbose, transferlog);

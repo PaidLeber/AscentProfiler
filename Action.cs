@@ -46,38 +46,58 @@ namespace AscentProfiler
 
         class Telemetry : Action
         {
-                SensorType sensor;
+                TelemetryType telemetry;
 
-                internal Telemetry(int index, ActionType type, SensorType sensor)
+                internal Telemetry(int index, ActionType type, TelemetryType telemetry, ActionModifier modifier)
                 {
-                        this.sensor = sensor;
+                        this.index = index;
+                        this.type = type;
+                        this.state = SetModifierState(modifier);
+                        this.telemetry = telemetry;
+                        this.modifier = modifier;
                 }
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
 
-                        switch (sensor)
+                        switch (telemetry)
                         {
-                                case SensorType.OFF:
-                                        module.flightTelemetry.isSensorsEnabled = false;
+                                case TelemetryType.MISSIONLOG:
+                                        module.flightTelemetry.isMissionLogEnabled = state;
+                                        break;
+                                
+                                case TelemetryType.SENSORS:
+                                        module.flightTelemetry.isSensorsEnabled = state;
                                         break;
 
-                                case SensorType.ON:
-                                        module.flightTelemetry.isSensorsEnabled = true;
-                                        break;
-
-                                case SensorType.TRANSMIT:
+                                case TelemetryType.TRANSMIT:
                                         module.flightTelemetry.isSensorsDataReadyToTransmit = true;
                                         break;
-                                default:
-                                        module.flightTelemetry.AddSensor(sensor);
-                                        break;
+
                         }
 
-
-                        return true;
+                        return activated = true;
                 }
         
+        }
+
+        class Sensors : Action
+        {
+                SensorType sensor;
+
+                internal Sensors(int index, ActionType type, SensorType sensor)
+                {
+                        this.index = index;
+                        this.type = type;
+                        this.sensor = sensor;
+                }
+
+                internal override bool Execute(AscentProAPGCSModule module)
+                {
+                        module.flightTelemetry.AddSensor(sensor);
+                        return activated = true;
+                }
+
         }
 
 

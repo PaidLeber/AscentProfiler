@@ -7,13 +7,17 @@ namespace AscentProfiler
 {
         enum SensorType
         {
-                TRANSMIT,
-                OFF,
-                ON,
                 TIME,
                 ALTITUDE,
                 GFORCE
+        }
 
+        enum TelemetryType
+        {
+                TRANSMIT,
+                TX,
+                MISSIONLOG,
+                SENSORS
         }
 
         enum TriggerType
@@ -41,7 +45,8 @@ namespace AscentProfiler
                 ACTIONGROUP,
                 STAGE,
                 THROTTLE,
-                TELEMETRY
+                TELEMETRY,
+                SENSORS
         }
 
         enum ActionModifier
