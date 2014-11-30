@@ -61,12 +61,20 @@ namespace AscentProfiler
                                 return;
 
 
-                        if (flightTelemetry.missionLogEnabled && flightTelemetry.missionLog.Count > flightTelemetry.lastMissionLogTransmitCount)              // Send Mission Logs
+                        if (flightTelemetry.isMissionLogEnabled && flightTelemetry.missionLog.Count > flightTelemetry.lastMissionLogTransmitCount)              // Send Mission Logs
                                 if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry.missionLog))
                                         flightTelemetry.lastMissionLogTransmitCount = flightTelemetry.missionLog.Count;
 
 
+                        if (flightTelemetry.isSensorsDataReadyToTransmit)
+                        {
+                                if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))
+                                {
 
+                                }
+                        }
+
+                                
 
                 }
 

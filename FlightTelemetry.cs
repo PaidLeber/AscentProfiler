@@ -9,15 +9,15 @@ namespace AscentProfiler
         {
 
                 AscentProAPGCSModule module;
+                SensorPackage sensorsSuite;
 
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
-                internal bool missionLogEnabled = true;
+                internal bool isMissionLogEnabled = true;
 
-                bool isSensorsDataReadyToTransmit = false;
+                internal Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
+                internal bool isSensorsDataReadyToTransmit = false;
                 bool isSensorsEnabled = false;
-                SensorPackage sensorsSuite;
-                Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
                 int sensorstep = 0;
                 
 
@@ -26,18 +26,6 @@ namespace AscentProfiler
                         this.module = module;
                         sensorsSuite = new SensorPackage(module);
 
-                        missionLog.Add("TEST0");
-                        missionLog.Add("TEST1");
-                        missionLog.Add("TEST2");
-                        missionLog.Add("TEST3");
-                        missionLog.Add("TEST4");
-                        missionLog.Add("TEST5");
-                        missionLog.Add("TEST6");
-                        missionLog.Add("TEST7");
-                        missionLog.Add("TEST8");
-                        missionLog.Add("TEST9");
-                        missionLog.Add("TEST10");
-                        missionLog.Add("TEST11");
                 }
                 
 

@@ -30,6 +30,15 @@ namespace AscentProfiler
                         return true;
                 }
 
+                internal bool ReceiveTelemetryData(double transmitdelay, Dictionary<SensorType, double[]> sensorsData)
+                {
+                        Debug.Log("Received Telemetry Data");
+
+
+
+                        return true;
+                }
+
                 void CheckForMissionLogsInTransit()
                 {
                         if (missionLogTransmitDelay.Count != 0)
