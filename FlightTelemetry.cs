@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AscentProfiler
 {
-        class FlightRecorder
+        class FlightTelemetry
         {
 
                 AscentProAPGCSModule module;
@@ -14,14 +14,17 @@ namespace AscentProfiler
                 internal int lastMissionLogTransmitCount = 0;
                 internal bool missionLogEnabled = true;
 
-
-                bool telemetryReadyToTransmit = false;
-                Dictionary<SensorType, double[]> telemetryData = new Dictionary<SensorType, double[]>();               
+                bool sensorsDataReadyToTransmit = false;
+                bool sensorsEnabled = false;
+                SensorPackage sensorspackage;
+                Dictionary<SensorType, double[]> sensorsData = new Dictionary<SensorType, double[]>();
                 
 
-                internal FlightRecorder(AscentProAPGCSModule module)
+                internal FlightTelemetry(AscentProAPGCSModule module)
                 {
                         this.module = module;
+                        sensorspackage = new SensorPackage(module);
+
                         missionLog.Add("TEST0");
                         missionLog.Add("TEST1");
                         missionLog.Add("TEST2");

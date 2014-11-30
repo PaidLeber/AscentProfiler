@@ -10,7 +10,7 @@ namespace AscentProfiler
         public class AscentProAPGCSModule : PartModule
         {
                 internal FlightProfile flightProfile;
-                internal FlightRecorder flightRecorder;
+                internal FlightTelemetry flightTelemetry;
 
                 //On RX Sequence of New Profile
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
@@ -38,7 +38,7 @@ namespace AscentProfiler
                 public AscentProAPGCSModule()
                 {
                         InitNewProfileSequence();
-                        flightRecorder = new FlightRecorder(this); 
+                        flightTelemetry = new FlightTelemetry(this); 
                         
                 }
 
@@ -55,7 +55,7 @@ namespace AscentProfiler
 
 
 
-                void Transmit(FlightRecorder flightrecorder)
+                void Transmit(FlightTelemetry flightrecorder)
                 {
                         if(isConnectedtoKSC)
                                 if (flightrecorder.missionLogEnabled && flightrecorder.missionLog.Count > flightrecorder.lastMissionLogTransmitCount)
@@ -80,7 +80,7 @@ namespace AscentProfiler
                 public override void OnUpdate()
                 {
 
-                        Transmit(flightRecorder);
+                        Transmit(flightTelemetry);
 
                         if (flightProfile != null && flightProfile.isEnabled)
                         {

@@ -14,7 +14,7 @@ namespace AscentProfiler
                 Queue<double> transmitDelay = new Queue<double>();
                 Queue<int> delayedFlightLogReadCount = new Queue<int>();
 
-                internal bool ReceiveFlightLog(double transmitdelay, FlightRecorder flightrecorder)
+                internal bool ReceiveFlightLog(double transmitdelay, FlightTelemetry flightrecorder)
                 {
                         Debug.Log("Received Flight Log");
                         transmitDelay.Enqueue(transmitdelay);
