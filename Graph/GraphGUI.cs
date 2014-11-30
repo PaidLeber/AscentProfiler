@@ -19,18 +19,15 @@ namespace AscentProfiler
 
 
                 Rect mainWindowPos = new Rect(60, 50, 500, 400);
-                Rect mainWindowPosLast = new Rect(0, 0, 0, 0);
-
                 Vector2 minDefaultWindowSize = new Vector2(500, 400);
+                Rect mainWindowPosLast = new Rect(0, 0, 0, 0);
                 Vector2 mainWindowScrollPos = new Vector2(0, 0);
                 bool mainWindowEnabled = false;
-
-                Vector2 deltaResize = new Vector2(0, 0);
 
                 Vector2 defaultGraphSize = new Vector2(320, 240);
                 ferramGraph graph = new ferramGraph(320, 240);
 
-                //
+                
                 // Unique window id
                 int windowId = 93972;
 
@@ -133,12 +130,7 @@ namespace AscentProfiler
                         //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
                         //GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
                         GUILayout.Label("deltaw: " + (int)(mainWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x) + " deltah: " + (int)(mainWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
-                        /* if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
-                        {
-                                
-                                //graph.resizeGraph(800, 600);
-                                
-                        }*/
+
                         mainWindowPos = ResizeWindow(id, mainWindowPos, minDefaultWindowSize);
                         GUI.DragWindow(titleBarRect);
                 }
