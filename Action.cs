@@ -97,6 +97,7 @@ namespace AscentProfiler
                         this.index = index;
                         this.type = type;
                         this.sensor = sensor;
+                        this.state = true;
                 }
 
                 internal override bool Execute(AscentProAPGCSModule module)
