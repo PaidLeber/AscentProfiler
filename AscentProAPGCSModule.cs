@@ -42,9 +42,7 @@ namespace AscentProfiler
                         
                 }
 
-                private float lastUpdate = 0.0f;
-                private float lastFixedUpdate = 0.0f;
-                private float logInterval = 5.0f;
+
 
                 internal void Test()
                 {
@@ -65,7 +63,11 @@ namespace AscentProfiler
 
                         if (flightTelemetry.isSensorsDataReadyToTransmit)
                                 if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))                     // Send Telemetry Data
+                                {
                                         flightTelemetry.sensorsOnBoard.Clear();
+                                        flightTelemetry.isSensorsDataReadyToTransmit = false;
+                                }
+
 
                                 
 
@@ -84,6 +86,11 @@ namespace AscentProfiler
                 /*
 * Called every frame
 */
+
+                private float lastUpdate = 0.0f;
+                private float lastFixedUpdate = 0.0f;
+                private float logInterval = 5.0f;
+
                 public override void OnUpdate()
                 {
                         if ((Time.time - lastUpdate) > logInterval)

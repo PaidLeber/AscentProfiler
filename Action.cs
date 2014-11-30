@@ -36,10 +36,10 @@ namespace AscentProfiler
                 protected int value;
                 protected bool state = false;
 
-                internal string displayvalue;
+                internal string displayvalue = "";
                 internal string description;
 
-                internal abstract bool Execute(); 
+                internal abstract bool Execute(AscentProAPGCSModule module);
 
                 protected bool SetModifierState(ActionModifier modifier)
                 {
@@ -61,6 +61,41 @@ namespace AscentProfiler
 
 
         }
+
+        class Telemetry : Action
+        {
+                SensorType sensor;
+
+                internal Telemetry(int index, SensorType sensor)
+                {
+                        this.sensor = sensor;
+                }
+
+                internal override bool Execute(AscentProAPGCSModule module)
+                {
+
+                        switch (sensor)
+                        {
+                                case SensorType.OFF:
+                                        module.flightTelemetry.isSensorsEnabled = false;
+                                        break;
+
+                                case SensorType.ON:
+                                        module.flightTelemetry.isSensorsEnabled = true;
+                                        break;
+
+                                case SensorType.TRANSMIT:
+                                        module.flightTelemetry.isSensorsDataReadyToTransmit = true;
+                                        break;
+
+                        }
+
+
+                        return true;
+                }
+        
+        }
+
 
         class ActionGroup : Action
         {

@@ -43,20 +43,6 @@ namespace AscentProfiler
                         return true;
                 }
 
-                void CheckForTelemetryDataInTransit()
-                {
-
-                        if (Planetarium.GetUniversalTime() > telemetryTransmitDelay.Peek())
-                        {
-                                telemetryTransmitDelay.Dequeue();
-                                telemetryData = telemetryDataInTransit;
-                                telemetryDataInTransit.Clear();
-
-                        }
-
-
-                }
-
                 void CheckForMissionLogsInTransit()
                 {
                         if (missionLogTransmitDelay.Count != 0)
@@ -67,11 +53,23 @@ namespace AscentProfiler
                                         missionLogCurrentReadCount = missionLogDelayedReadCount.Peek();
                                         missionLogDelayedReadCount.Dequeue();
                                         Debug.Log("transmit delay count: " + missionLogTransmitDelay.Count);
-
                                 }
                         }
 
                 }
+
+                void CheckForTelemetryDataInTransit()
+                {
+                        if (Planetarium.GetUniversalTime() > telemetryTransmitDelay.Peek())
+                        {
+                                telemetryTransmitDelay.Dequeue();
+                                telemetryData = telemetryDataInTransit;
+                                telemetryDataInTransit.Clear();
+
+                        }
+                }
+
+
 
 
 

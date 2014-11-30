@@ -8,6 +8,9 @@ namespace AscentProfiler
 
         enum SensorType
         { 
+                TRANSMIT,
+                OFF,
+                ON,
                 TIME,
                 ALTITUDE,
                 GFORCE

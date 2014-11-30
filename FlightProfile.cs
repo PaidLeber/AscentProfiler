@@ -76,7 +76,7 @@ namespace AscentProfiler
 
                         foreach (var action in listAction.Where(action => action.activated == false && action.index == index))
                         {
-                                if (action.Execute())
+                                if (action.Execute(module))
                                 {
                                         Debug.Log("Flight Profile ExecuteActions " + index);
 
