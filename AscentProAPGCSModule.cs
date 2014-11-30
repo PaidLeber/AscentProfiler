@@ -53,11 +53,9 @@ namespace AscentProfiler
 
 
 
-
-
                 void Transmit(FlightTelemetry flightTelemetry)
                 {
-                        if (!isConnectedtoKSC)
+                        if (!isConnectedtoKSC)                                                                                                                  
                                 return;
 
 
@@ -65,14 +63,9 @@ namespace AscentProfiler
                                 if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry.missionLog))
                                         flightTelemetry.lastMissionLogTransmitCount = flightTelemetry.missionLog.Count;
 
-
                         if (flightTelemetry.isSensorsDataReadyToTransmit)
-                        {
-                                if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))
-                                {
-
-                                }
-                        }
+                                if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))                     // Send Telemetry Data
+                                        flightTelemetry.sensorsOnBoard.Clear();
 
                                 
 

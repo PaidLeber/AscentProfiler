@@ -14,6 +14,10 @@ namespace AscentProfiler
                 Queue<double> missionLogTransmitDelay = new Queue<double>();
                 Queue<int> missionLogDelayedReadCount = new Queue<int>();
 
+                internal Dictionary<SensorType, double[]> telemetryData;
+                Dictionary<SensorType, double[]> telemetryDataInTransit;
+                Queue<double> telemetryTransmitDelay = new Queue<double>();
+
                 internal bool ReceiveMissionLog(double transmitdelay, List<string> remoteMissionLogs)
                 {
                         Debug.Log("Received Flight Log");
@@ -33,10 +37,24 @@ namespace AscentProfiler
                 internal bool ReceiveTelemetryData(double transmitdelay, Dictionary<SensorType, double[]> sensorsData)
                 {
                         Debug.Log("Received Telemetry Data");
-
-
+                        telemetryTransmitDelay.Enqueue(transmitdelay);
+                        telemetryDataInTransit = sensorsData;
 
                         return true;
+                }
+
+                void CheckForTelemetryDataInTransit()
+                {
+
+                        if (Planetarium.GetUniversalTime() > telemetryTransmitDelay.Peek())
+                        {
+                                telemetryTransmitDelay.Dequeue();
+                                telemetryData = telemetryDataInTransit;
+                                telemetryDataInTransit.Clear();
+
+                        }
+
+
                 }
 
                 void CheckForMissionLogsInTransit()
@@ -55,10 +73,13 @@ namespace AscentProfiler
 
                 }
 
+
+
                 public void Update()
                 {
                         //Debug.Log("TELEMETRY RECEIVE UPDATE");
                         CheckForMissionLogsInTransit();
+                        CheckForTelemetryDataInTransit();
 
                 }
                 
