@@ -11,13 +11,13 @@ namespace AscentProfiler
                 AscentProAPGCSModule module;
                 SensorPackage sensorsSuite;
 
+                internal bool isMissionLogEnabled = true;
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
-                internal bool isMissionLogEnabled = true;
 
+                internal bool isSensorsEnabled = false;
                 internal Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
                 internal bool isSensorsDataReadyToTransmit = false;
-                internal bool isSensorsEnabled = false;
                 int sensorstep = 0;
                 
 

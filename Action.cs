@@ -41,6 +41,12 @@ namespace AscentProfiler
 
                 }
 
+                protected string StateToString(bool state)
+                {
+                        return state ? "Active" : "Inactive";
+                
+                }
+
 
         }
 
@@ -71,11 +77,12 @@ namespace AscentProfiler
                                         break;
 
                                 case TelemetryType.TRANSMIT:
-                                        module.flightTelemetry.isSensorsDataReadyToTransmit = true;
+                                        state = true;
+                                        module.flightTelemetry.isSensorsDataReadyToTransmit = state;
                                         break;
 
                         }
-
+                        module.flightTelemetry.AddLog("Telemetry -> " + telemetry.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
         
@@ -95,6 +102,7 @@ namespace AscentProfiler
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
                         module.flightTelemetry.AddSensor(sensor);
+                        module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
 

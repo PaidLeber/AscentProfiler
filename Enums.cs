@@ -15,7 +15,6 @@ namespace AscentProfiler
         enum TelemetryType
         {
                 TRANSMIT,
-                TX,
                 MISSIONLOG,
                 SENSORS
         }
