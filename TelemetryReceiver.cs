@@ -11,21 +11,21 @@ namespace AscentProfiler
 
                 internal List<string> missionLog = new List<string>();
                 internal int missionLogCurrentReadCount = 0;
-                Queue<double> missionLogTransmitDelay = new Queue<double>();
+                Queue<double> missionLogTransitDelay = new Queue<double>();
                 Queue<int> missionLogDelayedReadCount = new Queue<int>();
 
                 internal Dictionary<SensorType, double[]> telemetryData;
                 Dictionary<SensorType, double[]> telemetryDataInTransit;
-                Queue<double> telemetryTransmitDelay = new Queue<double>();
+                Queue<double> telemetryTransitDelay = new Queue<double>();
 
                 internal bool ReceiveMissionLog(double transmitdelay, List<string> remoteMissionLogs)
                 {
                         Debug.Log("Received Flight Log");
-                        missionLogTransmitDelay.Enqueue(transmitdelay);
+                        missionLogTransitDelay.Enqueue(transmitdelay);
                         Debug.Log("Transmit delay: "+ transmitdelay);
                         
                         missionLogDelayedReadCount.Enqueue(remoteMissionLogs.Count);
-                        Debug.Log("Transmit delay count: " + missionLogTransmitDelay.Count);
+                        Debug.Log("Transmit delay count: " + missionLogTransitDelay.Count);
                         Debug.Log("TelemetryReceiver.flightlog Count: " + missionLog.Count);
                         Debug.Log("telemetrydata.flightlog Count: " + remoteMissionLogs.Count);
 
@@ -37,7 +37,7 @@ namespace AscentProfiler
                 internal bool ReceiveTelemetryData(double transmitdelay, Dictionary<SensorType, double[]> sensorsData)
                 {
                         Debug.Log("Received Telemetry Data");
-                        telemetryTransmitDelay.Enqueue(transmitdelay);
+                        telemetryTransitDelay.Enqueue(transmitdelay);
                         telemetryDataInTransit = sensorsData;
 
                         return true;
@@ -45,14 +45,14 @@ namespace AscentProfiler
 
                 void CheckForMissionLogsInTransit()
                 {
-                        if (missionLogTransmitDelay.Count != 0)
+                        if (missionLogTransitDelay.Count != 0)
                         {
-                                if (Planetarium.GetUniversalTime() > missionLogTransmitDelay.Peek())
+                                if (Planetarium.GetUniversalTime() > missionLogTransitDelay.Peek())
                                 {
-                                        missionLogTransmitDelay.Dequeue();
+                                        missionLogTransitDelay.Dequeue();
                                         missionLogCurrentReadCount = missionLogDelayedReadCount.Peek();
                                         missionLogDelayedReadCount.Dequeue();
-                                        Debug.Log("transmit delay count: " + missionLogTransmitDelay.Count);
+                                        Debug.Log("transmit delay count: " + missionLogTransitDelay.Count);
                                 }
                         }
 
@@ -60,13 +60,18 @@ namespace AscentProfiler
 
                 void CheckForTelemetryDataInTransit()
                 {
-                        if (Planetarium.GetUniversalTime() > telemetryTransmitDelay.Peek())
+                        if (telemetryTransitDelay.Count != 0)
                         {
-                                telemetryTransmitDelay.Dequeue();
-                                telemetryData = telemetryDataInTransit;
-                                telemetryDataInTransit.Clear();
+                                if (Planetarium.GetUniversalTime() > telemetryTransitDelay.Peek())
+                                {
+                                        telemetryTransitDelay.Dequeue();
+                                        telemetryData = telemetryDataInTransit;
+                                        telemetryDataInTransit.Clear();
 
+                                }
                         }
+
+
                 }
 
 
