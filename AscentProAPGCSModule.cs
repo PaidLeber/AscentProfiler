@@ -14,7 +14,7 @@ namespace AscentProfiler
 
                 //On RX Sequence of New Profile
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private bool isNewProfile = false;
+                private FlightProfile newProfile;
                 private double profileTransmissionTime = 0;
                 private int profileMessageSequence = 0;
 
@@ -100,6 +100,11 @@ namespace AscentProfiler
                                     + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
                         }
 
+                        if(newProfile != null)
+                        {
+                                RXProfileReceiverSequence();
+                        }
+
                         if (flightProfile != null && flightProfile.isEnabled)
                         {
                                 flightProfile.OnUpdate();
@@ -112,29 +117,25 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
-                        Debug.Log("RX Profile successful");
-                        //RXProfileReceiverSequence(newprofile);
-
-                        flightProfile = newprofile;
-                        flightProfile.AssignToModule(this);
-                        flightProfile.isEnabled = true;
-                        return isNewProfile = true;
+                        newProfile = newprofile;
+                        Debug.Log("RX Profile Transfer successful");
+                        return true;
                 }
 
-                void RXProfileReceiverSequence(FlightProfile newprofile)
+                void RXProfileReceiverSequence()
                 {
                         
-                        profileMessageSequence = 0;
-                        profileTransmissionTime = 0;
-
-
                                 if (profileTransmissionTime == 0)
                                 { profileTransmissionTime = Planetarium.GetUniversalTime(); }
 
 
                                 if (profileMessageSequence == 5)
                                 {
-                                        isNewProfile = false;
+                                        flightProfile = newProfile;
+                                        newProfile = null;
+                                        profileMessageSequence = 0;
+                                        profileTransmissionTime = 0;
+                                        return;
                                 }
 
 
@@ -148,6 +149,8 @@ namespace AscentProfiler
                                                 flightProfile = null;
                                                 flightProfile.AssignToModule(this);
                                                 flightProfile.isEnabled = true;
+                                                flightProfile.ExecuteActions(0);
+
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }

@@ -43,7 +43,7 @@ namespace AscentProfiler
                 void TriggerLoop()
                 {
 
-                        //Debug.Log("Trigger Loop test");
+                        
                         foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         {
 
@@ -69,7 +69,7 @@ namespace AscentProfiler
                 internal void AssignToModule(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        TriggerLoop();
+                        
                 }
 
                 internal void ExecuteActions(int index)
