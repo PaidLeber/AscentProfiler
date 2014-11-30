@@ -124,7 +124,7 @@ namespace AscentProfiler
                 
                 }
 
-                internal override bool Execute()
+                internal override bool Execute(AscentProAPGCSModule module)
                 {
                         switch(modifier)
                         {
@@ -167,7 +167,7 @@ namespace AscentProfiler
                 }
 
 
-                internal override bool Execute()
+                internal override bool Execute(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value);
                         FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(Util.SetActionGroup(value));
@@ -187,7 +187,7 @@ namespace AscentProfiler
                 }
 
 
-                internal override bool Execute()
+                internal override bool Execute(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log("STAGE SEPARATION");
                         Staging.ActivateNextStage();
@@ -207,7 +207,7 @@ namespace AscentProfiler
                 
                 }
 
-                internal override bool Execute()
+                internal override bool Execute(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log(value + " " + desc.ToUpper());
                         Staging.ActivateStage(value);
@@ -237,7 +237,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override bool Execute()
+                internal override bool Execute(AscentProAPGCSModule module)
                 {
 
                         FlightInputHandler.state.mainThrottle = floatvalue;
