@@ -79,20 +79,21 @@ namespace AscentProfiler
 */
                 public override void OnUpdate()
                 {
-
-                        Transmit(flightTelemetry);
-
-                        if (flightProfile != null && flightProfile.isEnabled)
-                        {
-                                flightProfile.TriggerLoop();
-                        }
-
                         if ((Time.time - lastUpdate) > logInterval)
                         {
                                 lastUpdate = Time.time;
                                 Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                                     + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
                         }
+
+                        if (flightProfile != null && flightProfile.isEnabled)
+                        {
+                                flightProfile.TriggerLoop();
+                        }
+
+                        flightTelemetry.OnUpdate();
+                        Transmit(flightTelemetry);
+
                 }
 
                 internal bool RXProfile(FlightProfile newprofile)

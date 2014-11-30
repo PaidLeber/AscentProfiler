@@ -41,9 +41,9 @@ namespace AscentProfiler
                 }
 
 
-                void SensorsDataCapture()
+                internal void OnUpdate()
                 {
-                        if (!isSensorsEnabled && module.vessel.missionTime == 0)
+                        if (!isSensorsEnabled || module.vessel.missionTime == 0)
                                 {return;}
 
                         foreach (SensorType sensor in sensorsOnBoard.Keys )
