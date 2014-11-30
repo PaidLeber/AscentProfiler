@@ -39,7 +39,7 @@ namespace AscentProfiler
                         missionLog.Add("TEST10");
                         missionLog.Add("TEST11");
                 }
-                //
+                
 
                 internal void OnUpdate()
                 {

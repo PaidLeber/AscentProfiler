@@ -34,7 +34,13 @@ namespace AscentProfiler
                         }
                 }
 
-                public void TriggerLoop()
+                internal void OnUpdate()
+                {
+                        TriggerLoop();
+
+                }
+
+                void TriggerLoop()
                 {
 
                         //Debug.Log("Trigger Loop test");

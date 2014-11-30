@@ -88,7 +88,7 @@ namespace AscentProfiler
 
                         if (flightProfile != null && flightProfile.isEnabled)
                         {
-                                flightProfile.TriggerLoop();
+                                flightProfile.OnUpdate();
                         }
 
                         flightTelemetry.OnUpdate();

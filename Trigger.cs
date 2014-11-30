@@ -119,7 +119,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightTelemetry.AddLog("Descending To " + module.vessel.mainBody.name + " " + value + "m");
+                                                module.flightTelemetry.AddLog("Descending Below " + module.vessel.mainBody.name + " " + value + "m");
                                                 return activated = true;
                                         }
                                 }
