@@ -62,7 +62,7 @@ namespace AscentProfiler
 
 
                         if (flightTelemetry.missionLogEnabled && flightTelemetry.missionLog.Count > flightTelemetry.lastMissionLogTransmitCount)              // Send Mission Logs
-                                if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry))
+                                if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry.missionLog))
                                         flightTelemetry.lastMissionLogTransmitCount = flightTelemetry.missionLog.Count;
 
 

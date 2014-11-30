@@ -14,23 +14,23 @@ namespace AscentProfiler
                 Queue<double> missionLogTransmitDelay = new Queue<double>();
                 Queue<int> missionLogDelayedReadCount = new Queue<int>();
 
-                internal bool ReceiveMissionLog(double transmitdelay, FlightTelemetry telemetryData)
+                internal bool ReceiveMissionLog(double transmitdelay, List<string> remoteMissionLogs)
                 {
                         Debug.Log("Received Flight Log");
                         missionLogTransmitDelay.Enqueue(transmitdelay);
                         Debug.Log("Transmit delay: "+ transmitdelay);
                         
-                        missionLogDelayedReadCount.Enqueue(telemetryData.missionLog.Count);
+                        missionLogDelayedReadCount.Enqueue(remoteMissionLogs.Count);
                         Debug.Log("Transmit delay count: " + missionLogTransmitDelay.Count);
                         Debug.Log("TelemetryReceiver.flightlog Count: " + missionLog.Count);
-                        Debug.Log("telemetrydata.flightlog Count: " + telemetryData.missionLog.Count);
+                        Debug.Log("telemetrydata.flightlog Count: " + remoteMissionLogs.Count);
 
-                        missionLog.AddRange(telemetryData.missionLog.GetRange(missionLog.Count, telemetryData.missionLog.Count - missionLog.Count));
+                        missionLog.AddRange(remoteMissionLogs.GetRange(missionLog.Count, remoteMissionLogs.Count - missionLog.Count));
                         Debug.Log("NEW TelemetryReceiver.flightlog Count: " + missionLog.Count);
                         return true;
                 }
 
-                void CheckMissionLogsInTransit()
+                void CheckForMissionLogsInTransit()
                 {
                         if (missionLogTransmitDelay.Count != 0)
                         {
@@ -49,7 +49,7 @@ namespace AscentProfiler
                 public void Update()
                 {
                         //Debug.Log("TELEMETRY RECEIVE UPDATE");
-                        CheckMissionLogsInTransit();
+                        CheckForMissionLogsInTransit();
 
                 }
                 
