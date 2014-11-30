@@ -181,8 +181,8 @@ namespace AscentProfiler
                         logWindowScrollPos = GUILayout.BeginScrollView(logWindowScrollPos, STYLE_MENU_SCROLL_VERTICAL);
 
                                 GUILayout.BeginVertical();
-
-                                        foreach (var log in Enumerable.Reverse(AscentProfiler.telemetryReceiver.FlightLog))
+                                        
+                                foreach (var log in Enumerable.Reverse(AscentProfiler.telemetryReceiver.missionLog).Where(p => p.IndexOf(p) <= AscentProfiler.telemetryReceiver.missionLogCurrentReadCount))
                                         {
                                                 GUILayout.Label(log);
                                         }

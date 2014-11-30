@@ -9,37 +9,37 @@ namespace AscentProfiler
         class TelemetryReceiver : MonoBehaviour
         {
 
-                internal List<string> FlightLog = new List<string>();
-                internal int currentflightlogReadCount = 0;
-                Queue<double> transmitDelay = new Queue<double>();
-                Queue<int> delayedFlightLogReadCount = new Queue<int>();
+                internal List<string> missionLog = new List<string>();
+                internal int missionLogCurrentReadCount = 0;
+                Queue<double> missionLogTransmitDelay = new Queue<double>();
+                Queue<int> missionLogDelayedReadCount = new Queue<int>();
 
-                internal bool ReceiveFlightLog(double transmitdelay, FlightTelemetry telemetryData)
+                internal bool ReceiveMissionLog(double transmitdelay, FlightTelemetry telemetryData)
                 {
                         Debug.Log("Received Flight Log");
-                        transmitDelay.Enqueue(transmitdelay);
+                        missionLogTransmitDelay.Enqueue(transmitdelay);
                         Debug.Log("Transmit delay: "+ transmitdelay);
                         
-                        delayedFlightLogReadCount.Enqueue(telemetryData.missionLog.Count);
-                        Debug.Log("Transmit delay count: " + transmitDelay.Count);
-                        Debug.Log("TelemetryReceiver.flightlog Count: " + FlightLog.Count);
+                        missionLogDelayedReadCount.Enqueue(telemetryData.missionLog.Count);
+                        Debug.Log("Transmit delay count: " + missionLogTransmitDelay.Count);
+                        Debug.Log("TelemetryReceiver.flightlog Count: " + missionLog.Count);
                         Debug.Log("telemetrydata.flightlog Count: " + telemetryData.missionLog.Count);
 
-                        FlightLog.AddRange(telemetryData.missionLog.GetRange(FlightLog.Count, telemetryData.missionLog.Count - FlightLog.Count));
-                        Debug.Log("NEW TelemetryReceiver.flightlog Count: " + FlightLog.Count);
+                        missionLog.AddRange(telemetryData.missionLog.GetRange(missionLog.Count, telemetryData.missionLog.Count - missionLog.Count));
+                        Debug.Log("NEW TelemetryReceiver.flightlog Count: " + missionLog.Count);
                         return true;
                 }
 
-                void CheckDataInTransit()
+                void CheckMissionLogsInTransit()
                 {
-                        if (transmitDelay.Count != 0)
+                        if (missionLogTransmitDelay.Count != 0)
                         {
-                                if (Planetarium.GetUniversalTime() > transmitDelay.Peek())
+                                if (Planetarium.GetUniversalTime() > missionLogTransmitDelay.Peek())
                                 {
-                                        transmitDelay.Dequeue();
-                                        currentflightlogReadCount = delayedFlightLogReadCount.Peek();
-                                        delayedFlightLogReadCount.Dequeue();
-                                        Debug.Log("transmit delay count: " + transmitDelay.Count);
+                                        missionLogTransmitDelay.Dequeue();
+                                        missionLogCurrentReadCount = missionLogDelayedReadCount.Peek();
+                                        missionLogDelayedReadCount.Dequeue();
+                                        Debug.Log("transmit delay count: " + missionLogTransmitDelay.Count);
 
                                 }
                         }
@@ -49,7 +49,7 @@ namespace AscentProfiler
                 public void Update()
                 {
                         //Debug.Log("TELEMETRY RECEIVE UPDATE");
-                        CheckDataInTransit();
+                        CheckMissionLogsInTransit();
 
                 }
                 
