@@ -5,6 +5,16 @@ using System.Text;
 
 namespace AscentProfiler
 {
+
+        enum SensorType
+        { 
+                time,
+                altitude,
+                gforce
+
+        }
+
+
         class SensorPackage
         {
 

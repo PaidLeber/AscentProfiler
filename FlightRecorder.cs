@@ -10,36 +10,36 @@ namespace AscentProfiler
 
                 AscentProAPGCSModule module;
 
-                internal List<string> MissionLog = new List<string>();
-                internal int lastFlightLogTransmitCount = 0;
-                internal bool logEnabled = true;
+                internal List<string> missionLog = new List<string>();
+                internal int lastMissionLogTransmitCount = 0;
+                internal bool missionLogEnabled = true;
 
 
-                SortedDictionary<float, int> index = new SortedDictionary<float,int>();
-                List<List<double>> telemetry = new List<List<double>>();
-
+                bool telemetryReadyToTransmit = false;
+                Dictionary<SensorType, double[]> telemetryData = new Dictionary<SensorType, double[]>();               
+                
 
                 internal FlightRecorder(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        MissionLog.Add("TEST0");
-                        MissionLog.Add("TEST1");
-                        MissionLog.Add("TEST2");
-                        MissionLog.Add("TEST3");
-                        MissionLog.Add("TEST4");
-                        MissionLog.Add("TEST5");
-                        MissionLog.Add("TEST6");
-                        MissionLog.Add("TEST7");
-                        MissionLog.Add("TEST8");
-                        MissionLog.Add("TEST9");
-                        MissionLog.Add("TEST10");
-                        MissionLog.Add("TEST11");
+                        missionLog.Add("TEST0");
+                        missionLog.Add("TEST1");
+                        missionLog.Add("TEST2");
+                        missionLog.Add("TEST3");
+                        missionLog.Add("TEST4");
+                        missionLog.Add("TEST5");
+                        missionLog.Add("TEST6");
+                        missionLog.Add("TEST7");
+                        missionLog.Add("TEST8");
+                        missionLog.Add("TEST9");
+                        missionLog.Add("TEST10");
+                        missionLog.Add("TEST11");
                 }
 
                 internal void AddLog(string log)
                 {
                         var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
-                        MissionLog.Add(transferlog);
+                        missionLog.Add(transferlog);
                         Log.Level(LogType.Verbose, transferlog);
 
                 }
