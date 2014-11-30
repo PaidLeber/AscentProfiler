@@ -48,7 +48,7 @@ namespace AscentProfiler
         {
                 SensorType sensor;
 
-                internal Telemetry(int index, SensorType sensor)
+                internal Telemetry(int index, ActionType type, SensorType sensor)
                 {
                         this.sensor = sensor;
                 }

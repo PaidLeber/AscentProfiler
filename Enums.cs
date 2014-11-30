@@ -40,7 +40,8 @@ namespace AscentProfiler
         {
                 ACTIONGROUP,
                 STAGE,
-                THROTTLE
+                THROTTLE,
+                TELEMETRY
         }
 
         enum ActionModifier
