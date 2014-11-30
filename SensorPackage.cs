@@ -25,7 +25,7 @@ namespace AscentProfiler
                 }
 
 
-                double GetSensorData(SensorType sensor)
+                internal double GetSensorData(SensorType sensor)
                 {
                         switch(sensor)
                         {

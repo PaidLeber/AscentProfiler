@@ -14,16 +14,17 @@ namespace AscentProfiler
                 internal int lastMissionLogTransmitCount = 0;
                 internal bool missionLogEnabled = true;
 
-                bool sensorsDataReadyToTransmit = false;
-                bool sensorsEnabled = false;
-                SensorPackage sensorspackage;
-                Dictionary<SensorType, double[]> sensorsData = new Dictionary<SensorType, double[]>();
+                bool isSensorsDataReadyToTransmit = false;
+                bool isSensorsEnabled = false;
+                SensorPackage sensorsSuite;
+                Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
+                int sensorstep = 0;
                 
 
                 internal FlightTelemetry(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        sensorspackage = new SensorPackage(module);
+                        sensorsSuite = new SensorPackage(module);
 
                         missionLog.Add("TEST0");
                         missionLog.Add("TEST1");
@@ -37,6 +38,22 @@ namespace AscentProfiler
                         missionLog.Add("TEST9");
                         missionLog.Add("TEST10");
                         missionLog.Add("TEST11");
+                }
+
+
+                void SensorsDataCapture()
+                {
+                        if (!isSensorsEnabled && module.vessel.missionTime == 0)
+                                {return;}
+
+                        foreach (SensorType sensor in sensorsOnBoard.Keys )
+                        {
+                                sensorsOnBoard[sensor][sensorstep] = sensorsSuite.GetSensorData(sensor);
+                                
+                        }
+
+                        sensorstep++;
+                
                 }
 
                 internal void AddLog(string log)

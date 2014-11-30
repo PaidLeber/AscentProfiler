@@ -14,18 +14,18 @@ namespace AscentProfiler
                 Queue<double> transmitDelay = new Queue<double>();
                 Queue<int> delayedFlightLogReadCount = new Queue<int>();
 
-                internal bool ReceiveFlightLog(double transmitdelay, FlightTelemetry flightrecorder)
+                internal bool ReceiveFlightLog(double transmitdelay, FlightTelemetry telemetryData)
                 {
                         Debug.Log("Received Flight Log");
                         transmitDelay.Enqueue(transmitdelay);
                         Debug.Log("Transmit delay: "+ transmitdelay);
                         
-                        delayedFlightLogReadCount.Enqueue(flightrecorder.missionLog.Count);
+                        delayedFlightLogReadCount.Enqueue(telemetryData.missionLog.Count);
                         Debug.Log("Transmit delay count: " + transmitDelay.Count);
                         Debug.Log("TelemetryReceiver.flightlog Count: " + FlightLog.Count);
-                        Debug.Log("flightrecorder.flightlog Count: " + flightrecorder.missionLog.Count);
+                        Debug.Log("telemetrydata.flightlog Count: " + telemetryData.missionLog.Count);
 
-                        FlightLog.AddRange(flightrecorder.missionLog.GetRange(FlightLog.Count, flightrecorder.missionLog.Count - FlightLog.Count));
+                        FlightLog.AddRange(telemetryData.missionLog.GetRange(FlightLog.Count, telemetryData.missionLog.Count - FlightLog.Count));
                         Debug.Log("NEW TelemetryReceiver.flightlog Count: " + FlightLog.Count);
                         return true;
                 }
