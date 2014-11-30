@@ -131,7 +131,7 @@ namespace AscentProfiler
 
                                 if (profileMessageSequence == 5)
                                 {
-                                        flightProfile = newProfile;
+                                        
                                         newProfile = null;
                                         profileMessageSequence = 0;
                                         profileTransmissionTime = 0;
@@ -147,6 +147,7 @@ namespace AscentProfiler
                                         if (profileMessageSequence == 3)
                                         {
                                                 flightProfile = null;
+                                                flightProfile = newProfile;
                                                 flightProfile.AssignToModule(this);
                                                 flightProfile.isEnabled = true;
                                                 flightProfile.ExecuteActions(0);
