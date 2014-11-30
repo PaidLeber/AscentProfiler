@@ -23,7 +23,7 @@ namespace AscentProfiler
                         listTrigger = triggerlist;
 
                         Debug.Log("FLIGHT PROFILE TRIGGER CONTRUCTOR!");
-                        foreach(Trigger item in listTrigger )
+                        foreach(Trigger item in listTrigger)
                         {
                                 Debug.Log("TRIGGER: activated: " + item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue);
                         }
@@ -69,6 +69,7 @@ namespace AscentProfiler
                 internal void AssignToModule(AscentProAPGCSModule module)
                 {
                         this.module = module;
+                        TriggerLoop();
                 }
 
                 internal void ExecuteActions(int index)
