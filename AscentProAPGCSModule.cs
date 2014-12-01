@@ -117,11 +117,30 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
-                        profileMessageSequence = 0;
-                        profileTransmissionTime = 0;
-                        newProfile = newprofile;
+                        if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                        {
+                                profileMessageSequence = 0;
+                                profileTransmissionTime = 0;
+                                newProfile = newprofile;
+                        }
+                        else
+                        {
+                                LoadNewProfile(newprofile);
+
+                        }
+
+
                         Debug.Log("RX Profile Transfer successful");
                         return true;
+                }
+
+                void LoadNewProfile(FlightProfile newprofile)
+                {
+                        flightTelemetry.sensorsOnBoard.Clear();
+                        flightProfile = newprofile;
+                        flightProfile.AssignToModule(this);
+                        flightProfile.isEnabled = true;
+                        flightProfile.ExecuteActions(0);
                 }
 
                 void RXProfileReceiverSequence()
@@ -146,13 +165,7 @@ namespace AscentProfiler
                                 {
                                         if (profileMessageSequence == 3)
                                         {
-                                                flightTelemetry.sensorsOnBoard.Clear();
-                                                flightProfile = null;
-                                                flightProfile = newProfile;
-                                                flightProfile.AssignToModule(this);
-                                                flightProfile.isEnabled = true;
-                                                flightProfile.ExecuteActions(0);
-
+                                                LoadNewProfile(newProfile);
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
