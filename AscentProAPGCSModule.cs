@@ -117,6 +117,8 @@ namespace AscentProfiler
 
                 internal bool RXProfile(FlightProfile newprofile)
                 {
+                        profileMessageSequence = 0;
+                        profileTransmissionTime = 0;
                         newProfile = newprofile;
                         Debug.Log("RX Profile Transfer successful");
                         return true;
@@ -129,12 +131,10 @@ namespace AscentProfiler
                                 { profileTransmissionTime = Planetarium.GetUniversalTime(); }
 
 
-                                if (profileMessageSequence == 5)
+                                if (profileMessageSequence == 6)
                                 {
                                         
                                         newProfile = null;
-                                        profileMessageSequence = 0;
-                                        profileTransmissionTime = 0;
                                         return;
                                 }
 
@@ -146,6 +146,7 @@ namespace AscentProfiler
                                 {
                                         if (profileMessageSequence == 3)
                                         {
+                                                flightTelemetry.sensorsOnBoard.Clear();
                                                 flightProfile = null;
                                                 flightProfile = newProfile;
                                                 flightProfile.AssignToModule(this);
@@ -170,7 +171,8 @@ namespace AscentProfiler
                         listRXReceiverMessage.Add(new object[] { 2.0f, 0, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Reconfiguration packets received from frame" });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
-                        listRXReceiverMessage.Add(new object[] { 8.0f, 8, "RX: Reconfiguration successful: Profile loaded" });
+                        listRXReceiverMessage.Add(new object[] { 4.0f, 8, "RX: Telemetry data buffer: Reset" });
+                        listRXReceiverMessage.Add(new object[] { 8.0f, 12, "RX: Reconfiguration successful: Profile loaded" });
                         listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
                 
                 }
