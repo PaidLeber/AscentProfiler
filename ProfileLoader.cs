@@ -132,17 +132,19 @@ namespace AscentProfiler
                 void TXRemoteTechNetwork(string profile, AscentProAPGCSModule module)
                 {
                         System.Random rng = new System.Random();
-                        int port = rng.Next(4000, 10000);
+                        int port = rng.Next(4000, 20000);
+                        string vessel_ip = AscentProfiler.currentVessel.vesselName.ToLower() + "." + AscentProfiler.currentVessel.vesselType.ToString().ToLower() + ".dsn";
+
                         ScreenMessages.PostScreenMessage("Transmitting GCodes to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
-                        module.flightTelemetry.AddLog("nc -uv -w 3000000 " + AscentProfiler.currentVessel.vesselName.ToLower() + "." + AscentProfiler.currentVessel.vesselType.ToString().ToLower() + ".dsn " + port + " < " + profile + ".profile");
+                        module.flightTelemetry.AddLog("nc -uv -w 3000000 " + vessel_ip + " " + port + " < " + profile + ".profile");
                         
                         if (module.isConnectedtoKSC)
                         {
-                                module.flightTelemetry.AddLog("nc: Connection to server.ip.address.here "+port+" port [udp/*] succeeded!");
+                                module.flightTelemetry.AddLog("nc: Connection to " + vessel_ip + " "+ port + " port [icp/*] succeeded!");
                         }
                         else
                         {
-                                module.flightTelemetry.AddLog("nc: connect to Ship.ip "+ port +" (icp) failed: Timeout (Check connection)");
+                                module.flightTelemetry.AddLog("nc: connect to " + vessel_ip + " " + port + " (icp) failed: Timeout (Check connection)");
                         }
 
                 }
