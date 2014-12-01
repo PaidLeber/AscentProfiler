@@ -164,7 +164,7 @@ namespace AscentProfiler
                                 //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
                                 if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                                 {
-                                        if (profileMessageSequence == 3)
+                                        if (profileMessageSequence == 4)
                                         {
                                                 LoadNewProfile(newProfile);
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
