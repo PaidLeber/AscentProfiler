@@ -27,7 +27,7 @@ namespace AscentProfiler
                 {
                         actionDict.Add("actionRegex", @"^\t*\w+\s+(\w+)\s+(\w+)(?:\s+""([\w\s]+)"")?\s*$");
                         actionDict.Add("sensorsRegex", @"^\t*\w+\s+(\w+)\s*$");
-                        actionDict.Add("telemetryRegex", @"^\t*\w+\s+(\w+)(?:\s+""([\w\s]+)"")?\s*$");
+                        actionDict.Add("telemetryRegex", @"^\t*\w+\s+(\w+)(?:\s+([\w\s]+))?\s*$");
 
                         actionRegex.Add(ActionType.SENSORS, actionDict["sensorsRegex"]);
                         actionRegex.Add(ActionType.ACTIONGROUP, actionDict["actionRegex"]);
