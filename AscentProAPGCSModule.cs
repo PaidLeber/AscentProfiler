@@ -158,12 +158,12 @@ namespace AscentProfiler
                                         if (profileMessageSequence == 4)
                                         {
                                                 LoadNewProfile(newProfile);
+                                                flightTelemetry.AddLog(Convert.ToString(messagearray[4]));
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
 
                                         ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
-                                        flightTelemetry.AddLog(Convert.ToString(messagearray[2]));
                                         profileMessageSequence++;
 
                                 }
