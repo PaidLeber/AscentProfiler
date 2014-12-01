@@ -19,7 +19,7 @@ namespace AscentProfiler
                 private int profileMessageSequence = 0;
 
 
-                private bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
+                internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
                 {
                         get
                         {
@@ -41,15 +41,6 @@ namespace AscentProfiler
                         flightTelemetry = new FlightTelemetry(this); 
                         
                 }
-
-
-
-                internal void Test()
-                {
-                        Log.Level(LogType.Verbose, "AscentProAPGCSModule TEST1");
-                }
-
-
 
                 void Transmit(FlightTelemetry flightTelemetry)
                 {

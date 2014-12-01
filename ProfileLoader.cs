@@ -114,28 +114,37 @@ namespace AscentProfiler
 
 
 
-                        return TXAscentProAPGCSModule(triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
+                        return TXAscentProAPGCSModule(profile, triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
 
                 }
                 
 
-                bool TXAscentProAPGCSModule(FlightProfile newprofile)
+                bool TXAscentProAPGCSModule(string profile, FlightProfile newprofile)
                 {
                         AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
-                        APGCSmodule.Test();
+
+                        TXRemoteTechNetwork(profile, APGCSmodule);
                         
                         return APGCSmodule.RXProfile(newprofile);
 
                 }
 
-                bool TXRemoteTechNetwork()
+                void TXRemoteTechNetwork(string profile, AscentProAPGCSModule module)
                 {
+                        System.Random rng = new System.Random();
+                        int port = rng.Next(4000, 10000);
                         ScreenMessages.PostScreenMessage("Transmitting GCodes to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
+                        module.flightTelemetry.AddLog("nc -uv -w 3000000 " + AscentProfiler.currentVessel.vesselType.ToString() + ".ship.ip " + port + " < " + profile + ".profile");
 
+                        if (module.isConnectedtoKSC)
+                        {
+                                module.flightTelemetry.AddLog("nc: Connection to server.ip.address.here "+port+" port [udp/*] succeeded!");
+                        }
+                        else
+                        {
+                                module.flightTelemetry.AddLog("nc: connect to Ship.ip "+ port +" (icp) failed: Timeout (Check connection)");
+                        }
 
-
-                        
-                        return false;
                 }
 
                 bool IsRegexCommandMatch(string line, string commandType)
