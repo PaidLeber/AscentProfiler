@@ -141,6 +141,7 @@ namespace AscentProfiler
                         flightProfile.AssignToModule(this);
                         flightProfile.isEnabled = true;
                         flightProfile.ExecuteActions(0);
+
                 }
 
                 void RXProfileReceiverSequence()
@@ -171,6 +172,7 @@ namespace AscentProfiler
                                         }
 
                                         ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
+                                        flightTelemetry.AddLog(Convert.ToString(messagearray[2]));
                                         profileMessageSequence++;
 
                                 }
