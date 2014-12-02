@@ -158,8 +158,8 @@ namespace AscentProfiler
                                         if (profileMessageSequence == 4)
                                         {
                                                 LoadNewProfile(newProfile);
-                                                flightTelemetry.AddLog("Reconfiguration successful: Sequence loaded");
-                                                Log.Level(LogType.Verbose, "Profile Loaded");
+                                                flightTelemetry.AddLog("Reconfiguration successful: sequence loaded");
+                                                Log.Level(LogType.Verbose, "Sequence Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
 
