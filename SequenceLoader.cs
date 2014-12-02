@@ -129,7 +129,7 @@ namespace AscentProfiler
 
                 }
 
-                void TXRemoteTechNetwork(string profile, AscentProAPGCSModule module)
+                void TXRemoteTechNetwork(string sequence, AscentProAPGCSModule module)
                 {
                         System.Random rng = new System.Random();
                         int port = rng.Next(4000, 20000);
