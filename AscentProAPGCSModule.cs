@@ -179,7 +179,7 @@ namespace AscentProfiler
                         listRXReceiverMessage.Add(new object[] { 3.0f, 1, "RX: Reconfiguration packets received from frame" });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 4, "RX: Checksum verification in progress, please standby " });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 6, "RX: Telemetry data buffer: Reset" });
-                        listRXReceiverMessage.Add(new object[] { 8.0f, 4, "RX: Reconfiguration successful: Sequence loaded" });
+                        listRXReceiverMessage.Add(new object[] { 8.0f, 4, "RX: Reconfiguration successful: sequence loaded" });
                         listRXReceiverMessage.Add(new object[] { 7.0f, 2, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
                 
                 }
