@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class ProfileLoader : MonoBehaviour
+        class ProfileLoader
         {
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
