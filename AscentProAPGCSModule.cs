@@ -9,14 +9,14 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal FlightSequence flightProfile;
+                internal FlightSequence flightSequence;
                 internal FlightTelemetry flightTelemetry;
 
-                //On RX Sequence of New Profile
+                //On RX Sequence of New Sequence
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private FlightSequence newProfile;
-                private double profileTransmissionTime = 0;
-                private int profileMessageSequence = 0;
+                private FlightSequence newSequence;
+                private double sequenceTransmissionTime = 0;
+                private int sequenceMessageOrder = 0;
 
 
                 internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
@@ -37,7 +37,7 @@ namespace AscentProfiler
 
                 public AscentProAPGCSModule()
                 {
-                        InitNewProfileSequence();
+                        InitNewSequenceMessage();
                         flightTelemetry = new FlightTelemetry(this); 
                         
                 }
@@ -91,14 +91,14 @@ namespace AscentProfiler
                                     + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
                         }
 
-                        if(newProfile != null)
+                        if(newSequence != null)
                         {
-                                RXProfileReceiverSequence();
+                                RXSequenceReceiver();
                         }
 
-                        if (flightProfile != null && flightProfile.isEnabled)
+                        if (flightSequence != null && flightSequence.isEnabled)
                         {
-                                flightProfile.OnUpdate();
+                                flightSequence.OnUpdate();
                         }
 
                         flightTelemetry.OnUpdate();
@@ -106,73 +106,73 @@ namespace AscentProfiler
 
                 }
 
-                internal bool RXProfile(FlightSequence newprofile)
+                internal bool RXNewSequence(FlightSequence newsequence)
                 {
                         if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
                         {
-                                profileMessageSequence = 0;
-                                profileTransmissionTime = 0;
-                                newProfile = newprofile;
+                                sequenceMessageOrder = 0;
+                                sequenceTransmissionTime = 0;
+                                newSequence = newsequence;
                         }
                         else
                         {
-                                LoadNewProfile(newprofile);
+                                LoadNewSequence(newsequence);
 
                         }
 
 
-                        Debug.Log("RX Profile Transfer successful");
+                        Debug.Log("RX Sequence Transfer successful");
                         return true;
                 }
 
-                void LoadNewProfile(FlightSequence newprofile)
+                void LoadNewSequence(FlightSequence newsequence)
                 {
                         flightTelemetry.sensorsOnBoard.Clear();
-                        flightProfile = newprofile;
-                        flightProfile.AssignToModule(this);
-                        flightProfile.isEnabled = true;
-                        flightProfile.ExecuteActions(0);
+                        flightSequence = newsequence;
+                        flightSequence.AssignToModule(this);
+                        flightSequence.isEnabled = true;
+                        flightSequence.ExecuteActions(0);
 
                 }
 
-                void RXProfileReceiverSequence()
+                void RXSequenceReceiver()
                 {
                         
-                                if (profileTransmissionTime == 0)
-                                { profileTransmissionTime = Planetarium.GetUniversalTime(); }
+                                if (sequenceTransmissionTime == 0)
+                                { sequenceTransmissionTime = Planetarium.GetUniversalTime(); }
 
 
-                                if (profileMessageSequence == 6)
+                                if (sequenceMessageOrder == 6)
                                 {
-                                        newProfile = null;
+                                        newSequence = null;
                                         return;
                                 }
 
 
-                                var messagearray = listRXReceiverMessage[profileMessageSequence];
+                                var messagearray = listRXReceiverMessage[sequenceMessageOrder];
 
-                                //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
-                                if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
+                                
+                                if (Planetarium.GetUniversalTime() > sequenceTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                                 {
-                                        Debug.Log("sequence#: "+profileMessageSequence+" seqdelaytime: "+messagearray[1]);
-                                        if (profileMessageSequence == 4)
+                                        Debug.Log("sequence#: "+sequenceMessageOrder+" seqdelaytime: "+messagearray[1]);
+                                        if (sequenceMessageOrder == 4)
                                         {
-                                                LoadNewProfile(newProfile);
+                                                LoadNewSequence(newSequence);
                                                 flightTelemetry.AddLog("Reconfiguration successful: sequence loaded");
                                                 Log.Level(LogType.Verbose, "Sequence Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
 
                                         ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
-                                        profileTransmissionTime = Planetarium.GetUniversalTime();
-                                        profileMessageSequence++;
+                                        sequenceTransmissionTime = Planetarium.GetUniversalTime();
+                                        sequenceMessageOrder++;
 
                                 }
                         
                 }
                 
 
-                void InitNewProfileSequence()
+                void InitNewSequenceMessage()
                 {
                         
                         listRXReceiverMessage.Add(new object[] { 4.0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });

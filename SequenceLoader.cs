@@ -125,7 +125,7 @@ namespace AscentProfiler
 
                         TXRemoteTechNetwork(sequence, APGCSmodule);
                         
-                        return APGCSmodule.RXProfile(newsequence);
+                        return APGCSmodule.RXNewSequence(newsequence);
 
                 }
 
