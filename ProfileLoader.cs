@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 internal ProfileLoader()
                 {
-                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.profilesDir, "*.profile"));
+                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.profilesDir, "*.seq"));
 
                         foreach (string file in files)
                         {
@@ -133,11 +133,12 @@ namespace AscentProfiler
                 {
                         System.Random rng = new System.Random();
                         int port = rng.Next(4000, 20000);
-                        string vessel_ip = AscentProfiler.currentVessel.vesselName.ToLower() + "." + AscentProfiler.currentVessel.vesselType.ToString().ToLower() + ".dsn";
+                        string vessel_ip = (AscentProfiler.currentVessel.vesselName.ToLower() + "." + AscentProfiler.currentVessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+                        
+                        //ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting GCodes to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.LOWER_CENTER));
 
-                        ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting GCodes to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.LOWER_CENTER));
-
-                        module.flightTelemetry.AddLog("nc -uv -w 3000000 " + vessel_ip + " " + port + " < " + profile + ".profile");
+                        module.flightTelemetry.AddLog("Transmitting sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
+                        module.flightTelemetry.AddLog("nc -uv -w 3000000 " + vessel_ip + " " + port + " < " + profile + ".seq");
                         
                         if (module.isConnectedtoKSC)
                         {

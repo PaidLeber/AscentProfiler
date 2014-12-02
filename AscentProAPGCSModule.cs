@@ -144,7 +144,6 @@ namespace AscentProfiler
 
                                 if (profileMessageSequence == 6)
                                 {
-                                        
                                         newProfile = null;
                                         return;
                                 }
@@ -155,15 +154,17 @@ namespace AscentProfiler
                                 //Debug.Log("UT: " + Planetarium.GetUniversalTime() + " PTT: " + profileTransmissionTime + " PSD: " + profileSequenceDelay + " RTSD: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id) + " PROFILE MESSAGESEQ: " + profileMessageSequence);
                                 if (Planetarium.GetUniversalTime() > profileTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                                 {
+                                        Debug.Log("sequence#: "+profileMessageSequence+" seqdelaytime: "+messagearray[1]);
                                         if (profileMessageSequence == 4)
                                         {
                                                 LoadNewProfile(newProfile);
-                                                flightTelemetry.AddLog("Reconfiguration successful: Profile loaded");
+                                                flightTelemetry.AddLog("Reconfiguration successful: Sequence loaded");
                                                 Log.Level(LogType.Verbose, "Profile Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
 
                                         ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
+                                        profileTransmissionTime = Planetarium.GetUniversalTime();
                                         profileMessageSequence++;
 
                                 }
@@ -173,13 +174,13 @@ namespace AscentProfiler
 
                 void InitNewProfileSequence()
                 {
-
-                        listRXReceiverMessage.Add(new object[] { 2.0f, 0, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Reconfiguration packets received from frame" });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 2, "RX: Checksum verification in progress, please standby " });
-                        listRXReceiverMessage.Add(new object[] { 4.0f, 8, "RX: Telemetry data buffer: Reset" });
-                        listRXReceiverMessage.Add(new object[] { 8.0f, 12, "RX: Reconfiguration successful: Profile loaded" });
-                        listRXReceiverMessage.Add(new object[] { 12.0f, 2, "RX: APGCS Telecommand Receiver Version " + AscentProfiler.version + " Ready" });
+                        
+                        listRXReceiverMessage.Add(new object[] { 4.0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 3.0f, 1, "RX: Reconfiguration packets received from frame" });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 4, "RX: Checksum verification in progress, please standby " });
+                        listRXReceiverMessage.Add(new object[] { 6.0f, 6, "RX: Telemetry data buffer: Reset" });
+                        listRXReceiverMessage.Add(new object[] { 8.0f, 4, "RX: Reconfiguration successful: Sequence loaded" });
+                        listRXReceiverMessage.Add(new object[] { 7.0f, 2, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
                 
                 }
 
