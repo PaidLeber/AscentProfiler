@@ -19,6 +19,7 @@ namespace AscentProfiler
                 internal Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
                 internal bool isSensorsDataReadyToTransmit = false;
                 int sensorstep = 0;
+                int sensorrate = 0;
                 
 
                 internal FlightTelemetry(AscentProAPGCSModule module)
