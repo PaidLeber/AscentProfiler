@@ -10,7 +10,7 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
-                List<Trigger> NewTriggerProfile = new List<Trigger>();
+                List<Trigger> NewTriggerSequence = new List<Trigger>();
 
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
@@ -61,7 +61,7 @@ namespace AscentProfiler
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
 
 
-                                NewTriggerProfile.Add(triggerProducts[trigger]());
+                                NewTriggerSequence.Add(triggerProducts[trigger]());
 
                                 Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
                                 //Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
@@ -76,10 +76,10 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
-                internal FlightSequence GetNewFlightProfile(List<Action> newactionlist)
+                internal FlightSequence GetNewFlightSequence(List<Action> newactionlist)
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
-                        return new FlightSequence(NewTriggerProfile, newactionlist);
+                        return new FlightSequence(NewTriggerSequence, newactionlist);
                 }
 
                 bool SetTriggerMode(TriggerType trigger)

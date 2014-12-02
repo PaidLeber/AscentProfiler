@@ -114,7 +114,7 @@ namespace AscentProfiler
 
 
 
-                        return TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
+                        return TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightSequence(actionFactory.GetNewActionList()));
 
                 }
                 
