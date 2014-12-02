@@ -143,7 +143,7 @@ namespace AscentProfiler
                                                         if (GUILayout.Button(pair.Key, STYLE_WINDOW_BUTTON, GUILayout.Height(24)))
                                                         {
                                                                 //profileLoaded = profileLoader.LoadProfile(pair.Key);
-                                                                if (profileLoader.LoadProfile(pair.Key))
+                                                                if (profileLoader.LoadSequence(pair.Key))
                                                                 {
                                                                         profileLoaded = true;
                                                                         Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfiler.currentVessel.vesselName);

@@ -13,7 +13,7 @@ namespace AscentProfiler
         {
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
-                Dictionary<string, string> profiles = new Dictionary<string, string>();
+                Dictionary<string, string> sequences = new Dictionary<string, string>();
 
 
                 int triggerIndex = 0;
@@ -24,59 +24,59 @@ namespace AscentProfiler
 
                         foreach (string file in files)
                         {
-                                profiles.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
+                                sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
                         }
                 }
 
                 internal Dictionary<string, string> GetProfiles()
                 {
-                        return profiles;
+                        return sequences;
                 }
 
-                internal bool LoadProfile(string profile)
+                internal bool LoadSequence(string sequence)
                 {
-                        int profileStart = 0;
-                        int profileEnd = 0;
+                        int sequenceStart = 0;
+                        int sequenceEnd = 0;
 
-                        List<string> profileLines = new List<string>(profiles[profile].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
+                        List<string> sequenceLines = new List<string>(sequences[sequence].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 
-                        Log.Level(LogType.Info, "Loading Profile: " + profile);
-                        Log.Level(LogType.Verbose, profiles[profile].ToUpper());
+                        Log.Level(LogType.Info, "Loading Profile: " + sequence);
+                        Log.Level(LogType.Verbose, sequences[sequence].ToUpper());
 
                         int lineCounter = 0;
-                        foreach (string line in profileLines)
+                        foreach (string line in sequenceLines)
                         {
                                 lineCounter++;
                                 if (Regex.IsMatch(line, @"^START\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT START: #" + line);
-                                        profileStart = lineCounter;
+                                        sequenceStart = lineCounter;
                                 }
 
                                 if (Regex.IsMatch(line, @"^END\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT END: #" + line);
-                                        profileEnd = lineCounter;
+                                        sequenceEnd = lineCounter;
                                 }
                         }
 
-                        if(profileStart > profileEnd)
+                        if(sequenceStart > sequenceEnd)
                         {
-                                profileLines.Reverse();
+                                sequenceLines.Reverse();
                         }
-                        else if(profileStart == 0)
+                        else if(sequenceStart == 0)
                         {
-                                Log.Script(LogType.Error, profile + " START not found.");
+                                Log.Script(LogType.Error, sequence + " START not found.");
                                 // Add error log checking here then return bool
                                 //return false;
                         }
-                        else if (profileEnd == 0)
+                        else if (sequenceEnd == 0)
                         {
-                                Log.Script(LogType.Error, profile+ " END not found.");
+                                Log.Script(LogType.Error, sequence+ " END not found.");
                         }
 
                         lineCounter = 0;
-                        foreach (string line in profileLines)
+                        foreach (string line in sequenceLines)
                         {
                                 
                                 lineCounter++;
@@ -114,18 +114,18 @@ namespace AscentProfiler
 
 
 
-                        return TXAscentProAPGCSModule(profile, triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
+                        return TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightProfile(actionFactory.GetNewActionList()));
 
                 }
                 
 
-                bool TXAscentProAPGCSModule(string profile, FlightProfile newprofile)
+                bool TXAscentProAPGCSModule(string sequence, FlightProfile newsequence)
                 {
                         AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
-                        TXRemoteTechNetwork(profile, APGCSmodule);
+                        TXRemoteTechNetwork(sequence, APGCSmodule);
                         
-                        return APGCSmodule.RXProfile(newprofile);
+                        return APGCSmodule.RXProfile(newsequence);
 
                 }
 
@@ -138,7 +138,7 @@ namespace AscentProfiler
                         ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.UPPER_RIGHT));
 
                         //module.flightTelemetry.AddLog("Transmitting command sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
-                        module.flightTelemetry.AddLog("$nc -uv -w "+ Math.Ceiling(RemoteTech.API.GetSignalDelayToKSC(module.vessel.id)) + " " + vessel_ip + " " + port + " < " + profile + ".seq");
+                        module.flightTelemetry.AddLog("$nc -uv -w "+ Math.Ceiling(RemoteTech.API.GetSignalDelayToKSC(module.vessel.id)) + " " + vessel_ip + " " + port + " < " + sequence + ".seq");
                         
                         if (module.isConnectedtoKSC)
                         {
