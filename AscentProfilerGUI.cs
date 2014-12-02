@@ -11,7 +11,7 @@ namespace AscentProfiler
         {
                 GraphGUI graphGui = new GraphGUI();
 
-                ProfileLoader profileLoader;
+                SequenceLoader profileLoader;
                 bool profileLoaded = false;
                 bool graphWindowEnabled = false;
                 Texture2D loadIcon;
@@ -125,7 +125,7 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
-                                profileLoader = new ProfileLoader();
+                                profileLoader = new SequenceLoader();
                             
 
                                 GUILayout.BeginVertical();

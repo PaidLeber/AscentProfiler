@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class ProfileLoader
+        class SequenceLoader
         {
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
@@ -18,7 +18,7 @@ namespace AscentProfiler
 
                 int triggerIndex = 0;
 
-                internal ProfileLoader()
+                internal SequenceLoader()
                 {
                         List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.profilesDir, "*.seq"));
 
