@@ -5,6 +5,13 @@ using System.Text;
 
 namespace AscentProfiler
 {
+
+        enum RegisteredAddons
+        {
+                FerramAerospaceResearch,
+                RemoteTech
+        }
+
         enum SensorType
         {
                 TIME,

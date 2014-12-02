@@ -7,11 +7,6 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        enum RegisteredAddons
-        {
-                FerramAerospaceResearch,
-                RemoteTech
-        }
 
 
         [KSPAddon(KSPAddon.Startup.Flight, false)]
