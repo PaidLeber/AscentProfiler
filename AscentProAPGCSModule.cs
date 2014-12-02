@@ -9,12 +9,12 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal FlightProfile flightProfile;
+                internal FlightSequence flightProfile;
                 internal FlightTelemetry flightTelemetry;
 
                 //On RX Sequence of New Profile
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private FlightProfile newProfile;
+                private FlightSequence newProfile;
                 private double profileTransmissionTime = 0;
                 private int profileMessageSequence = 0;
 
@@ -106,7 +106,7 @@ namespace AscentProfiler
 
                 }
 
-                internal bool RXProfile(FlightProfile newprofile)
+                internal bool RXProfile(FlightSequence newprofile)
                 {
                         if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
                         {
@@ -125,7 +125,7 @@ namespace AscentProfiler
                         return true;
                 }
 
-                void LoadNewProfile(FlightProfile newprofile)
+                void LoadNewProfile(FlightSequence newprofile)
                 {
                         flightTelemetry.sensorsOnBoard.Clear();
                         flightProfile = newprofile;

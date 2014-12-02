@@ -76,10 +76,10 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
-                internal FlightProfile GetNewFlightProfile(List<Action> newactionlist)
+                internal FlightSequence GetNewFlightProfile(List<Action> newactionlist)
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
-                        return new FlightProfile(NewTriggerProfile, newactionlist);
+                        return new FlightSequence(NewTriggerProfile, newactionlist);
                 }
 
                 bool SetTriggerMode(TriggerType trigger)
