@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class GraphGUI
+        class GUITelemetry
         {
 
                 Texture2D loadIcon;
@@ -18,11 +18,11 @@ namespace AscentProfiler
                 GUIStyle BackgroundStyle;
 
 
-                Rect mainWindowPos = new Rect(60, 50, 500, 400);
+                Rect telemetryWindowPos = new Rect(60, 50, 500, 400);
                 Vector2 minDefaultWindowSize = new Vector2(500, 400);
-                Rect mainWindowPosLast = new Rect(0, 0, 0, 0);
-                Vector2 mainWindowScrollPos = new Vector2(0, 0);
-                bool mainWindowEnabled = false;
+                Rect telemetryWindowPosLast = new Rect(0, 0, 0, 0);
+                Vector2 telemetryWindowScrollPos = new Vector2(0, 0);
+                bool telemetryWindowEnabled = false;
 
                 Vector2 defaultGraphSize = new Vector2(320, 240);
                 ferramGraph graph = new ferramGraph(320, 240);
@@ -43,7 +43,7 @@ namespace AscentProfiler
 
 
 
-                public GraphGUI()
+                public GUITelemetry()
                 {
                         loadIcon = GetTexture("load");
 
@@ -53,7 +53,7 @@ namespace AscentProfiler
 
                 public void ChangeState(bool state)
                 {
-                        mainWindowEnabled = state;
+                        telemetryWindowEnabled = state;
                 }
 
 
@@ -83,9 +83,9 @@ namespace AscentProfiler
                         STYLE_WINDOW_BUTTON.margin = new RectOffset(0, 0, 0, 0);
                         STYLE_WINDOW_BUTTON.padding = new RectOffset(0, 0, 0, 0);
 
-                        if (mainWindowEnabled)
+                        if (telemetryWindowEnabled)
                         {
-                                mainWindowPos = GUILayout.Window(windowId + 1, mainWindowPos, DrawMainWindow, "Telemetry");
+                                telemetryWindowPos = GUILayout.Window(windowId + 1, telemetryWindowPos, DrawMainWindow, "Telemetry");
                         }
 
                 }
@@ -94,7 +94,7 @@ namespace AscentProfiler
                 public void DrawMainWindow(int id)
                 {
 
-                        mainWindowEnabled = !GUI.Toggle(new Rect(mainWindowPos.width - 25, 0, 20, 20), !mainWindowEnabled, "");
+                        telemetryWindowEnabled = !GUI.Toggle(new Rect(telemetryWindowPos.width - 25, 0, 20, 20), !telemetryWindowEnabled, "");
 
 
                         GUIStyle defaultButton = new GUIStyle(GUI.skin.GetStyle("button"));
@@ -114,10 +114,10 @@ namespace AscentProfiler
                         //GUILayout.Space(1);
 
 
-                        if (mainWindowPos.width != mainWindowPosLast.width || mainWindowPos.height != mainWindowPosLast.height)
+                        if (telemetryWindowPos.width != telemetryWindowPosLast.width || telemetryWindowPos.height != telemetryWindowPosLast.height)
                         {
-                                mainWindowPosLast = mainWindowPos;
-                                graph.resizeGraph((int)(mainWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x), (int)(mainWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
+                                telemetryWindowPosLast = telemetryWindowPos;
+                                graph.resizeGraph((int)(telemetryWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x), (int)(telemetryWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
                                 graph.Update();
                                 
                         }
@@ -126,12 +126,12 @@ namespace AscentProfiler
                         
                         graph.Display(BackgroundStyle, 0, 0);
                         
-                        GUILayout.Label("w: " + mainWindowPos.width + " h: " + mainWindowPos.height);
+                        GUILayout.Label("w: " + telemetryWindowPos.width + " h: " + telemetryWindowPos.height);
                         //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
                         //GUILayout.Label("mx: " + mousecheck.x + " my: " + mousecheck.y);
-                        GUILayout.Label("deltaw: " + (int)(mainWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x) + " deltah: " + (int)(mainWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
+                        GUILayout.Label("deltaw: " + (int)(telemetryWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x) + " deltah: " + (int)(telemetryWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
 
-                        mainWindowPos = ResizeWindow(id, mainWindowPos, minDefaultWindowSize);
+                        telemetryWindowPos = ResizeWindow(id, telemetryWindowPos, minDefaultWindowSize);
                         GUI.DragWindow(titleBarRect);
                 }
 

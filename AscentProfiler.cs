@@ -21,9 +21,14 @@ namespace AscentProfiler
                 internal static string profilesDir;
                 internal static string flightlogsDir;
 
-                AscentProfilerGUI gui = null;
+                GUIAscentProfiler guiAscentProfiler = null;
+                GUITelemetry guiTelemetry = null;
+
                 bool mainWindowEnabled = true;
+                bool telemetryWindowEnabled = true;
                 IButton mainButton;
+                IButton telemetryButton;
+
 
                 internal static TelemetryReceiver telemetryReceiver;
 
@@ -38,22 +43,36 @@ namespace AscentProfiler
                         CheckforAPIs();
 
                         
-                        gui = new AscentProfilerGUI();
+                        guiAscentProfiler = new GUIAscentProfiler();
                         telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
                         //telemetryReceiver = new TelemetryReceiver();
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
-                                mainWindowEnabled = false;
+                                telemetryWindowEnabled = false;
                                 mainButton = ToolbarManager.Instance.add("AscentProfiler", "AscentProfiler");
                                 mainButton.TexturePath = "AscentProfiler/Textures/icon_blizzy";
                                 mainButton.ToolTip = "Open Ascent Profiler";
                                 mainButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
                                 mainButton.OnClick += (e) =>
                                 {
-                                        gui.ChangeState(!mainWindowEnabled);
-                                        mainWindowEnabled = !mainWindowEnabled;
+                                        guiAscentProfiler.ChangeState(!telemetryWindowEnabled);
+                                        telemetryWindowEnabled = !telemetryWindowEnabled;
                                 };
+
+                                //Telemetry Station button
+                                telemetryWindowEnabled = false;
+                                telemetryButton = ToolbarManager.Instance.add("Telemetry Graph", "Telemetry Graph1");
+                                telemetryButton.TexturePath = "AscentProfiler/Textures/telemetry_received_blizzy";
+                                telemetryButton.ToolTip = "Open Telemetry Graph";
+                                telemetryButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
+                                telemetryButton.OnClick += (e) =>
+                                {
+                                        guiTelemetry.ChangeState(!telemetryWindowEnabled);
+                                        telemetryWindowEnabled = !telemetryWindowEnabled;
+                                };
+
+
                         }
 
                         // Create user home directory paths for saves
@@ -111,7 +130,7 @@ namespace AscentProfiler
 
                 void OnGUI()
                 {
-                        gui.OnGUI();
+                        guiAscentProfiler.OnGUI();
                 }
 
                 void Update()

@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class AscentProfilerGUI
+        class GUIAscentProfiler
         {
-                GraphGUI graphGui = new GraphGUI();
+                GUITelemetry graphGui = new GUITelemetry();
 
-                SequenceLoader profileLoader;
+                FlightSequenceLoader profileLoader;
                 bool profileLoaded = false;
                 bool graphWindowEnabled = false;
                 Texture2D loadIcon;
@@ -50,7 +50,7 @@ namespace AscentProfiler
 
 
 
-                public AscentProfilerGUI()
+                public GUIAscentProfiler()
                 {
                         loadIcon = GetTexture("load");
                 
@@ -125,7 +125,7 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
-                                profileLoader = new SequenceLoader();
+                                profileLoader = new FlightSequenceLoader();
                             
 
                                 GUILayout.BeginVertical();
