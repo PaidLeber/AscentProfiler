@@ -49,8 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs" />
-    <Compile Include="ActionFactory.cs" />
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\ActionFactory.cs" />
     <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="AscentProfilerGUI.cs" />
@@ -66,8 +66,8 @@
     <Compile Include="SensorPackage.cs" />
     <Compile Include="TelemetryReceiver.cs" />
     <Compile Include="ToolbarWrapper.cs" />
-    <Compile Include="Trigger.cs" />
-    <Compile Include="TriggerFactory.cs" />
+    <Compile Include="Triggers\Trigger.cs" />
+    <Compile Include="Triggers\TriggerFactory.cs" />
     <Compile Include="FlightSequence.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
