@@ -55,9 +55,12 @@ namespace AscentProfiler
                         if (flightTelemetry.isSensorsDataReadyToTransmit)
                                 if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))                     // Send Telemetry Data
                                 {
-                                        flightTelemetry.sensorsOnBoard.Clear();
+                                        flightTelemetry.isSensorsEnabled = false;
                                         flightTelemetry.isSensorsDataReadyToTransmit = false;
+                                        flightTelemetry.sensorsOnBoard.Clear();
                                 }
+
+
 
 
                                 
