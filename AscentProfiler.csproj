@@ -56,7 +56,7 @@
     <Compile Include="AscentProfilerGUI.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Graph\ferramGraph.cs" />
-    <Compile Include="FlightController.cs" />
+    <Compile Include="Control Loops\FlightController.cs" />
     <Compile Include="FlightTelemetry.cs" />
     <Compile Include="Graph\GraphGUI.cs" />
     <Compile Include="Log.cs" />
@@ -74,9 +74,7 @@
   <ItemGroup>
     <None Include="AscentProfiler.cfg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Control Loops\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "C:\Projects\KSP_win\GameData\AscentProfiler"</PostBuildEvent>
