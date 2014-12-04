@@ -49,8 +49,8 @@ namespace AscentProfiler
                                 {
                                         sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
 
-                                        Debug.Log( sensor.ToString() +": COUNT: "+  sensorsOnBoard[sensor][sensorsOnBoard[sensor].Count - 1]);
-
+                                        Debug.Log( sensor.ToString() +": COUNT: "+  (sensorsOnBoard[sensor].Count - 1));
+                                        Debug.Log(sensor.ToString() + ": VALUE: " + (sensorsOnBoard[sensor][sensorsOnBoard[sensor].Count - 1]));
 
                                 }
                                 
