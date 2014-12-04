@@ -25,7 +25,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace KerbalGraph
+namespace AscentProfiler
 {
     public class KerbalGraph
     {

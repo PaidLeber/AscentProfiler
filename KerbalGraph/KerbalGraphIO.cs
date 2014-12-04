@@ -26,7 +26,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace KerbalGraph
+namespace AscentProfiler
 {
     /// <summary>
     /// Handles IO for the main KerbalGraph class

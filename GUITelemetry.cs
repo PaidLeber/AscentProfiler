@@ -24,8 +24,9 @@ namespace AscentProfiler
                 Vector2 telemetryWindowScrollPos = new Vector2(0, 0);
                 bool telemetryWindowEnabled = false;
 
-                Vector2 defaultGraphSize = new Vector2(320, 240);
-                ferramGraph graph = new ferramGraph(320, 240);
+                Vector2 defaultGraphSize = new Vector2(500, 300);
+                KerbalGraph graph = new KerbalGraph(500, 300);
+
 
                 
                 // Unique window id
@@ -62,14 +63,26 @@ namespace AscentProfiler
                         if (!isDataLoaded)
                         {
                                 graph.Clear();
-
+                                Color val;
                                 foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
                                 {
                                         Debug.Log("DATA KEY IS: " + data.Key);
                                         Debug.Log(String.Join(" ", data.Value.ConvertAll(i => i.ToString()).ToArray()));
                                         if (data.Key != SensorType.TIME)
                                         {
-                                                graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray());
+                                                switch(data.Key)
+                                                {
+                                                        case SensorType.ALTITUDE:
+                                                                val = new Color(.9f, .9f, 0f);
+                                                                break;
+                                                        default:
+                                                                val = new Color(1.0f, 0.0f, 0.0f);
+                                                                break;
+                                                }
+
+                                                                
+                
+                                                graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray(), val);
                                         }
                                         
 
@@ -81,10 +94,10 @@ namespace AscentProfiler
                                 double miny = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min() , 2);
                                 double maxy = Math.Round(AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max(), 2);
                                 graph.SetBoundaries(minx, maxx, miny, maxy);
-                                graph.SetGridScaleUsingValues(1, 5);
-                                graph.horizontalLabel = "time";
-                                graph.verticalLabel = "altitude";
-                                graph.Update();
+                                graph.SetGridScaleUsingPixels(20, 20);
+                                graph.horizontalLabel = "TIME";
+                                graph.verticalLabel = "ALTITUDE";
+                                //graph.Update();
                                 isDataLoaded = true;
                         
                         }
@@ -99,8 +112,8 @@ namespace AscentProfiler
 
                                 graph.SetBoundaries(0, 50, -10, 10);
                                 graph.SetGridScaleUsingValues(1, 5);
-                                graph.horizontalLabel = "time";
-                                graph.verticalLabel = "value";
+                                graph.horizontalLabel = "";
+                                graph.verticalLabel = "";
                                 graph.Update();
 
                         }
@@ -145,14 +158,15 @@ namespace AscentProfiler
                         if (telemetryWindowPos.width != telemetryWindowPosLast.width || telemetryWindowPos.height != telemetryWindowPosLast.height)
                         {
                                 telemetryWindowPosLast = telemetryWindowPos;
-                                graph.resizeGraph((int)(telemetryWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x), (int)(telemetryWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
-                                graph.Update();
+                                //graph.resizeGraph((int)(telemetryWindowPos.width - minDefaultWindowSize.x + defaultGraphSize.x), (int)(telemetryWindowPos.height - minDefaultWindowSize.y + defaultGraphSize.y));
+                                
+                                
                                 
                         }
 
-
+                        graph.Display(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
                         
-                        graph.Display(BackgroundStyle, 0, 0);
+                        //graph.Display(BackgroundStyle);
                         
                         GUILayout.Label("w: " + telemetryWindowPos.width + " h: " + telemetryWindowPos.height);
                         //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);
