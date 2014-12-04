@@ -18,6 +18,7 @@ namespace AscentProfiler
                 internal bool isSensorsEnabled = false;
                 internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
                 internal bool isSensorsDataReadyToTransmit = false;
+                int sensorstep = 0;
                 int sensorrate = 0;
                 
 
@@ -45,7 +46,7 @@ namespace AscentProfiler
                                 sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
                                 
                         }
-
+                        sensorstep++;
                 
                 }
 

@@ -38,6 +38,7 @@ namespace AscentProfiler
                 {
                         Debug.Log("Received Telemetry Data");
                         telemetryTransitDelay.Enqueue(transmitdelay);
+                        telemetryDataInTransit = new Dictionary<SensorType,List<double>>(sensorsData);
                         telemetryDataInTransit = sensorsData;
 
                         return true;
@@ -65,9 +66,17 @@ namespace AscentProfiler
                                 if (Planetarium.GetUniversalTime() > telemetryTransitDelay.Peek())
                                 {
                                         telemetryTransitDelay.Dequeue();
-                                        telemetryData = telemetryDataInTransit;
-                                        telemetryDataInTransit.Clear();
+                                        telemetryData = new Dictionary<SensorType,List<double>>(telemetryDataInTransit);
+                                        telemetryDataInTransit = null;
                                         Debug.Log("NEW TELEMETRY DATA LOADED!");
+
+                                        foreach (KeyValuePair<SensorType, List<double>> data in telemetryData)
+                                        {
+                                                Debug.Log("DATA KEY IS: " + data.Key);
+                                                Debug.Log(String.Join(" ", data.Value.ConvertAll(i => i.ToString()).ToArray()));
+
+                                        }
+
                                 }
                         }
 
