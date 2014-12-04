@@ -103,9 +103,33 @@ namespace AscentProfiler
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
+                        switch(sensor)
+                        {
+                                case SensorType.MAXQ:
+
+                                        if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
+                                        {
+                                                AddSensor(module, sensor);
+                                        }
+                                        else
+                                        {
+                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + "Not Available");
+                                        }
+                                        break;
+
+                                default:
+                                        AddSensor(module, sensor);
+                                        break;
+                                        
+                        }
+
+                        return activated = true;
+                }
+
+                void AddSensor(AscentProAPGCSModule module, SensorType sensor)
+                {
                         module.flightTelemetry.AddSensor(sensor);
                         module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
-                        return activated = true;
                 }
 
         }

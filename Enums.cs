@@ -16,7 +16,8 @@ namespace AscentProfiler
         {
                 TIME,
                 ALTITUDE,
-                GFORCE
+                GFORCE,
+                MAXQ
         }
 
         enum TelemetryType

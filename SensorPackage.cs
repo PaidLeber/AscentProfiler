@@ -26,6 +26,8 @@ namespace AscentProfiler
                                         return module.vessel.altitude;
                                 case SensorType.GFORCE:
                                         return module.vessel.geeForce;
+                                case SensorType.MAXQ:
+                                        return ferram4.FARAPI.GetActiveControlSys_Q();
 
                                 default:
                                         return 0;
