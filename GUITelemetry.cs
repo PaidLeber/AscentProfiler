@@ -18,8 +18,8 @@ namespace AscentProfiler
                 GUIStyle BackgroundStyle;
 
 
-                Rect telemetryWindowPos = new Rect(60, 50, 500, 400);
-                Vector2 minDefaultWindowSize = new Vector2(500, 400);
+                Rect telemetryWindowPos = new Rect(60, 50, 700, 400);
+                Vector2 minDefaultWindowSize = new Vector2(700, 400);
                 Rect telemetryWindowPosLast = new Rect(0, 0, 0, 0);
                 Vector2 telemetryWindowScrollPos = new Vector2(0, 0);
                 bool telemetryWindowEnabled = false;
@@ -81,7 +81,7 @@ namespace AscentProfiler
                                 double miny = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min();
                                 double maxy = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max();
                                 graph.SetBoundaries(minx, maxx, miny, maxy);
-                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.SetGridScaleUsingValues(1, 100);
                                 graph.horizontalLabel = "time";
                                 graph.verticalLabel = "altitude";
                                 graph.Update();
@@ -152,7 +152,7 @@ namespace AscentProfiler
 
 
                         
-                        graph.Display(BackgroundStyle, 0, 0);
+                        graph.Display(BackgroundStyle, 50, 0);
                         
                         GUILayout.Label("w: " + telemetryWindowPos.width + " h: " + telemetryWindowPos.height);
                         //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);

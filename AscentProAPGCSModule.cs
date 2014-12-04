@@ -116,6 +116,7 @@ namespace AscentProfiler
                                 sequenceMessageOrder = 0;
                                 sequenceTransmissionTime = 0;
                                 newSequence = newsequence;
+                                Debug.Log("RX Sequence Transfer successful");
                         }
                         else
                         {
@@ -124,7 +125,7 @@ namespace AscentProfiler
                         }
 
 
-                        Debug.Log("RX Sequence Transfer successful");
+                        
                         return true;
                 }
 

@@ -662,9 +662,13 @@ namespace AscentProfiler
                         GUILayout.BeginArea(new Rect(20 + horizontalBorder, 15 + verticalBorder, 30, displayRect.height + 2 * verticalBorder));
 
                         GUIStyle LabelStyle = new GUIStyle(GUI.skin.label);
-                        LabelStyle.alignment = TextAnchor.UpperCenter;
-
+                        LabelStyle.alignment = TextAnchor.UpperRight;
+                        LabelStyle.wordWrap = false;
+                        
                         GUILayout.Label(topBound, LabelStyle, GUILayout.Height(20), GUILayout.ExpandWidth(true));
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("70000", LabelStyle);
+                        GUILayout.EndHorizontal();
                         int pixelspace = (int)displayRect.height / 2 - 72;
                         GUILayout.Space(pixelspace);
                         GUILayout.Label(verticalLabel, LabelStyle, GUILayout.Height(100), GUILayout.ExpandWidth(true));
