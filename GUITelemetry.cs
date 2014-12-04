@@ -80,8 +80,8 @@ namespace AscentProfiler
                                 double maxx = AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max();
                                 double miny = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min();
                                 double maxy = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max();
-                                graph.SetBoundaries(minx, miny, miny, maxy);
-                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.SetBoundaries(minx, maxy, miny, maxy);
+                                graph.SetGridScaleUsingValues(1, 10);
                                 graph.horizontalLabel = "time";
                                 graph.verticalLabel = "altitude";
                                 graph.Update();

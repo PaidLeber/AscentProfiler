@@ -19,7 +19,8 @@ namespace AscentProfiler
                 internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
                 internal bool isSensorsDataReadyToTransmit = false;
                 int sensorstep = 0;
-                int sensorrate = 0;
+                int sensorrate = 1; //per second
+                double sensorlast;
                 
 
                 internal FlightTelemetry(AscentProAPGCSModule module)
@@ -41,12 +42,20 @@ namespace AscentProfiler
                         if (!isSensorsEnabled || module.vessel.missionTime == 0)
                                 {return;}
 
-                        foreach (SensorType sensor in sensorsOnBoard.Keys )
+                        if (Planetarium.GetUniversalTime() + sensorrate > Planetarium.GetUniversalTime())
                         {
-                                sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
-                                
+                                foreach (SensorType sensor in sensorsOnBoard.Keys)
+                                {
+                                        sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
+
+                                }
+
+                                sensorlast = Planetarium.GetUniversalTime();
+                                sensorstep++;
                         }
-                        sensorstep++;
+
+
+
                 
                 }
 
