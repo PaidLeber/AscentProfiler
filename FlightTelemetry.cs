@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace AscentProfiler
 {
@@ -42,14 +43,17 @@ namespace AscentProfiler
                         if (!isSensorsEnabled || module.vessel.missionTime == 0)
                                 {return;}
 
-                        if (Planetarium.GetUniversalTime() + sensorrate > Planetarium.GetUniversalTime())
+                        if (Planetarium.GetUniversalTime() > sensorlast + sensorrate)
                         {
                                 foreach (SensorType sensor in sensorsOnBoard.Keys)
                                 {
                                         sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
 
-                                }
+                                        Debug.Log( sensor.ToString() +": COUNT: "+  sensorsOnBoard[sensor][sensorsOnBoard[sensor].Count - 1]);
 
+
+                                }
+                                
                                 sensorlast = Planetarium.GetUniversalTime();
                                 sensorstep++;
                         }
