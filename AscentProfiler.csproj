@@ -59,6 +59,8 @@
     <Compile Include="Control Loops\FlightController.cs" />
     <Compile Include="FlightTelemetry.cs" />
     <Compile Include="GUITelemetry.cs" />
+    <Compile Include="KerbalGraph\KerbalGraph.cs" />
+    <Compile Include="KerbalGraph\KerbalGraphIO.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
     <Compile Include="FlightSequenceLoader.cs" />
@@ -68,7 +70,7 @@
     <Compile Include="ToolbarWrapper.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="Triggers\TriggerFactory.cs" />
-    <Compile Include="FlightSequence.cs" />
+    <Compile Include="SequenceEngine.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

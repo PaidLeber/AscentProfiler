@@ -7,7 +7,7 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-        class FlightSequence
+        class SequenceEngine
         {
                 internal bool isEnabled = false;
 
@@ -16,7 +16,7 @@ namespace AscentProfiler
 
                 AscentProAPGCSModule module;
 
-                internal FlightSequence(List<Trigger> triggerlist, List<Action> actionlist)
+                internal SequenceEngine(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         listAction = actionlist;

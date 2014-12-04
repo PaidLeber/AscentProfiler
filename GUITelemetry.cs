@@ -76,12 +76,12 @@ namespace AscentProfiler
 
                                 }
 
-                                double minx = AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Min();
-                                double maxx = AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max();
-                                double miny = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min();
-                                double maxy = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max();
+                                double minx = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Min() , 2);
+                                double maxx = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max() , 2);
+                                double miny = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min() , 2);
+                                double maxy = Math.Round(AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max(), 2);
                                 graph.SetBoundaries(minx, maxx, miny, maxy);
-                                graph.SetGridScaleUsingValues(1, 100);
+                                graph.SetGridScaleUsingValues(1, 5);
                                 graph.horizontalLabel = "time";
                                 graph.verticalLabel = "altitude";
                                 graph.Update();
@@ -152,7 +152,7 @@ namespace AscentProfiler
 
 
                         
-                        graph.Display(BackgroundStyle, 50, 0);
+                        graph.Display(BackgroundStyle, 0, 0);
                         
                         GUILayout.Label("w: " + telemetryWindowPos.width + " h: " + telemetryWindowPos.height);
                         //GUILayout.Label("gw: " + graph.width + " gh: " + graph.height);

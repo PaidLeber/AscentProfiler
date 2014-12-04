@@ -119,7 +119,7 @@ namespace AscentProfiler
                 }
                 
 
-                bool TXAscentProAPGCSModule(string sequence, FlightSequence newsequence)
+                bool TXAscentProAPGCSModule(string sequence, SequenceEngine newsequence)
                 {
                         AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
