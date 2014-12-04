@@ -67,26 +67,23 @@ namespace AscentProfiler
                                 {
                                         Debug.Log("DATA KEY IS: " + data.Key);
                                         Debug.Log(String.Join(" ", data.Value.ConvertAll(i => i.ToString()).ToArray()));
-
-                                }
-
-                                /*foreach (KeyValuePair<SensorType, List<double>> data in )
-                                {
-                                        //Debug.Log("DATA KEY IS: " + data.Key);
-                                        //Debug.Log(data.Value.ToArray());
-
-
-                                        
                                         if (data.Key != SensorType.TIME)
                                         {
                                                 graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray());
                                         }
                                         
 
-                                        
-                                }*/
-                                graph.SetBoundaries(0, AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Count - 1, 0, 100);
-                                graph.SetGridScaleUsingValues(1, 100);
+
+                                }
+
+                                double minx = AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Min();
+                                double maxx = AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max();
+                                double miny = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min();
+                                double maxy = AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max();
+                                graph.SetBoundaries(minx, miny, miny, maxy);
+                                graph.SetGridScaleUsingValues(1, 5);
+                                graph.horizontalLabel = "time";
+                                graph.verticalLabel = "altitude";
                                 graph.Update();
                                 isDataLoaded = true;
                         

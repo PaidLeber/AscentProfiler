@@ -24,8 +24,8 @@ namespace AscentProfiler
                 GUIAscentProfiler guiAscentProfiler = null;
                 GUITelemetry guiTelemetry = null;
 
-                bool mainWindowEnabled = true;
-                bool telemetryWindowEnabled = true;
+                bool mainWindowEnabled = false;
+                bool telemetryWindowEnabled = false;
                 IButton mainButton;
                 IButton telemetryButton;
 
@@ -53,15 +53,15 @@ namespace AscentProfiler
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
-                                telemetryWindowEnabled = false;
+                                mainWindowEnabled = false;
                                 mainButton = ToolbarManager.Instance.add("AscentProfiler", "AscentProfiler");
                                 mainButton.TexturePath = "AscentProfiler/Textures/icon_blizzy";
                                 mainButton.ToolTip = "Open Ascent Profiler";
                                 mainButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
                                 mainButton.OnClick += (e) =>
                                 {
-                                        guiAscentProfiler.ChangeState(!telemetryWindowEnabled);
-                                        telemetryWindowEnabled = !telemetryWindowEnabled;
+                                        guiAscentProfiler.ChangeState(!mainWindowEnabled);
+                                        mainWindowEnabled = !mainWindowEnabled;
                                 };
 
                                 //Telemetry Station button
