@@ -44,7 +44,10 @@ namespace AscentProfiler
 
                         
                         guiAscentProfiler = new GUIAscentProfiler();
+                        guiTelemetry = new GUITelemetry();
+
                         telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
+
                         //telemetryReceiver = new TelemetryReceiver();
 
                         if (ToolbarManager.ToolbarAvailable)
@@ -62,7 +65,7 @@ namespace AscentProfiler
 
                                 //Telemetry Station button
                                 telemetryWindowEnabled = false;
-                                telemetryButton = ToolbarManager.Instance.add("Telemetry Graph", "Telemetry Graph1");
+                                telemetryButton = ToolbarManager.Instance.add("AscentProfiler", "TelemetryGraph");
                                 telemetryButton.TexturePath = "AscentProfiler/Textures/telemetry_received_blizzy";
                                 telemetryButton.ToolTip = "Open Telemetry Graph";
                                 telemetryButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
@@ -131,6 +134,7 @@ namespace AscentProfiler
                 void OnGUI()
                 {
                         guiAscentProfiler.OnGUI();
+                        guiTelemetry.OnGUI();
                 }
 
                 void Update()
