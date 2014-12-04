@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class TelemetryReceiver : MonoBehaviour
+        class TelemetryReceiver
         {
 
                 internal List<string> missionLog = new List<string>();
@@ -14,8 +14,8 @@ namespace AscentProfiler
                 Queue<double> missionLogTransitDelay = new Queue<double>();
                 Queue<int> missionLogDelayedReadCount = new Queue<int>();
 
-                internal Dictionary<SensorType, double[]> telemetryData;
-                Dictionary<SensorType, double[]> telemetryDataInTransit;
+                internal Dictionary<SensorType, List<double>> telemetryData;
+                Dictionary<SensorType, List<double>> telemetryDataInTransit;
                 Queue<double> telemetryTransitDelay = new Queue<double>();
 
                 internal bool ReceiveMissionLog(double transmitdelay, List<string> remoteMissionLogs)
@@ -34,7 +34,7 @@ namespace AscentProfiler
                         return true;
                 }
 
-                internal bool ReceiveTelemetryData(double transmitdelay, Dictionary<SensorType, double[]> sensorsData)
+                internal bool ReceiveTelemetryData(double transmitdelay, Dictionary<SensorType, List<double>> sensorsData)
                 {
                         Debug.Log("Received Telemetry Data");
                         telemetryTransitDelay.Enqueue(transmitdelay);

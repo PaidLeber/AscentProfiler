@@ -39,7 +39,7 @@ namespace AscentProfiler
                 Rect resizeStart = new Rect();
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
 
-
+                bool isDataLoaded = true;
 
 
 
@@ -59,7 +59,23 @@ namespace AscentProfiler
 
                 public void OnGUI()
                 {
+                        if (!isDataLoaded)
+                        { 
+                                foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
+                                {
+                                        if (data.Key != SensorType.TIME)
+                                        {
+                                                graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray());
+                                        }
+                                        
 
+                                        
+                                }
+                                graph.SetBoundaries(0, AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Count - 1, 0, 100);
+                                graph.SetGridScaleUsingValues(1, 100);
+                                isDataLoaded = true;
+                        
+                        }
 
                         if (BackgroundStyle == null )
                         {
@@ -103,7 +119,7 @@ namespace AscentProfiler
                         
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-
+                                isDataLoaded = false;
                         }
                         
 

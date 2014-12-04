@@ -16,9 +16,8 @@ namespace AscentProfiler
                 internal int lastMissionLogTransmitCount = 0;
 
                 internal bool isSensorsEnabled = false;
-                internal Dictionary<SensorType, double[]> sensorsOnBoard = new Dictionary<SensorType, double[]>();
+                internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
                 internal bool isSensorsDataReadyToTransmit = false;
-                int sensorstep = 0;
                 int sensorrate = 0;
                 
 
@@ -32,7 +31,7 @@ namespace AscentProfiler
                 internal bool AddSensor(SensorType sensor)
                 {
 
-                        sensorsOnBoard.Add(sensor, new double[]{});
+                        sensorsOnBoard.Add(sensor, new List<double>{});
                         return true;
                 }
 
@@ -43,11 +42,10 @@ namespace AscentProfiler
 
                         foreach (SensorType sensor in sensorsOnBoard.Keys )
                         {
-                                sensorsOnBoard[sensor][sensorstep] = sensorsSuite.GetSensorData(sensor);
+                                sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
                                 
                         }
 
-                        sensorstep++;
                 
                 }
 
