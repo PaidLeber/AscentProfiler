@@ -67,7 +67,7 @@ namespace AscentProfiler
                                         telemetryTransitDelay.Dequeue();
                                         telemetryData = telemetryDataInTransit;
                                         telemetryDataInTransit.Clear();
-
+                                        Debug.Log("NEW TELEMETRY DATA LOADED!");
                                 }
                         }
 

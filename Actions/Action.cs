@@ -74,10 +74,12 @@ namespace AscentProfiler
                                 
                                 case TelemetryType.SENSORS:
                                         module.flightTelemetry.isSensorsEnabled = state;
+                                        Debug.Log("SENSORS STATE: "+ state);
                                         break;
 
                                 case TelemetryType.TRANSMIT:
                                         module.flightTelemetry.isSensorsDataReadyToTransmit = state;
+                                        Debug.Log("TRANSMIT STATE: " + state);
                                         break;
 
                         }

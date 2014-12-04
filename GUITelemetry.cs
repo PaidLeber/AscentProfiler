@@ -60,19 +60,26 @@ namespace AscentProfiler
                 public void OnGUI()
                 {
                         if (!isDataLoaded)
-                        { 
+                        {
+                                graph.Clear();
                                 foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
                                 {
+                                        //Debug.Log("DATA KEY IS: " + data.Key);
+                                        //Debug.Log(data.Value.ToArray());
+
+
+                                        /*
                                         if (data.Key != SensorType.TIME)
                                         {
                                                 graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray());
-                                        }
+                                        }*/
                                         
 
                                         
                                 }
                                 graph.SetBoundaries(0, AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Count - 1, 0, 100);
                                 graph.SetGridScaleUsingValues(1, 100);
+                                graph.Update();
                                 isDataLoaded = true;
                         
                         }
