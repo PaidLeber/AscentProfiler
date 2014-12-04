@@ -103,34 +103,28 @@ namespace AscentProfiler
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
-                        switch(sensor)
+
+                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
                         {
-                                case SensorType.MAXQ:
-
-                                        if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
+                                foreach (FARAPIType farsensor in (FARAPIType[])Enum.GetValues(typeof(FARAPIType)))
+                                {
+                                        if (farsensor.ToString() == sensor.ToString())
                                         {
-                                                AddSensor(module, sensor);
+                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR Not Available");
+                                                return activated = true;
                                         }
-                                        else
-                                        {
-                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + "Not Available");
-                                        }
-                                        break;
 
-                                default:
-                                        AddSensor(module, sensor);
-                                        break;
-                                        
+
+                                }
+
                         }
+
+                        module.flightTelemetry.AddSensor(sensor);
+                        module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
 
                         return activated = true;
                 }
 
-                void AddSensor(AscentProAPGCSModule module, SensorType sensor)
-                {
-                        module.flightTelemetry.AddSensor(sensor);
-                        module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
-                }
 
         }
 

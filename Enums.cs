@@ -17,7 +17,13 @@ namespace AscentProfiler
                 TIME,
                 ALTITUDE,
                 GFORCE,
-                MAXQ
+                MAXQ,
+                AOA
+        }
+        enum FARAPIType
+        { 
+                MAXQ,
+                AOA
         }
 
         enum TelemetryType

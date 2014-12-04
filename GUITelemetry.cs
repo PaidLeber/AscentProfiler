@@ -62,7 +62,7 @@ namespace AscentProfiler
                         if (!isDataLoaded)
                         {
                                 graph.autoscale = true;
-                                graph.SetBoundaries(0,1,0,1);
+                                graph.SetBoundaries(0, 100, 0, 100);
                                 Color val;
                                 foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
                                 {
@@ -74,6 +74,9 @@ namespace AscentProfiler
                                                 {
                                                         case SensorType.ALTITUDE:
                                                                 val = new Color(.9f, .9f, 0f);
+                                                                break;
+                                                        case SensorType.MAXQ:
+                                                                val = new Color(.2f, .5f, .7f);
                                                                 break;
                                                         default:
                                                                 val = new Color(1.0f, 0.0f, 0.0f);
@@ -95,9 +98,9 @@ namespace AscentProfiler
                                 //double maxx = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max() , 2);
                                 //double miny = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min() , 2);
                                 //double maxy = Math.Round(AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max(), 2);
-                                //graph.SetBoundaries(minx, maxx, miny, maxy);
+                                graph.SetBoundaries(0,100,0,100);
                                 //graph.SetGridScaleUsingPixels(20, 20);
-                                graph.horizontalLabel = "TIME";
+                                graph.horizontalLabel = "MET IN SECS";
                                 graph.verticalLabel = "ALTITUDE";
                                 graph.Update();
                                 isDataLoaded = true;
@@ -128,7 +131,7 @@ namespace AscentProfiler
 
                         if (telemetryWindowEnabled)
                         {
-                                telemetryWindowPos = GUILayout.Window(windowId + 1, telemetryWindowPos, DrawMainWindow, "Telemetry");
+                                telemetryWindowPos = GUILayout.Window(windowId + 1, telemetryWindowPos, DrawMainWindow, "Ascent Profile for " + AscentProfiler.currentVessel.vesselName);
                         }
 
                 }
