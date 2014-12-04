@@ -87,7 +87,7 @@ namespace AscentProfiler
                         }
                         catch
                         {
-                                Log.Script(LogType.Error, value + " is not a valid action parameter");
+                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a valid action parameter for " + typeof(T));
                         }
 
                         return (T)Enum.Parse(typeof(T), value, true);

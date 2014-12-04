@@ -94,18 +94,18 @@ namespace AscentProfiler
                 public void DrawMainWindow(int id)
                 {
 
-                        telemetryWindowEnabled = !GUI.Toggle(new Rect(telemetryWindowPos.width - 25, 0, 20, 20), !telemetryWindowEnabled, "");
+                        //telemetryWindowEnabled = !GUI.Toggle(new Rect(telemetryWindowPos.width - 25, 0, 20, 20), !telemetryWindowEnabled, "");
 
 
                         GUIStyle defaultButton = new GUIStyle(GUI.skin.GetStyle("button"));
 
                         GUILayout.BeginHorizontal();
-
+                        
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
 
                         }
-
+                        
 
                         GUILayout.EndHorizontal();
 

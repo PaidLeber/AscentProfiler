@@ -90,13 +90,13 @@ namespace AscentProfiler
                         STYLE_MENU_SCROLL_VERTICAL.padding = new RectOffset(0, 0, 0, 0);
 
                         
-                        mainWindowEnabled = !GUI.Toggle(new Rect(mainWindowPos.width - 25, 0, 20, 20), !mainWindowEnabled, "");
+                        //mainWindowEnabled = !GUI.Toggle(new Rect(mainWindowPos.width - 25, 0, 20, 20), !mainWindowEnabled, "");
 
 
                         GUIStyle defaultButton = new GUIStyle(GUI.skin.GetStyle("button"));
 
                         GUILayout.BeginHorizontal();
-
+                        
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
                                 profileLoaded = false;

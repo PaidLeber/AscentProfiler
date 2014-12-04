@@ -77,7 +77,6 @@ namespace AscentProfiler
                                         break;
 
                                 case TelemetryType.TRANSMIT:
-                                        state = true;
                                         module.flightTelemetry.isSensorsDataReadyToTransmit = state;
                                         break;
 
