@@ -110,7 +110,7 @@ namespace AscentProfiler
                                 {
                                         if (farsensor.ToString() == sensor.ToString())
                                         {
-                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR Not Available");
+                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR not installed");
                                                 return activated = true;
                                         }
 

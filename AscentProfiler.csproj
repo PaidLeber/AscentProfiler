@@ -58,7 +58,6 @@
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="GUIAscentProfiler.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Graph\ferramGraph.cs" />
     <Compile Include="Control Loops\FlightController.cs" />
     <Compile Include="FlightTelemetry.cs" />
     <Compile Include="GUITelemetry.cs" />

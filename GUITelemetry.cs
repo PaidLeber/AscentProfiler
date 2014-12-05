@@ -61,8 +61,8 @@ namespace AscentProfiler
                 {
                         if (!isDataLoaded)
                         {
-                                graph.autoscale = true;
-                                graph.SetBoundaries(0, 100, 0, 100);
+                                //graph.autoscale = true;
+                                //graph.SetBoundaries(0, 100, 0, 100);
                                 Color val;
                                 foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
                                 {
@@ -98,9 +98,9 @@ namespace AscentProfiler
                                 //double maxx = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].Max() , 2);
                                 //double miny = Math.Round( AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Min() , 2);
                                 //double maxy = Math.Round(AscentProfiler.telemetryReceiver.telemetryData[SensorType.ALTITUDE].Max(), 2);
-                                graph.SetBoundaries(0,100,0,100);
+                                graph.SetBoundaries(0,500,0,500);
                                 //graph.SetGridScaleUsingPixels(20, 20);
-                                graph.horizontalLabel = "MET IN SECS";
+                                graph.horizontalLabel = "TIME IN SECS";
                                 graph.verticalLabel = "ALTITUDE";
                                 graph.Update();
                                 isDataLoaded = true;

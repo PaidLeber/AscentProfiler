@@ -753,7 +753,7 @@ namespace AscentProfiler
         /// </summary>
         public void Display(params GUILayoutOption[] options)
         {
-            const int axisDisplaySize = 30;
+            const int axisDisplaySize = 50;
             const int legendSpacing = 20;
 
             GUIStyle BackgroundStyle = new GUIStyle(GUI.skin.box);
