@@ -12,6 +12,16 @@ namespace AscentProfiler
                 RemoteTech
         }
 
+        enum AttitudeType
+        { 
+                HEADING,
+                PITCH,
+                ROLL,
+                HPR,
+                REF,
+                CONTROL
+        }
+
         enum SensorType
         {
                 TIME,
@@ -47,6 +57,7 @@ namespace AscentProfiler
 
         }
 
+
         enum TriggerModifier
         {
                 None,
@@ -59,7 +70,8 @@ namespace AscentProfiler
                 STAGE,
                 THROTTLE,
                 TELEMETRY,
-                SENSORS
+                SENSORS,
+                CONTROL
         }
 
         enum ActionModifier
