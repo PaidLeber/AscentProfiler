@@ -23,7 +23,7 @@ namespace AscentProfiler
                                 if (value && !_isEngaged)
                                 {
                                         _isEngaged = true;
-                                        module.vessel.OnFlyByWire += new FlightInputCallback(Driver);
+                                        module.vessel.OnFlyByWire += new FlightInputCallback(Controller);
                                 }
                                 else
                                 {
@@ -37,9 +37,6 @@ namespace AscentProfiler
 
                 internal AttitudeController()
                 {
-
-                       
-
                 }
 
                 internal bool SetAttitude(Vector3d attitude, bool hold)
@@ -62,6 +59,11 @@ namespace AscentProfiler
                 internal bool SetRoll(double roll, bool hold)
                 {
                         return true;
+                }
+
+                public void ActiveController(FlightCtrlState s)
+                {
+
                 }
 
 

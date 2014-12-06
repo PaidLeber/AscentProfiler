@@ -13,10 +13,10 @@ namespace AscentProfiler
                 }
 
 
-                public void Controller(FlightCtrlState s)
+                public override void ActiveController(FlightCtrlState s)
                 {
 
                 }
-
+                
         }
 }

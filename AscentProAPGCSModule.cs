@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                private Vessel isCurrentVessel;
+                private Vessel focusedVessel;
 
                 internal AttitudeController attitude;
                 internal SequenceEngine flightSequence;
@@ -74,6 +74,22 @@ namespace AscentProfiler
                         Debug.Log("UT: " + Planetarium.GetUniversalTime());
                         Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id));
                         return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
+                
+                }
+
+                bool IsFocusedVessel()
+                {
+                        if (vessel == focusedVessel)
+                                return true;
+
+                        if (focusedVessel != null) focusedVessel.OnFlyByWire -= ActiveController;
+
+
+                        return false;
+                }
+
+                void ActiveController(FlightCtrlState s)
+                { 
                 
                 }
 
