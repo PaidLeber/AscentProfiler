@@ -9,6 +9,8 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
+                private Vessel isCurrentVessel;
+
                 internal SequenceEngine flightSequence;
                 internal FlightTelemetry flightTelemetry;
 
