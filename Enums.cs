@@ -14,12 +14,18 @@ namespace AscentProfiler
 
         enum AttitudeType
         { 
+                HPR,
                 HEADING,
                 PITCH,
                 ROLL,
-                HPR,
+                HOLD,
                 REF,
                 CONTROL
+        }
+
+        enum ControlType
+        { 
+                ATTITUDE
         }
 
         enum SensorType
@@ -57,13 +63,6 @@ namespace AscentProfiler
 
         }
 
-
-        enum TriggerModifier
-        {
-                None,
-                FROMMAXVAL
-
-        }
         enum ActionType
         {
                 ACTIONGROUP,
@@ -72,6 +71,12 @@ namespace AscentProfiler
                 TELEMETRY,
                 SENSORS,
                 CONTROL
+        }
+
+        enum TriggerModifier
+        {
+                FROMMAXVAL
+
         }
 
         enum ActionModifier

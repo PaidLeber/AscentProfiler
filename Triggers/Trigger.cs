@@ -138,7 +138,8 @@ namespace AscentProfiler
 
         }
 
-        [Serializable]
+
+        //[Serializable]
         class Countdown : Trigger
         {
 
@@ -174,9 +175,23 @@ namespace AscentProfiler
                        
                 }
                 
+        }
 
+        class Attitude : Trigger
+        {
+                public Attitude(int index, TriggerType type, AttitudeType attitude, )
+                { 
+                
+                
+                }
 
         }
+
+
+
+
+
+
 
         /*
 
