@@ -60,9 +60,6 @@ namespace AscentProfiler
                                         flightTelemetry.sensorsOnBoard.Clear();
                                 }
 
-
-
-
                                 
 
                 }
@@ -193,7 +190,6 @@ namespace AscentProfiler
                 */
                 public override void OnAwake()
                 {
-
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);

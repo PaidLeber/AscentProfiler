@@ -193,7 +193,6 @@ namespace AscentProfiler
                         this.heading = xyz.x;
                         this.pitch = xyz.y;
                         this.roll = xyz.z;
-                        this.hold = hold;
                 
                 }
 

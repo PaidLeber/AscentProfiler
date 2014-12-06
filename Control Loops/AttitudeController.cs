@@ -8,11 +8,33 @@ namespace AscentProfiler
 {
         class AttitudeController
         {
-                AttitudeControlType control;
+
+
+                AscentProAPGCSModule module;
+                AttitudeControlType controller;
 
                 Vector3d attitude;
                 Quaternion rotation;
-                bool isEnabled;
+                bool _isEngaged;
+                internal bool isEngaged
+                {
+                        get { return _isEngaged; }
+
+                        set 
+                        {
+                                if (value && !_isEngaged)
+                                {
+                                        _isEngaged = true;
+                                        module.vessel.OnFlyByWire += new FlightInputCallback(Driver);
+                                }
+                                else
+                                {
+                                        _isEngaged = false;
+                                        module.vessel.OnFlyByWire -= new FlightInputCallback(Driver);
+                                }
+                        
+                        }
+                }
 
 
                 internal AttitudeController()
@@ -41,6 +63,11 @@ namespace AscentProfiler
                 internal bool SetRoll(double roll, bool hold)
                 {
                         return true;
+                }
+
+                public void Driver(FlightCtrlState s)
+                { 
+                
                 }
 
         }
