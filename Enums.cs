@@ -18,14 +18,17 @@ namespace AscentProfiler
                 HEADING,
                 PITCH,
                 ROLL,
-                HOLD,
-                REF,
                 CONTROL
         }
 
         enum ControlType
         { 
                 ATTITUDE
+        }
+
+        enum AttitudeControlType
+        { 
+                SAS
         }
 
         enum SensorType

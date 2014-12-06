@@ -180,13 +180,12 @@ namespace AscentProfiler
         class Attitude : Trigger
         {
                 AttitudeType attitude;
-                bool hold;
-                Vector3 XYZ;
+                Vector3d XYZ;
                 double heading;
                 double pitch;
                 double roll;
 
-                public Attitude(int index, TriggerType type, AttitudeType attitude, Vector3 xyz, bool hold)
+                public Attitude(int index, TriggerType type, AttitudeType attitude, Vector3d xyz)
                 {
                         this.index = index;
                         this.type = type;

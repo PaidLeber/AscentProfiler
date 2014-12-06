@@ -8,32 +8,37 @@ namespace AscentProfiler
 {
         class AttitudeController
         {
-                Quaternion attitude;
+                AttitudeControlType control;
+
+                Vector3d attitude;
+                Quaternion rotation;
+                bool isEnabled;
 
 
-                public AttitudeController()
+                internal AttitudeController()
                 { 
                 
                 
                 }
 
-                bool SetAttitude()
+                internal bool SetAttitude(Vector3d attitude, bool hold)
+                {
+                        
+                        return true;
+                }
+
+                internal bool SetHeading(double heading, bool hold)
                 {
                         return true;
                 }
 
-                bool SetHeading()
-                {
-                        return true;
-                }
-
-                bool SetPitch()
+                internal bool SetPitch(double pitch, bool hold)
                 {
                         return true;
 
                 }
 
-                bool SetRoll()
+                internal bool SetRoll(double roll, bool hold)
                 {
                         return true;
                 }
