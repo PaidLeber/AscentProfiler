@@ -56,6 +56,8 @@
     <Compile Include="Actions\ActionFactory.cs" />
     <Compile Include="AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
+    <Compile Include="Control Loops\AttitudeController.cs" />
+    <Compile Include="Control Loops\SASController.cs" />
     <Compile Include="GUIAscentProfiler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Control Loops\FlightController.cs" />

@@ -29,7 +29,7 @@ namespace AscentProfiler
         }
 
 
-        public static class AttitudeController
+        public static class AttitudeController0
         {
 
                 public static Quaternion attitudeTarget;

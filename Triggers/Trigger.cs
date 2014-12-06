@@ -152,7 +152,7 @@ namespace AscentProfiler
 
                 internal override bool Evaluate(AscentProAPGCSModule module)
                 {
-
+                        
                         //May need to use Timefixed.delta
                         double UT = Planetarium.GetUniversalTime();
 
