@@ -65,7 +65,6 @@ namespace AscentProfiler
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
-                        
 
                         if (control == ControlType.ATTITUDE)
                         {
@@ -75,13 +74,13 @@ namespace AscentProfiler
                                 {
                                         case ControllerType.SAS:
                                                 state = true;
-                                                newAttitudeController = new SASController();
+                                                newAttitudeController = new SASController(module);
                                                 break;
                                 }
 
                                 if (newAttitudeController != null)
                                 {
-                                        module.attitude = newAttitudeController;
+                                        module.flightController = newAttitudeController;
                                 }
                                 else
                                 {

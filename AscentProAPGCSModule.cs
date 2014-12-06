@@ -11,7 +11,7 @@ namespace AscentProfiler
         {
                 private Vessel focusedVessel;
 
-                internal AttitudeController attitude;
+                internal AttitudeController flightController;
                 internal SequenceEngine flightSequence;
                 internal FlightTelemetry flightTelemetry;
 
@@ -77,21 +77,9 @@ namespace AscentProfiler
                 
                 }
 
-                bool IsFocusedVessel()
-                {
-                        if (vessel == focusedVessel)
-                                return true;
-
-                        if (focusedVessel != null) focusedVessel.OnFlyByWire -= ActiveController;
 
 
-                        return false;
-                }
 
-                void ActiveController(FlightCtrlState s)
-                { 
-                
-                }
 
                 /*
 * Called every frame
@@ -204,6 +192,20 @@ namespace AscentProfiler
                 
                 }
 
+                public override void OnInactive()
+                {
+                        if (flightController != null) flightController.isEngaged = false;
+
+                }
+
+                public override void OnDestroy()
+                {
+                        if (flightController != null) flightController.isEngaged = false;
+                                
+                }
+
+
+               
                 /*
                 * Called after the scene is loaded.
                 */

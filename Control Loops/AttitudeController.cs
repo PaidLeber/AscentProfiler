@@ -10,61 +10,49 @@ namespace AscentProfiler
         {
                 protected AscentProAPGCSModule module;
 
+                protected Vessel flybywireVessel;                               //vessel change test
                 protected Vector3d attitude;
                 protected Quaternion rotation;
-                protected bool _isEngaged;
-                
-                internal bool isEngaged
-                {
-                        get { return _isEngaged; }
-
-                        set 
-                        {
-                                if (value && !_isEngaged)
-                                {
-                                        _isEngaged = true;
-                                        module.vessel.OnFlyByWire += new FlightInputCallback(Controller);
-                                }
-                                else
-                                {
-                                        _isEngaged = false;
-                                        module.vessel.OnFlyByWire -= new FlightInputCallback(Driver);
-                                }
-                        
-                        }
-                }
-
+                protected bool _isEngaged = false;
+                internal bool isEngaged;
+                protected float heading;
+                protected float pitch;
+                protected float roll;
 
                 internal AttitudeController()
                 {
                 }
 
-                internal bool SetAttitude(Vector3d attitude, bool hold)
-                {
-                        
-                        return true;
-                }
 
-                internal bool SetHeading(double heading, bool hold)
+                internal void SetAttitude(Vector3d attitude)
                 {
-                        return true;
-                }
-
-                internal bool SetPitch(double pitch, bool hold)
-                {
-                        return true;
+                        SetHeading(attitude.x);
+                        SetPitch(attitude.y);
+                        SetRoll(attitude.z);
 
                 }
 
-                internal bool SetRoll(double roll, bool hold)
+                internal void SetHeading(double heading)
                 {
-                        return true;
+                        this.heading = Double.IsNaN(heading) ? 0f : (float) heading;
+
+                }
+
+                internal void SetPitch(double pitch)
+                {
+                        this.pitch = Double.IsNaN(pitch) ? 0f : (float)pitch;
+                }
+
+                internal void SetRoll(double roll)
+                {
+                        this.roll = Double.IsNaN(roll) ? 0f : (float)roll;
                 }
 
                 public void ActiveController(FlightCtrlState s)
                 {
 
                 }
+
 
 
         }

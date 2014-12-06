@@ -185,6 +185,8 @@ namespace AscentProfiler
                 double pitch;
                 double roll;
 
+                bool state;
+
                 public Attitude(int index, TriggerType type, AttitudeType attitude, Vector3d xyz)
                 {
                         this.index = index;
@@ -193,12 +195,22 @@ namespace AscentProfiler
                         this.heading = xyz.x;
                         this.pitch = xyz.y;
                         this.roll = xyz.z;
+                        
                 
                 }
 
                 internal override bool Evaluate(AscentProAPGCSModule module)
                 {
+                        switch(attitude)
+                        {
+                                case AttitudeType.OFF:
+                                        module.flightController.isEngaged = false;
+                                        break;
 
+                                case AttitudeType.ON:
+                                        module.flightController.isEngaged = true;
+                                        break;
+                        }
 
 
 
@@ -208,7 +220,7 @@ namespace AscentProfiler
 
 
 
-                        return false;
+                        return activated = true;
                 }
 
 

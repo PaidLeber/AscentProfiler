@@ -14,6 +14,8 @@ namespace AscentProfiler
 
         enum AttitudeType
         { 
+                OFF,
+                ON,
                 HPR,
                 HEADING,
                 PITCH,
