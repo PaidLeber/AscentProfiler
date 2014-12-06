@@ -75,7 +75,8 @@ namespace AscentProfiler
 
         enum TriggerModifier
         {
-                FROMMAXVAL
+                FROMMAXVAL,
+                HOLD
 
         }
 

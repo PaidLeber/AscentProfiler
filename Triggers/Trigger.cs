@@ -179,11 +179,42 @@ namespace AscentProfiler
 
         class Attitude : Trigger
         {
-                public Attitude(int index, TriggerType type, AttitudeType attitude, )
-                { 
-                
+                AttitudeType attitude;
+                bool hold;
+                Vector3 XYZ;
+                double heading;
+                double pitch;
+                double roll;
+
+                public Attitude(int index, TriggerType type, AttitudeType attitude, Vector3 xyz, bool hold)
+                {
+                        this.index = index;
+                        this.type = type;
+                        this.XYZ = xyz;
+                        this.heading = xyz.x;
+                        this.pitch = xyz.y;
+                        this.roll = xyz.z;
+                        this.hold = hold;
                 
                 }
+
+                internal override bool Evaluate(AscentProAPGCSModule module)
+                {
+
+
+
+
+
+
+                        //activated = true;
+
+
+
+                        return false;
+                }
+
+
+
 
         }
 
