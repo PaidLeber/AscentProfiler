@@ -50,6 +50,55 @@ namespace AscentProfiler
 
         }
 
+        class Control : Action
+        {
+                ControlType control;
+                ControllerType controller;
+
+                internal Control(int index, ActionType type, ControlType control, ControllerType controller)
+                {
+                        this.index = index;
+                        this.type = type;
+                        this.control = control;
+                        this.controller = controller;
+                }
+
+                internal override bool Execute(AscentProAPGCSModule module)
+                {
+                        
+
+                        if (control == ControlType.ATTITUDE)
+                        {
+                                SASController newAttitudeController = null;
+
+                                switch (controller)
+                                {
+                                        case ControllerType.SAS:
+                                                state = true;
+                                                newAttitudeController = new SASController();
+                                                break;
+                                }
+
+                                if (newAttitudeController != null)
+                                {
+                                        module.attitude = newAttitudeController;
+                                }
+                                else
+                                {
+                                        module.flightSequence.isEnabled = false;
+                                        module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
+                                }
+
+                        }
+
+                        module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString());
+                        return activated = true;
+                }
+
+
+        }
+
+
         class Telemetry : Action
         {
                 TelemetryType telemetry;

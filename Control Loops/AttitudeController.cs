@@ -8,14 +8,12 @@ namespace AscentProfiler
 {
         class AttitudeController
         {
+                protected AscentProAPGCSModule module;
 
-
-                AscentProAPGCSModule module;
-                AttitudeControlType controller;
-
-                Vector3d attitude;
-                Quaternion rotation;
-                bool _isEngaged;
+                protected Vector3d attitude;
+                protected Quaternion rotation;
+                protected bool _isEngaged;
+                
                 internal bool isEngaged
                 {
                         get { return _isEngaged; }
@@ -38,9 +36,10 @@ namespace AscentProfiler
 
 
                 internal AttitudeController()
-                { 
-                
-                
+                {
+
+                       
+
                 }
 
                 internal bool SetAttitude(Vector3d attitude, bool hold)
@@ -65,10 +64,6 @@ namespace AscentProfiler
                         return true;
                 }
 
-                public void Driver(FlightCtrlState s)
-                { 
-                
-                }
 
         }
 }

@@ -5,8 +5,18 @@ using System.Text;
 
 namespace AscentProfiler
 {
-        class SASController
+        class SASController : AttitudeController
         {
+                internal SASController(AscentProAPGCSModule module)
+                {
+                        this.module = module;
+                }
+
+
+                public void Controller(FlightCtrlState s)
+                {
+
+                }
 
         }
 }

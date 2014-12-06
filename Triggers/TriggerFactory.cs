@@ -33,6 +33,7 @@ namespace AscentProfiler
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
 
+
                         /*Many to one Relationship*/
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);

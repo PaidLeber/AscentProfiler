@@ -26,7 +26,7 @@ namespace AscentProfiler
                 ATTITUDE
         }
 
-        enum AttitudeControlType
+        enum ControllerType
         { 
                 SAS
         }

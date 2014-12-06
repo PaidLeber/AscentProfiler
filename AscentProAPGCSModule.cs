@@ -11,6 +11,7 @@ namespace AscentProfiler
         {
                 private Vessel isCurrentVessel;
 
+                internal AttitudeController attitude;
                 internal SequenceEngine flightSequence;
                 internal FlightTelemetry flightTelemetry;
 
@@ -49,7 +50,7 @@ namespace AscentProfiler
                         if (!isConnectedtoKSC)                                                                                                                  
                                 return;
 
-
+                        
                         if (flightTelemetry.isMissionLogEnabled && flightTelemetry.missionLog.Count > flightTelemetry.lastMissionLogTransmitCount)              // Send Mission Logs
                                 if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry.missionLog))
                                         flightTelemetry.lastMissionLogTransmitCount = flightTelemetry.missionLog.Count;
