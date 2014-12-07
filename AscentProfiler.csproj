@@ -67,7 +67,7 @@
     <Compile Include="KerbalGraph\KerbalGraphIO.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PartExtensions.cs" />
-    <Compile Include="FlightSequenceLoader.cs" />
+    <Compile Include="SequenceLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SensorPackage.cs" />
     <Compile Include="TelemetryReceiver.cs" />

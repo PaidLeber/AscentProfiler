@@ -11,7 +11,7 @@ namespace AscentProfiler
         {
                 GUITelemetry graphGui = new GUITelemetry();
 
-                FlightSequenceLoader profileLoader;
+                SequenceLoader profileLoader;
                 bool profileLoaded = false;
                 bool graphWindowEnabled = false;
                 Texture2D loadIcon;
@@ -118,6 +118,15 @@ namespace AscentProfiler
                                 graphGui.ChangeState(!graphWindowEnabled);
                                 graphWindowEnabled = !graphWindowEnabled;
                         }
+                        
+                        if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
+                        {
+                                AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                                Debug.Log(APGCSmodule.flightController.isEngaged);
+                                APGCSmodule.flightController.isEngaged = !APGCSmodule.flightController.isEngaged;
+                                
+                                
+                        }
 
                         GUILayout.EndHorizontal();
 
@@ -125,8 +134,8 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
-                                profileLoader = new FlightSequenceLoader();
-                            
+                                profileLoader = new SequenceLoader();
+                                
 
                                 GUILayout.BeginVertical();
 

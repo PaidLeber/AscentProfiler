@@ -13,45 +13,18 @@ namespace AscentProfiler
                 Quaternion rotationtarget;
                 Quaternion lastrotation;
 
-                internal new bool isEngaged
-                {
-                        get { return _isEngaged; }
-
-                        set
-                        {
-                                if (value && !_isEngaged)
-                                {
-                                        if (flybywireVessel == null)
-                                        {
-                                                flybywireVessel = module.vessel;
-                                        }
-                                        else
-                                        {
-                                                module.flightTelemetry.AddLog("Vessel has changed. Handle it.");
-                                                Debug.Log("Vessel has changed. Handle it.");
-                                                _isEngaged = false;
-                                        }
-
-                                        flybywireVessel.OnFlyByWire -= new FlightInputCallback(ActiveController);
-                                        flybywireVessel.OnFlyByWire += new FlightInputCallback(ActiveController);
-                                        _isEngaged = true;
-                                }
-                                else if (!value && _isEngaged)
-                                {
-                                        _isEngaged = false;
-                                        module.vessel.OnFlyByWire -= new FlightInputCallback(ActiveController);
-                                        module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false);
-                                }
-
-                        }
-                }
-
-
                 internal SASController(AscentProAPGCSModule module)
                 {
                         this.module = module;
+                        module.flightTelemetry.AddLog("SAS Controller Loaded!");
                 }
 
+
+                void OnIsEngaged()
+                {
+                
+                
+                }
 
                 public override void ActiveController(FlightCtrlState s)
                 {

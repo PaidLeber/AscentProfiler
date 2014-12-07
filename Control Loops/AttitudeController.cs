@@ -10,15 +10,59 @@ namespace AscentProfiler
         {
                 protected AscentProAPGCSModule module;
 
-                protected Vessel flybywireVessel;                               //vessel change test
-                protected bool _isEngaged = false;
-                internal bool isEngaged;
+                private Vessel flybywireVessel;                               //vessel change test
+                //internal bool Enabled;
                 protected float heading;
                 protected float pitch;
                 protected float roll;
 
+                private bool _isEngaged;
+                internal bool isEngaged
+                {
+                        get { return _isEngaged; }
+
+                        set
+                        {
+                                Debug.Log("isengaged: " + value + " :" + _isEngaged);
+                                if (value && !_isEngaged)
+                                {
+                                        Debug.Log("enteriing isengaged");
+                                        if (flybywireVessel == null)
+                                        {
+                                                Debug.Log("created flybywire vessel copy");
+                                                flybywireVessel = module.vessel;
+                                        }
+                                        else if (flybywireVessel != module.vessel)
+                                        {
+                                                module.flightTelemetry.AddLog("Vessel has changed. Handle it.");
+                                                Debug.Log("Vessel has changed. Handle it.");
+                                                _isEngaged = false;
+                                        }
+                                        Debug.Log("turning on flybywire");
+                                        flybywireVessel.OnFlyByWire -= ActiveController;
+                                        flybywireVessel.OnFlyByWire += ActiveController;
+                                        _isEngaged = true;
+                                }
+                                else if (!value && _isEngaged)
+                                {
+                                        Debug.Log("disable engage");
+                                        _isEngaged = false;
+                                        module.vessel.OnFlyByWire -= ActiveController;
+                                        module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false);
+                                }
+
+                        }
+                }
+
+
                 internal AttitudeController()
                 {
+                }
+
+                internal void OnUpdate()
+                {
+
+
                 }
 
 
