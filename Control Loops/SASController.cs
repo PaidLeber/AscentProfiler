@@ -13,7 +13,7 @@ namespace AscentProfiler
                 Quaternion rotationtarget;
                 Quaternion lastrotation;
 
-                internal override bool isEngaged
+                internal bool isEngaged
                 {
                         get { return _isEngaged; }
 

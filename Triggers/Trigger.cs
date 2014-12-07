@@ -147,12 +147,11 @@ namespace AscentProfiler
                 float pitch;
                 float roll;
 
-                bool state;
-
                 public Attitude(int index, int linkedIndex, TriggerType type, AttitudeType attitude, Vector3 xyz)
                 {
                         this.index = index;
                         this.type = type;
+                        this.attitude = attitude;
                         this.XYZ = xyz;
                         this.heading = xyz.x;
                         this.pitch = xyz.y;
@@ -167,10 +166,12 @@ namespace AscentProfiler
                         {
                                 case AttitudeType.OFF:
                                         module.flightController.isEngaged = false;
+                                        module.flightTelemetry.AddLog(type.ToString() + " -> " + attitude.ToString() + " : Off");
                                         return activated = true;
 
                                 case AttitudeType.ON:
                                         module.flightController.isEngaged = true;
+                                        module.flightTelemetry.AddLog(type.ToString() +" -> " + attitude.ToString() + " : On");
                                         return activated = true;
 
                                 case AttitudeType.HEADING:

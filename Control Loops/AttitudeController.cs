@@ -48,7 +48,7 @@ namespace AscentProfiler
                         this.roll = Double.IsNaN(roll) ? 0f : (float)roll;
                 }
 
-                public void ActiveController(FlightCtrlState s)
+                public virtual void ActiveController(FlightCtrlState s)
                 {
 
                 }
