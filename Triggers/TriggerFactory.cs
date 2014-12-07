@@ -32,16 +32,20 @@ namespace AscentProfiler
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
-
+                        regexDict.Add("attitude", @"^\t*\w+\s+(\w+)(?:\s+(-?(?:[0-8][0-9]?|90)))?(?:,(-?(?:[0-8][0-9]?|90)),(-?(?:[0-8][0-9]?|90)))?");
 
                         /*Many to one Relationship*/
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.DESCENT, regexDict["oneWordRegex"]);
                         triggerRegex.Add(TriggerType.ALTITUDE, regexDict["oneParamFromMaxValRegex"]);
                         triggerRegex.Add(TriggerType.COUNTDOWN, regexDict["countdown"]);
+                        triggerRegex.Add(TriggerType.ATTITUDE, regexDict["attitude"]);
 
                         triggerProducts.Add(TriggerType.ALTITUDE, () => { return new Altitude(currentIndex, linkedIndex, currentTrigger, UpperFirstChar(currentTrigger.ToString()), scriptAscentMode, SetModifier(TriggerModifier.FROMMAXVAL, regexGrouping.Groups[2].Value.ToString()), Convert.ToDouble(regexGrouping.Groups[1].Value.ToString())); });
-                
+
+
+                        triggerProducts.Add(TriggerType.ATTITUDE, () => { return new Attitude(currentIndex, linkedIndex, currentTrigger, ParseEnum<AttitudeType>(regexGrouping.Groups[1].Value), SetAttitude(regexGrouping.Groups[2].Value.ToString(), regexGrouping.Groups[3].Value.ToString(), regexGrouping.Groups[4].Value.ToString())); });
+
                 }
 
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
@@ -101,6 +105,27 @@ namespace AscentProfiler
                                 default:
                                         return false;
                         }
+                }
+
+                Vector3 SetAttitude(string h, string p, string r)
+                {
+
+                        try
+                        {
+                                float heading = Convert.ToSingle(h);
+                        //float pitch = Convert.ToSingle(p);
+                        //float roll = Convert.ToSingle(r); 
+                        }
+                        catch
+                        {
+                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a number in a valid format. " + typeof(T));
+                        }
+
+
+
+                        
+
+                        return new Vector3(, , );
                 }
 
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
@@ -170,6 +195,21 @@ namespace AscentProfiler
                 internal int GetTabStackCount()
                 {
                         return tabCountStack.Count;
+
+                }
+
+                T ParseEnum<T>(string value)
+                {
+                        try
+                        {
+                                return (T)Enum.Parse(typeof(T), value, true);
+                        }
+                        catch
+                        {
+                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a valid trigger parameter for " + typeof(T));
+                        }
+
+                        return (T)Enum.Parse(typeof(T), value, true);
 
                 }
 

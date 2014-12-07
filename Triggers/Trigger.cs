@@ -139,11 +139,69 @@ namespace AscentProfiler
         }
 
 
+        class Attitude : Trigger
+        {
+                AttitudeType attitude;
+                Vector3d XYZ;
+                float heading;
+                float pitch;
+                float roll;
+
+                bool state;
+
+                public Attitude(int index, int linkedIndex, TriggerType type, AttitudeType attitude, Vector3 xyz)
+                {
+                        this.index = index;
+                        this.type = type;
+                        this.XYZ = xyz;
+                        this.heading = xyz.x;
+                        this.pitch = xyz.y;
+                        this.roll = xyz.z;
+
+
+                }
+
+                internal override bool Evaluate(AscentProAPGCSModule module)
+                {
+                        switch (attitude)
+                        {
+                                case AttitudeType.OFF:
+                                        module.flightController.isEngaged = false;
+                                        return activated = true;
+
+                                case AttitudeType.ON:
+                                        module.flightController.isEngaged = true;
+                                        return activated = true;
+
+                                case AttitudeType.HEADING:
+                                        module.flightController.SetHeading(heading);
+                                        break;
+                                case AttitudeType.PITCH:
+                                        module.flightController.SetPitch(pitch);
+                                        break;
+                                case AttitudeType.ROLL:
+                                        module.flightController.SetRoll(roll);
+                                        break;
+                                case AttitudeType.HPR:
+                                        module.flightController.SetAttitude(XYZ);
+                                        break;
+                        }
+
+
+                        return activated = true;
+                }
+
+
+
+
+        }
+
+
         //[Serializable]
         class Countdown : Trigger
         {
 
-                public Countdown(int index, TriggerType type, string description, double value) // fix constructor
+                public Countdown(int index, int linkedIndex, TriggerType type, string description, double value) // fix constructor
                 {
                         this.index = index;
                         this.type = type;
@@ -177,56 +235,7 @@ namespace AscentProfiler
                 
         }
 
-        class Attitude : Trigger
-        {
-                AttitudeType attitude;
-                Vector3d XYZ;
-                double heading;
-                double pitch;
-                double roll;
 
-                bool state;
-
-                public Attitude(int index, TriggerType type, AttitudeType attitude, Vector3d xyz)
-                {
-                        this.index = index;
-                        this.type = type;
-                        this.XYZ = xyz;
-                        this.heading = xyz.x;
-                        this.pitch = xyz.y;
-                        this.roll = xyz.z;
-                        
-                
-                }
-
-                internal override bool Evaluate(AscentProAPGCSModule module)
-                {
-                        switch(attitude)
-                        {
-                                case AttitudeType.OFF:
-                                        module.flightController.isEngaged = false;
-                                        break;
-
-                                case AttitudeType.ON:
-                                        module.flightController.isEngaged = true;
-                                        break;
-                        }
-
-
-
-
-
-                        //activated = true;
-
-
-
-                        return activated = true;
-                }
-
-
-
-
-        }
 
 
 
