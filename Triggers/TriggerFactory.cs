@@ -109,15 +109,12 @@ namespace AscentProfiler
 
                 Vector3 SetAttitude(string h, string p, string r)
                 {
-                        float heading;
-                        float pitch;
-                        float roll;
 
                         try
                         {
-                                heading = Convert.ToSingle(h);
-                                pitch = Convert.ToSingle(p);
-                                roll = Convert.ToSingle(r);
+                                float heading = string.IsNullOrEmpty(h) ? 0f : Convert.ToSingle(h);
+                                float pitch   = string.IsNullOrEmpty(p) ? 0f : Convert.ToSingle(p);
+                                float roll    = string.IsNullOrEmpty(r) ? 0f : Convert.ToSingle(r);
 
                                 return new Vector3(heading, pitch, roll);
                                 
