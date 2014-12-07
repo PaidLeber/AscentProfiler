@@ -12,9 +12,9 @@ namespace AscentProfiler
 
                 private Vessel flybywireVessel;                               //vessel change test
                 //internal bool Enabled;
-                protected float heading;
-                protected float pitch;
-                protected float roll;
+                protected float heading = 90f;
+                protected float pitch = 90f;
+                protected float roll = 90f;
 
                 private bool _isEngaged;
                 internal bool isEngaged
@@ -66,7 +66,7 @@ namespace AscentProfiler
                 }
 
 
-                internal void SetAttitude(Vector3d attitude)
+                internal void SetAttitude(Vector3 attitude)
                 {
                         SetHeading(attitude.x);
                         SetPitch(attitude.y);
@@ -74,20 +74,20 @@ namespace AscentProfiler
 
                 }
 
-                internal void SetHeading(double heading)
+                internal void SetHeading(float heading)
                 {
-                        this.heading = Double.IsNaN(heading) ? 0f : (float) heading;
+                        this.heading = heading;
 
                 }
 
-                internal void SetPitch(double pitch)
+                internal void SetPitch(float pitch)
                 {
-                        this.pitch = Double.IsNaN(pitch) ? 0f : (float)pitch;
+                        this.pitch = pitch;
                 }
 
-                internal void SetRoll(double roll)
+                internal void SetRoll(float roll)
                 {
-                        this.roll = Double.IsNaN(roll) ? 0f : (float)roll;
+                        this.roll = roll;
                 }
 
                 public virtual void ActiveController(FlightCtrlState s)

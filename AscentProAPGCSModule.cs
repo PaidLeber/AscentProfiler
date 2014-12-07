@@ -268,7 +268,7 @@ namespace AscentProfiler
                  */
                 public override void OnInactive()
                 {
-                        if (flightController != null) flightController.isEngaged = false;
+                        //if (flightController != null) flightController.isEngaged = false;
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnInactive");
