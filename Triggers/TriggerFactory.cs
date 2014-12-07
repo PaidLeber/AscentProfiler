@@ -109,23 +109,26 @@ namespace AscentProfiler
 
                 Vector3 SetAttitude(string h, string p, string r)
                 {
+                        float heading;
+                        float pitch;
+                        float roll;
 
                         try
                         {
-                                float heading = Convert.ToSingle(h);
-                        //float pitch = Convert.ToSingle(p);
-                        //float roll = Convert.ToSingle(r); 
+                                heading = Convert.ToSingle(h);
+                                pitch = Convert.ToSingle(p);
+                                roll = Convert.ToSingle(r);
+
+                                return new Vector3(heading, pitch, roll);
+                                
                         }
                         catch
                         {
-                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a number in a valid format. " + typeof(T));
+                                Log.Script(LogType.Error, "Attitude value is not a number in a valid format. Line #");
                         }
 
-
-
-                        
-
-                        return new Vector3(, , );
+                        return new Vector3(0,0,0);
+    
                 }
 
                 bool SetModifier(TriggerModifier modifier, string regexgroup)
