@@ -72,14 +72,11 @@ namespace AscentProfiler
                                 switch (controller)
                                 {
                                         case ControllerType.SAS:
-                                                if(state)
-                                                        module.flightController = new SASController(module);
-
+                                                module.flightController = new SASController(module);  
                                                 module.flightController.isEngaged = state;
                                                 break;
 
                                         default:
-                                                module.flightSequence.isEnabled = false;
                                                 module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
                                                 return activated = true;
                                 }
