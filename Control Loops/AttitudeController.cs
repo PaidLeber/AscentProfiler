@@ -11,8 +11,6 @@ namespace AscentProfiler
                 protected AscentProAPGCSModule module;
 
                 protected Vessel flybywireVessel;                               //vessel change test
-                protected Vector3d attitude;
-                protected Quaternion rotation;
                 protected bool _isEngaged = false;
                 internal bool isEngaged;
                 protected float heading;
