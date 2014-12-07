@@ -55,10 +55,11 @@ namespace AscentProfiler
                 ControlType control;
                 ControllerType controller;
 
-                internal Control(int index, ActionType type, ControlType control, ControllerType controller)
+                internal Control(int index, ActionType type, ControlType control, ControllerType controller, ActionModifier modifier)
                 {
                         this.index = index;
                         this.type = type;
+                        this.state = SetModifierState(modifier);
                         this.control = control;
                         this.controller = controller;
                 }
@@ -68,29 +69,24 @@ namespace AscentProfiler
 
                         if (control == ControlType.ATTITUDE)
                         {
-                                SASController newAttitudeController = null;
-
                                 switch (controller)
                                 {
                                         case ControllerType.SAS:
-                                                state = true;
-                                                newAttitudeController = new SASController(module);
-                                                break;
-                                }
+                                                if(state)
+                                                        module.flightController = new SASController(module);
 
-                                if (newAttitudeController != null)
-                                {
-                                        module.flightController = newAttitudeController;
-                                }
-                                else
-                                {
-                                        module.flightSequence.isEnabled = false;
-                                        module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
+                                                module.flightController.isEngaged = state;
+                                                break;
+
+                                        default:
+                                                module.flightSequence.isEnabled = false;
+                                                module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
+                                                return activated = true;
                                 }
 
                         }
 
-                        module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString());
+                        module.flightTelemetry.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
 

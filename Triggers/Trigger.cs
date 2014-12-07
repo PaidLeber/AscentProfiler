@@ -164,6 +164,7 @@ namespace AscentProfiler
                 {
                         switch (attitude)
                         {
+                                        /*
                                 case AttitudeType.OFF:
                                         module.flightController.isEngaged = false;
                                         module.flightTelemetry.AddLog(type.ToString() + " -> " + attitude.ToString() + " : Off");
@@ -173,7 +174,7 @@ namespace AscentProfiler
                                         module.flightController.isEngaged = true;
                                         module.flightTelemetry.AddLog(type.ToString() +" -> " + attitude.ToString() + " : On");
                                         return activated = true;
-
+                                */
                                 case AttitudeType.HEADING:
                                         module.flightController.SetHeading(heading);
                                         break;
