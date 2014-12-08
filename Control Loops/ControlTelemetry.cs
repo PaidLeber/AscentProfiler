@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class TelemetryControl
+        class ControlTelemetry
         {
 
                 AscentProAPGCSModule module;
@@ -26,7 +26,7 @@ namespace AscentProfiler
                 double sensorlast;
                 
 
-                internal TelemetryControl(AscentProAPGCSModule module)
+                internal ControlTelemetry(AscentProAPGCSModule module)
                 {
                         this.module = module;
                         sensorsSuite = new SensorPackage(module);

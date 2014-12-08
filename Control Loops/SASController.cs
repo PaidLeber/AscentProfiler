@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class SASController : AttitudeControl
+        class SASController : ControlAttitude
         {
                 Quaternion lastrotation;
 

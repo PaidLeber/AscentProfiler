@@ -72,7 +72,7 @@ namespace AscentProfiler
                         {
                                 case ControlType.TELEMETRY:
 
-                                        module.telemetryController = new TelemetryControl(module);
+                                        module.telemetryController = new ControlTelemetry(module);
                                         module.telemetryController.Enabled = state;
                                         break;
 

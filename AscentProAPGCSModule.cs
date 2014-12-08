@@ -10,8 +10,8 @@ namespace AscentProfiler
         public class AscentProAPGCSModule : PartModule
         {
                 internal SequenceEngine Sequence;
-                internal TelemetryControl telemetryController;
-                internal AttitudeControl attitudeController;
+                internal ControlTelemetry telemetryController;
+                internal ControlAttitude attitudeController;
 
                 //On RX Sequence of New Sequence
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
@@ -42,7 +42,7 @@ namespace AscentProfiler
                         
                 }
 
-                void Transmit(TelemetryControl flightTelemetry)
+                void Transmit(ControlTelemetry flightTelemetry)
                 {
                         if (!isConnectedtoKSC)                                                                                                                  
                                 return;
