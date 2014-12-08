@@ -141,40 +141,40 @@ namespace AscentProfiler
 
         class Attitude : Trigger
         {
-                AttitudeType attitude;
-                Vector3d XYZ;
+                AttitudeType command;
+                Vector3 attitude;
                 float heading;
                 float pitch;
                 float roll;
 
-                public Attitude(int index, int linkedIndex, TriggerType type, AttitudeType attitude, Vector3 xyz)
+                public Attitude(int index, int linkedIndex, TriggerType type, AttitudeType command, Vector3 attitude)
                 {
                         this.index = index;
                         this.type = type;
+                        this.command = command;
                         this.attitude = attitude;
-                        this.XYZ = xyz;
-                        this.heading = xyz.x;
-                        this.pitch = xyz.y;
-                        this.roll = xyz.z;
-
 
                 }
 
                 internal override bool Evaluate(AscentProAPGCSModule module)
                 {
-                        switch (attitude)
+                        switch (command)
                         {
                                 case AttitudeType.HEADING:
-                                        module.flightController.SetHeading(heading);
+                                        module.flightController.SetHeading(attitude.x);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE HEADING " + attitude.x);
                                         break;
                                 case AttitudeType.PITCH:
-                                        module.flightController.SetPitch(pitch);
+                                        module.flightController.SetPitch(attitude.y);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE PITCH " + attitude.y);
                                         break;
                                 case AttitudeType.ROLL:
-                                        module.flightController.SetRoll(roll);
+                                        module.flightController.SetRoll(attitude.z);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE ROLL " + attitude.z);
                                         break;
                                 case AttitudeType.HPR:
-                                        module.flightController.SetAttitude(XYZ);
+                                        module.flightController.SetAttitude(attitude);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE " + attitude.x + ", " + attitude.y + ", " + attitude.z);
                                         break;
                         }
 
