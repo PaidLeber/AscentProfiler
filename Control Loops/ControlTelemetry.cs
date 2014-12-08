@@ -24,7 +24,22 @@ namespace AscentProfiler
                 int sensorstep = 0;
                 int sensorrate = 1; //per second
                 double sensorlast;
-                
+
+                internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
+                {
+                        get
+                        {
+                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) && module.vessel.GetCrewCount() == 0)
+                                {
+                                        return RemoteTech.API.HasConnectionToKSC(module.vessel.id);
+                                }
+                                else
+                                {
+                                        return true;
+                                }
+                        }
+
+                }
 
                 internal ControlTelemetry(AscentProAPGCSModule module)
                 {
@@ -35,7 +50,7 @@ namespace AscentProfiler
 
                 internal void Transmit()
                 {
-                        if (!module.isConnectedtoKSC)
+                        if (!isConnectedtoKSC)
                                 return;
 
 

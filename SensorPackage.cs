@@ -15,7 +15,6 @@ namespace AscentProfiler
                         this.module = module;
                 }
 
-
                 internal double GetSensorData(SensorType sensor)
                 {
                         switch(sensor)

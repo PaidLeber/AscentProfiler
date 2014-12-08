@@ -13,21 +13,7 @@ namespace AscentProfiler
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
-                internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
-                {
-                        get
-                        {
-                                if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) && vessel.GetCrewCount() == 0)                  
-                                {
-                                        return RemoteTech.API.HasConnectionToKSC(vessel.id);
-                                }
-                                else
-                                {
-                                        return true;
-                                }
-                        }
 
-                }
 
                 public AscentProAPGCSModule()
                 {
