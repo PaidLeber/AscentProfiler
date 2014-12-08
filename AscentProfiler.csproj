@@ -60,7 +60,6 @@
     <Compile Include="Control Loops\SASController.cs" />
     <Compile Include="GUIAscentProfiler.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Control Loops\FlightController.cs" />
     <Compile Include="Control Loops\TelemetryControl.cs" />
     <Compile Include="GUITelemetry.cs" />
     <Compile Include="KerbalGraph\KerbalGraph.cs" />

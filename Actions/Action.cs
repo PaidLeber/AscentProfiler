@@ -116,7 +116,7 @@ namespace AscentProfiler
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
-
+                                
                         switch (telemetry)
                         {
                                 case TelemetryType.MISSIONLOG:
