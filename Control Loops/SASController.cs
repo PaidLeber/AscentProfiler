@@ -28,7 +28,7 @@ namespace AscentProfiler
 
                 public override void ActiveController(FlightCtrlState s)
                 {
-                        float SASControllerStrength = 1;
+                        
                         Quaternion attitudetarget = 
                                 Quaternion.AngleAxis(heading, Vector3.up) * 
                                 Quaternion.AngleAxis(-pitch, Vector3.right) * 
@@ -43,13 +43,9 @@ namespace AscentProfiler
                         {
                                 module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, true);
                         }
-                        float angle = Quaternion.Angle(attitudetarget, rotationtarget);
+
                         if (Quaternion.Angle(lastrotation, rotationtarget) > 10)
                         {
-
-                                float amplitude = Mathf.Min(1, 0.005f * SASControllerStrength * (180f / angle));
-                                rotationtarget = Quaternion.Slerp(attitudetarget, rotationtarget, amplitude);
-                                Quaternion.Slerp(attitudetarget, rotationtarget, amplitude);
                                 module.vessel.VesselSAS.LockHeading(rotationtarget);
                                 lastrotation = rotationtarget;
                         }
@@ -57,9 +53,7 @@ namespace AscentProfiler
                         {
                                 module.vessel.VesselSAS.LockHeading(rotationtarget, true);
                         }
-
-
-
+                        
 
                 }
                 
