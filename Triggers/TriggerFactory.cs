@@ -118,6 +118,7 @@ namespace AscentProfiler
                                 float pitch   = string.IsNullOrEmpty(p) ? 0f : Convert.ToSingle(p);
                                 float roll    = string.IsNullOrEmpty(r) ? 0f : Convert.ToSingle(r);
 
+                                Debug.Log("HEADING: "+heading+" PITCH: "+pitch+" ROLL: "+ roll);
                                 return new Vector3(heading, pitch, roll);
                                 
                         }

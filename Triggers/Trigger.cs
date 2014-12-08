@@ -153,7 +153,7 @@ namespace AscentProfiler
                         this.attitude = attitude;
 
                 }
-
+                
                 internal override bool Evaluate(AscentProAPGCSModule module)
                 {
                         switch (command)
@@ -163,11 +163,11 @@ namespace AscentProfiler
                                         module.flightTelemetry.AddLog("SET ATTITUDE HEADING " + attitude.x);
                                         break;
                                 case AttitudeType.PITCH:
-                                        module.flightController.SetPitch(attitude.y);
+                                        module.flightController.SetPitch(attitude.x);
                                         module.flightTelemetry.AddLog("SET ATTITUDE PITCH " + attitude.y);
                                         break;
                                 case AttitudeType.ROLL:
-                                        module.flightController.SetRoll(attitude.z);
+                                        module.flightController.SetRoll(attitude.x);
                                         module.flightTelemetry.AddLog("SET ATTITUDE ROLL " + attitude.z);
                                         break;
                                 case AttitudeType.HPR:
