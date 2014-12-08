@@ -102,7 +102,6 @@ namespace AscentProfiler
 
 
 
-                        telemetryController.ReadSensors();
                         Transmit(telemetryController);
 
                         if (telemetryController != null)

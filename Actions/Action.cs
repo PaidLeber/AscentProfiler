@@ -124,19 +124,8 @@ namespace AscentProfiler
                                         break;
                                 
                                 case TelemetryType.SENSORS:
-
-                                        if (state)
-                                        {
-
-                                                module.telemetryController.sensorsEnabled = state;
-                                                Debug.Log("SENSORS STATE: " + state);
-                                        }
-                                        else
-                                        { 
-                                        
-                                        }
-
-
+                                        module.telemetryController.sensorsEnabled = state;
+                                        Debug.Log("SENSORS STATE: " + state);
                                         break;
 
                                 case TelemetryType.TRANSMIT:
