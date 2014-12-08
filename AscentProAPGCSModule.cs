@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal SequenceEngine Sequencer;
+                internal SequenceEngine CommandSequencer;
                 Dictionary<ControlType, ControlModule> ControllerBank;
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
@@ -53,9 +53,9 @@ namespace AscentProfiler
 
 
 
-                        if (Sequencer != null)
+                        if (CommandSequencer != null)
                         {
-                                Sequencer.TriggerLoop();
+                                CommandSequencer.TriggerLoop();
                         }
                                 
 

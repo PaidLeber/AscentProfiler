@@ -7,8 +7,12 @@ namespace AscentProfiler
 {
         class ControlModule : IControl
         {
+                protected AscentProAPGCSModule module;
+
+                internal bool Enabled;
 
 
+                void Process();
 
         }
 }

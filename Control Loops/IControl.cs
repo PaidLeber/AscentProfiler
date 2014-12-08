@@ -7,7 +7,6 @@ namespace AscentProfiler
 {
         interface IControl
         {
-                protected AscentProAPGCSModule module;
 
                 internal bool Enabled;
 
