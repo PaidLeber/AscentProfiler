@@ -9,7 +9,8 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal SequenceEngine sequence;
+                internal SequenceEngine Sequencer;
+                Dictionary<ControlType, ControlModule> ControllerBank;
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
@@ -25,6 +26,7 @@ namespace AscentProfiler
 */
                 public override void OnAwake()
                 {
+                        ControllerBank = new Dictionary<ControlType, ControlModule>();
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
@@ -51,9 +53,9 @@ namespace AscentProfiler
 
 
 
-                        if (sequence != null)
+                        if (Sequencer != null)
                         {
-                                sequence.TriggerLoop();
+                                Sequencer.TriggerLoop();
                         }
                                 
 

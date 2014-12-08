@@ -14,9 +14,7 @@ namespace AscentProfiler
 
                 internal bool Enabled = false;
 
-                internal bool isMissionLogEnabled = true;
-                internal List<string> missionLog = new List<string>();
-                internal int lastMissionLogTransmitCount = 0;
+
 
                 internal bool sensorsEnabled = false;
                 internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
