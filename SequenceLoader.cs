@@ -138,6 +138,7 @@ namespace AscentProfiler
                         ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.UPPER_RIGHT));
 
                         //module.flightTelemetry.AddLog("Transmitting command sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
+                        /*
                         module.telemetryController.AddLog("$nc -uv -w "+ Math.Ceiling(RemoteTech.API.GetSignalDelayToKSC(module.vessel.id)) + " " + vessel_ip + " " + port + " < " + sequence + ".seq");
                         
                         if (module.isConnectedtoKSC)
@@ -148,8 +149,22 @@ namespace AscentProfiler
                         {
                                 module.telemetryController.AddLog("nc: connect to " + vessel_ip + " " + port + " (icp) failed: Timeout (Check connection)");
                         }
-
+                        */
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 bool IsRegexCommandMatch(string line, string commandType)
                 {

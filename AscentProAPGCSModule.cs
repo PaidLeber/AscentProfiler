@@ -13,13 +13,6 @@ namespace AscentProfiler
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
-                //On RX Sequence of New Sequence
-                private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private SequenceEngine newSequence;
-                private double sequenceTransmissionTime = 0;
-                private int sequenceMessageOrder = 0;
-
-
                 internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
                 {
                         get
@@ -38,11 +31,6 @@ namespace AscentProfiler
 
                 public AscentProAPGCSModule()
                 {
-                        sequence                = null;
-                        telemetryController     = null;
-                        attitudeController      = null;
-
-                        InitNewSequenceMessage();
                         
                 }
 
@@ -73,10 +61,7 @@ namespace AscentProfiler
                                     + "][" + Time.time.ToString("0.0000") + "]: OnUpdate");
                         }
 
-                        if(newSequence != null)
-                        {
-                                RXSequenceReceiver();
-                        }
+
 
 
 
@@ -101,93 +86,9 @@ namespace AscentProfiler
 
                 }
 
-                internal bool RXNewSequence(SequenceEngine newsequence)
-                {
-                        if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
-                        {
-                                sequenceMessageOrder = 0;
-                                sequenceTransmissionTime = 0;
-                                newSequence = newsequence;
-                                Debug.Log("RX Sequence Transfer successful");
-                        }
-                        else
-                        {
-                                LoadNewSequence(newsequence);
-
-                        }
 
 
-                        
-                        return true;
-                }
 
-                void LoadNewSequence(SequenceEngine newsequence)
-                {
-                        //telemetryController.sensorsOnBoard.Clear();
-                        sequence = newsequence;
-                        sequence.AssignToModule(this);
-                        sequence.Enabled = true;
-                        sequence.ExecuteActions(0);
-
-                }
-
-                void RXSequenceReceiver()
-                {
-                        
-                                if (sequenceTransmissionTime == 0)
-                                { sequenceTransmissionTime = Planetarium.GetUniversalTime(); }
-
-
-                                if (sequenceMessageOrder == 6)
-                                {
-                                        newSequence = null;
-                                        return;
-                                }
-
-
-                                var messagearray = listRXReceiverMessage[sequenceMessageOrder];
-
-                                
-                                if (Planetarium.GetUniversalTime() > sequenceTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
-                                {
-                                        Debug.Log("sequence#: "+sequenceMessageOrder+" seqdelaytime: "+messagearray[1]);
-                                        if (sequenceMessageOrder == 4)
-                                        {
-                                                LoadNewSequence(newSequence);
-                                                telemetryController.AddLog("Reconfiguration successful: sequence loaded");
-                                                Log.Level(LogType.Verbose, "Sequence Loaded");
-                                                Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
-                                        }
-
-                                        ScreenMessages.PostScreenMessage(new ScreenMessage(Convert.ToString(messagearray[2]), (float)messagearray[0], ScreenMessageStyle.UPPER_LEFT));
-                                        sequenceTransmissionTime = Planetarium.GetUniversalTime();
-                                        sequenceMessageOrder++;
-
-                                }
-                        
-                }
-                
-
-                void InitNewSequenceMessage()
-                {
-                        /*
-                        listRXReceiverMessage.Add(new object[] { 4.0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
-                        listRXReceiverMessage.Add(new object[] { 3.0f, 1, "RX: Reconfiguration packets received from frame" });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 4, "RX: Checksum verification in progress, please standby " });
-                        listRXReceiverMessage.Add(new object[] { 6.0f, 6, "RX: Telemetry data buffer: Reset" });
-                        listRXReceiverMessage.Add(new object[] { 8.0f, 4, "RX: Reconfiguration successful: sequence loaded" });
-                        listRXReceiverMessage.Add(new object[] { 7.0f, 2, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
-                        */
-
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Reconfiguration packets received from frame" });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Checksum verification in progress, please standby " });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Telemetry data buffer: Reset" });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Reconfiguration successful: sequence loaded" });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
-
-                
-                }
 
 
                
