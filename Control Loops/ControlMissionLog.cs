@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AscentProfiler
 {
-        class ControlMissionLog
+        class ControlMissionLog : ControlModule
         {
                 internal bool Enabled;
 
@@ -14,9 +14,24 @@ namespace AscentProfiler
                 internal int lastMissionLogTransmitCount = 0;
 
 
+                internal void AddLog(string log)
+                {
+                        if (!isMissionLogEnabled)
+                        { return; }
 
+                        var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
+                        missionLog.Add(transferlog);
+                        Log.Level(LogType.Verbose, transferlog);
 
+                }
 
+                string timeStamp(double secs)
+                {
+                        TimeSpan t = TimeSpan.FromSeconds(secs);
+
+                        return string.Format("T+{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
+
+                }
 
         }
 }

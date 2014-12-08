@@ -5,14 +5,13 @@ using System.Text;
 
 namespace AscentProfiler
 {
-        class ControlModule : IControl
+        abstract class ControlModule
         {
                 protected AscentProAPGCSModule module;
 
                 internal bool Enabled;
 
-
-                void Process();
+                virtual void Process();
 
         }
 }

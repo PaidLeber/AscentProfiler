@@ -6,11 +6,8 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class ControlAttitude
+        class ControlAttitude : ControlModule
         {
-                protected AscentProAPGCSModule module;
-
-                private Vessel flybywireVessel;                               //vessel change test
 
                 protected float heading;
                 protected float pitch;
