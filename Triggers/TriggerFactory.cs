@@ -64,11 +64,13 @@ namespace AscentProfiler
                                 currentIndex++;                                                                          
 
                                 linkedIndex = GetParentIndex(trigger, commandLine, lineNumber, currentIndex);
-
+                                Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
+                                Debug.Log(trigger.ToString());
+                                Debug.Log("GET PARENT INDEX: LINKED INDEX = " + linkedIndex);
 
                                 NewTriggerSequence.Add(triggerProducts[trigger]());
 
-                                Log.Level(LogType.Verbose, "CURRENT INDEX: " + currentIndex);
+                                
                                 //Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
                                 
                         }

@@ -143,13 +143,11 @@ namespace AscentProfiler
         {
                 AttitudeType command;
                 Vector3 attitude;
-                float heading;
-                float pitch;
-                float roll;
 
                 public Attitude(int index, int linkedIndex, TriggerType type, AttitudeType command, Vector3 attitude)
                 {
                         this.index = index;
+                        this.linkedIndex = linkedIndex;
                         this.type = type;
                         this.command = command;
                         this.attitude = attitude;
