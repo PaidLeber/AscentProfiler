@@ -10,7 +10,7 @@ namespace AscentProfiler
         public class AscentProAPGCSModule : PartModule
         {
                 internal SequenceEngine CommandSequencer;
-                Dictionary<ControlType, ControlModule> ControllerBank;
+                Dictionary<ControlType, ControlModule> ControllerModules;
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
@@ -21,12 +21,25 @@ namespace AscentProfiler
                         
                 }
 
+                internal bool AddControl(ControlType control)
+                {
+                
+                        return true;
+                }
+
+                internal bool SetControlState(ControlType control, bool state)
+                {
+
+                        return true;
+                }
+
+
                 /*
 * Called after the scene is loaded.
 */
                 public override void OnAwake()
                 {
-                        ControllerBank = new Dictionary<ControlType, ControlModule>();
+                        ControllerModules = new Dictionary<ControlType, ControlModule>();
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);

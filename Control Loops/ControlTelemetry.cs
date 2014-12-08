@@ -9,8 +9,6 @@ namespace AscentProfiler
         class ControlTelemetry : ControlModule
         {
 
-
-
                 internal bool isConnectedtoKSC                                                                           //If RT loaded, get RT value, if no RT, always return true;
                 {
                         get
