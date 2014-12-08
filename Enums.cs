@@ -32,6 +32,7 @@ namespace AscentProfiler
 
         enum ControllerType
         { 
+                DEFAULT,
                 SAS
         }
 

@@ -53,7 +53,7 @@ namespace AscentProfiler
 
                 }
 
-                public override void ActiveController0(FlightCtrlState s)
+                public void ActiveController0(FlightCtrlState s)
                 {
                         
                         Quaternion attitudetarget = 

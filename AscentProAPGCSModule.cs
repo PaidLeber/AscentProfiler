@@ -9,10 +9,9 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-
-                internal AttitudeControl attitudeController;
-                internal SequenceEngine flightSequence;
+                internal SequenceEngine Sequence;
                 internal TelemetryControl telemetryController;
+                internal AttitudeControl attitudeController;
 
                 //On RX Sequence of New Sequence
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
@@ -109,8 +108,8 @@ namespace AscentProfiler
                         if (telemetryController != null)
                                 telemetryController.ReadSensors();
 
-                        if (flightSequence != null)
-                                flightSequence.TriggerLoop();
+                        if (Sequence != null)
+                                Sequence.TriggerLoop();
 
                         if (attitudeController != null)
                                 attitudeController.ActiveController();
@@ -140,10 +139,10 @@ namespace AscentProfiler
                 void LoadNewSequence(SequenceEngine newsequence)
                 {
                         telemetryController.sensorsOnBoard.Clear();
-                        flightSequence = newsequence;
-                        flightSequence.AssignToModule(this);
-                        flightSequence.Enabled = true;
-                        flightSequence.ExecuteActions(0);
+                        Sequence = newsequence;
+                        Sequence.AssignToModule(this);
+                        Sequence.Enabled = true;
+                        Sequence.ExecuteActions(0);
 
                 }
 

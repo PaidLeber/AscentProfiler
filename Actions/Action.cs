@@ -54,6 +54,7 @@ namespace AscentProfiler
         {
                 ControlType control;
                 ControllerType controller;
+                string error;
 
                 internal Control(int index, ActionType type, ControlType control, ControllerType controller, ActionModifier modifier)
                 {
@@ -67,22 +68,6 @@ namespace AscentProfiler
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
 
-                        if (control == ControlType.ATTITUDE)
-                        {
-                                switch (controller)
-                                {
-                                        case ControllerType.SAS:
-                                                module.attitudeController = new SASController(module);  
-                                                module.attitudeController.Enabled = state;
-                                                break;
-
-                                        default:
-                                                module.telemetryController.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
-                                                return activated = true;
-                                }
-
-                        }
-
                         switch(control)
                         {
                                 case ControlType.TELEMETRY:
@@ -90,11 +75,25 @@ namespace AscentProfiler
                                         module.telemetryController = new TelemetryControl(module);
                                         module.telemetryController.Enabled = state;
                                         break;
-                        
+
+                                case ControlType.ATTITUDE:
+
+                                        switch (controller)
+                                        {
+                                                case ControllerType.SAS:
+                                                        module.attitudeController = new SASController(module);
+                                                        module.attitudeController.Enabled = state;
+                                                        break;
+
+                                                default:
+                                                        error = " : Not  a valid attitude controller";
+                                                        break;
+                                        }
+                                        break;
                         
                         }
 
-                        module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state));
+                        module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + error);
                         return activated = true;
                 }
 
@@ -120,10 +119,6 @@ namespace AscentProfiler
 
                         switch (telemetry)
                         {
-                                case TelemetryType.ON:
-                                        module.telemetryController = new TelemetryControl(module);
-                                        break;
-
                                 case TelemetryType.MISSIONLOG:
                                         module.telemetryController.isMissionLogEnabled = state;
                                         break;
