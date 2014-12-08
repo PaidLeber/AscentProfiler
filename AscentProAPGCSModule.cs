@@ -102,16 +102,16 @@ namespace AscentProfiler
                                 RXSequenceReceiver();
                         }
 
-                        if (flightSequence != null && flightSequence.isEnabled)
-                        {
-                                flightSequence.OnUpdate();
-                        }
+
 
                         flightTelemetry.OnUpdate();
                         Transmit(flightTelemetry);
 
+                        if (flightSequence != null)
+                                flightSequence.TriggerLoop();
+
                         if (flightController != null)
-                                flightController.OnUpdate();
+                                flightController.ActiveController();
 
                 }
 
@@ -140,7 +140,7 @@ namespace AscentProfiler
                         flightTelemetry.sensorsOnBoard.Clear();
                         flightSequence = newsequence;
                         flightSequence.AssignToModule(this);
-                        flightSequence.isEnabled = true;
+                        flightSequence.Enabled = true;
                         flightSequence.ExecuteActions(0);
 
                 }

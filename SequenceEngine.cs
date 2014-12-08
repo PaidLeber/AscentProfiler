@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         class SequenceEngine
         {
-                internal bool isEnabled = false;
+                internal bool Enabled = false;
 
                 internal List<Trigger> listTrigger;
                 internal List<Action> listAction;
@@ -34,14 +34,10 @@ namespace AscentProfiler
                         }
                 }
 
-                internal void OnUpdate()
+                internal void TriggerLoop()
                 {
-                        TriggerLoop();
-
-                }
-
-                void TriggerLoop()
-                {
+                        if (!Enabled)
+                                return;
 
                         
                         foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
