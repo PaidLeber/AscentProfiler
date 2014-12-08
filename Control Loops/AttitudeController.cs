@@ -12,9 +12,9 @@ namespace AscentProfiler
 
                 private Vessel flybywireVessel;                               //vessel change test
                 //internal bool Enabled;
-                protected float heading = 90f;
-                protected float pitch = 90f;
-                protected float roll = 90f;
+                protected float heading;
+                protected float pitch;
+                protected float roll;
 
                 private bool _isEngaged;
                 internal bool isEngaged

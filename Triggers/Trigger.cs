@@ -164,11 +164,11 @@ namespace AscentProfiler
                                         break;
                                 case AttitudeType.PITCH:
                                         module.flightController.SetPitch(attitude.x);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE PITCH " + attitude.y);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE PITCH " + attitude.x);
                                         break;
                                 case AttitudeType.ROLL:
                                         module.flightController.SetRoll(attitude.x);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE ROLL " + attitude.z);
+                                        module.flightTelemetry.AddLog("SET ATTITUDE ROLL " + attitude.x);
                                         break;
                                 case AttitudeType.HPR:
                                         module.flightController.SetAttitude(attitude);

@@ -32,7 +32,7 @@ namespace AscentProfiler
                         regexDict.Add("oneWordRegex", @"^\w+\s*");
                         regexDict.Add("tabcount", @"^(\t)+\w+");
                         regexDict.Add("countdown", @"^\t*\w+\s+(?:Y(\d{1,4})\s*,\s*D(\d{1,3})\s*,\s*|T-)(?:(?:(?:(\d{1,2}):)?(?:(\d{1,2}):)?)?(\d{1,2}))\s*$");
-                        regexDict.Add("attitude", @"^\t*\w+\s+(\w+)(?:\s+(-?(?:[0-8][0-9]?|90)))?(?:,(-?(?:[0-8][0-9]?|90)),(-?(?:[0-8][0-9]?|90)))?");
+                        regexDict.Add("attitude", @"^\t*\w+\s+(\w+)(?:\s+(-?(?:[0-9]{1,3})))?(?:,(-?(?:[0-8][0-9]?|90)),(-?(?:[0-8][0-9]?|90)))?");
 
                         /*Many to one Relationship*/
                         triggerRegex.Add(TriggerType.ASCENT, regexDict["oneWordRegex"]);

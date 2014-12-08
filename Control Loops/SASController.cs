@@ -31,7 +31,10 @@ namespace AscentProfiler
                         Quaternion rotationtarget = Quaternion.LookRotation(north, up) * attitudetarget * Quaternion.Euler(90, 0, 0);
 
                         if (!module.vessel.ActionGroups[KSPActionGroup.SAS])
+                        {
                                 module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, true);
+                        }
+                                
 
 
                         if (Quaternion.Angle(lastrotation, rotationtarget) > 10)
