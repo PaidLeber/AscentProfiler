@@ -9,7 +9,7 @@ namespace AscentProfiler
 
         public class AscentProAPGCSModule : PartModule
         {
-                internal SequenceEngine Sequence;
+                internal SequenceEngine sequence;
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
@@ -38,45 +38,23 @@ namespace AscentProfiler
 
                 public AscentProAPGCSModule()
                 {
+                        sequence                = null;
+                        telemetryController     = null;
+                        attitudeController      = null;
+
                         InitNewSequenceMessage();
                         
                 }
 
-                void Transmit(ControlTelemetry flightTelemetry)
+                /*
+* Called after the scene is loaded.
+*/
+                public override void OnAwake()
                 {
-                        if (!isConnectedtoKSC)                                                                                                                  
-                                return;
 
-                        
-                        if (flightTelemetry.isMissionLogEnabled && flightTelemetry.missionLog.Count > flightTelemetry.lastMissionLogTransmitCount)              // Send Mission Logs
-                                if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), flightTelemetry.missionLog))
-                                        flightTelemetry.lastMissionLogTransmitCount = flightTelemetry.missionLog.Count;
-
-                        if (flightTelemetry.isSensorsDataReadyToTransmit)
-                                if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))                     // Send Telemetry Data
-                                {
-                                        flightTelemetry.sensorsEnabled = false;
-                                        flightTelemetry.isSensorsDataReadyToTransmit = false;
-                                        flightTelemetry.sensorsOnBoard.Clear();
-                                }
-
-                                
-
+                        Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
+                            + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
                 }
-
-                double TransitTimeUT()
-                {
-                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
-                                { return 0; }
-                        Debug.Log("UT: " + Planetarium.GetUniversalTime());
-                        Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(vessel.id));
-                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(vessel.id);
-                
-                }
-
-
-
-
 
                 /*
 * Called every frame
@@ -102,16 +80,24 @@ namespace AscentProfiler
 
 
 
-                        Transmit(telemetryController);
+                        if (sequence != null)
+                        {
+                                sequence.TriggerLoop();
+                        }
+                                
 
                         if (telemetryController != null)
+                        {
                                 telemetryController.ReadSensors();
+                                telemetryController.Transmit();
+                        }
 
-                        if (Sequence != null)
-                                Sequence.TriggerLoop();
 
                         if (attitudeController != null)
+                        {
                                 attitudeController.ActiveController();
+                        }
+                                
 
                 }
 
@@ -137,11 +123,11 @@ namespace AscentProfiler
 
                 void LoadNewSequence(SequenceEngine newsequence)
                 {
-                        telemetryController.sensorsOnBoard.Clear();
-                        Sequence = newsequence;
-                        Sequence.AssignToModule(this);
-                        Sequence.Enabled = true;
-                        Sequence.ExecuteActions(0);
+                        //telemetryController.sensorsOnBoard.Clear();
+                        sequence = newsequence;
+                        sequence.AssignToModule(this);
+                        sequence.Enabled = true;
+                        sequence.ExecuteActions(0);
 
                 }
 
@@ -205,15 +191,7 @@ namespace AscentProfiler
 
 
                
-                /*
-                * Called after the scene is loaded.
-                */
-                public override void OnAwake()
-                {
 
-                        Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
-                            + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
-                }
 
                 /*
                  * Called after OnAwake.

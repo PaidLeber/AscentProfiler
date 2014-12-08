@@ -32,7 +32,39 @@ namespace AscentProfiler
                         sensorsSuite = new SensorPackage(module);
 
                 }
-                
+
+                internal void Transmit()
+                {
+                        if (!module.isConnectedtoKSC)
+                                return;
+
+
+                        if (isMissionLogEnabled && missionLog.Count > lastMissionLogTransmitCount)              // Send Mission Logs
+                                if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), missionLog))
+                                        lastMissionLogTransmitCount = missionLog.Count;
+
+                        if (isSensorsDataReadyToTransmit)
+                                if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), sensorsOnBoard))                     // Send Telemetry Data
+                                {
+                                        sensorsEnabled = false;
+                                        isSensorsDataReadyToTransmit = false;
+                                        sensorsOnBoard.Clear();
+                                }
+
+
+
+                }
+
+                double TransitTimeUT()
+                {
+                        if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
+                        { return 0; }
+                        Debug.Log("UT: " + Planetarium.GetUniversalTime());
+                        Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id));
+                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id);
+
+                }
+
                 internal bool AddSensor(SensorType sensor)
                 {
 

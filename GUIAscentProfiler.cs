@@ -106,7 +106,7 @@ namespace AscentProfiler
                         {
                                 AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
                                         
-                                foreach (Trigger item in APGCSmodule.Sequence.listTrigger)
+                                foreach (Trigger item in APGCSmodule.sequence.listTrigger)
                                 {
                                         Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " value: " + item.value);
                                 }
