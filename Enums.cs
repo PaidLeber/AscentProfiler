@@ -25,7 +25,9 @@ namespace AscentProfiler
 
         enum ControlType
         { 
+                TELEMETRY,
                 ATTITUDE
+
         }
 
         enum ControllerType

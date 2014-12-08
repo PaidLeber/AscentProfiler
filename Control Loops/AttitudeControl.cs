@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class AttitudeController
+        class AttitudeControl
         {
                 protected AscentProAPGCSModule module;
 
@@ -16,7 +16,7 @@ namespace AscentProfiler
                 protected float pitch;
                 protected float roll;
 
-                private bool _enabled;
+                private bool _enabled = false;
                 internal bool Enabled
                 {
                         get { return _enabled; }
@@ -36,7 +36,7 @@ namespace AscentProfiler
 
 
 
-                internal AttitudeController()
+                internal AttitudeControl()
                 {
                 }
 

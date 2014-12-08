@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class SASController : AttitudeController
+        class SASController : AttitudeControl
         {
                 Quaternion lastrotation;
 
                 internal SASController(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        module.flightTelemetry.AddLog("SAS Controller Loaded!");
+                        module.telemetryController.AddLog("SAS Controller Loaded!");
                 }
 
 

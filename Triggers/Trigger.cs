@@ -91,7 +91,7 @@ namespace AscentProfiler
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
                                                 
-                                                module.flightTelemetry.AddLog("Ascending Above "+ module.vessel.mainBody.name + " " + value + "m");
+                                                module.telemetryController.AddLog("Ascending Above "+ module.vessel.mainBody.name + " " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -99,7 +99,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.flightTelemetry.AddLog("Descending Below " + module.vessel.mainBody.name + " " + value + "m");
+                                                module.telemetryController.AddLog("Descending Below " + module.vessel.mainBody.name + " " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -117,12 +117,12 @@ namespace AscentProfiler
                                 {
                                         if (ascentMode)
                                         {
-                                                module.flightTelemetry.AddLog("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
+                                                module.telemetryController.AddLog("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
                                                 return activated = true;
                                         }
                                         else
                                         {
-                                                module.flightTelemetry.AddLog("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
+                                                module.telemetryController.AddLog("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
                                                 return activated = true;
                                         }
 
@@ -159,20 +159,20 @@ namespace AscentProfiler
                         switch (command)
                         {
                                 case AttitudeType.HEADING:
-                                        module.flightController.SetHeading(attitude.x);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE HEADING " + attitude.x);
+                                        module.attitudeController.SetHeading(attitude.x);
+                                        module.telemetryController.AddLog("SET ATTITUDE HEADING " + attitude.x);
                                         break;
                                 case AttitudeType.PITCH:
-                                        module.flightController.SetPitch(attitude.x);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE PITCH " + attitude.x);
+                                        module.attitudeController.SetPitch(attitude.x);
+                                        module.telemetryController.AddLog("SET ATTITUDE PITCH " + attitude.x);
                                         break;
                                 case AttitudeType.ROLL:
-                                        module.flightController.SetRoll(attitude.x);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE ROLL " + attitude.x);
+                                        module.attitudeController.SetRoll(attitude.x);
+                                        module.telemetryController.AddLog("SET ATTITUDE ROLL " + attitude.x);
                                         break;
                                 case AttitudeType.HPR:
-                                        module.flightController.SetAttitude(attitude);
-                                        module.flightTelemetry.AddLog("SET ATTITUDE " + attitude.x + ", " + attitude.y + ", " + attitude.z);
+                                        module.attitudeController.SetAttitude(attitude);
+                                        module.telemetryController.AddLog("SET ATTITUDE " + attitude.x + ", " + attitude.y + ", " + attitude.z);
                                         break;
                         }
 

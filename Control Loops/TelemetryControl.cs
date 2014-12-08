@@ -6,17 +6,19 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class FlightTelemetry
+        class TelemetryControl
         {
 
                 AscentProAPGCSModule module;
                 SensorPackage sensorsSuite;
 
+                internal bool Enabled = false;
+
                 internal bool isMissionLogEnabled = true;
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
 
-                internal bool isSensorsEnabled = false;
+                internal bool sensorsEnabled = false;
                 internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
                 internal bool isSensorsDataReadyToTransmit = false;
                 int sensorstep = 0;
@@ -24,7 +26,7 @@ namespace AscentProfiler
                 double sensorlast;
                 
 
-                internal FlightTelemetry(AscentProAPGCSModule module)
+                internal TelemetryControl(AscentProAPGCSModule module)
                 {
                         this.module = module;
                         sensorsSuite = new SensorPackage(module);
@@ -38,10 +40,10 @@ namespace AscentProfiler
                         return true;
                 }
 
-                internal void OnUpdate()
+                internal void ReadSensors()
                 {
-                        if (!isSensorsEnabled || module.vessel.missionTime == 0)
-                                {return;}
+                        if (!sensorsEnabled || module.vessel.missionTime == 0)
+                                return;
 
                         if (Planetarium.GetUniversalTime() > sensorlast + sensorrate)
                         {

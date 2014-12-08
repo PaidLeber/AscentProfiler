@@ -72,18 +72,29 @@ namespace AscentProfiler
                                 switch (controller)
                                 {
                                         case ControllerType.SAS:
-                                                module.flightController = new SASController(module);  
-                                                module.flightController.isEngaged = state;
+                                                module.attitudeController = new SASController(module);  
+                                                module.attitudeController.Enabled = state;
                                                 break;
 
                                         default:
-                                                module.flightTelemetry.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
+                                                module.telemetryController.AddLog("Control -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + " : Not  a valid attitude controller");
                                                 return activated = true;
                                 }
 
                         }
 
-                        module.flightTelemetry.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state));
+                        switch(control)
+                        {
+                                case ControlType.TELEMETRY:
+
+                                        module.telemetryController = new TelemetryControl(module);
+                                        module.telemetryController.Enabled = state;
+                                        break;
+                        
+                        
+                        }
+
+                        module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
 
@@ -109,22 +120,37 @@ namespace AscentProfiler
 
                         switch (telemetry)
                         {
+                                case TelemetryType.ON:
+                                        module.telemetryController = new TelemetryControl(module);
+                                        break;
+
                                 case TelemetryType.MISSIONLOG:
-                                        module.flightTelemetry.isMissionLogEnabled = state;
+                                        module.telemetryController.isMissionLogEnabled = state;
                                         break;
                                 
                                 case TelemetryType.SENSORS:
-                                        module.flightTelemetry.isSensorsEnabled = state;
-                                        Debug.Log("SENSORS STATE: "+ state);
+
+                                        if (state)
+                                        {
+
+                                                module.telemetryController.sensorsEnabled = state;
+                                                Debug.Log("SENSORS STATE: " + state);
+                                        }
+                                        else
+                                        { 
+                                        
+                                        }
+
+
                                         break;
 
                                 case TelemetryType.TRANSMIT:
-                                        module.flightTelemetry.isSensorsDataReadyToTransmit = state;
+                                        module.telemetryController.isSensorsDataReadyToTransmit = state;
                                         Debug.Log("TRANSMIT STATE: " + state);
                                         break;
 
                         }
-                        module.flightTelemetry.AddLog("Telemetry -> " + telemetry.ToString() + " : " + StateToString(state));
+                        module.telemetryController.AddLog("Telemetry -> " + telemetry.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
         
@@ -151,7 +177,7 @@ namespace AscentProfiler
                                 {
                                         if (farsensor.ToString() == sensor.ToString())
                                         {
-                                                module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR not installed");
+                                                module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR not installed");
                                                 return activated = true;
                                         }
 
@@ -160,8 +186,8 @@ namespace AscentProfiler
 
                         }
 
-                        module.flightTelemetry.AddSensor(sensor);
-                        module.flightTelemetry.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
+                        module.telemetryController.AddSensor(sensor);
+                        module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
 
                         return activated = true;
                 }

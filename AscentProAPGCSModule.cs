@@ -10,9 +10,9 @@ namespace AscentProfiler
         public class AscentProAPGCSModule : PartModule
         {
 
-                internal AttitudeController flightController;
+                internal AttitudeControl attitudeController;
                 internal SequenceEngine flightSequence;
-                internal FlightTelemetry flightTelemetry;
+                internal TelemetryControl telemetryController;
 
                 //On RX Sequence of New Sequence
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
@@ -40,11 +40,10 @@ namespace AscentProfiler
                 public AscentProAPGCSModule()
                 {
                         InitNewSequenceMessage();
-                        flightTelemetry = new FlightTelemetry(this); 
                         
                 }
 
-                void Transmit(FlightTelemetry flightTelemetry)
+                void Transmit(TelemetryControl flightTelemetry)
                 {
                         if (!isConnectedtoKSC)                                                                                                                  
                                 return;
@@ -57,7 +56,7 @@ namespace AscentProfiler
                         if (flightTelemetry.isSensorsDataReadyToTransmit)
                                 if (AscentProfiler.telemetryReceiver.ReceiveTelemetryData(TransitTimeUT(), flightTelemetry.sensorsOnBoard))                     // Send Telemetry Data
                                 {
-                                        flightTelemetry.isSensorsEnabled = false;
+                                        flightTelemetry.sensorsEnabled = false;
                                         flightTelemetry.isSensorsDataReadyToTransmit = false;
                                         flightTelemetry.sensorsOnBoard.Clear();
                                 }
@@ -104,14 +103,17 @@ namespace AscentProfiler
 
 
 
-                        flightTelemetry.OnUpdate();
-                        Transmit(flightTelemetry);
+                        telemetryController.ReadSensors();
+                        Transmit(telemetryController);
+
+                        if (telemetryController != null)
+                                telemetryController.ReadSensors();
 
                         if (flightSequence != null)
                                 flightSequence.TriggerLoop();
 
-                        if (flightController != null)
-                                flightController.ActiveController();
+                        if (attitudeController != null)
+                                attitudeController.ActiveController();
 
                 }
 
@@ -137,7 +139,7 @@ namespace AscentProfiler
 
                 void LoadNewSequence(SequenceEngine newsequence)
                 {
-                        flightTelemetry.sensorsOnBoard.Clear();
+                        telemetryController.sensorsOnBoard.Clear();
                         flightSequence = newsequence;
                         flightSequence.AssignToModule(this);
                         flightSequence.Enabled = true;
@@ -168,7 +170,7 @@ namespace AscentProfiler
                                         if (sequenceMessageOrder == 4)
                                         {
                                                 LoadNewSequence(newSequence);
-                                                flightTelemetry.AddLog("Reconfiguration successful: sequence loaded");
+                                                telemetryController.AddLog("Reconfiguration successful: sequence loaded");
                                                 Log.Level(LogType.Verbose, "Sequence Loaded");
                                                 Log.Level(LogType.Verbose, "this module enabled: " + this.isEnabled);
                                         }
