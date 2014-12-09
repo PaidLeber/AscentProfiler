@@ -33,7 +33,7 @@ namespace AscentProfiler
         enum ControllerType
         { 
                 DEFAULT,
-                SAS
+                SAS,
         }
 
         enum SensorType

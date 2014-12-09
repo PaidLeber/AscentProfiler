@@ -14,6 +14,10 @@ namespace AscentProfiler
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
+                private GUILoadoutEditor sequenceWindow;
+                private GUILoadoutEditor controllerWindow;
+                private GUILoadoutEditor sensorWindow;
+
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Module ID")]
                 public string moduleID = "";
 
@@ -44,7 +48,9 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
                 public void ModifySensorLoadout()
                 {
-
+                        GameObject gameObj = new GameObject("addsensors", typeof(GUILoadoutEditor));
+                        DontDestroyOnLoad(gameObj);
+                        sensorWindow = (GUILoadoutEditor)gameObj.GetComponent(typeof(GUILoadoutEditor));
                 }
 
                 public AscentProAPGCSModule()
