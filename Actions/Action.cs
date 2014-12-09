@@ -157,7 +157,7 @@ namespace AscentProfiler
 
                         if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
                         {
-                                foreach (FARAPIType farsensor in (FARAPIType[])Enum.GetValues(typeof(FARAPIType)))
+                                foreach (FARSensorType farsensor in (FARSensorType[])Enum.GetValues(typeof(FARSensorType)))
                                 {
                                         if (farsensor.ToString() == sensor.ToString())
                                         {

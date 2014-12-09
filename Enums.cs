@@ -44,7 +44,7 @@ namespace AscentProfiler
                 MAXQ,
                 AOA
         }
-        enum FARAPIType
+        enum FARSensorType
         { 
                 MAXQ,
                 AOA

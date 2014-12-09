@@ -51,19 +51,23 @@ namespace AscentProfiler
 
        
                                         GUILayout.BeginVertical(GUILayout.Width(200));
-                                        labelStyle.normal.textColor = Color.yellow;
-                                        GUILayout.Label(windowType + "s Available", labelStyle);
 
-                                        GUILayout.Space(5);
+                                                labelStyle.normal.textColor = Color.yellow;
+
+                                                GUILayout.Label(windowType + "s Available", labelStyle);
+
+                                                GUILayout.Space(5);
 
 
-                                        leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
+                                                leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
+
                                                 foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
                                                 {
                                                         GUILayout.Button(value.ToString());
 
                                                 }
-                                        GUILayout.EndScrollView();
+
+                                                GUILayout.EndScrollView();
 
 
                                         GUILayout.EndVertical();
@@ -74,30 +78,33 @@ namespace AscentProfiler
                                         GUILayout.FlexibleSpace();
 
                                         GUILayout.BeginVertical();
-                                        GUILayout.Space(70);
-                                        labelStyle.normal.textColor = Color.cyan;
-                                        GUILayout.Label(">", labelStyle);
-                                        GUILayout.Space(200);
-                                        GUILayout.Label("<", labelStyle);
+
+                                                GUILayout.Space(70);
+                                                labelStyle.normal.textColor = Color.cyan;
+                                                GUILayout.Label(">", labelStyle);
+                                                GUILayout.Space(200);
+                                                GUILayout.Label("<", labelStyle);
+
                                         GUILayout.EndVertical();
 
                                         GUILayout.FlexibleSpace();
                                         
-
                                         GUILayout.BeginVertical(GUILayout.Width(200));
 
-                                        labelStyle.normal.textColor = Color.green;
-                                        GUILayout.Label(windowType+"s Loadout", labelStyle);
+                                                labelStyle.normal.textColor = Color.green;
+                                                GUILayout.Label(windowType+" Loadout", labelStyle);
 
-                                        GUILayout.Space(5);
+                                                GUILayout.Space(5);
 
-                                        rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
-                                        foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
-                                        {
-                                                GUILayout.Button(value.ToString());
+                                                rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
 
-                                        }
-                                        GUILayout.EndScrollView();
+                                                foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                                                {
+                                                        GUILayout.Button(value.ToString());
+
+                                                }
+
+                                                GUILayout.EndScrollView();
 
                                         GUILayout.EndVertical();
                                         
