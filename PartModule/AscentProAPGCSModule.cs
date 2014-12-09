@@ -14,13 +14,16 @@ namespace AscentProfiler
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Module Name")]
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Module ID")]
                 public string moduleID = "";
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence")]
                 public string activeSeq = "";
 
-                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change Module Name")]
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Mode")]
+                public string modeSeq = "";                                                                           // Active, Inactive, Hibernation
+
+                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change Module ID")]
                 public void GUIDChange()
                 {
 
