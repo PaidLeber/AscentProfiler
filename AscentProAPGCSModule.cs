@@ -21,18 +21,6 @@ namespace AscentProfiler
                         
                 }
 
-                internal bool AddControl(ControlType control)
-                {
-                
-                        return true;
-                }
-
-                internal bool SetControlState(ControlType control, bool state)
-                {
-
-                        return true;
-                }
-
 
                 /*
 * Called after the scene is loaded.

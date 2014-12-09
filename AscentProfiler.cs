@@ -48,7 +48,7 @@ namespace AscentProfiler
                         telemetryReceiver = new TelemetryReceiver();
 
                         //telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
-
+                        
                         
 
                         if (ToolbarManager.ToolbarAvailable)
