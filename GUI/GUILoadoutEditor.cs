@@ -8,7 +8,7 @@ namespace AscentProfiler
 {
         public class GUILoadoutEditor : MonoBehaviour
         {
-                Rect WindowRect = new Rect(200, 100, 400, 400);
+                Rect WindowRect = new Rect(200, 100, 450, 400);
 
                 string windowTitle;
                 string windowType;
@@ -18,7 +18,8 @@ namespace AscentProfiler
                 Vector2 rightScrollPosition;
 
                 //Styles
-                GUIStyle style = new GUIStyle();
+                GUIStyle labelStyle = new GUIStyle();
+                GUIStyle columnStyle;
                 
 
                 internal GUILoadoutEditor()
@@ -29,14 +30,14 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        style.alignment = TextAnchor.MiddleCenter;
+                        labelStyle.alignment = TextAnchor.MiddleCenter;
+
                 }
 
                 void OnGUI()
                 {
 
                         WindowRect = GUILayout.Window(windowId, WindowRect, DrawLoadoutEditor, windowTitle);
-                        Debug.Log("working");
                 }
 
                 void DrawLoadoutEditor(int id)
@@ -48,50 +49,67 @@ namespace AscentProfiler
 
                         GUILayout.BeginHorizontal();
 
-                                        leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
-
-                                        GUILayout.BeginVertical(GUILayout.Width(150));
-                                        style.normal.textColor = Color.yellow;
-                                        GUILayout.Label(windowType + " Available", style);
+       
+                                        GUILayout.BeginVertical(GUILayout.Width(200));
+                                        labelStyle.normal.textColor = Color.yellow;
+                                        GUILayout.Label(windowType + "s Available", labelStyle);
 
                                         GUILayout.Space(5);
 
+
+                                        leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
                                                 foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
                                                 {
                                                         GUILayout.Button(value.ToString());
 
                                                 }
+                                        GUILayout.EndScrollView();
+
 
                                         GUILayout.EndVertical();
-                                        GUILayout.EndScrollView();
+
+
+                        
 
                                         GUILayout.FlexibleSpace();
 
-                                        rightScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
+                                        GUILayout.BeginVertical();
+                                        GUILayout.Space(70);
+                                        labelStyle.normal.textColor = Color.cyan;
+                                        GUILayout.Label(">", labelStyle);
+                                        GUILayout.Space(200);
+                                        GUILayout.Label("<", labelStyle);
+                                        GUILayout.EndVertical();
 
-                                        GUILayout.BeginVertical(GUILayout.Width(150));
+                                        GUILayout.FlexibleSpace();
+                                        
 
-                                        style.normal.textColor = Color.green;
-                                        GUILayout.Label(windowType + " Loadout", style);
+                                        GUILayout.BeginVertical(GUILayout.Width(200));
+
+                                        labelStyle.normal.textColor = Color.green;
+                                        GUILayout.Label(windowType+"s Loadout", labelStyle);
 
                                         GUILayout.Space(5);
 
+                                        rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
                                         foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
                                         {
                                                 GUILayout.Button(value.ToString());
 
                                         }
+                                        GUILayout.EndScrollView();
 
                                         GUILayout.EndVertical();
-                                        GUILayout.EndScrollView();
+                                        
 
 
                         GUILayout.EndHorizontal();
-
+                        
+                        GUILayout.Button("Apply");
                         GUILayout.EndVertical();
 
 
-                        GUI.DragWindow();
+                        GUI.DragWindow(new Rect(0, 0, 10000, 20));
                 }
 
                 public void InitWindow(string windowtype, string title)
