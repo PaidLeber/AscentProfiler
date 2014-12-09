@@ -90,10 +90,10 @@ namespace AscentProfiler
                 void LoadNewSequence(SequenceEngine newsequence)
                 {
                         //telemetryController.sensorsOnBoard.Clear();
-                        sequence = newsequence;
-                        sequence.AssignToModule(this);
-                        sequence.Enabled = true;
-                        sequence.ExecuteActions(0);
+                        //sequence = newsequence;
+                        //sequence.AssignToModule(this);
+                        //sequence.Enabled = true;
+                        //sequence.ExecuteActions(0);
 
                 }
 
@@ -133,7 +133,7 @@ namespace AscentProfiler
 
                         var messagearray = listRXReceiverMessage[sequenceMessageOrder];
 
-
+                        /*
                         if (Planetarium.GetUniversalTime() > sequenceTransmissionTime + Convert.ToDouble(messagearray[1]) + RemoteTech.API.GetSignalDelayToKSC(vessel.id))
                         {
                                 Debug.Log("sequence#: " + sequenceMessageOrder + " seqdelaytime: " + messagearray[1]);
@@ -150,7 +150,7 @@ namespace AscentProfiler
                                 sequenceMessageOrder++;
 
                         }
-
+                        */
                 }
 
 

@@ -91,7 +91,7 @@ namespace AscentProfiler
                                         if (isIncreasing(isascending, currentAltitude, value))
                                         {
                                                 
-                                                module.telemetryController.AddLog("Ascending Above "+ module.vessel.mainBody.name + " " + value + "m");
+                                                //module.telemetryController.AddLog("Ascending Above "+ module.vessel.mainBody.name + " " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -99,7 +99,7 @@ namespace AscentProfiler
                                 {
                                         if (isDecreasing(isascending, currentAltitude, value))
                                         {
-                                                module.telemetryController.AddLog("Descending Below " + module.vessel.mainBody.name + " " + value + "m");
+                                                //module.telemetryController.AddLog("Descending Below " + module.vessel.mainBody.name + " " + value + "m");
                                                 return activated = true;
                                         }
                                 }
@@ -159,20 +159,20 @@ namespace AscentProfiler
                         switch (command)
                         {
                                 case AttitudeType.HEADING:
-                                        module.attitudeController.SetHeading(attitude.x);
-                                        module.telemetryController.AddLog("SET ATTITUDE HEADING " + attitude.x);
+                                        //module.attitudeController.SetHeading(attitude.x);
+                                        //module.telemetryController.AddLog("SET ATTITUDE HEADING " + attitude.x);
                                         break;
                                 case AttitudeType.PITCH:
-                                        module.attitudeController.SetPitch(attitude.x);
-                                        module.telemetryController.AddLog("SET ATTITUDE PITCH " + attitude.x);
+                                        //module.attitudeController.SetPitch(attitude.x);
+                                        //module.telemetryController.AddLog("SET ATTITUDE PITCH " + attitude.x);
                                         break;
                                 case AttitudeType.ROLL:
-                                        module.attitudeController.SetRoll(attitude.x);
-                                        module.telemetryController.AddLog("SET ATTITUDE ROLL " + attitude.x);
+                                        //module.attitudeController.SetRoll(attitude.x);
+                                        //module.telemetryController.AddLog("SET ATTITUDE ROLL " + attitude.x);
                                         break;
                                 case AttitudeType.HPR:
-                                        module.attitudeController.SetAttitude(attitude);
-                                        module.telemetryController.AddLog("SET ATTITUDE " + attitude.x + ", " + attitude.y + ", " + attitude.z);
+                                        //module.attitudeController.SetAttitude(attitude);
+                                        //module.telemetryController.AddLog("SET ATTITUDE " + attitude.x + ", " + attitude.y + ", " + attitude.z);
                                         break;
                         }
 

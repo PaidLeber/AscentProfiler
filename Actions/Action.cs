@@ -93,7 +93,7 @@ namespace AscentProfiler
                         
                         }
 
-                        module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + error);
+                        //module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + error);
                         return activated = true;
                 }
 
@@ -124,7 +124,7 @@ namespace AscentProfiler
                                         break;
                                 
                                 case TelemetryType.SENSORS:
-                                        //module.telemetryController.sensorsEnabled = state;
+                                       // module.telemetryController.sensorsEnabled = state;
                                         Debug.Log("SENSORS STATE: " + state);
                                         break;
 
@@ -134,7 +134,7 @@ namespace AscentProfiler
                                         break;
 
                         }
-                        module.telemetryController.AddLog("Telemetry -> " + telemetry.ToString() + " : " + StateToString(state));
+                        //module.telemetryController.AddLog("Telemetry -> " + telemetry.ToString() + " : " + StateToString(state));
                         return activated = true;
                 }
         
@@ -161,7 +161,7 @@ namespace AscentProfiler
                                 {
                                         if (farsensor.ToString() == sensor.ToString())
                                         {
-                                                module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR not installed");
+                                                //module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state) + " : FAR not installed");
                                                 return activated = true;
                                         }
 
@@ -170,8 +170,8 @@ namespace AscentProfiler
 
                         }
 
-                        module.telemetryController.AddSensor(sensor);
-                        module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
+                        //module.telemetryController.AddSensor(sensor);
+                        //module.telemetryController.AddLog("Sensors -> " + sensor.ToString() + " : " + StateToString(state));
 
                         return activated = true;
                 }

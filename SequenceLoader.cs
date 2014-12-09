@@ -40,7 +40,7 @@ namespace AscentProfiler
 
                         List<string> sequenceLines = new List<string>(sequences[sequence].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 
-                        Log.Level(LogType.Info, "Loading Profile: " + sequence);
+                        Log.Level(LogType.Info, "Loading Sequence: " + sequence);
                         Log.Level(LogType.Verbose, sequences[sequence].ToUpper());
 
                         int lineCounter = 0;
