@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace AscentProfiler
 {
@@ -16,6 +17,10 @@ namespace AscentProfiler
                 int sensorrate = 1; //per second
                 double sensorlast;
 
+                internal override void Process()
+                { 
+                
+                }
 
                 internal bool AddSensor(SensorType sensor)
                 {

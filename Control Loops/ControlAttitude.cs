@@ -14,7 +14,7 @@ namespace AscentProfiler
                 protected float roll;
 
                 private bool _enabled = false;
-                internal bool Enabled
+                internal new bool Enabled
                 {
                         get { return _enabled; }
 
@@ -30,7 +30,10 @@ namespace AscentProfiler
 
                 }
 
-
+                internal override void Process()
+                { 
+                
+                }
 
 
                 internal ControlAttitude()

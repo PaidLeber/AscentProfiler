@@ -7,8 +7,6 @@ namespace AscentProfiler
 {
         class ControlMissionLog : ControlModule
         {
-                internal bool Enabled;
-
                 internal bool isMissionLogEnabled = true;
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
@@ -30,6 +28,11 @@ namespace AscentProfiler
                         TimeSpan t = TimeSpan.FromSeconds(secs);
 
                         return string.Format("T+{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
+
+                }
+
+                internal override void Process()
+                {
 
                 }
 

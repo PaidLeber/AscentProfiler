@@ -14,12 +14,25 @@ namespace AscentProfiler
                 internal ControlTelemetry telemetryController;
                 internal ControlAttitude attitudeController;
 
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "ID:")]
+                public string moduleID = "";
 
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence:")]
+                public string activeSeq = "";
+
+                [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Change ID")]
+                public void GUIDChange()
+                {
+
+                }
 
                 public AscentProAPGCSModule()
                 {
                         
                 }
+
+
+
 
 
                 /*
@@ -62,14 +75,14 @@ namespace AscentProfiler
 
                         if (telemetryController != null)
                         {
-                                telemetryController.ReadSensors();
-                                telemetryController.Transmit();
+                                //telemetryController.ReadSensors();
+                                //telemetryController.Transmit();
                         }
 
 
                         if (attitudeController != null)
                         {
-                                attitudeController.ActiveController();
+                                //attitudeController.ActiveController();
                         }
                                 
 

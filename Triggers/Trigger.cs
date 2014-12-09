@@ -117,12 +117,12 @@ namespace AscentProfiler
                                 {
                                         if (ascentMode)
                                         {
-                                                module.telemetryController.AddLog("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
+                                                //module.telemetryController.AddLog("Descending " + value +" From Max Altitude "+ maxval +" To " + currentAltitude);
                                                 return activated = true;
                                         }
                                         else
                                         {
-                                                module.telemetryController.AddLog("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
+                                                //module.telemetryController.AddLog("Ascending " + value + " From Min Altitude " + maxval + " To " + currentAltitude);
                                                 return activated = true;
                                         }
 

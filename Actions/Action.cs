@@ -120,16 +120,16 @@ namespace AscentProfiler
                         switch (telemetry)
                         {
                                 case TelemetryType.MISSIONLOG:
-                                        module.telemetryController.isMissionLogEnabled = state;
+                                        //module.telemetryController.isMissionLogEnabled = state;
                                         break;
                                 
                                 case TelemetryType.SENSORS:
-                                        module.telemetryController.sensorsEnabled = state;
+                                        //module.telemetryController.sensorsEnabled = state;
                                         Debug.Log("SENSORS STATE: " + state);
                                         break;
 
                                 case TelemetryType.TRANSMIT:
-                                        module.telemetryController.isSensorsDataReadyToTransmit = state;
+                                        //module.telemetryController.isSensorsDataReadyToTransmit = state;
                                         Debug.Log("TRANSMIT STATE: " + state);
                                         break;
 

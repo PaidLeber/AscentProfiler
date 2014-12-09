@@ -11,8 +11,7 @@ namespace AscentProfiler
 
                 internal bool Enabled;
 
-                virtual void Process();
-                virtual void DataPacket();
+                internal abstract void Process();
 
         }
 }

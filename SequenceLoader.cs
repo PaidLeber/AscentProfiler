@@ -124,8 +124,8 @@ namespace AscentProfiler
                         AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
                         TXRemoteTechNetwork(sequence, APGCSmodule);
-                        
-                        return APGCSmodule.RXNewSequence(newsequence);
+
+                        return true;
 
                 }
 

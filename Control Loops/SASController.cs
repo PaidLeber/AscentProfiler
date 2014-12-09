@@ -13,7 +13,7 @@ namespace AscentProfiler
                 internal SASController(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        module.telemetryController.AddLog("SAS Controller Loaded!");
+                        //module.telemetryController.AddLog("SAS Controller Loaded!");
                 }
 
 

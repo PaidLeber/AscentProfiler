@@ -32,12 +32,17 @@ namespace AscentProfiler
 
                 }
 
+                internal override void Process()
+                {
+
+                }
+
                 internal void Transmit()
                 {
                         if (!isConnectedtoKSC)
                                 return;
 
-
+                        /*
                         if (isMissionLogEnabled && missionLog.Count > lastMissionLogTransmitCount)              // Send Mission Logs
                                 if (AscentProfiler.telemetryReceiver.ReceiveMissionLog(TransitTimeUT(), missionLog))
                                         lastMissionLogTransmitCount = missionLog.Count;
@@ -50,7 +55,7 @@ namespace AscentProfiler
                                         sensorsOnBoard.Clear();
                                 }
 
-
+                        */
 
                 }
 
