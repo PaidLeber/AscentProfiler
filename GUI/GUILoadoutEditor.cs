@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        public class GUILoadoutEditor : MonoBehaviour
+        class GUILoadoutEditor : MonoBehaviour
         {
                 AscentProAPGCSModule module;
 
@@ -19,8 +19,8 @@ namespace AscentProfiler
                 Vector2 leftScrollPosition;
                 Vector2 rightScrollPosition;
 
-                private List<SensorType> leftList = new List<SensorType>();
-                private List<SensorType> rightList;
+                List<SensorType> leftList = new List<SensorType>();
+                List<SensorType> rightList;
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
