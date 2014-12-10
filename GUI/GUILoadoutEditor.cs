@@ -167,6 +167,7 @@ namespace AscentProfiler
                                 SaveSensorLoadout();
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUILoadoutEditor>());
+                                
                         
                         }
 
@@ -194,6 +195,7 @@ namespace AscentProfiler
                 void LoadSensorsFromPartModule(AscentProAPGCSModule module)
                 {
                         rightList = module.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                        rightList.Remove(SensorType.TIME);
                         rightList.Sort();
 
                 }
@@ -203,8 +205,8 @@ namespace AscentProfiler
                         
                         foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
                         {
-
-                                leftList.Add(sensor);
+                                if (sensor != SensorType.TIME)
+                                        leftList.Add(sensor);
                         }
   
                         leftList = leftList.Except(rightList).ToList();
@@ -217,13 +219,15 @@ namespace AscentProfiler
                 {
                         module.ControllerModules[ControlType.SENSOR].ClearTypes();
 
+                        module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);                              // Remove Time array from available sensor options to user, but add it here
+
                         foreach(SensorType sensor in rightList)
                         {
                                 module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
                         }
 
 
-                        //module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);
+
                         
                 
                 }
