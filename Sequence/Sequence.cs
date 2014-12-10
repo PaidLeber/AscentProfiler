@@ -19,7 +19,7 @@ namespace AscentProfiler
                 internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
 
 
-                internal Sequence(List<Trigger> triggerlist, List<Action> actionlist)
+                internal Sequence()
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         //listAction = actionlist;

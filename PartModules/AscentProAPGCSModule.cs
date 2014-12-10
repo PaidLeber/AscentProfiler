@@ -126,7 +126,7 @@ namespace AscentProfiler
 
                         if (SequenceEngine != null)
                         {
-                                SequenceEngine.Process();
+                                SequenceEngine.Process(this);
                         }
                                 
 

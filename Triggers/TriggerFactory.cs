@@ -86,7 +86,8 @@ namespace AscentProfiler
                 internal Sequence GetNewFlightSequence(List<Action> newactionlist)
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
-                        return new Sequence(NewTriggerSequence, newactionlist);
+                        //return new Sequence(NewTriggerSequence, newactionlist);
+                        return new Sequence();
                 }
 
                 bool SetTriggerMode(TriggerType trigger)

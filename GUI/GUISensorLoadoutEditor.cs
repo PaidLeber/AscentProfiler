@@ -187,7 +187,7 @@ namespace AscentProfiler
                 void LoadSensorsFromPartModule(AscentProAPGCSModule module)
                 {
                         rightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                        //rightList.Remove(SensorType.TIME);
+                        rightList.Remove(SensorType.TIME);
                         rightList.Sort();
 
                 }
