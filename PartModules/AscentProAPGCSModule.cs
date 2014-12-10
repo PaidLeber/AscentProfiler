@@ -48,7 +48,7 @@ namespace AscentProfiler
                 {
                         GameObject gameObj = new GameObject("addsensors", typeof(GUILoadoutEditor));
                         sensorWindow = (GUILoadoutEditor)gameObj.GetComponent(typeof(GUILoadoutEditor));
-                        sensorWindow.InitWindow(this, "Sensors", "Sensor Loadout Window");
+                        sensorWindow.InitWindow(this, LoadoutType.Sensor, "Sensor Loadout Window");
                 }
 
                 public AscentProAPGCSModule()

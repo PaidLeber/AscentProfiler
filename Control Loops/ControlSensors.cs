@@ -44,22 +44,13 @@ namespace AscentProfiler
 
                 internal override bool RemoveType<T>(T enumvalue)
                 {
-                        throw new NotImplementedException();
-                }
 
-                internal override void Process(AscentProAPGCSModule module)
-                { 
-                
-                }
+                        sensorsOnBoard.Remove((SensorType)Convert.ChangeType(enumvalue, typeof(T)));
 
-                internal bool AddSensor(SensorType sensor)
-                {
-
-                        sensorsOnBoard.Add(sensor, new List<double> { });
                         return true;
                 }
 
-                internal void ReadSensors()
+                internal override void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled || module.vessel.missionTime == 0)
                                 return;
@@ -79,9 +70,7 @@ namespace AscentProfiler
                                 sensorstep++;
                         }
 
-
-
-
+                
                 }
 
 

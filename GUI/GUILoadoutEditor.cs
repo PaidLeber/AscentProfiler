@@ -13,7 +13,7 @@ namespace AscentProfiler
                 Rect WindowRect = new Rect(200, 100, 450, 400);
 
                 string windowTitle;
-                string windowType;
+                LoadoutType LoadoutType;
 
                 int windowId = 98473;
                 Vector2 leftScrollPosition;
@@ -32,15 +32,15 @@ namespace AscentProfiler
 
                 }
 
-                public void InitWindow(AscentProAPGCSModule module, string windowtype, string title)
+                internal void InitWindow(AscentProAPGCSModule module, LoadoutType loadouttype, string title)
                 {
                         this.module = module;
-                        windowType = windowtype;
-                        windowTitle = title;
+                        this.LoadoutType = loadouttype;
+                        this.windowTitle = title;
 
-                        switch (windowtype)
+                        switch (loadouttype)
                         {
-                                case "Sensors":
+                                case LoadoutType.Sensor:
 
                                         InitSensorController(module);
                                         LoadSensorsFromPartModule(module);
@@ -83,7 +83,7 @@ namespace AscentProfiler
 
                                                 labelStyle.normal.textColor = Color.yellow;
 
-                                                GUILayout.Label(windowType + "s Available", labelStyle);
+                                                GUILayout.Label(LoadoutType + "s Available", labelStyle);
 
                                                 GUILayout.Space(5);
 
@@ -130,7 +130,7 @@ namespace AscentProfiler
                                         GUILayout.BeginVertical(GUILayout.Width(200));
 
                                                 labelStyle.normal.textColor = Color.green;
-                                                GUILayout.Label(windowType+" Loadout", labelStyle);
+                                                GUILayout.Label(LoadoutType+" Loadout", labelStyle);
 
                                                 GUILayout.Space(5);
 
@@ -204,10 +204,16 @@ namespace AscentProfiler
                         }
 
                         leftList = leftList.Except(rightList).ToList();
-
+                        
                         leftList.Sort();
                 }
 
+
+                void SaveLoadout()
+                { 
+                        
+                
+                }
 
 
 
