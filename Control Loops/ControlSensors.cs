@@ -37,7 +37,9 @@ namespace AscentProfiler
 
                 internal override bool AddType<T>(T enumvalue)
                 {
-                        throw new NotImplementedException();
+                        sensorsOnBoard.Add( (SensorType)Convert.ChangeType(enumvalue, typeof(T)) , new List<double> { });
+
+                        return true;
                 }
 
                 internal override bool RemoveType<T>(T enumvalue)

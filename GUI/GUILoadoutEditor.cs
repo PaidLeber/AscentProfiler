@@ -20,7 +20,7 @@ namespace AscentProfiler
                 Vector2 rightScrollPosition;
 
                 private List<SensorType> leftList = new List<SensorType>();
-                private List<SensorType> rightList = new List<SensorType>();
+                private List<SensorType> rightList;
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -180,6 +180,7 @@ namespace AscentProfiler
                         if (!module.ControllerModules.ContainsKey(ControlType.SENSOR))
                         {
                                 module.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
+                                module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);
 
                         }
 
