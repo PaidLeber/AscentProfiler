@@ -7,7 +7,7 @@ using KSP;
 
 namespace AscentProfiler
 {
-       
+        [Serializable]
         abstract class Trigger
         {
 
@@ -56,6 +56,7 @@ namespace AscentProfiler
                 }
         }
 
+        [Serializable]
         class Altitude : Trigger
         {
                 
@@ -138,7 +139,7 @@ namespace AscentProfiler
 
         }
 
-
+        [Serializable]
         class Attitude : Trigger
         {
                 AttitudeType command;
@@ -186,7 +187,7 @@ namespace AscentProfiler
         }
 
 
-        //[Serializable]
+        [Serializable]
         class Countdown : Trigger
         {
 

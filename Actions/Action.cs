@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-
+        [Serializable]
         abstract class Action
         {
                 internal ActionType type;
@@ -50,6 +50,7 @@ namespace AscentProfiler
 
         }
 
+        [Serializable]
         class Control : Action
         {
                 ControlType control;
@@ -100,7 +101,7 @@ namespace AscentProfiler
 
         }
 
-
+        [Serializable]
         class Telemetry : Action
         {
                 TelemetryType telemetry;
@@ -140,6 +141,7 @@ namespace AscentProfiler
         
         }
 
+        [Serializable]
         class Sensors : Action
         {
                 SensorType sensor;
@@ -179,7 +181,7 @@ namespace AscentProfiler
 
         }
 
-
+        [Serializable]
         class ActionGroup : Action
         {
                 KSPActionGroup actiongroupValue;
@@ -226,6 +228,7 @@ namespace AscentProfiler
 
         }
 
+        [Serializable]
         class ActionGroupToggle : Action
         {
 
@@ -247,6 +250,7 @@ namespace AscentProfiler
                 }
         }
 
+        [Serializable]
         class StageNext : Action
         {
 
@@ -268,6 +272,7 @@ namespace AscentProfiler
                 }
         }
 
+        [Serializable]
         class ActivateStage : Action
         {
 
@@ -288,6 +293,7 @@ namespace AscentProfiler
         }
 
 
+        [Serializable]
         class Throttle : Action
         {
                 float floatvalue;
