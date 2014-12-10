@@ -32,9 +32,24 @@ namespace AscentProfiler
 
                 }
 
-                internal override void Process()
+                internal override T GetTypes<T>()
                 {
+                        throw new NotImplementedException();
+                }
 
+                internal override bool AddType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool RemoveType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override void Process(AscentProAPGCSModule module)
+                {
+                        throw new NotImplementedException();
                 }
 
                 internal void Transmit()

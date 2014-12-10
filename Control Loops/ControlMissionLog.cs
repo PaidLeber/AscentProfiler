@@ -12,6 +12,27 @@ namespace AscentProfiler
                 internal int lastMissionLogTransmitCount = 0;
 
 
+                internal override T GetTypes<T>()
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool AddType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool RemoveType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override void Process(AscentProAPGCSModule module)
+                {
+                        throw new NotImplementedException();
+                }
+
+
                 internal void AddLog(string log)
                 {
                         if (!isMissionLogEnabled)
@@ -31,10 +52,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override void Process()
-                {
 
-                }
 
         }
 }

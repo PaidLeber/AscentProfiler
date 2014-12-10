@@ -122,8 +122,8 @@ namespace AscentProfiler
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
                                 AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
-                                Debug.Log(APGCSmodule.attitudeController.Enabled);
-                                APGCSmodule.attitudeController.Enabled = !APGCSmodule.attitudeController.Enabled;
+                                //Debug.Log(APGCSmodule.attitudeController.Enabled);
+                                //APGCSmodule.attitudeController.Enabled = !APGCSmodule.attitudeController.Enabled;
                                 
                                 
                         }

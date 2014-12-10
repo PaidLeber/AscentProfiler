@@ -67,7 +67,7 @@ namespace AscentProfiler
 
                 internal override bool Execute(AscentProAPGCSModule module)
                 {
-
+                        /*
                         switch(control)
                         {
                                 case ControlType.TELEMETRY:
@@ -92,7 +92,7 @@ namespace AscentProfiler
                                         break;
                         
                         }
-
+                        */
                         //module.telemetryController.AddLog(type.ToString() + " -> " + control.ToString() + " : " + controller.ToString() + " : " + StateToString(state) + error);
                         return activated = true;
                 }

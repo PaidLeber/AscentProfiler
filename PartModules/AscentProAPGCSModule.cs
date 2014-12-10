@@ -98,17 +98,7 @@ namespace AscentProfiler
                         }
                                 
 
-                        if (telemetryController != null)
-                        {
-                                //telemetryController.ReadSensors();
-                                //telemetryController.Transmit();
-                        }
 
-
-                        if (attitudeController != null)
-                        {
-                                //attitudeController.ActiveController();
-                        }
                                 
 
                 }

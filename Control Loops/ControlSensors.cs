@@ -8,10 +8,9 @@ namespace AscentProfiler
 {
         class ControlSensors : ControlModule
         {
-                SensorPackage sensorsSuite;
+                SensorPackage sensorsSuite = new SensorPackage();
 
-                internal bool sensorsEnabled = false;
-                internal Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
+                Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
                 internal bool isSensorsDataReadyToTransmit = false;
                 int sensorstep = 0;
                 int sensorrate = 1; //per second
@@ -22,7 +21,29 @@ namespace AscentProfiler
                         sensorsSuite = new SensorPackage();
                 }
 
-                internal override void Process()
+                /*
+                internal abstract T GetTypes<T>();
+                internal abstract bool AddType<T>(T enumvalue);
+                internal abstract bool RemoveType<T>(T enumvalue);
+                internal abstract void Process(AscentProAPGCSModule module);
+                */
+
+                internal override T GetTypes<T>()
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool AddType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool RemoveType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override void Process(AscentProAPGCSModule module)
                 { 
                 
                 }
@@ -36,7 +57,7 @@ namespace AscentProfiler
 
                 internal void ReadSensors()
                 {
-                        if (!sensorsEnabled || module.vessel.missionTime == 0)
+                        if (!Enabled || module.vessel.missionTime == 0)
                                 return;
 
                         if (Planetarium.GetUniversalTime() > sensorlast + sensorrate)

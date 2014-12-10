@@ -191,5 +191,16 @@ namespace AscentProfiler
 
                 }
 
+                void LoadSensorsFromPartModule(AscentProAPGCSModule module)
+                { 
+                        /*
+                        foreach(KeyValuePair<controlt in module.ControllerModules[ControlType.SENSOR])
+                        {
+                                module.ControllerModules[ControlType.SENSOR].GetTypes<SensorType>();
+                        }
+                */
+                }
+
+
         }
 }
