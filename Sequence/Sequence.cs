@@ -9,12 +9,15 @@ namespace AscentProfiler
         [Serializable]
         class Sequence
         {
-                internal bool Enabled = false;
+                internal bool Enabled;
 
-                internal List<Trigger> listTrigger;
-                internal List<Action> listAction;
+                internal string ActiveSequence;
 
-                internal Dictionary<ControlType, ControlModule> ControllerModules;
+                internal Dictionary<string, List<Trigger>> triggerBlockBuffer     = new Dictionary<string,List<Trigger>>();
+                internal Dictionary<string, List<Action>>  actionBlockBuffer      = new Dictionary<string,List<Action>>();
+
+                internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
+
 
                 AscentProAPGCSModule module;
 
@@ -36,18 +39,18 @@ namespace AscentProfiler
                         }
                 }
 
-                internal void TriggerLoop()
+                internal void Process()
                 {
                         if (!Enabled)
                                 return;
 
                         
-                        foreach (Trigger trigger in listTrigger.Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
+                        foreach (Trigger trigger in triggerBlockBuffer[ActiveSequence].Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         {
 
                                 if (trigger.Evaluate(module))
                                 {
-                                        foreach (Trigger linkedtrigger in listTrigger.Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
+                                        foreach (Trigger linkedtrigger in triggerBlockBuffer[ActiveSequence].Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
                                         {
                                                 if(linkedtrigger.linkedIndex == trigger.index)
                                                 {
@@ -73,7 +76,7 @@ namespace AscentProfiler
                 internal void ExecuteActions(int index)
                 {
 
-                        foreach (var action in listAction.Where(action => action.activated == false && action.index == index))
+                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.index == index))
                         {
                                 if (action.Execute(module))
                                 {

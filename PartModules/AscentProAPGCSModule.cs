@@ -97,7 +97,7 @@ namespace AscentProfiler
 */
                 public override void OnAwake()
                 {
-                        ControllerModules = new Dictionary<ControlType, ControlModule>();
+                        
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnAwake: " + this.name);
@@ -126,7 +126,7 @@ namespace AscentProfiler
 
                         if (SequenceEngine != null)
                         {
-                                SequenceEngine.TriggerLoop();
+                                SequenceEngine.Process();
                         }
                                 
 
