@@ -14,9 +14,9 @@ namespace AscentProfiler
         {
                 internal Sequence SequenceEngine;
 
-                private GUILoadoutEditor sequenceWindow;
-                private GUILoadoutEditor controllerWindow;
-                private GUILoadoutEditor sensorWindow;
+                private GUISensorLoadoutEditor sequenceWindow;
+                private GUISensorLoadoutEditor controllerWindow;
+                private GUISensorLoadoutEditor sensorWindow;
 
                 public AscentProAPGCSModule()
                 {
@@ -53,8 +53,8 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
                 public void ModifySensorLoadout()
                 {
-                        sensorWindow = gameObject.AddComponent<GUILoadoutEditor>();
-                        sensorWindow.InitWindow(gameObject, this, LoadoutType.Sensor, "Sensor Loadout Window");
+                        sensorWindow = gameObject.AddComponent<GUISensorLoadoutEditor>();
+                        sensorWindow.InitWindow(this, LoadoutType.Sensor, "Sensor Loadout Window");
                 }
 
 

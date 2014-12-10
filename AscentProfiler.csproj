@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\ActionFactory.cs" />
+    <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
     <Compile Include="PartModules\AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="Control Loops\ControlAttitude.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="GUI\GUIAscentProfiler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Control Loops\ControlTelemetry.cs" />
-    <Compile Include="GUI\GUILoadoutEditor.cs" />
+    <Compile Include="GUI\GUISensorLoadoutEditor.cs" />
     <Compile Include="GUI\GUITelemetry.cs" />
     <Compile Include="KerbalGraph\KerbalGraph.cs" />
     <Compile Include="KerbalGraph\KerbalGraphIO.cs" />

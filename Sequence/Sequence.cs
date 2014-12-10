@@ -24,9 +24,9 @@ namespace AscentProfiler
                 internal Sequence(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
-                        listAction = actionlist;
-                        listTrigger = triggerlist;
-
+                        //listAction = actionlist;
+                        //listTrigger = triggerlist;
+                        /*
                         Debug.Log("FLIGHT SEQUENCE TRIGGER CONTRUCTOR!");
                         foreach(Trigger item in listTrigger)
                         {
@@ -37,6 +37,7 @@ namespace AscentProfiler
                         {
                                 Debug.Log("ACTION: activated: " + item.activated + " linked index: " + item.index + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " modifier: " + item.modifier);
                         }
+                         */ 
                 }
 
                 internal void Process()

@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class GUILoadoutEditor : MonoBehaviour
+        class GUISensorLoadoutEditor : MonoBehaviour
         {
                 AscentProAPGCSModule module;
+
                 int windowId = 98473;
 
                 Rect WindowRect = new Rect(200, 100, 450, 400);
@@ -26,15 +27,14 @@ namespace AscentProfiler
                 GUIStyle labelStyle = new GUIStyle();
                 
 
-                internal GUILoadoutEditor()
+                internal GUISensorLoadoutEditor()
                 {
                         
 
                 }
 
-                internal void InitWindow(GameObject obj, AscentProAPGCSModule module, LoadoutType loadouttype, string title)
+                internal void InitWindow(AscentProAPGCSModule module, LoadoutType loadouttype, string title)
                 {
-                        //this.gameObject = obj;
                         this.module = module;
                         this.LoadoutType = loadouttype;
                         this.windowTitle = title;
@@ -164,7 +164,7 @@ namespace AscentProfiler
 
                                 SaveSensorLoadout();
 
-                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUILoadoutEditor>());
+                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUISensorLoadoutEditor>());
                                 
                         
                         }
