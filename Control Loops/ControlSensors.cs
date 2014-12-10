@@ -48,6 +48,11 @@ namespace AscentProfiler
                         return true;
                 }
 
+                internal override void ClearTypes()
+                {
+                        sensorsOnBoard.Clear();
+                }
+
                 internal override void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled || module.vessel.missionTime == 0)

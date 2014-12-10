@@ -50,6 +50,10 @@ namespace AscentProfiler
                         throw new NotImplementedException();
                 }
 
+                internal override void ClearTypes()
+                {
+                        throw new NotImplementedException();
+                }
 
                 internal ControlAttitude()
                 {

@@ -52,6 +52,11 @@ namespace AscentProfiler
                         throw new NotImplementedException();
                 }
 
+                internal override void ClearTypes()
+                {
+                        throw new NotImplementedException();
+                }
+
                 internal void Transmit()
                 {
                         if (!isConnectedtoKSC)

@@ -215,7 +215,7 @@ namespace AscentProfiler
 
                 void SaveSensorLoadout()
                 {
-                        module.ControllerModules.Clear();
+                        module.ControllerModules[ControlType.SENSOR].ClearTypes();
 
                         foreach(SensorType sensor in rightList)
                         {
@@ -223,7 +223,7 @@ namespace AscentProfiler
                         }
 
 
-                        module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);
+                        //module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);
                         
                 
                 }
