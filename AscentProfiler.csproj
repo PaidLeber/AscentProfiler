@@ -77,7 +77,7 @@
     <Compile Include="ToolbarWrapper.cs" />
     <Compile Include="Triggers\Trigger.cs" />
     <Compile Include="Triggers\TriggerFactory.cs" />
-    <Compile Include="Sequence\SequenceEngine.cs" />
+    <Compile Include="Sequence\Sequence.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

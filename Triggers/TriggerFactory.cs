@@ -83,10 +83,10 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
-                internal SequenceEngine GetNewFlightSequence(List<Action> newactionlist)
+                internal Sequence GetNewFlightSequence(List<Action> newactionlist)
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
-                        return new SequenceEngine(NewTriggerSequence, newactionlist);
+                        return new Sequence(NewTriggerSequence, newactionlist);
                 }
 
                 bool SetTriggerMode(TriggerType trigger)

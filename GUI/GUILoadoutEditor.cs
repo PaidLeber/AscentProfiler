@@ -181,9 +181,9 @@ namespace AscentProfiler
 
                 void InitSensorController(AscentProAPGCSModule module)
                 {
-                        if (!module.ControllerModules.ContainsKey(ControlType.SENSOR))
+                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
                         {
-                                module.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
+                                module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
                                 
 
                         }
@@ -192,7 +192,7 @@ namespace AscentProfiler
                 
                 void LoadSensorsFromPartModule(AscentProAPGCSModule module)
                 {
-                        rightList = module.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                        rightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
                         rightList.Remove(SensorType.TIME);
                         rightList.Sort();
 
@@ -215,13 +215,13 @@ namespace AscentProfiler
 
                 void SaveSensorLoadout()
                 {
-                        module.ControllerModules[ControlType.SENSOR].ClearTypes();
+                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].ClearTypes();
 
-                        module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);                              // Remove Time array from available sensor options to user, but add it here
+                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);                              // Remove Time array from available sensor options to user, but add it here
 
                         foreach(SensorType sensor in rightList)
                         {
-                                module.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
+                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
                         }
 
 

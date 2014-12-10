@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 //On RX Sequence of New Sequence
                 private List<object[]> listRXReceiverMessage = new List<object[]>();
-                private SequenceEngine newSequence;
+                private Sequence newSequence;
                 private double sequenceTransmissionTime = 0;
                 private int sequenceMessageOrder = 0;
 
@@ -87,7 +87,7 @@ namespace AscentProfiler
 
 
 
-                void LoadNewSequence(SequenceEngine newsequence)
+                void LoadNewSequence(Sequence newsequence)
                 {
                         //telemetryController.sensorsOnBoard.Clear();
                         //sequence = newsequence;
@@ -97,7 +97,7 @@ namespace AscentProfiler
 
                 }
 
-                internal bool RXNewSequence(SequenceEngine newsequence)
+                internal bool RXNewSequence(Sequence newsequence)
                 {
                         if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
                         {

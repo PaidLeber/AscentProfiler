@@ -6,17 +6,19 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-
-        class SequenceEngine
+        [Serializable]
+        class Sequence
         {
                 internal bool Enabled = false;
 
                 internal List<Trigger> listTrigger;
                 internal List<Action> listAction;
 
+                internal Dictionary<ControlType, ControlModule> ControllerModules;
+
                 AscentProAPGCSModule module;
 
-                internal SequenceEngine(List<Trigger> triggerlist, List<Action> actionlist)
+                internal Sequence(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
                         listAction = actionlist;

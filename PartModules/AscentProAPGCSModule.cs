@@ -12,8 +12,7 @@ namespace AscentProfiler
         [Serializable]
         public class AscentProAPGCSModule : PartModule
         {
-                internal SequenceEngine CommandSequencer;
-                internal Dictionary<ControlType, ControlModule> ControllerModules;
+                internal Sequence SequenceEngine;
 
                 private GUILoadoutEditor sequenceWindow;
                 private GUILoadoutEditor controllerWindow;
@@ -72,7 +71,7 @@ namespace AscentProfiler
                                 {
                                         BinaryFormatter f = new BinaryFormatter();
 
-                                        f.Serialize(mstream, ControllerModules);
+                                        f.Serialize(mstream, SequenceEngine);
 
                                         string data = Convert.ToBase64String(mstream.ToArray()).Replace('/', '_');
 
@@ -125,9 +124,9 @@ namespace AscentProfiler
 
 
 
-                        if (CommandSequencer != null)
+                        if (SequenceEngine != null)
                         {
-                                CommandSequencer.TriggerLoop();
+                                SequenceEngine.TriggerLoop();
                         }
                                 
 
