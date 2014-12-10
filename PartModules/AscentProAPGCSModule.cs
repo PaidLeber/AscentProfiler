@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-
+        [Serializable]
         public class AscentProAPGCSModule : PartModule
         {
                 internal SequenceEngine CommandSequencer;
@@ -68,15 +68,15 @@ namespace AscentProfiler
                         try
                         {
 
-                                using (MemoryStream ms = new MemoryStream())
+                                using (MemoryStream mstream = new MemoryStream())
                                 {
                                         BinaryFormatter f = new BinaryFormatter();
 
-                                        f.Serialize(ms, ControllerModules);
+                                        f.Serialize(mstream, ControllerModules);
 
-                                        string data = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+                                        string data = Convert.ToBase64String(mstream.ToArray()).Replace('/', '_');
 
-                                        node.AddValue("FlightProgram", data);
+                                        node.AddValue("SequenceEngine", data);
                                 }
 
                                         
