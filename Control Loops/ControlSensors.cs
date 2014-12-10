@@ -15,7 +15,7 @@ namespace AscentProfiler
                 int sensorstep = 0;
                 int sensorrate = 1; //per second
                 double sensorlast;
-
+                
                 internal ControlSensors()
                 {
                         sensorsSuite = new SensorPackage();
@@ -30,8 +30,6 @@ namespace AscentProfiler
 
                 internal override T GetLoadedTypes<T>()
                 {
-                        List<SensorType> temp = sensorsOnBoard.Select(x => x.Key).ToList();
-
                         return (T) Convert.ChangeType(sensorsOnBoard.Select(x => x.Key).ToList(), typeof(T));
                 }
 
