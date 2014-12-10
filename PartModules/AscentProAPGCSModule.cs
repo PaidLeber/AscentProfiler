@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +18,11 @@ namespace AscentProfiler
                 private GUILoadoutEditor sequenceWindow;
                 private GUILoadoutEditor controllerWindow;
                 private GUILoadoutEditor sensorWindow;
+
+                public AscentProAPGCSModule()
+                {
+
+                }
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Module ID")]
                 public string moduleID = "";
@@ -50,12 +58,38 @@ namespace AscentProfiler
                         sensorWindow.InitWindow(gameObject, this, LoadoutType.Sensor, "Sensor Loadout Window");
                 }
 
-                public AscentProAPGCSModule()
+
+
+                public override void OnSave(ConfigNode node)
                 {
-                        
+                        Debug.Log("Saving APGCSModule... ");
+
+
+                        try
+                        {
+
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                        BinaryFormatter f = new BinaryFormatter();
+
+                                        f.Serialize(ms, ControllerModules);
+
+                                        string data = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+
+                                        node.AddValue("FlightProgram", data);
+                                }
+
+                                        
+                                        
+
+
+                        }
+                        catch (Exception e)
+                        {
+                                Debug.Log("Unable to save APGCSModule state: " + e.Message + " at " + e.StackTrace);
+                        }
+
                 }
-
-
 
 
 
@@ -182,11 +216,14 @@ namespace AscentProfiler
                 /*
                  * Called when the game is saving the part information.
                  */
+                /*
                 public override void OnSave(ConfigNode node)
                 {
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
                 }
+                 
+                 */
 
 
         }

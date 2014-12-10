@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
+        [Serializable]
         class ControlSensors : ControlModule
         {
+                [NonSerialized]
                 SensorPackage sensorsSuite = new SensorPackage();
 
                 Dictionary<SensorType, List<double>> sensorsOnBoard = new Dictionary<SensorType, List<double>>();
