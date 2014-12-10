@@ -7,12 +7,12 @@ namespace AscentProfiler
 {
         class ControlMissionLog : ControlModule
         {
-                internal bool isMissionLogEnabled = true;
+
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
 
 
-                internal override T GetTypes<T>()
+                internal override T GetLoadedTypes<T>()
                 {
                         throw new NotImplementedException();
                 }
@@ -35,7 +35,7 @@ namespace AscentProfiler
 
                 internal void AddLog(string log)
                 {
-                        if (!isMissionLogEnabled)
+                        if (!Enabled)
                         { return; }
 
                         var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;

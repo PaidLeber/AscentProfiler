@@ -28,9 +28,11 @@ namespace AscentProfiler
                 internal abstract void Process(AscentProAPGCSModule module);
                 */
 
-                internal override T GetTypes<T>()
+                internal override T GetLoadedTypes<T>()
                 {
-                        throw new NotImplementedException();
+                        List<SensorType> temp = sensorsOnBoard.Select(x => x.Key).ToList();
+
+                        return (T) Convert.ChangeType(sensorsOnBoard.Select(x => x.Key).ToList(), typeof(T));
                 }
 
                 internal override bool AddType<T>(T enumvalue)

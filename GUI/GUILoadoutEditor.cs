@@ -19,8 +19,8 @@ namespace AscentProfiler
                 Vector2 leftScrollPosition;
                 Vector2 rightScrollPosition;
 
-                private List<string> leftList = new List<string>();
-                private List<string> rightList = new List<string>();
+                private List<SensorType> leftList = new List<SensorType>();
+                private List<SensorType> rightList = new List<SensorType>();
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -43,7 +43,8 @@ namespace AscentProfiler
                                 case "Sensor":
 
                                         InitSensorController(module);
-                                        LoadSensorTypes();
+                                        EnumSensorTypes();
+                                        LoadSensorsFromPartModule(module);
                                         break;
                         }
 
@@ -88,14 +89,14 @@ namespace AscentProfiler
 
                                                 leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
 
-                                                foreach (string value in leftList)
+                                                foreach (SensorType sensor in leftList)
                                                 {
-                                                        if(GUILayout.Button(value))
+                                                        if(GUILayout.Button(sensor.ToString()))
                                                         {
-                                                                rightList.Add(value);
+                                                                rightList.Add(sensor);
                                                                 rightList.Sort();
 
-                                                                leftList.Remove(value);
+                                                                leftList.Remove(sensor);
                                                                 leftList.Sort();
 
 
@@ -134,14 +135,14 @@ namespace AscentProfiler
 
                                                 rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
 
-                                                foreach (string value in rightList)
+                                                foreach (SensorType sensor in rightList)
                                                 {
-                                                        if (GUILayout.Button(value))
+                                                        if (GUILayout.Button(sensor.ToString()))
                                                         {
-                                                                leftList.Add(value);
+                                                                leftList.Add(sensor);
                                                                 leftList.Sort();
 
-                                                                rightList.Remove(value);
+                                                                rightList.Remove(sensor);
                                                                 rightList.Sort();
 
 
@@ -172,14 +173,7 @@ namespace AscentProfiler
 
 
 
-                void LoadSensorTypes()
-                {
-                        foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
-                        {
-                                leftList.Add(value.ToString());
-                        }
-                        leftList.Sort();
-                }
+
 
                 void InitSensorController(AscentProAPGCSModule module)
                 {
@@ -191,14 +185,20 @@ namespace AscentProfiler
 
                 }
 
+                void EnumSensorTypes()
+                {
+                        foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                        {
+                                leftList.Add(sensor);
+                        }
+                        leftList.Sort();
+                }
+
                 void LoadSensorsFromPartModule(AscentProAPGCSModule module)
                 { 
-                        /*
-                        foreach(KeyValuePair<controlt in module.ControllerModules[ControlType.SENSOR])
-                        {
-                                module.ControllerModules[ControlType.SENSOR].GetTypes<SensorType>();
-                        }
-                */
+                       rightList = module.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                      
+                
                 }
 
 

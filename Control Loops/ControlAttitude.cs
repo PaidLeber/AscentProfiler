@@ -14,7 +14,7 @@ namespace AscentProfiler
                 protected float roll;
 
                 private bool _enabled = false;
-                internal new bool Enabled
+                internal bool Enabled
                 {
                         get { return _enabled; }
 
@@ -30,7 +30,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override T GetTypes<T>()
+                internal override T GetLoadedTypes<T>()
                 {
                         throw new NotImplementedException();
                 }

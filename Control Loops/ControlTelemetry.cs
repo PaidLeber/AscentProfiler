@@ -32,7 +32,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override T GetTypes<T>()
+                internal override T GetLoadedTypes<T>()
                 {
                         throw new NotImplementedException();
                 }

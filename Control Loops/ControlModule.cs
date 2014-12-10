@@ -10,9 +10,9 @@ namespace AscentProfiler
         {
                 protected AscentProAPGCSModule module;
 
-                internal bool Enabled;
+                internal bool Enabled { get; set; }
 
-                internal abstract T GetTypes<T>();
+                internal abstract T GetLoadedTypes<T>();
                 internal abstract bool AddType<T>(T enumvalue);
                 internal abstract bool RemoveType<T>(T enumvalue);
                 internal abstract void Process(AscentProAPGCSModule module);
