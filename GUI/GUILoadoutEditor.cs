@@ -8,6 +8,8 @@ namespace AscentProfiler
 {
         public class GUILoadoutEditor : MonoBehaviour
         {
+                AscentProAPGCSModule module;
+
                 Rect WindowRect = new Rect(200, 100, 450, 400);
 
                 string windowTitle;
@@ -25,6 +27,29 @@ namespace AscentProfiler
                 
 
                 internal GUILoadoutEditor()
+                {
+                        
+
+                }
+
+                public void InitWindow(AscentProAPGCSModule module, string windowtype, string title)
+                {
+                        this.module = module;
+                        windowType = windowtype;
+                        windowTitle = title;
+
+                        switch (windowtype)
+                        {
+                                case "Sensor":
+
+                                        InitSensorController(module);
+                                        LoadSensorTypes();
+                                        break;
+                        }
+
+                }
+
+                void LoadSensorsFromModule(AscentProAPGCSModule module)
                 {
                         
 
@@ -65,7 +90,16 @@ namespace AscentProfiler
 
                                                 foreach (string value in leftList)
                                                 {
-                                                        GUILayout.Button(value);
+                                                        if(GUILayout.Button(value))
+                                                        {
+                                                                rightList.Add(value);
+                                                                rightList.Sort();
+
+                                                                leftList.Remove(value);
+                                                                leftList.Sort();
+
+
+                                                        }
 
                                                 }
 
@@ -100,9 +134,18 @@ namespace AscentProfiler
 
                                                 rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
 
-                                                foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                                                foreach (string value in rightList)
                                                 {
-                                                        GUILayout.Button(value.ToString());
+                                                        if (GUILayout.Button(value))
+                                                        {
+                                                                leftList.Add(value);
+                                                                leftList.Sort();
+
+                                                                rightList.Remove(value);
+                                                                rightList.Sort();
+
+
+                                                        }
 
                                                 }
 
@@ -113,27 +156,21 @@ namespace AscentProfiler
 
 
                         GUILayout.EndHorizontal();
+
+                        if (GUILayout.Button("Save Loadout"))
+                        { 
+                                
                         
-                        GUILayout.Button("Apply");
+                        
+                        }
+
                         GUILayout.EndVertical();
 
 
                         GUI.DragWindow(new Rect(0, 0, 10000, 20));
                 }
 
-                public void InitWindow(string windowtype, string title)
-                {
-                        windowType = windowtype;
-                        windowTitle = title;
-                        
-                        switch(windowtype)
-                        {
-                                case "Sensor":
-                                        LoadSensorTypes();
-                                        break;
-                        }
 
-                }
 
                 void LoadSensorTypes()
                 {
@@ -144,7 +181,15 @@ namespace AscentProfiler
                         leftList.Sort();
                 }
 
+                void InitSensorController(AscentProAPGCSModule module)
+                {
+                        if (!module.ControllerModules.ContainsKey(ControlType.SENSOR))
+                        {
+                                module.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
 
+                        }
+
+                }
 
         }
 }

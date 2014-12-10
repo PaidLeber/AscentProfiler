@@ -17,6 +17,11 @@ namespace AscentProfiler
                 int sensorrate = 1; //per second
                 double sensorlast;
 
+                internal ControlSensors()
+                {
+                        sensorsSuite = new SensorPackage();
+                }
+
                 internal override void Process()
                 { 
                 
@@ -38,7 +43,7 @@ namespace AscentProfiler
                         {
                                 foreach (SensorType sensor in sensorsOnBoard.Keys)
                                 {
-                                        sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(sensor));
+                                        sensorsOnBoard[sensor].Add(sensorsSuite.GetSensorData(module, sensor));
 
                                         Debug.Log(sensor.ToString() + ": COUNT: " + (sensorsOnBoard[sensor].Count - 1));
                                         Debug.Log(sensor.ToString() + ": VALUE: " + (sensorsOnBoard[sensor][sensorsOnBoard[sensor].Count - 1]));

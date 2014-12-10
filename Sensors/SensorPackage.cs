@@ -8,14 +8,12 @@ namespace AscentProfiler
 
         class SensorPackage
         {
-                AscentProAPGCSModule module;
 
-                internal SensorPackage(AscentProAPGCSModule module)
+                internal SensorPackage()
                 {
-                        this.module = module;
                 }
 
-                internal double GetSensorData(SensorType sensor)
+                internal double GetSensorData(AscentProAPGCSModule module, SensorType sensor)
                 {
                         switch(sensor)
                         {

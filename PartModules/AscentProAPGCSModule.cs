@@ -10,9 +10,7 @@ namespace AscentProfiler
         public class AscentProAPGCSModule : PartModule
         {
                 internal SequenceEngine CommandSequencer;
-                Dictionary<ControlType, ControlModule> ControllerModules;
-                internal ControlTelemetry telemetryController;
-                internal ControlAttitude attitudeController;
+                internal Dictionary<ControlType, ControlModule> ControllerModules;
 
                 private GUILoadoutEditor sequenceWindow;
                 private GUILoadoutEditor controllerWindow;
@@ -50,7 +48,7 @@ namespace AscentProfiler
                 {
                         GameObject gameObj = new GameObject("addsensors", typeof(GUILoadoutEditor));
                         sensorWindow = (GUILoadoutEditor)gameObj.GetComponent(typeof(GUILoadoutEditor));
-                        sensorWindow.InitWindow("Sensor", "Sensor Loadout Window");
+                        sensorWindow.InitWindow(this, "Sensor", "Sensor Loadout Window");
                 }
 
                 public AscentProAPGCSModule()

@@ -25,7 +25,9 @@ namespace AscentProfiler
 
         enum ControlType
         { 
+                SENSOR,
                 TELEMETRY,
+                MISSIONLOG,
                 ATTITUDE
 
         }
