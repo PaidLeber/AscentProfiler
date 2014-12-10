@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
+        [Serializable]
         abstract class ControlModule
         {
                 protected AscentProAPGCSModule module;
