@@ -40,7 +40,7 @@ namespace AscentProfiler
 
                         switch (windowtype)
                         {
-                                case "Sensor":
+                                case "Sensors":
 
                                         InitSensorController(module);
                                         LoadSensorsFromPartModule(module);
