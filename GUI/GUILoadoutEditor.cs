@@ -43,8 +43,9 @@ namespace AscentProfiler
                                 case "Sensor":
 
                                         InitSensorController(module);
-                                        EnumSensorTypes();
                                         LoadSensorsFromPartModule(module);
+                                        EnumSensorTypes();
+
                                         break;
                         }
 
@@ -185,22 +186,29 @@ namespace AscentProfiler
                         }
 
                 }
+                
+                void LoadSensorsFromPartModule(AscentProAPGCSModule module)
+                {
+                        rightList = module.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                        rightList.Sort();
+
+                }
 
                 void EnumSensorTypes()
                 {
+
                         foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
                         {
+
                                 leftList.Add(sensor);
                         }
+
+                        leftList = leftList.Except(rightList).ToList();
+
                         leftList.Sort();
                 }
 
-                void LoadSensorsFromPartModule(AscentProAPGCSModule module)
-                { 
-                       rightList = module.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                      
-                
-                }
+
 
 
         }
