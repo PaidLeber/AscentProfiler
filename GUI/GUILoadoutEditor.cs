@@ -17,9 +17,11 @@ namespace AscentProfiler
                 Vector2 leftScrollPosition;
                 Vector2 rightScrollPosition;
 
+                private List<string> leftList = new List<string>();
+                private List<string> rightList = new List<string>();
+
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
-                GUIStyle columnStyle;
                 
 
                 internal GUILoadoutEditor()
@@ -61,9 +63,9 @@ namespace AscentProfiler
 
                                                 leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
 
-                                                foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                                                foreach (string value in leftList)
                                                 {
-                                                        GUILayout.Button(value.ToString());
+                                                        GUILayout.Button(value);
 
                                                 }
 
@@ -124,8 +126,25 @@ namespace AscentProfiler
                         windowType = windowtype;
                         windowTitle = title;
                         
+                        switch(windowtype)
+                        {
+                                case "Sensor":
+                                        LoadSensorTypes();
+                                        break;
+                        }
 
                 }
+
+                void LoadSensorTypes()
+                {
+                        foreach (SensorType value in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                        {
+                                leftList.Add(value.ToString());
+                        }
+                        leftList.Sort();
+                }
+
+
 
         }
 }
