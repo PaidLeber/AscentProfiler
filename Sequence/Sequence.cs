@@ -19,8 +19,6 @@ namespace AscentProfiler
                 internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
 
 
-                AscentProAPGCSModule module;
-
                 internal Sequence(List<Trigger> triggerlist, List<Action> actionlist)
                 {
                         Log.Level(LogType.Verbose, "Trigger Guardian contructor!");
@@ -40,7 +38,7 @@ namespace AscentProfiler
                          */ 
                 }
 
-                internal void Process()
+                internal void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled)
                                 return;
@@ -49,7 +47,7 @@ namespace AscentProfiler
                         foreach (Trigger trigger in triggerBlockBuffer[ActiveSequence].Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         {
 
-                                if (trigger.Evaluate(module))
+                                if (trigger.Evaluate(module))                                                                   // Check & Execute Trigger(s)
                                 {
                                         foreach (Trigger linkedtrigger in triggerBlockBuffer[ActiveSequence].Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
                                         {
@@ -60,7 +58,20 @@ namespace AscentProfiler
 
                                         }
                                         Debug.Log(trigger.type);
-                                        ExecuteActions(trigger.index);
+
+                                        
+                                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.index == trigger.index))           
+                                        {
+                                                if (action.Execute(module))                                                     // Check & Execute Action(s)
+                                                {
+                                                        Debug.Log("Flight Sequence ExecuteActions " + trigger.index);
+
+
+                                                }
+
+                                        }
+
+
                                 }
 
                         }
@@ -68,28 +79,7 @@ namespace AscentProfiler
 
                 }
 
-                internal void AssignToModule(AscentProAPGCSModule module)
-                {
-                        this.module = module;
-                        
-                }
 
-                internal void ExecuteActions(int index)
-                {
-
-                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.index == index))
-                        {
-                                if (action.Execute(module))
-                                {
-                                        Debug.Log("Flight Sequence ExecuteActions " + index);
-
-
-                                }
-
-                        }
-
-
-                }
 
         }
 

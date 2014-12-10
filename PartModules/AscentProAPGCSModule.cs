@@ -12,7 +12,7 @@ namespace AscentProfiler
         [Serializable]
         public class AscentProAPGCSModule : PartModule
         {
-                internal Sequence SequenceEngine;
+                internal Sequence SequenceEngine = new Sequence();
 
                 private GUISensorLoadoutEditor sequenceWindow;
                 private GUISensorLoadoutEditor controllerWindow;
@@ -67,19 +67,19 @@ namespace AscentProfiler
                         try
                         {
 
-                                using (MemoryStream mstream = new MemoryStream())
+                                if(SequenceEngine != null)
                                 {
-                                        BinaryFormatter f = new BinaryFormatter();
+                                        using (MemoryStream mstream = new MemoryStream())
+                                        {
+                                                BinaryFormatter f = new BinaryFormatter();
 
-                                        f.Serialize(mstream, SequenceEngine);
+                                                f.Serialize(mstream, SequenceEngine);
 
-                                        string data = Convert.ToBase64String(mstream.ToArray()).Replace('/', '_');
+                                                string data = Convert.ToBase64String(mstream.ToArray()).Replace('/', '_');
 
-                                        node.AddValue("SequenceEngine", data);
+                                                node.AddValue("SequenceEngine", data);
+                                        }
                                 }
-
-                                        
-                                        
 
 
                         }

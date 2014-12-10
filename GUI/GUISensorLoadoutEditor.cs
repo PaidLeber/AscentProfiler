@@ -52,12 +52,6 @@ namespace AscentProfiler
 
                 }
 
-                void LoadSensorsFromModule(AscentProAPGCSModule module)
-                {
-                        
-                        
-                }
-
                 void Start()
                 {
                         labelStyle.alignment = TextAnchor.MiddleCenter;
@@ -193,7 +187,7 @@ namespace AscentProfiler
                 void LoadSensorsFromPartModule(AscentProAPGCSModule module)
                 {
                         rightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                        rightList.Remove(SensorType.TIME);
+                        //rightList.Remove(SensorType.TIME);
                         rightList.Sort();
 
                 }
@@ -203,10 +197,9 @@ namespace AscentProfiler
                         
                         foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
                         {
-                                if (sensor != SensorType.TIME)
-                                        leftList.Add(sensor);
+                                leftList.Add(sensor);
                         }
-  
+                        leftList.Remove(SensorType.TIME);
                         leftList = leftList.Except(rightList).ToList();
                         
                         leftList.Sort();
