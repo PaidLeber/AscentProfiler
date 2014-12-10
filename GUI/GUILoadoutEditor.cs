@@ -9,7 +9,6 @@ namespace AscentProfiler
         class GUILoadoutEditor : MonoBehaviour
         {
                 AscentProAPGCSModule module;
-                GameObject gameObject;
                 int windowId = 98473;
 
                 Rect WindowRect = new Rect(200, 100, 450, 400);
@@ -35,7 +34,7 @@ namespace AscentProfiler
 
                 internal void InitWindow(GameObject obj, AscentProAPGCSModule module, LoadoutType loadouttype, string title)
                 {
-                        this.gameObject = obj;
+                        //this.gameObject = obj;
                         this.module = module;
                         this.LoadoutType = loadouttype;
                         this.windowTitle = title;
@@ -56,7 +55,7 @@ namespace AscentProfiler
                 void LoadSensorsFromModule(AscentProAPGCSModule module)
                 {
                         
-
+                        
                 }
 
                 void Start()
@@ -67,7 +66,6 @@ namespace AscentProfiler
 
                 void OnGUI()
                 {
-
                         WindowRect = GUILayout.Window(windowId, WindowRect, DrawLoadoutEditor, windowTitle);
                 }
 

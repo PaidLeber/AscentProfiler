@@ -21,13 +21,6 @@ namespace AscentProfiler
                         sensorsSuite = new SensorPackage();
                 }
 
-                /*
-                internal abstract T GetTypes<T>();
-                internal abstract bool AddType<T>(T enumvalue);
-                internal abstract bool RemoveType<T>(T enumvalue);
-                internal abstract void Process(AscentProAPGCSModule module);
-                */
-
                 internal override T GetLoadedTypes<T>()
                 {
                         return (T) Convert.ChangeType(sensorsOnBoard.Select(x => x.Key).ToList(), typeof(T));

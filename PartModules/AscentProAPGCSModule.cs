@@ -46,9 +46,8 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
                 public void ModifySensorLoadout()
                 {
-                        GameObject gameObj = new GameObject("addsensors", typeof(GUILoadoutEditor));
-                        sensorWindow = (GUILoadoutEditor)gameObj.GetComponent(typeof(GUILoadoutEditor));
-                        sensorWindow.InitWindow(gameObj, this, LoadoutType.Sensor, "Sensor Loadout Window");
+                        sensorWindow = gameObject.AddComponent<GUILoadoutEditor>();
+                        sensorWindow.InitWindow(gameObject, this, LoadoutType.Sensor, "Sensor Loadout Window");
                 }
 
                 public AscentProAPGCSModule()
