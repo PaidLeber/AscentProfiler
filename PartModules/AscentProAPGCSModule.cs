@@ -48,7 +48,7 @@ namespace AscentProfiler
                 public void ModifyControllerLoadout()
                 {
                         controlWindow = gameObject.AddComponent<GUIControlLoadoutEditor>();
-                        controlWindow.InitWindow(this, LoadoutType.Control, "Controller Loadout Window");
+                        controlWindow.InitWindow(this, LoadoutType.Control, "Control Loadout Window");
                 }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
