@@ -41,7 +41,7 @@ namespace AscentProfiler
 
                         switch (loadouttype)
                         {
-                                case LoadoutType.Sensor:
+                                case LoadoutType.Control:
 
                                         InitController(module);
                                         LoadFromPartModule(module);
@@ -84,14 +84,14 @@ namespace AscentProfiler
 
                                                 leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
 
-                                                foreach (ControlType sensor in leftList.ToList())
+                                                foreach (ControlType control in leftList.ToList())
                                                 {
-                                                        if(GUILayout.Button(sensor.ToString()))
+                                                        if(GUILayout.Button(control.ToString()))
                                                         {
-                                                                rightList.Add(sensor);
+                                                                rightList.Add(control);
                                                                 rightList.Sort();
 
-                                                                leftList.Remove(sensor);
+                                                                leftList.Remove(control);
                                                                 leftList.Sort();
 
 
@@ -130,14 +130,14 @@ namespace AscentProfiler
 
                                                 rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
 
-                                                foreach (ControlType sensor in rightList.ToList())
+                                                foreach (ControlType control in rightList.ToList())
                                                 {
-                                                        if (GUILayout.Button(sensor.ToString()))
+                                                        if (GUILayout.Button(control.ToString()))
                                                         {
-                                                                leftList.Add(sensor);
+                                                                leftList.Add(control);
                                                                 leftList.Sort();
 
-                                                                rightList.Remove(sensor);
+                                                                rightList.Remove(control);
                                                                 rightList.Sort();
 
 
@@ -156,9 +156,9 @@ namespace AscentProfiler
                         if (GUILayout.Button("Save Loadout"))
                         {
 
-                                SaveSensorLoadout();
+                                SaveLoadout();
 
-                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUISensorLoadoutEditor>());
+                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUIControlLoadoutEditor>());
                                 
                         
                         }
@@ -189,7 +189,7 @@ namespace AscentProfiler
                 void EnumTypes()
                 {
 
-                        foreach (ControlType control in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                        foreach (ControlType control in (ControlType[])Enum.GetValues(typeof(ControlType)))
                         {
                                 leftList.Add(control);
                         }
@@ -199,7 +199,7 @@ namespace AscentProfiler
                 }
 
 
-                void SaveSensorLoadout()
+                void SaveLoadout()
                 {
 
                         /*

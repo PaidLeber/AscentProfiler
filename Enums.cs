@@ -15,7 +15,7 @@ namespace AscentProfiler
         enum LoadoutType
         { 
                 Sensor,
-                Controller,
+                Control,
                 Sequence
         }
 
