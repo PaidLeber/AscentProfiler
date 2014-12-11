@@ -136,7 +136,7 @@ namespace AscentProfiler
                         {
 
                                 string base64 = node.GetValue("SequenceEngine");
-                                base64 = base64.Replace('_', '/');
+
                                 byte[] data = Convert.FromBase64String(base64);
                                 using (MemoryStream ms = new MemoryStream(data))
                                 {
@@ -176,7 +176,8 @@ namespace AscentProfiler
                                                         f.Serialize(gz, SequenceEngine);
                                                 }
 
-                                                string base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+                                                string base64 = Convert.ToBase64String(ms.ToArray());
+
 
                                                 node.AddValue("SequenceEngine", base64);
                                         }
