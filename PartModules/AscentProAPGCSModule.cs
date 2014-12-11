@@ -5,8 +5,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 using Ionic.Zlib;
+using UnityEngine;
+
 
 namespace AscentProfiler
 {
@@ -49,6 +50,7 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
                 public void ModifyControllerLoadout()
                 {
+                        /*
                         string base64;
 
                         using (MemoryStream ms = new MemoryStream())
@@ -78,7 +80,7 @@ namespace AscentProfiler
 
                         }
 
-
+                        */
                 }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
@@ -128,6 +130,8 @@ namespace AscentProfiler
                 {
                         Debug.Log("OnLoad Loading APGCSModule...");
 
+
+
                         if (node.HasValue("SequenceEngine"))
                         {
 
@@ -149,7 +153,7 @@ namespace AscentProfiler
                         
                         }
 
-
+                        
 
                 }
 
@@ -157,6 +161,39 @@ namespace AscentProfiler
                 {
                         Debug.Log("Saving APGCSModule... ");
 
+
+                        try
+                        {
+                                if (SequenceEngine != null)
+                                {
+
+                                        using (MemoryStream ms = new MemoryStream())
+                                        {
+                                                BinaryFormatter f = new BinaryFormatter();
+
+                                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
+                                                {
+                                                        f.Serialize(gz, SequenceEngine);
+                                                }
+
+                                                string base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+
+                                                node.AddValue("SequenceEngine", base64);
+                                        }
+
+
+                                }
+
+
+
+                        }
+                        catch (Exception e)
+                        {
+                                Debug.Log("Unable to save APGCSModule state: " + e.Message + " at " + e.StackTrace);
+                        }
+
+
+                        /*
 
                         try
                         {
@@ -185,6 +222,8 @@ namespace AscentProfiler
                         {
                                 Debug.Log("Unable to save APGCSModule state: " + e.Message + " at " + e.StackTrace);
                         }
+                         * 
+                         * */
 
                 }
 
