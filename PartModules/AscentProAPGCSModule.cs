@@ -9,10 +9,11 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        [Serializable]
+        
         public class AscentProAPGCSModule : PartModule
         {
-                internal Sequence SequenceEngine = new Sequence();
+                
+                internal Sequence SequenceEngine;
 
                 private GUISensorLoadoutEditor sequenceWindow;
                 private GUISensorLoadoutEditor controllerWindow;
@@ -27,7 +28,7 @@ namespace AscentProfiler
                 public string moduleID = "";
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence")]
-                public string activeSeq = "";
+                public string activeSequence = "";
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Mode")]
                 public string modeSeq = "";                                                                           // Active, Inactive, Hibernation
@@ -57,7 +58,52 @@ namespace AscentProfiler
                         sensorWindow.InitWindow(this, LoadoutType.Sensor, "Sensor Loadout Window");
                 }
 
+                /*
+ * Called after OnAwake.
+ */
+                public override void OnStart(PartModule.StartState state)
+                {
+                        Debug.Log("Module Started");
 
+                        if(SequenceEngine == null)
+                                SequenceEngine = new Sequence();
+
+
+                }
+
+                /*
+ * Called when the game is loading the part information. It comes from: the part's cfg file,
+ * the .craft file, the persistence file, or the quicksave file.
+ */
+                public override void OnLoad(ConfigNode node)
+                {
+                        Debug.Log("Loading APGCSModule...");
+
+
+                        if (node.HasValue("SequenceEngine"))
+                        {
+                            string base64 = node.GetValue("SequenceEngine");
+
+                            base64.Replace('_', '/');
+                            byte[] data = Convert.FromBase64String(base64);
+
+
+                            using (MemoryStream ms = new MemoryStream(data))
+                            {
+                                    BinaryFormatter f = new BinaryFormatter();
+
+
+                                    SequenceEngine = (Sequence)f.Deserialize(ms);
+                            }
+
+                        }
+                        else
+                        {
+                               Debug.Log("No saved game for this vessel.");
+                        }
+
+
+                }
 
                 public override void OnSave(ConfigNode node)
                 {
@@ -69,16 +115,19 @@ namespace AscentProfiler
 
                                 if(SequenceEngine != null)
                                 {
-                                        using (MemoryStream mstream = new MemoryStream())
+                                        using (MemoryStream ms = new MemoryStream())
                                         {
                                                 BinaryFormatter f = new BinaryFormatter();
 
-                                                f.Serialize(mstream, SequenceEngine);
+                                                f.Serialize(ms, this.SequenceEngine);
 
-                                                string data = Convert.ToBase64String(mstream.ToArray()).Replace('/', '_');
+                                                string data = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
 
                                                 node.AddValue("SequenceEngine", data);
                                         }
+
+
+
                                 }
 
 
@@ -143,15 +192,7 @@ namespace AscentProfiler
                
 
 
-                /*
-                 * Called after OnAwake.
-                 */
-                public override void OnStart(PartModule.StartState state)
-                {
 
-                        Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
-                            + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
-                }
 
                 /*
                  * Called when the part is activated/enabled. This usually occurs either when the craft
@@ -202,15 +243,7 @@ namespace AscentProfiler
                             + "][" + Time.time.ToString("0.0000") + "]: OnInactive");
                 }
 
-                /*
-                 * Called when the game is loading the part information. It comes from: the part's cfg file,
-                 * the .craft file, the persistence file, or the quicksave file.
-                 */
-                public override void OnLoad(ConfigNode node)
-                {
-                        Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
-                            + "][" + Time.time.ToString("0.0000") + "]: OnLoad: " + node);
-                }
+
 
                 /*
                  * Called when the game is saving the part information.
