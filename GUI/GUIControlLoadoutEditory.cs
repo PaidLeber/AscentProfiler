@@ -276,7 +276,10 @@ namespace AscentProfiler
 
                 void InitController(AscentProAPGCSModule module)
                 {
-                       
+                        foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
+                        {
+                                leftattList.Add(attitude);
+                        }
 
                 }
                 
