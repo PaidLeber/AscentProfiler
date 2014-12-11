@@ -202,17 +202,32 @@ namespace AscentProfiler
                 void SaveLoadout()
                 {
 
-                        /*
-                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].ClearTypes();
 
-                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);                              // Remove Time array from available sensor options to user, but add it here
+                        module.SequenceEngine.ControllerModules.Clear();
 
-                        foreach(SensorType sensor in rightList)
+                        foreach(ControlType control in rightList)
                         {
-                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
+                                switch(control)
+                                {
+                                        case ControlType.ATTITUDE:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlAttitude() );
+                                                break;
+                                        case ControlType.MISSIONLOG:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlMissionLog());
+                                                break;
+                                        case ControlType.SENSOR:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlSensors());
+                                                break;
+                                        case ControlType.TELEMETRY:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlTelemetry());
+                                                break;
+                                }
+                                
+
+                                        
                         }
 
-                        */
+                        
 
                         
                 

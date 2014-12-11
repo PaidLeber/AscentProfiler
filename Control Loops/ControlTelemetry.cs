@@ -30,7 +30,7 @@ namespace AscentProfiler
 
                 }
 
-                internal ControlTelemetry(AscentProAPGCSModule module)
+                internal ControlTelemetry()
                 {
                         //this.module = module;
                        
