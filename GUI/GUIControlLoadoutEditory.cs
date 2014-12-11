@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class GUISensorLoadoutEditor : MonoBehaviour
+        class GUIControlLoadoutEditor : MonoBehaviour
         {
                 AscentProAPGCSModule module;
 
@@ -20,14 +20,14 @@ namespace AscentProfiler
                 Vector2 leftScrollPosition;
                 Vector2 rightScrollPosition;
 
-                List<SensorType> leftList = new List<SensorType>();
-                List<SensorType> rightList = new List<SensorType>();
+                List<ControlType> leftList = new List<ControlType>();
+                List<ControlType> rightList = new List<ControlType>();
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
-                
 
-                internal GUISensorLoadoutEditor()
+
+                internal GUIControlLoadoutEditor()
                 {
                         
 
@@ -43,9 +43,9 @@ namespace AscentProfiler
                         {
                                 case LoadoutType.Sensor:
 
-                                        InitSensorController(module);
-                                        LoadSensorsFromPartModule(module);
-                                        EnumSensorTypes();
+                                        InitController(module);
+                                        LoadFromPartModule(module);
+                                        EnumTypes();
 
                                         break;
                         }
@@ -83,8 +83,8 @@ namespace AscentProfiler
 
 
                                                 leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
-                        
-                                                foreach (SensorType sensor in leftList.ToList())
+
+                                                foreach (ControlType sensor in leftList.ToList())
                                                 {
                                                         if(GUILayout.Button(sensor.ToString()))
                                                         {
@@ -129,8 +129,8 @@ namespace AscentProfiler
                                                 GUILayout.Space(5);
 
                                                 rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
-                        
-                                                foreach (SensorType sensor in rightList.ToList())
+
+                                                foreach (ControlType sensor in rightList.ToList())
                                                 {
                                                         if (GUILayout.Button(sensor.ToString()))
                                                         {
@@ -173,33 +173,26 @@ namespace AscentProfiler
 
 
 
-                void InitSensorController(AscentProAPGCSModule module)
+                void InitController(AscentProAPGCSModule module)
                 {
-                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                        {
-                                module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
-                                
-
-                        }
+                       
 
                 }
                 
-                void LoadSensorsFromPartModule(AscentProAPGCSModule module)
+                void LoadFromPartModule(AscentProAPGCSModule module)
                 {
-                        rightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                        rightList.Remove(SensorType.TIME);
+                        rightList = module.SequenceEngine.ControllerModules.Keys.ToList();
                         rightList.Sort();
 
                 }
 
-                void EnumSensorTypes()
+                void EnumTypes()
                 {
-                        
-                        foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
+
+                        foreach (ControlType control in (SensorType[])Enum.GetValues(typeof(SensorType)))
                         {
-                                leftList.Add(sensor);
+                                leftList.Add(control);
                         }
-                        leftList.Remove(SensorType.TIME);
                         leftList = leftList.Except(rightList).ToList();
                         
                         leftList.Sort();
@@ -208,6 +201,8 @@ namespace AscentProfiler
 
                 void SaveSensorLoadout()
                 {
+
+                        /*
                         module.SequenceEngine.ControllerModules[ControlType.SENSOR].ClearTypes();
 
                         module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);                              // Remove Time array from available sensor options to user, but add it here
@@ -217,7 +212,7 @@ namespace AscentProfiler
                                 module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
                         }
 
-
+                        */
 
                         
                 

@@ -47,37 +47,7 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
                 public void ModifyControllerLoadout()
                 {
-                        /*
-                        string base64;
 
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                                BinaryFormatter f = new BinaryFormatter();
-
-                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
-                                {
-                                        f.Serialize(gz, SequenceEngine);
-                                }
-
-                               base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
-                        }
-
-                        SequenceEngine = null;
-
-                        base64 = base64.Replace('_', '/');
-                        byte[] data = Convert.FromBase64String(base64);
-                        using (MemoryStream ms = new MemoryStream(data))
-                        {
-                                BinaryFormatter f = new BinaryFormatter();
-
-                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress))
-                                {
-                                        SequenceEngine = (Sequence)f.Deserialize(gz);
-                                }
-
-                        }
-
-                        */
                 }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sensor(s)")]
@@ -114,26 +84,7 @@ namespace AscentProfiler
 
                         if (node.HasValue("SequenceEngine"))
                         {
-
                                 SequenceEngine = (Sequence)Serializer.DeserializeFromString(node.GetValue("SequenceEngine"));
-
-                                /*
-                                string base64 = node.GetValue("SequenceEngine");
-                                base64 = base64.Replace('_', '/');
-                                byte[] data = Convert.FromBase64String(base64);
-                                using (MemoryStream ms = new MemoryStream(data))
-                                {
-                                        BinaryFormatter f = new BinaryFormatter();
-
-                                        using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress))
-                                        {
-                                                SequenceEngine = null;
-                                                SequenceEngine = (Sequence)f.Deserialize(gz);
-                                        }
-
-                                }
-                                */
-
                         }
                         else
                         {
@@ -148,8 +99,6 @@ namespace AscentProfiler
                 {
                         Debug.Log("Saving APGCSModule... ");
 
-                       
-
                         try
                         {
                                 if(SequenceEngine != null)
@@ -157,31 +106,6 @@ namespace AscentProfiler
                                         node.AddValue("SequenceEngine", Serializer.SerializeToString(SequenceEngine) );
                                 }
 
-
-
-                                /*
-                                if (SequenceEngine != null)
-                                {
-
-                                        using (MemoryStream ms = new MemoryStream())
-                                        {
-                                                BinaryFormatter f = new BinaryFormatter();
-
-                                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
-                                                {
-                                                        f.Serialize(gz, SequenceEngine);
-                                                }
-
-                                                string base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
-
-                                                node.AddValue("SequenceEngine", base64);
-                                        }
-
-
-                                }
-                                */
-
-
                         }
                         catch (Exception e)
                         {
@@ -189,37 +113,6 @@ namespace AscentProfiler
                         }
 
 
-                        /*
-
-                        try
-                        {
-                                if (SequenceEngine != null)
-                                {
-
-                                        using (MemoryStream ms = new MemoryStream())
-                                        {
-                                                BinaryFormatter f = new BinaryFormatter();
-
-                                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
-                                                {
-                                                        f.Serialize(gz, SequenceEngine);
-                                                }
-
-                                                string base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
-
-                                                node.AddValue("SequenceEngine", base64);
-                                        }
-                                }
-
-
-
-                        }
-                        catch (Exception e)
-                        {
-                                Debug.Log("Unable to save APGCSModule state: " + e.Message + " at " + e.StackTrace);
-                        }
-                         * 
-                         * */
 
                 }
 
