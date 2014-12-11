@@ -12,15 +12,15 @@ namespace AscentProfiler
 
                 int windowId = 98473;
 
-                Rect WindowRect = new Rect(200, 100, 450, 600);
-                Rect newWinRect;
-                Rect oldWinRect;
+                Rect WindowRect = new Rect(200, 100, 450, 400);
 
                 string windowTitle;
                 LoadoutType LoadoutType;
 
                 Vector2 leftScrollPosition;
                 Vector2 rightScrollPosition;
+                Vector2 leftattScrollPosition;
+                Vector2 rightattScrollPosition;
 
                 List<ControlType> leftList = new List<ControlType>();
                 List<ControlType> rightList = new List<ControlType>();
@@ -158,11 +158,101 @@ namespace AscentProfiler
 
                                         GUILayout.EndVertical();
 
-
-
-
-
                         GUILayout.EndHorizontal();
+
+                        
+                        if (rightList.Contains(ControlType.ATTITUDE))
+                        {
+                                GUILayout.BeginVertical();
+                                GUILayout.Label("ATTITUDE", labelStyle);
+                                GUILayout.EndVertical();
+
+                                GUILayout.BeginHorizontal();
+
+                                GUILayout.BeginVertical(GUILayout.Width(200));
+
+                                labelStyle.normal.textColor = Color.yellow;
+
+                                GUILayout.Label("Controllers Available", labelStyle);
+
+                                GUILayout.Space(5);
+
+
+                                leftattScrollPosition = GUILayout.BeginScrollView(leftattScrollPosition);
+
+                                foreach (AttitudeControlType attitudecontroller in leftattList.ToList())
+                                {
+                                        if (GUILayout.Button(attitudecontroller.ToString()))
+                                        {
+                                                rightattList.Add(attitudecontroller);
+                                                rightattList.Sort();
+
+                                                leftattList.Remove(attitudecontroller);
+                                                leftattList.Sort();
+
+
+                                        }
+
+                                }
+
+                                GUILayout.EndScrollView();
+
+
+                                GUILayout.EndVertical();
+
+
+
+
+                                GUILayout.FlexibleSpace();
+
+                                GUILayout.BeginVertical();
+
+                                GUILayout.Space(1);
+                                labelStyle.normal.textColor = Color.cyan;
+                                GUILayout.Label(">", labelStyle);
+                                GUILayout.Space(1);
+                                GUILayout.Label("<", labelStyle);
+
+                                GUILayout.EndVertical();
+
+                                GUILayout.FlexibleSpace();
+
+                                GUILayout.BeginVertical(GUILayout.Width(200));
+
+                                labelStyle.normal.textColor = Color.green;
+                                GUILayout.Label("Controller On Board", labelStyle);
+
+                                GUILayout.Space(5);
+
+                                rightattScrollPosition = GUILayout.BeginScrollView(rightattScrollPosition, false, false);
+
+                                foreach (AttitudeControlType attitudecontroller in rightattList.ToList())
+                                {
+                                        if (GUILayout.Button(attitudecontroller.ToString()))
+                                        {
+                                                leftattList.Add(attitudecontroller);
+                                                leftattList.Sort();
+
+                                                rightattList.Remove(attitudecontroller);
+                                                rightattList.Sort();
+
+
+                                        }
+
+                                }
+
+                                GUILayout.EndScrollView();
+
+                                GUILayout.Space(5);
+
+
+
+                                GUILayout.EndVertical();
+
+                                GUILayout.EndHorizontal();
+                        }
+                        
+
 
                         if (GUILayout.Button("Save Loadout"))
                         {
