@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Ionic.Zlib;
 
 namespace AscentProfiler
 {
-        
+        [Serializable]
         public class AscentProAPGCSModule : PartModule
         {
                 
@@ -48,6 +49,35 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
                 public void ModifyControllerLoadout()
                 {
+                        string base64;
+
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                                BinaryFormatter f = new BinaryFormatter();
+
+                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
+                                {
+                                        f.Serialize(gz, SequenceEngine);
+                                }
+
+                               base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+                        }
+
+                        SequenceEngine = null;
+
+                        base64 = base64.Replace('_', '/');
+                        byte[] data = Convert.FromBase64String(base64);
+                        using (MemoryStream ms = new MemoryStream(data))
+                        {
+                                BinaryFormatter f = new BinaryFormatter();
+
+                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress))
+                                {
+                                        SequenceEngine = (Sequence)f.Deserialize(gz);
+                                }
+
+                        }
+
 
                 }
 
@@ -63,7 +93,7 @@ namespace AscentProfiler
  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        Debug.Log("Module Started");
+                        Debug.Log("APGCSModule OnStart");
 
                         if(SequenceEngine == null)
                                 SequenceEngine = new Sequence();
@@ -75,32 +105,50 @@ namespace AscentProfiler
  * Called when the game is loading the part information. It comes from: the part's cfg file,
  * the .craft file, the persistence file, or the quicksave file.
  */
+                public static MemoryStream SerializeToStream(object o)
+                {   
+                        MemoryStream stream = new MemoryStream();
+                        IFormatter formatter = new BinaryFormatter();
+                        formatter.Serialize(stream, o);
+                        return stream;
+
+                }
+
+                public static object DeserializeFromStream(MemoryStream stream)
+                {
+
+                        IFormatter formatter = new BinaryFormatter();
+                        stream.Seek(0, SeekOrigin.Begin);
+                        object o = formatter.Deserialize(stream);
+                        return o;
+
+                }
+
                 public override void OnLoad(ConfigNode node)
                 {
-                        Debug.Log("Loading APGCSModule...");
-
+                        Debug.Log("OnLoad Loading APGCSModule...");
 
                         if (node.HasValue("SequenceEngine"))
                         {
-                            string base64 = node.GetValue("SequenceEngine");
 
-                            base64.Replace('_', '/');
-                            byte[] data = Convert.FromBase64String(base64);
+                                string base64 = node.GetValue("SequenceEngine");
+                                base64 = base64.Replace('_', '/');
+                                byte[] data = Convert.FromBase64String(base64);
+                                using (MemoryStream ms = new MemoryStream(data))
+                                {
+                                        BinaryFormatter f = new BinaryFormatter();
 
+                                        using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress))
+                                        {
+                                                SequenceEngine = null;
+                                                SequenceEngine = (Sequence)f.Deserialize(gz);
+                                        }
 
-                            using (MemoryStream ms = new MemoryStream(data))
-                            {
-                                    BinaryFormatter f = new BinaryFormatter();
-
-
-                                    SequenceEngine = (Sequence)f.Deserialize(ms);
-                            }
-
+                                }
+                        
+                        
                         }
-                        else
-                        {
-                               Debug.Log("No saved game for this vessel.");
-                        }
+
 
 
                 }
@@ -112,23 +160,24 @@ namespace AscentProfiler
 
                         try
                         {
-
-                                if(SequenceEngine != null)
+                                if (SequenceEngine != null)
                                 {
+
                                         using (MemoryStream ms = new MemoryStream())
                                         {
                                                 BinaryFormatter f = new BinaryFormatter();
 
-                                                f.Serialize(ms, this.SequenceEngine);
+                                                using (DeflateStream gz = new DeflateStream(ms, CompressionMode.Compress))
+                                                {
+                                                        f.Serialize(gz, SequenceEngine);
+                                                }
 
-                                                string data = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
+                                                string base64 = Convert.ToBase64String(ms.ToArray()).Replace('/', '_');
 
-                                                node.AddValue("SequenceEngine", data);
+                                                node.AddValue("SequenceEngine", base64);
                                         }
-
-
-
                                 }
+
 
 
                         }

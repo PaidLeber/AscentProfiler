@@ -38,6 +38,9 @@
     <Reference Include="FerramAerospaceResearch">
       <HintPath>..\..\KSP_win\GameData\FerramAerospaceResearch\Plugins\FerramAerospaceResearch.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zlib">
+      <HintPath>..\..\KSP_win\GameData\AscentProfiler\Ionic.Zlib.dll</HintPath>
+    </Reference>
     <Reference Include="RemoteTech">
       <HintPath>..\..\KSP_win\GameData\RemoteTech\Plugins\RemoteTech.dll</HintPath>
     </Reference>
