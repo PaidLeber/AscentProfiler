@@ -9,7 +9,7 @@ namespace AscentProfiler
         [Serializable]
         abstract class ControlModule
         {
-                protected AscentProAPGCSModule module;
+                //protected AscentProAPGCSModule module;
 
                 internal bool Enabled { get; set; }
 

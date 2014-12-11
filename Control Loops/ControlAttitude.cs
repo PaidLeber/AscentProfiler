@@ -22,7 +22,7 @@ namespace AscentProfiler
                         { 
                                 if (!value)
                                 {
-                                        module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false); 
+                                       // module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false); 
                                 }
                                 
                                 _enabled = value;

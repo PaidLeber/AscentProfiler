@@ -12,12 +12,12 @@ namespace AscentProfiler
 
                 internal SASController(AscentProAPGCSModule module)
                 {
-                        this.module = module;
+                        //this.module = module;
                         //module.telemetryController.AddLog("SAS Controller Loaded!");
                 }
 
 
-                public override void ActiveController()
+                internal override void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled)
                                 return;
@@ -53,7 +53,7 @@ namespace AscentProfiler
 
                 }
 
-                public void ActiveController0(FlightCtrlState s)
+                public void ActiveController0(AscentProAPGCSModule module, FlightCtrlState s)
                 {
                         
                         Quaternion attitudetarget = 

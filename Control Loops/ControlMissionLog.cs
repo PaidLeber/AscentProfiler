@@ -41,9 +41,9 @@ namespace AscentProfiler
                         if (!Enabled)
                         { return; }
 
-                        var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
-                        missionLog.Add(transferlog);
-                        Log.Level(LogType.Verbose, transferlog);
+                        //var transferlog = timeStamp(module.vessel.missionTime) + " - " + log;
+                        //missionLog.Add(transferlog);
+                        //Log.Level(LogType.Verbose, transferlog);
 
                 }
 

@@ -14,6 +14,8 @@ namespace AscentProfiler
                 {
                         get
                         {
+                                /*
+
                                 if (AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech) && module.vessel.GetCrewCount() == 0)
                                 {
                                         return RemoteTech.API.HasConnectionToKSC(module.vessel.id);
@@ -22,13 +24,15 @@ namespace AscentProfiler
                                 {
                                         return true;
                                 }
+                                 */
+                                return false;
                         }
 
                 }
 
                 internal ControlTelemetry(AscentProAPGCSModule module)
                 {
-                        this.module = module;
+                        //this.module = module;
                        
 
                 }
@@ -85,9 +89,9 @@ namespace AscentProfiler
                         if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.RemoteTech))
                         { return 0; }
                         Debug.Log("UT: " + Planetarium.GetUniversalTime());
-                        Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id));
-                        return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id);
-
+                        //Debug.Log("Signal Delay: " + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id));
+                        //return Planetarium.GetUniversalTime() + RemoteTech.API.GetSignalDelayToKSC(module.vessel.id);
+                        return 0;
                 }
 
 

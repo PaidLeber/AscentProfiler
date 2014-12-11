@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +8,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        [Serializable]
+        
         public class AscentProAPGCSModule : PartModule
         {
                 
@@ -25,7 +22,7 @@ namespace AscentProfiler
                 {
 
                 }
-
+                
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Module ID")]
                 public string moduleID = "";
 
@@ -107,24 +104,7 @@ namespace AscentProfiler
  * Called when the game is loading the part information. It comes from: the part's cfg file,
  * the .craft file, the persistence file, or the quicksave file.
  */
-                public static MemoryStream SerializeToStream(object o)
-                {   
-                        MemoryStream stream = new MemoryStream();
-                        IFormatter formatter = new BinaryFormatter();
-                        formatter.Serialize(stream, o);
-                        return stream;
 
-                }
-
-                public static object DeserializeFromStream(MemoryStream stream)
-                {
-
-                        IFormatter formatter = new BinaryFormatter();
-                        stream.Seek(0, SeekOrigin.Begin);
-                        object o = formatter.Deserialize(stream);
-                        return o;
-
-                }
 
                 public override void OnLoad(ConfigNode node)
                 {
@@ -135,6 +115,9 @@ namespace AscentProfiler
                         if (node.HasValue("SequenceEngine"))
                         {
 
+                                SequenceEngine = (Sequence)Serializer.DeserializeFromString(node.GetValue("SequenceEngine"));
+
+                                /*
                                 string base64 = node.GetValue("SequenceEngine");
                                 base64 = base64.Replace('_', '/');
                                 byte[] data = Convert.FromBase64String(base64);
@@ -149,8 +132,12 @@ namespace AscentProfiler
                                         }
 
                                 }
-                        
-                        
+                                */
+
+                        }
+                        else
+                        {
+                                Debug.Log("No Sequence found for command part "+part.name);
                         }
 
                         
@@ -161,9 +148,18 @@ namespace AscentProfiler
                 {
                         Debug.Log("Saving APGCSModule... ");
 
+                       
 
                         try
                         {
+                                if(SequenceEngine != null)
+                                {
+                                        node.AddValue("SequenceEngine", Serializer.SerializeToString(SequenceEngine) );
+                                }
+
+
+
+                                /*
                                 if (SequenceEngine != null)
                                 {
 
@@ -183,7 +179,7 @@ namespace AscentProfiler
 
 
                                 }
-
+                                */
 
 
                         }
