@@ -39,10 +39,10 @@ namespace AscentProfiler
 
         }
 
-        enum ControllerType
+        enum AttitudeControlType
         { 
-                DEFAULT,
                 SAS,
+                MECHJEB
         }
 
         enum SensorType

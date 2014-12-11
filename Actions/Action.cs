@@ -54,10 +54,10 @@ namespace AscentProfiler
         class Control : Action
         {
                 ControlType control;
-                ControllerType controller;
+                AttitudeControlType controller;
                 string error;
 
-                internal Control(int index, ActionType type, ControlType control, ControllerType controller, ActionModifier modifier)
+                internal Control(int index, ActionType type, ControlType control, AttitudeControlType controller, ActionModifier modifier)
                 {
                         this.index = index;
                         this.type = type;

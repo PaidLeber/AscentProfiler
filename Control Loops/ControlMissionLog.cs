@@ -5,9 +5,10 @@ using System.Text;
 
 namespace AscentProfiler
 {
+        [Serializable]
         class ControlMissionLog : ControlModule
         {
-
+                
                 internal List<string> missionLog = new List<string>();
                 internal int lastMissionLogTransmitCount = 0;
 

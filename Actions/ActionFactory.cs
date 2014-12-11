@@ -38,7 +38,7 @@ namespace AscentProfiler
                         actionProducts.Add(ActionType.ACTIONGROUP, () => { return new ActionGroup(currentIndex, currentAction, ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value), ParseEnum<KSPActionGroup>(regexGrouping.Groups[1].Value), regexGrouping.Groups[3].Value.ToString()); });
                         actionProducts.Add(ActionType.SENSORS,     () => { return new Sensors(currentIndex, currentAction, ParseEnum<SensorType>(regexGrouping.Groups[1].Value)); });
                         actionProducts.Add(ActionType.TELEMETRY,   () => { return new Telemetry(currentIndex, currentAction, ParseEnum<TelemetryType>(regexGrouping.Groups[1].Value), ParseEnum<ActionModifier>(regexGrouping.Groups[2].Value)); });
-                        actionProducts.Add(ActionType.CONTROL,     () => { return new Control(currentIndex, currentAction, ParseEnum<ControlType>(regexGrouping.Groups[1].Value), ParseEnum<ControllerType>(regexGrouping.Groups[2].Value), ParseEnum<ActionModifier>(regexGrouping.Groups[3].Value)); });
+                        actionProducts.Add(ActionType.CONTROL,     () => { return new Control(currentIndex, currentAction, ParseEnum<ControlType>(regexGrouping.Groups[1].Value), ParseEnum<AttitudeControlType>(regexGrouping.Groups[2].Value), ParseEnum<ActionModifier>(regexGrouping.Groups[3].Value)); });
 
                 }
 

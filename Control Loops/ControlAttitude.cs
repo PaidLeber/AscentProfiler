@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
+        [Serializable]
         class ControlAttitude : ControlModule
         {
 

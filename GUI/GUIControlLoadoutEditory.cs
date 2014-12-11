@@ -12,7 +12,9 @@ namespace AscentProfiler
 
                 int windowId = 98473;
 
-                Rect WindowRect = new Rect(200, 100, 450, 400);
+                Rect WindowRect = new Rect(200, 100, 450, 600);
+                Rect newWinRect;
+                Rect oldWinRect;
 
                 string windowTitle;
                 LoadoutType LoadoutType;
@@ -22,6 +24,9 @@ namespace AscentProfiler
 
                 List<ControlType> leftList = new List<ControlType>();
                 List<ControlType> rightList = new List<ControlType>();
+
+                List<AttitudeControlType> leftattList = new List<AttitudeControlType>();
+                List<AttitudeControlType> rightattList = new List<AttitudeControlType>();
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -114,7 +119,7 @@ namespace AscentProfiler
                                                 GUILayout.Space(70);
                                                 labelStyle.normal.textColor = Color.cyan;
                                                 GUILayout.Label(">", labelStyle);
-                                                GUILayout.Space(200);
+                                                GUILayout.Space(70);
                                                 GUILayout.Label("<", labelStyle);
 
                                         GUILayout.EndVertical();
@@ -147,8 +152,14 @@ namespace AscentProfiler
                         
                                                 GUILayout.EndScrollView();
 
+                                                GUILayout.Space(10);
+
+
+
                                         GUILayout.EndVertical();
-                                        
+
+
+
 
 
                         GUILayout.EndHorizontal();
