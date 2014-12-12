@@ -276,10 +276,7 @@ namespace AscentProfiler
 
                 void InitController(AscentProAPGCSModule module)
                 {
-                        foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
-                        {
-                                leftattList.Add(attitude);
-                        }
+
 
                 }
                 
@@ -287,6 +284,8 @@ namespace AscentProfiler
                 {
                         rightList = module.SequenceEngine.ControllerModules.Keys.ToList();
                         rightList.Sort();
+
+                        
 
                 }
 
@@ -300,6 +299,13 @@ namespace AscentProfiler
                         leftList = leftList.Except(rightList).ToList();
                         
                         leftList.Sort();
+
+                        foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
+                        {
+                                leftattList.Add(attitude);
+                        }
+                        leftattList.Sort();
+
                 }
 
 

@@ -217,7 +217,10 @@ namespace AscentProfiler
                                 module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
                         }
 
-
+                        if(rightList.Count == 0)
+                        {
+                                module.SequenceEngine.ControllerModules.Remove(ControlType.SENSOR);
+                        }
 
                         
                 
