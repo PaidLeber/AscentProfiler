@@ -104,6 +104,44 @@ namespace AscentProfiler
                                                                 controlLeftList.Remove(control);
                                                                 controlLeftList.Sort();
 
+                                                                
+                                                                if(control == ControlType.SENSOR)
+                                                                {
+                                                                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+                                                                        {
+                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
+
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                                sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                                                                                sensorRightList.Remove(SensorType.TIME);
+                                                                                sensorRightList.Sort();
+                                                                        
+                                                                                foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                                                                                {
+                                                                                        sensorLeftList.Add(sensor);
+                                                                                }
+                                                                                sensorLeftList.Remove(SensorType.TIME);
+                                                                                sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
+                        
+                                                                                sensorLeftList.Sort();
+
+                                                                        }
+                                                                }
+
+                                                                if (control == ControlType.ATTITUDE)
+                                                                {
+                                                                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
+                                                                        {
+                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new ControlAttitude());
+
+
+                                                                        }
+                                                                }
+
+
 
                                                         }
 
@@ -150,6 +188,25 @@ namespace AscentProfiler
                                                                 controlRightList.Remove(control);
                                                                 controlRightList.Sort();
 
+                                                                if (control == ControlType.SENSOR)
+                                                                {
+                                                                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+                                                                        {
+                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.SENSOR);
+
+
+                                                                        }
+                                                                }
+
+                                                                if (control == ControlType.ATTITUDE)
+                                                                {
+                                                                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
+                                                                        {
+                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE));
+
+
+                                                                        }
+                                                                }
 
                                                         }
 
