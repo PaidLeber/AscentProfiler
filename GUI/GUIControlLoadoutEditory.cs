@@ -107,28 +107,25 @@ namespace AscentProfiler
                                                                 
                                                                 if(control == ControlType.SENSOR)
                                                                 {
+
                                                                         if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
                                                                         {
                                                                                 module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
 
-
                                                                         }
-                                                                        else
+
+                                                                        sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                                                                        sensorRightList.Remove(SensorType.TIME);
+                                                                        sensorRightList.Sort();
+
+                                                                        foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
                                                                         {
-                                                                                sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                                                                                sensorRightList.Remove(SensorType.TIME);
-                                                                                sensorRightList.Sort();
-                                                                        
-                                                                                foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
-                                                                                {
-                                                                                        sensorLeftList.Add(sensor);
-                                                                                }
-                                                                                sensorLeftList.Remove(SensorType.TIME);
-                                                                                sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
-                        
-                                                                                sensorLeftList.Sort();
-
+                                                                                sensorLeftList.Add(sensor);
                                                                         }
+                                                                        sensorLeftList.Remove(SensorType.TIME);
+                                                                        sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
+
+                                                                        sensorLeftList.Sort();
                                                                 }
 
                                                                 if (control == ControlType.ATTITUDE)
@@ -202,7 +199,7 @@ namespace AscentProfiler
                                                                 {
                                                                         if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
                                                                         {
-                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE));
+                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
 
 
                                                                         }
@@ -282,7 +279,7 @@ namespace AscentProfiler
                                 GUILayout.BeginVertical(GUILayout.Width(200));
 
                                 labelStyle.normal.textColor = Color.green;
-                                GUILayout.Label("Controller On Board", labelStyle);
+                                GUILayout.Label("Controllers On Board", labelStyle);
 
                                 GUILayout.Space(5);
 
@@ -346,6 +343,9 @@ namespace AscentProfiler
                                                 sensorLeftList.Sort();
 
 
+                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
+
+
                                         }
 
                                 }
@@ -391,6 +391,7 @@ namespace AscentProfiler
                                                 sensorRightList.Remove(sensor);
                                                 sensorRightList.Sort();
 
+                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
 
                                         }
 
@@ -412,7 +413,13 @@ namespace AscentProfiler
                         if (GUILayout.Button("Save Loadout"))
                         {
 
-                                SaveLoadout();
+                                if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+                                {
+                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
+
+                                }
+
+                                //SaveLoadout();
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUIControlLoadoutEditor>());
                                 
