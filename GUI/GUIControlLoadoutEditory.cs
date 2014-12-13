@@ -12,21 +12,26 @@ namespace AscentProfiler
 
                 int windowId = 98473;
 
-                Rect WindowRect = new Rect(200, 100, 450, 400);
+                Rect WindowRect = new Rect(200, 100, 450, 600);
 
                 string windowTitle;
                 LoadoutType LoadoutType;
 
-                Vector2 leftScrollPosition;
-                Vector2 rightScrollPosition;
-                Vector2 leftattScrollPosition;
-                Vector2 rightattScrollPosition;
 
-                List<ControlType> leftList = new List<ControlType>();
-                List<ControlType> rightList = new List<ControlType>();
+                Vector2 controlLeftScrollPosition;
+                Vector2 controlRightScrollPosition;
+                List<ControlType> controlLeftList = new List<ControlType>();
+                List<ControlType> controlRightList = new List<ControlType>();
 
-                List<AttitudeControlType> leftattList = new List<AttitudeControlType>();
-                List<AttitudeControlType> rightattList = new List<AttitudeControlType>();
+                Vector2 attitudeLeftScrollPosition;
+                Vector2 attitudeRightScrollPosition;
+                List<AttitudeControlType> attitudeLeftList = new List<AttitudeControlType>();
+                List<AttitudeControlType> attitudeRightList = new List<AttitudeControlType>();
+
+                Vector2 sensorLeftScrollPosition;
+                Vector2 sensorRightScrollPosition;
+                List<SensorType> sensorLeftList = new List<SensorType>();
+                List<SensorType> sensorRightList = new List<SensorType>();
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -87,17 +92,17 @@ namespace AscentProfiler
                                                 GUILayout.Space(5);
 
 
-                                                leftScrollPosition = GUILayout.BeginScrollView(leftScrollPosition);
+                                                controlLeftScrollPosition = GUILayout.BeginScrollView(controlLeftScrollPosition);
 
-                                                foreach (ControlType control in leftList.ToList())
+                                                foreach (ControlType control in controlLeftList.ToList())
                                                 {
                                                         if(GUILayout.Button(control.ToString()))
                                                         {
-                                                                rightList.Add(control);
-                                                                rightList.Sort();
+                                                                controlRightList.Add(control);
+                                                                controlRightList.Sort();
 
-                                                                leftList.Remove(control);
-                                                                leftList.Sort();
+                                                                controlLeftList.Remove(control);
+                                                                controlLeftList.Sort();
 
 
                                                         }
@@ -133,17 +138,17 @@ namespace AscentProfiler
 
                                                 GUILayout.Space(5);
 
-                                                rightScrollPosition = GUILayout.BeginScrollView(rightScrollPosition, false, false);
+                                                controlRightScrollPosition = GUILayout.BeginScrollView(controlRightScrollPosition, false, false);
 
-                                                foreach (ControlType control in rightList.ToList())
+                                                foreach (ControlType control in controlRightList.ToList())
                                                 {
                                                         if (GUILayout.Button(control.ToString()))
                                                         {
-                                                                leftList.Add(control);
-                                                                leftList.Sort();
+                                                                controlLeftList.Add(control);
+                                                                controlLeftList.Sort();
 
-                                                                rightList.Remove(control);
-                                                                rightList.Sort();
+                                                                controlRightList.Remove(control);
+                                                                controlRightList.Sort();
 
 
                                                         }
@@ -161,7 +166,7 @@ namespace AscentProfiler
                         GUILayout.EndHorizontal();
 
                         
-                        if (rightList.Contains(ControlType.ATTITUDE))
+                        if (controlRightList.Contains(ControlType.ATTITUDE))
                         {
                                 GUILayout.BeginVertical();
                                 GUILayout.Label("ATTITUDE", labelStyle);
@@ -178,17 +183,17 @@ namespace AscentProfiler
                                 GUILayout.Space(5);
 
 
-                                leftattScrollPosition = GUILayout.BeginScrollView(leftattScrollPosition);
+                                attitudeLeftScrollPosition = GUILayout.BeginScrollView(attitudeLeftScrollPosition);
 
-                                foreach (AttitudeControlType attitudecontroller in leftattList.ToList())
+                                foreach (AttitudeControlType attitudecontroller in attitudeLeftList.ToList())
                                 {
                                         if (GUILayout.Button(attitudecontroller.ToString()))
                                         {
-                                                rightattList.Add(attitudecontroller);
-                                                rightattList.Sort();
+                                                attitudeRightList.Add(attitudecontroller);
+                                                attitudeRightList.Sort();
 
-                                                leftattList.Remove(attitudecontroller);
-                                                leftattList.Sort();
+                                                attitudeLeftList.Remove(attitudecontroller);
+                                                attitudeLeftList.Sort();
 
 
                                         }
@@ -224,17 +229,17 @@ namespace AscentProfiler
 
                                 GUILayout.Space(5);
 
-                                rightattScrollPosition = GUILayout.BeginScrollView(rightattScrollPosition, false, false);
+                                attitudeRightScrollPosition = GUILayout.BeginScrollView(attitudeRightScrollPosition, false, false);
 
-                                foreach (AttitudeControlType attitudecontroller in rightattList.ToList())
+                                foreach (AttitudeControlType attitudecontroller in attitudeRightList.ToList())
                                 {
                                         if (GUILayout.Button(attitudecontroller.ToString()))
                                         {
-                                                leftattList.Add(attitudecontroller);
-                                                leftattList.Sort();
+                                                attitudeLeftList.Add(attitudecontroller);
+                                                attitudeLeftList.Sort();
 
-                                                rightattList.Remove(attitudecontroller);
-                                                rightattList.Sort();
+                                                attitudeRightList.Remove(attitudecontroller);
+                                                attitudeRightList.Sort();
 
 
                                         }
@@ -251,7 +256,100 @@ namespace AscentProfiler
 
                                 GUILayout.EndHorizontal();
                         }
-                        
+
+
+
+                        if (controlRightList.Contains(ControlType.SENSOR))
+                        {
+                                GUILayout.BeginVertical();
+                                GUILayout.Label("SENSORS", labelStyle);
+                                GUILayout.EndVertical();
+
+                                GUILayout.BeginHorizontal();
+
+                                GUILayout.BeginVertical(GUILayout.Width(200));
+
+                                labelStyle.normal.textColor = Color.yellow;
+
+                                GUILayout.Label("Sensors Available", labelStyle);
+
+                                GUILayout.Space(5);
+
+
+                                sensorLeftScrollPosition = GUILayout.BeginScrollView(sensorLeftScrollPosition);
+
+                                foreach (SensorType sensor in sensorLeftList.ToList())
+                                {
+                                        if (GUILayout.Button(sensor.ToString()))
+                                        {
+                                                sensorRightList.Add(sensor);
+                                                sensorRightList.Sort();
+
+                                                sensorLeftList.Remove(sensor);
+                                                sensorLeftList.Sort();
+
+
+                                        }
+
+                                }
+
+                                GUILayout.EndScrollView();
+
+
+                                GUILayout.EndVertical();
+
+
+
+
+                                GUILayout.FlexibleSpace();
+
+                                GUILayout.BeginVertical();
+
+                                GUILayout.Space(1);
+                                labelStyle.normal.textColor = Color.cyan;
+                                GUILayout.Label(">", labelStyle);
+                                GUILayout.Space(1);
+                                GUILayout.Label("<", labelStyle);
+
+                                GUILayout.EndVertical();
+
+                                GUILayout.FlexibleSpace();
+
+                                GUILayout.BeginVertical(GUILayout.Width(200));
+
+                                labelStyle.normal.textColor = Color.green;
+                                GUILayout.Label("Sensors On Board", labelStyle);
+
+                                GUILayout.Space(5);
+
+                                sensorRightScrollPosition = GUILayout.BeginScrollView(sensorRightScrollPosition, false, false);
+
+                                foreach (SensorType sensor in sensorRightList.ToList())
+                                {
+                                        if (GUILayout.Button(sensor.ToString()))
+                                        {
+                                                sensorLeftList.Add(sensor);
+                                                sensorLeftList.Sort();
+
+                                                sensorRightList.Remove(sensor);
+                                                sensorRightList.Sort();
+
+
+                                        }
+
+                                }
+
+                                GUILayout.EndScrollView();
+
+                                GUILayout.Space(5);
+
+
+
+                                GUILayout.EndVertical();
+
+                                GUILayout.EndHorizontal();
+                        }
+
 
 
                         if (GUILayout.Button("Save Loadout"))
@@ -282,8 +380,8 @@ namespace AscentProfiler
                 
                 void LoadFromPartModule(AscentProAPGCSModule module)
                 {
-                        rightList = module.SequenceEngine.ControllerModules.Keys.ToList();
-                        rightList.Sort();
+                        controlRightList = module.SequenceEngine.ControllerModules.Keys.ToList();
+                        controlRightList.Sort();
 
                         
 
@@ -294,17 +392,17 @@ namespace AscentProfiler
 
                         foreach (ControlType control in (ControlType[])Enum.GetValues(typeof(ControlType)))
                         {
-                                leftList.Add(control);
+                                controlLeftList.Add(control);
                         }
-                        leftList = leftList.Except(rightList).ToList();
+                        controlLeftList = controlLeftList.Except(controlRightList).ToList();
                         
-                        leftList.Sort();
+                        controlLeftList.Sort();
 
                         foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
                         {
-                                leftattList.Add(attitude);
+                                attitudeLeftList.Add(attitude);
                         }
-                        leftattList.Sort();
+                        attitudeLeftList.Sort();
 
                 }
 
@@ -315,7 +413,7 @@ namespace AscentProfiler
 
                         module.SequenceEngine.ControllerModules.Clear();
 
-                        foreach(ControlType control in rightList)
+                        foreach(ControlType control in controlRightList)
                         {
 
                                 module.SequenceEngine.AddControl(control);
