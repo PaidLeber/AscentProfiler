@@ -61,7 +61,8 @@
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\ActionFactory.cs" />
-    <Compile Include="GUI\GUIControlLoadoutEditory.cs" />
+    <Compile Include="GUI\GUISequenceLoadoutEditor.cs" />
+    <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
     <Compile Include="PartModules\AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="Control Loops\ControlAttitude.cs" />
