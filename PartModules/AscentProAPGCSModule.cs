@@ -14,7 +14,7 @@ namespace AscentProfiler
                 
                 internal Sequence SequenceEngine;
 
-                private GUISensorLoadoutEditor sequenceWindow;
+                private GUIControlLoadoutEditor sequenceWindow;
                 private GUIControlLoadoutEditor controlWindow;
 
                 public AscentProAPGCSModule()
