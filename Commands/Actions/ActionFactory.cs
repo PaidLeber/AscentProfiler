@@ -14,7 +14,7 @@ namespace AscentProfiler
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<ActionType, string> actionRegex = new Dictionary<ActionType, String>();
 
-                List<Action> NewActionList = new List<Action>();
+                List<Command> NewActionList = new List<Command>();
                 Dictionary<ActionType, Func<Action>> actionProducts = new Dictionary<ActionType, Func<Action>>();
                 Match regexGrouping;
 
@@ -76,7 +76,7 @@ namespace AscentProfiler
 
                 }
 
-                internal List<Action> GetNewActionList()
+                internal List<Command> GetNewActionList()
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating action executor");
                         return NewActionList;

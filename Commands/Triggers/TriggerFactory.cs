@@ -10,7 +10,7 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
-                List<Trigger> NewTriggerSequence = new List<Trigger>();
+                List<Command> NewTriggerSequence = new List<Command>();
 
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
