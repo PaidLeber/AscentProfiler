@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using KSP;
 
 namespace AscentProfiler
 {
@@ -64,7 +63,7 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
-                internal override bool Process(AscentProAPGCSModule module)
+                internal override bool Evaluate(AscentProAPGCSModule module)
                 {
                         IsAscending(module);
 
@@ -144,7 +143,7 @@ namespace AscentProfiler
 
                 }
                 
-                internal override bool Process(AscentProAPGCSModule module)
+                internal override bool Evaluate(AscentProAPGCSModule module)
                 {
                         switch (command)
                         {
@@ -188,7 +187,7 @@ namespace AscentProfiler
                         this.value = value;
                 }
 
-                internal override bool Process(AscentProAPGCSModule module)
+                internal override bool Evaluate(AscentProAPGCSModule module)
                 {
                         
                         //May need to use Timefixed.delta
