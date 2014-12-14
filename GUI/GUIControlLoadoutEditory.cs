@@ -73,6 +73,10 @@ namespace AscentProfiler
                         WindowRect = GUILayout.Window(windowId, WindowRect, DrawLoadoutEditor, windowTitle);
                 }
 
+
+
+
+
                 void DrawLoadoutEditor(int id)
                 {
 
@@ -104,31 +108,10 @@ namespace AscentProfiler
                                                                 controlLeftList.Remove(control);
                                                                 controlLeftList.Sort();
 
+                                                                AddControl(control);
+
+
                                                                 
-                                                                if(control == ControlType.SENSOR)
-                                                                {
-
-                                                                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                                                                        {
-                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
-
-                                                                        }
-                                                                        EnumSensorTypes();
-
-                                                                }
-
-                                                                if (control == ControlType.ATTITUDE)
-                                                                {
-                                                                        if (!module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
-                                                                        {
-                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new ControlAttitude());
-
-
-                                                                        }
-                                                                        EnumAttitudeTypes();
-                                                                }
-
-
 
                                                         }
 
@@ -175,25 +158,7 @@ namespace AscentProfiler
                                                                 controlRightList.Remove(control);
                                                                 controlRightList.Sort();
 
-                                                                if (control == ControlType.SENSOR)
-                                                                {
-                                                                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                                                                        {
-                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.SENSOR);
-
-
-                                                                        }
-                                                                }
-
-                                                                if (control == ControlType.ATTITUDE)
-                                                                {
-                                                                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
-                                                                        {
-                                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
-
-
-                                                                        }
-                                                                }
+                                                                RemoveControl(control);
 
                                                         }
 
@@ -246,14 +211,7 @@ namespace AscentProfiler
                                                                 attitudeLeftList.Sort();
 
 
-                                                                switch (attitude)
-                                                                {
-                                                                        case AttitudeControlType.SAS:
-                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new SASController());
-                                                                                break;
-
-
-                                                                }
+                                                                AddAttitudeController(attitude);
                                                         
                                                         }
 
@@ -304,15 +262,7 @@ namespace AscentProfiler
                                                 attitudeRightList.Remove(attitude);
                                                 attitudeRightList.Sort();
 
-
-                                                switch (attitude)
-                                                {
-                                                        case AttitudeControlType.SAS:
-                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
-                                                                break;
-
-
-                                                }
+                                                RemoveAttitudeController();
 
                                         }
 
@@ -520,16 +470,74 @@ namespace AscentProfiler
                         {
                                 attitudeLeftList.Add(attitude);
                         }
-                        attitudeRightList.Add(module.SequenceEngine.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
-                        attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
+
+                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
+                        {
+                                attitudeRightList.Add(module.SequenceEngine.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
+                                attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
+                        }
+
                         attitudeLeftList.Sort();
                 
                 }
 
+                void AddControl(ControlType control)
+                {
+                        if (!module.SequenceEngine.ControllerModules.ContainsKey(control))
+                        {
+                                switch (control)
+                                {
+                                        case ControlType.ATTITUDE:
+                                                //module.SequenceEngine.ControllerModules.Add(control, new ControlAttitude());
+                                                EnumAttitudeTypes();
+                                                break;
+                                        case ControlType.SENSOR:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlSensors());
+                                                EnumSensorTypes();
+                                                break;
+                                        case ControlType.MISSIONLOG:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlMissionLog());
+                                                break;
+                                        case ControlType.TELEMETRY:
+                                                module.SequenceEngine.ControllerModules.Add(control, new ControlTelemetry());
+                                                break;
+                                }
+                        }
+
+
+
+                }
+
+                void RemoveControl(ControlType control)
+                {
+                        module.SequenceEngine.ControllerModules.Remove(control);
+                }
+
+                void AddAttitudeController(AttitudeControlType controller)
+                {
+                        switch (controller)
+                        {
+                                case AttitudeControlType.SAS:
+                                        module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new SASController());
+                                        break;
+
+
+                        }
+
+
+                }
+
+                void RemoveAttitudeController()
+                {
+                        module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
+
+                }
+
+
                 void SaveLoadout()
                 {
 
-                        
+                        /*
                         module.SequenceEngine.ControllerModules.Clear();
 
                         foreach(ControlType control in controlRightList)
@@ -540,11 +548,15 @@ namespace AscentProfiler
                                         
                         }
 
-                        
+                        */
 
                         
                 
                 }
+
+
+
+
 
 
         }

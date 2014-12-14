@@ -9,6 +9,7 @@ namespace AscentProfiler
         [Serializable]
         class SASController : ControlAttitude
         {
+                [NonSerialized]
                 Quaternion lastrotation;
 
                 internal SASController()

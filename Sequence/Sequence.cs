@@ -38,6 +38,8 @@ namespace AscentProfiler
                          */ 
                 }
 
+
+
                 internal void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled)
@@ -81,27 +83,7 @@ namespace AscentProfiler
 
 
 
-                internal void AddControl(ControlType control)
-                {
 
-                        switch (control)
-                        {
-                                case ControlType.ATTITUDE:
-                                        ControllerModules.Add(control, new ControlAttitude());
-                                        break;
-                                case ControlType.MISSIONLOG:
-                                        ControllerModules.Add(control, new ControlMissionLog());
-                                        break;
-                                case ControlType.SENSOR:
-                                        ControllerModules.Add(control, new ControlSensors());
-                                        break;
-                                case ControlType.TELEMETRY:
-                                        ControllerModules.Add(control, new ControlTelemetry());
-                                        break;
-                        }
-                
-                
-                }
 
         }
 
