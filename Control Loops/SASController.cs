@@ -9,13 +9,11 @@ namespace AscentProfiler
         [Serializable]
         class SASController : ControlAttitude
         {
-                internal AttitudeControlType ActiveController = AttitudeControlType.SAS;
-
                 Quaternion lastrotation;
 
                 internal SASController()
                 {
-
+                        ActiveController = AttitudeControlType.SAS;
                 }
 
                 internal override T GetLoadedTypes<T>()
@@ -29,11 +27,6 @@ namespace AscentProfiler
                 }
 
                 internal override bool RemoveType<T>(T enumvalue)
-                {
-                        throw new NotImplementedException();
-                }
-
-                internal override void Process(AscentProAPGCSModule module)
                 {
                         throw new NotImplementedException();
                 }

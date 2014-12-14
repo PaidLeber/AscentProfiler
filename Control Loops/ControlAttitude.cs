@@ -9,7 +9,7 @@ namespace AscentProfiler
         [Serializable]
         class ControlAttitude : ControlModule
         {
-                internal AttitudeControlType ActiveController;
+                protected AttitudeControlType ActiveController;
 
                 protected float heading;
                 protected float pitch;
@@ -17,7 +17,6 @@ namespace AscentProfiler
 
                 internal ControlAttitude()
                 {
-                        
 
                 }
 

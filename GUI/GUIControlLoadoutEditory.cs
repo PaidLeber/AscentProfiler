@@ -113,7 +113,7 @@ namespace AscentProfiler
                                                                                 module.SequenceEngine.ControllerModules.Add(ControlType.SENSOR, new ControlSensors());
 
                                                                         }
-
+                                                                        EnumSensorTypes();
 
                                                                 }
 
@@ -125,6 +125,7 @@ namespace AscentProfiler
 
 
                                                                         }
+                                                                        EnumAttitudeTypes();
                                                                 }
 
 
@@ -211,6 +212,8 @@ namespace AscentProfiler
                         
                         if (controlRightList.Contains(ControlType.ATTITUDE))
                         {
+                                
+
                                 GUILayout.BeginVertical();
                                 GUILayout.Label("ATTITUDE", labelStyle);
                                 GUILayout.EndVertical();
@@ -482,23 +485,37 @@ namespace AscentProfiler
 
 
 
+                        EnumAttitudeTypes();
 
+
+                        EnumSensorTypes();
+
+
+
+                }
+
+                void EnumSensorTypes()
+                {
+                        sensorLeftList.Clear();
                         foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
                         {
                                 sensorLeftList.Add(sensor);
                         }
-                        
 
-                        if( module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+
+                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
                                 sensorLeftList = sensorLeftList.Except(module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>()).ToList();
 
                         sensorLeftList.Remove(SensorType.TIME);
                         sensorLeftList.Sort();
-
+                
                 }
 
-                void EnumAttitudeType()
+
+                void EnumAttitudeTypes()
                 {
+                        attitudeLeftList.Clear();
+                        attitudeRightList.Clear();
                         foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
                         {
                                 attitudeLeftList.Add(attitude);
@@ -506,6 +523,7 @@ namespace AscentProfiler
                         attitudeRightList.Add(module.SequenceEngine.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
                         attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
                         attitudeLeftList.Sort();
+                
                 }
 
                 void SaveLoadout()
