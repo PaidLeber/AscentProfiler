@@ -11,7 +11,7 @@ namespace AscentProfiler
         {
                 Quaternion lastrotation;
 
-                internal SASController(AscentProAPGCSModule module)
+                internal SASController()
                 {
                         //this.module = module;
                         //module.telemetryController.AddLog("SAS Controller Loaded!");

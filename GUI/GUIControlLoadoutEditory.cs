@@ -31,7 +31,8 @@ namespace AscentProfiler
                 Vector2 sensorLeftScrollPosition;
                 Vector2 sensorRightScrollPosition;
                 List<SensorType> sensorLeftList = new List<SensorType>();
-                List<SensorType> sensorRightList = new List<SensorType>();
+
+                int maxAttitudeControllers = 1;
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -227,18 +228,35 @@ namespace AscentProfiler
 
                                 attitudeLeftScrollPosition = GUILayout.BeginScrollView(attitudeLeftScrollPosition);
 
-                                foreach (AttitudeControlType attitudecontroller in attitudeLeftList.ToList())
+                                foreach (AttitudeControlType attitude in attitudeLeftList.ToList())
                                 {
-                                        if (GUILayout.Button(attitudecontroller.ToString()))
-                                        {
-                                                attitudeRightList.Add(attitudecontroller);
-                                                attitudeRightList.Sort();
 
-                                                attitudeLeftList.Remove(attitudecontroller);
-                                                attitudeLeftList.Sort();
+                                                if (GUILayout.Button(attitude.ToString()))
+                                                {
+
+                                                        if (attitudeRightList.Count < maxAttitudeControllers)
+                                                        {
+                                                                attitudeRightList.Add(attitude);
+                                                                attitudeRightList.Sort();
+
+                                                                attitudeLeftList.Remove(attitude);
+                                                                attitudeLeftList.Sort();
 
 
-                                        }
+                                                                switch (attitude)
+                                                                {
+                                                                        case AttitudeControlType.SAS:
+                                                                                module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new SASController());
+                                                                                break;
+
+
+                                                                }
+                                                        
+                                                        }
+
+
+                                                }
+
 
                                 }
 
@@ -273,16 +291,25 @@ namespace AscentProfiler
 
                                 attitudeRightScrollPosition = GUILayout.BeginScrollView(attitudeRightScrollPosition, false, false);
 
-                                foreach (AttitudeControlType attitudecontroller in attitudeRightList.ToList())
+                                foreach (AttitudeControlType attitude in attitudeRightList.ToList())
                                 {
-                                        if (GUILayout.Button(attitudecontroller.ToString()))
+                                        if (GUILayout.Button(attitude.ToString()))
                                         {
-                                                attitudeLeftList.Add(attitudecontroller);
+                                                attitudeLeftList.Add(attitude);
                                                 attitudeLeftList.Sort();
 
-                                                attitudeRightList.Remove(attitudecontroller);
+                                                attitudeRightList.Remove(attitude);
                                                 attitudeRightList.Sort();
 
+
+                                                switch (attitude)
+                                                {
+                                                        case AttitudeControlType.SAS:
+                                                                module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
+                                                                break;
+
+
+                                                }
 
                                         }
 
@@ -324,15 +351,10 @@ namespace AscentProfiler
                                 {
                                         if (GUILayout.Button(sensor.ToString()))
                                         {
-                                                sensorRightList.Add(sensor);
-                                                sensorRightList.Sort();
+                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
 
                                                 sensorLeftList.Remove(sensor);
                                                 sensorLeftList.Sort();
-
-
-                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
-
 
                                         }
 
@@ -375,10 +397,10 @@ namespace AscentProfiler
                                         if(sensor != SensorType.TIME)
                                                 if (GUILayout.Button(sensor.ToString()))
                                                 {
+                                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
+
                                                         sensorLeftList.Add(sensor);
                                                         sensorLeftList.Sort();
-
-                                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
 
                                                 }
 
