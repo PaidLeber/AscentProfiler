@@ -379,14 +379,6 @@ namespace AscentProfiler
                         if (GUILayout.Button("Save Loadout"))
                         {
 
-                                if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                                {
-                                        if (!module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>().Contains(SensorType.TIME))
-                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
-
-                                }
-
-                                //SaveLoadout();
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUIControlLoadoutEditor>());
                                 
@@ -407,14 +399,6 @@ namespace AscentProfiler
                         controlRightList = module.SequenceEngine.ControllerModules.Keys.ToList();
                         controlRightList.Sort();
 
-                        /*
-                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                        {
-                                sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                                sensorRightList.Remove(SensorType.TIME);
-                                sensorRightList.Sort();
-                        }
-                        */
 
 
 
@@ -493,6 +477,7 @@ namespace AscentProfiler
                                                 break;
                                         case ControlType.SENSOR:
                                                 module.SequenceEngine.ControllerModules.Add(control, new ControlSensors());
+                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
                                                 EnumSensorTypes();
                                                 break;
                                         case ControlType.MISSIONLOG:
@@ -533,6 +518,15 @@ namespace AscentProfiler
 
                 }
 
+                void AddSensor()
+                { 
+                
+                }
+
+                void RemoveSensor()
+                { 
+                
+                }
 
                 void SaveLoadout()
                 {
