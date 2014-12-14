@@ -53,7 +53,6 @@ namespace AscentProfiler
                         {
                                 case LoadoutType.Control:
 
-                                        InitController(module);
                                         LoadFromPartModule(module);
                                         EnumTypes();
 
@@ -114,18 +113,7 @@ namespace AscentProfiler
 
                                                                         }
 
-                                                                        sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
-                                                                        sensorRightList.Remove(SensorType.TIME);
-                                                                        sensorRightList.Sort();
 
-                                                                        foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
-                                                                        {
-                                                                                sensorLeftList.Add(sensor);
-                                                                        }
-                                                                        sensorLeftList.Remove(SensorType.TIME);
-                                                                        sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
-
-                                                                        sensorLeftList.Sort();
                                                                 }
 
                                                                 if (control == ControlType.ATTITUDE)
@@ -381,19 +369,25 @@ namespace AscentProfiler
 
                                 sensorRightScrollPosition = GUILayout.BeginScrollView(sensorRightScrollPosition, false, false);
 
-                                foreach (SensorType sensor in sensorRightList.ToList())
+                                foreach (SensorType sensor in module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>())
                                 {
+
+
                                         if (GUILayout.Button(sensor.ToString()))
                                         {
                                                 sensorLeftList.Add(sensor);
                                                 sensorLeftList.Sort();
 
-                                                sensorRightList.Remove(sensor);
-                                                sensorRightList.Sort();
+                                                //sensorRightList.Remove(sensor);
+                                                //sensorRightList.Sort();
 
                                                 module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
 
                                         }
+
+
+
+
 
                                 }
 
@@ -434,20 +428,24 @@ namespace AscentProfiler
 
 
 
-
-
-                void InitController(AscentProAPGCSModule module)
-                {
-
-
-                }
                 
                 void LoadFromPartModule(AscentProAPGCSModule module)
                 {
                         controlRightList = module.SequenceEngine.ControllerModules.Keys.ToList();
                         controlRightList.Sort();
 
-                        
+                        /*
+                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+                        {
+                                sensorRightList = module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>();
+                                sensorRightList.Remove(SensorType.TIME);
+                                sensorRightList.Sort();
+                        }
+                        */
+
+
+
+
 
                 }
 
@@ -466,7 +464,17 @@ namespace AscentProfiler
                         {
                                 attitudeLeftList.Add(attitude);
                         }
+                        attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
                         attitudeLeftList.Sort();
+
+
+                        foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
+                        {
+                                sensorLeftList.Add(sensor);
+                        }
+                        sensorLeftList.Remove(SensorType.TIME);
+                        sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
+                        sensorLeftList.Sort();
 
                 }
 
@@ -474,7 +482,7 @@ namespace AscentProfiler
                 void SaveLoadout()
                 {
 
-
+                        
                         module.SequenceEngine.ControllerModules.Clear();
 
                         foreach(ControlType control in controlRightList)

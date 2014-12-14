@@ -25,7 +25,8 @@ namespace AscentProfiler
 
                 internal override T GetLoadedTypes<T>()
                 {
-                        return (T) Convert.ChangeType(sensorsOnBoard.Select(x => x.Key).ToList(), typeof(T));
+
+                        return (T) Convert.ChangeType(sensorsOnBoard.OrderBy(x => x.Key).Select(x => x.Key).ToList(), typeof(T));
                 }
 
                 internal override bool AddType<T>(T enumvalue)
