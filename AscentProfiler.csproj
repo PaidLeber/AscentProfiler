@@ -72,7 +72,6 @@
     <Compile Include="GUI\GUIAscentProfiler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Control Loops\ControlTelemetry.cs" />
-    <Compile Include="GUI\GUISensorLoadoutEditor.cs" />
     <Compile Include="GUI\GUITelemetry.cs" />
     <Compile Include="KerbalGraph\KerbalGraph.cs" />
     <Compile Include="KerbalGraph\KerbalGraphIO.cs" />

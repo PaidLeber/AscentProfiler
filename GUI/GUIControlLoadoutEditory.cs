@@ -372,18 +372,15 @@ namespace AscentProfiler
                                 foreach (SensorType sensor in module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>())
                                 {
 
+                                        if(sensor != SensorType.TIME)
+                                                if (GUILayout.Button(sensor.ToString()))
+                                                {
+                                                        sensorLeftList.Add(sensor);
+                                                        sensorLeftList.Sort();
 
-                                        if (GUILayout.Button(sensor.ToString()))
-                                        {
-                                                sensorLeftList.Add(sensor);
-                                                sensorLeftList.Sort();
+                                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
 
-                                                //sensorRightList.Remove(sensor);
-                                                //sensorRightList.Sort();
-
-                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
-
-                                        }
+                                                }
 
 
 
@@ -409,6 +406,7 @@ namespace AscentProfiler
 
                                 if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
                                 {
+                                        if (!module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>().Contains(SensorType.TIME))
                                         module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
 
                                 }
@@ -472,8 +470,12 @@ namespace AscentProfiler
                         {
                                 sensorLeftList.Add(sensor);
                         }
+                        
+
+                        if( module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
+                                sensorLeftList = sensorLeftList.Except(module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>()).ToList();
+
                         sensorLeftList.Remove(SensorType.TIME);
-                        sensorLeftList = sensorLeftList.Except(sensorRightList).ToList();
                         sensorLeftList.Sort();
 
                 }
