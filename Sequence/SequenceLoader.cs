@@ -27,6 +27,13 @@ namespace AscentProfiler
                                 sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
                         }
                 }
+                internal List<string> GetDirectoryContents(string directory)
+                {
+                        List<string> files = new List<string>(Directory.GetDirectories(directory));
+
+                        return files;
+                
+                }
 
                 internal Dictionary<string, string> GetProfiles()
                 {

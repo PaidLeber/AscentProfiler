@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using KSP.IO;
 
 namespace AscentProfiler
 {
         class GUISequenceLoadoutEditor : MonoBehaviour
         {
+                SequenceLoader sequenceLoader;
+                bool directoryLoaded;
+
                 AscentProAPGCSModule module;
 
                 int windowId = 98473;
@@ -79,6 +83,17 @@ namespace AscentProfiler
 
                 void DrawLoadoutEditor(int id)
                 {
+
+                        if(!directoryLoaded)
+                        {
+                                sequenceLoader = new SequenceLoader();
+
+
+
+
+                        }
+
+
 
                         GUILayout.BeginVertical();
 

@@ -10,7 +10,7 @@ namespace AscentProfiler
 
         class TriggerFactory
         {
-                List<Command> NewTriggerSequence = new List<Command>();
+                List<Command> NewSequence = new List<Command>();
 
                 internal Dictionary<string, string> regexDict = new Dictionary<string, string>();
                 Dictionary<TriggerType, string> triggerRegex = new Dictionary<TriggerType, String>();
@@ -68,7 +68,7 @@ namespace AscentProfiler
                                 Debug.Log(trigger.ToString());
                                 Debug.Log("GET PARENT INDEX: LINKED INDEX = " + linkedIndex);
 
-                                NewTriggerSequence.Add(triggerProducts[trigger]());
+                                NewSequence.Add(triggerProducts[trigger]());
 
                                 
                                 //Log.Level(LogType.Verbose, "TRIGGER DICTIONARY COUNT: " + AscentProfiler.ActiveProfile.triggerGuardian.tdictionary.Count);
@@ -87,9 +87,9 @@ namespace AscentProfiler
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
 
-                        NewTriggerSequence.AddRange(newactionlist);
+                        NewSequence.AddRange(newactionlist);
 
-                        return NewTriggerSequence;
+                        return NewSequence;
                 }
 
                 bool SetTriggerMode(TriggerType trigger)
