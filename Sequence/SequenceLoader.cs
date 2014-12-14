@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 internal SequenceLoader()
                 {
-                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.profilesDir, "*.seq"));
+                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
 
                         foreach (string file in files)
                         {

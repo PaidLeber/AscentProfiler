@@ -18,8 +18,8 @@ namespace AscentProfiler
 
                 internal static Vessel currentVessel = null;
                 static string AscentProfilerDir;
-                internal static string profilesDir;
-                internal static string flightlogsDir;
+                internal static string sequenceDir;
+                internal static string telemetryDir;
 
                 GUIAscentProfiler guiAscentProfiler = null;
                 GUITelemetry guiTelemetry = null;
@@ -93,27 +93,27 @@ namespace AscentProfiler
 
                         }
 
-                        profilesDir     = AscentProfilerDir + "/Profiles";
-                        flightlogsDir   = AscentProfilerDir + "/Flight Logs";
+                        sequenceDir     = AscentProfilerDir + "/Sequences";
+                        telemetryDir   = AscentProfilerDir + "/Telemetry";
                         
                         if (!Directory.Exists(AscentProfilerDir))
                         {
                                 Directory.CreateDirectory(AscentProfilerDir);
                         }
 
-                        if (!Directory.Exists(profilesDir))
+                        if (!Directory.Exists(sequenceDir))
                         {
-                                Directory.CreateDirectory(profilesDir);
+                                Directory.CreateDirectory(sequenceDir);
                         }
 
-                        if (!Directory.Exists(flightlogsDir))
+                        if (!Directory.Exists(telemetryDir))
                         {
-                                Directory.CreateDirectory(flightlogsDir);
+                                Directory.CreateDirectory(telemetryDir);
                         }
 
                         Log.Level(LogType.Info, "User Directory: " + AscentProfilerDir);
-                        Log.Level(LogType.Info, "Profiles Directory: " + profilesDir);
-                        Log.Level(LogType.Info, "Flight Logs Directory: " + flightlogsDir); 
+                        Log.Level(LogType.Info, "Sequence Directory: " + sequenceDir);
+                        Log.Level(LogType.Info, "Telemetry Directory: " + telemetryDir); 
                 }
 
                 void CheckforAPIs()
