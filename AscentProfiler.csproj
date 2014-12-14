@@ -59,8 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\Action.cs" />
-    <Compile Include="Actions\ActionFactory.cs" />
+    <Compile Include="Commands\Action.cs" />
+    <Compile Include="Commands\Actions\ActionFactory.cs" />
     <Compile Include="GUI\GUISequenceLoadoutEditor.cs" />
     <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
     <Compile Include="PartModules\AscentProAPGCSModule.cs" />
@@ -84,8 +84,8 @@
     <Compile Include="Serializer.cs" />
     <Compile Include="Telemetry\TelemetryReceiver.cs" />
     <Compile Include="ToolbarWrapper.cs" />
-    <Compile Include="Triggers\Trigger.cs" />
-    <Compile Include="Triggers\TriggerFactory.cs" />
+    <Compile Include="Commands\Trigger.cs" />
+    <Compile Include="Commands\Triggers\TriggerFactory.cs" />
     <Compile Include="Sequence\Sequence.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
