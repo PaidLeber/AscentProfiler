@@ -49,7 +49,7 @@ namespace AscentProfiler
                         foreach (Trigger trigger in triggerBlockBuffer[ActiveSequence].Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         {
 
-                                if (trigger.Evaluate(module))                                                                   // Check & Execute Trigger(s)
+                                if (trigger.Process(module))                                                                   // Check & Execute Trigger(s)
                                 {
                                         foreach (Trigger linkedtrigger in triggerBlockBuffer[ActiveSequence].Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
                                         {
@@ -62,9 +62,9 @@ namespace AscentProfiler
                                         Debug.Log(trigger.type);
 
                                         
-                                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.index == trigger.index))           
+                                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.linkedIndex == trigger.index))           
                                         {
-                                                if (action.Execute(module))                                                     // Check & Execute Action(s)
+                                                if (action.Process(module))                                                     // Check & Execute Action(s)
                                                 {
                                                         Debug.Log("Flight Sequence ExecuteActions " + trigger.index);
 

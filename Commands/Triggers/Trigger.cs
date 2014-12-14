@@ -8,29 +8,18 @@ using KSP;
 namespace AscentProfiler
 {
         [Serializable]
-        abstract class Trigger
+        abstract class Trigger : Command
         {
 
-
-
+                internal TriggerType type;
+                protected double value;
                 protected bool isascending;
                 protected double lastaltitude;
-
-                internal TriggerType type;
-                internal bool activated = false;
-                internal int index;
-                internal int linkedIndex;
 
                 protected bool ascentMode;
                 protected bool fromaxval;
 
-                internal double value;
                 protected double maxval;
-
-                internal string displayvalue;
-                internal string description;
-
-                internal abstract bool Evaluate(AscentProAPGCSModule module);
 
                 protected bool IsAscending(AscentProAPGCSModule module)
                 {
@@ -75,7 +64,7 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         IsAscending(module);
 
@@ -155,7 +144,7 @@ namespace AscentProfiler
 
                 }
                 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         switch (command)
                         {
@@ -199,7 +188,7 @@ namespace AscentProfiler
                         this.value = value;
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         
                         //May need to use Timefixed.delta

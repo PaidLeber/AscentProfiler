@@ -7,21 +7,11 @@ using UnityEngine;
 namespace AscentProfiler
 {
         [Serializable]
-        abstract class Action
+        abstract class Action : Command
         {
+                protected new int value;
                 internal ActionType type;
                 internal ActionModifier modifier;
-
-                internal bool activated = false;
-                internal int index = -1;
-
-                protected int value;
-                protected bool state = false;
-
-                internal string displayvalue = "";
-                internal string description;
-
-                internal abstract bool Execute(AscentProAPGCSModule module);
 
                 protected bool SetModifierState(ActionModifier modifier)
                 {
@@ -57,16 +47,16 @@ namespace AscentProfiler
                 AttitudeControlType controller;
                 string error;
 
-                internal Control(int index, ActionType type, ControlType control, AttitudeControlType controller, ActionModifier modifier)
+                internal Control(int linkedindex, ActionType type, ControlType control, AttitudeControlType controller, ActionModifier modifier)
                 {
-                        this.index = index;
+                        this.linkedIndex = linkedindex;
                         this.type = type;
                         this.state = SetModifierState(modifier);
                         this.control = control;
                         this.controller = controller;
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         /*
                         switch(control)
@@ -108,14 +98,14 @@ namespace AscentProfiler
 
                 internal Telemetry(int index, ActionType type, TelemetryType telemetry, ActionModifier modifier)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.type = type;
                         this.state = SetModifierState(modifier);
                         this.telemetry = telemetry;
                         this.modifier = modifier;
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                                 
                         switch (telemetry)
@@ -148,13 +138,13 @@ namespace AscentProfiler
 
                 internal Sensors(int index, ActionType type, SensorType sensor)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.type = type;
                         this.sensor = sensor;
                         this.state = true;
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
 
                         if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
@@ -188,7 +178,7 @@ namespace AscentProfiler
 
                 internal ActionGroup(int index, ActionType type, ActionModifier modifier, KSPActionGroup kspactiongroupEnum, string description)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.type = type;
                         this.state = SetModifierState(modifier);
                         this.modifier = modifier;
@@ -197,7 +187,7 @@ namespace AscentProfiler
                 
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         switch(modifier)
                         {
@@ -235,13 +225,13 @@ namespace AscentProfiler
 
                 internal ActionGroupToggle(int index, int value)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.value = value;
                 
                 }
 
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value);
                         FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(Util.SetActionGroup(value));
@@ -257,12 +247,12 @@ namespace AscentProfiler
 
                 internal StageNext(int index)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                 
                 }
 
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log("STAGE SEPARATION");
                         Staging.ActivateNextStage();
@@ -278,12 +268,12 @@ namespace AscentProfiler
 
                 internal ActivateStage(int index, int value)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.value = value;
                 
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
                         //FlightLog.Log(value + " " + desc.ToUpper());
                         Staging.ActivateStage(value);
@@ -300,7 +290,7 @@ namespace AscentProfiler
 
                 internal Throttle(int index, int value)
                 {
-                        this.index = index;
+                        this.linkedIndex = index;
                         this.value = value;
 
                         if (value < 100) //move this convert code to action factory
@@ -314,7 +304,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override bool Execute(AscentProAPGCSModule module)
+                internal override bool Process(AscentProAPGCSModule module)
                 {
 
                         FlightInputHandler.state.mainThrottle = floatvalue;
