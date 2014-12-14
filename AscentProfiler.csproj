@@ -64,7 +64,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="GUI\GUISequenceLoadoutEditor.cs" />
     <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
-    <Compile Include="PartModules\AscentProAPGCSModule.cs" />
+    <Compile Include="PartModule\AscentProAPGCSModule.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="Control Loops\ControlAttitude.cs" />
     <Compile Include="Control Loops\ControlMissionLog.cs" />

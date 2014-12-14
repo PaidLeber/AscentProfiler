@@ -9,7 +9,7 @@ namespace AscentProfiler
         [Serializable]
         abstract class Action : Command
         {
-                protected new int value;
+                protected int value;
                 internal ActionType type;
                 internal ActionModifier modifier;
 
