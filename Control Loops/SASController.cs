@@ -9,14 +9,39 @@ namespace AscentProfiler
         [Serializable]
         class SASController : ControlAttitude
         {
+                internal AttitudeControlType ActiveController = AttitudeControlType.SAS;
+
                 Quaternion lastrotation;
 
                 internal SASController()
                 {
-                        //this.module = module;
-                        //module.telemetryController.AddLog("SAS Controller Loaded!");
+
                 }
 
+                internal override T GetLoadedTypes<T>()
+                {
+                        return (T) Convert.ChangeType(ActiveController, typeof(T));
+                }
+
+                internal override bool AddType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override bool RemoveType<T>(T enumvalue)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override void Process(AscentProAPGCSModule module)
+                {
+                        throw new NotImplementedException();
+                }
+
+                internal override void ClearTypes()
+                {
+                        throw new NotImplementedException();
+                }
 
                 internal override void Process(AscentProAPGCSModule module)
                 {

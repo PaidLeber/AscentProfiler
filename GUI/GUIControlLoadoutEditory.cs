@@ -285,7 +285,7 @@ namespace AscentProfiler
                                 GUILayout.BeginVertical(GUILayout.Width(200));
 
                                 labelStyle.normal.textColor = Color.green;
-                                GUILayout.Label("Controllers On Board", labelStyle);
+                                GUILayout.Label("Controller On Board", labelStyle);
 
                                 GUILayout.Space(5);
 
@@ -480,12 +480,7 @@ namespace AscentProfiler
                         
                         controlLeftList.Sort();
 
-                        foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
-                        {
-                                attitudeLeftList.Add(attitude);
-                        }
-                        attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
-                        attitudeLeftList.Sort();
+
 
 
                         foreach (SensorType sensor in (SensorType[])Enum.GetValues(typeof(SensorType)))
@@ -502,6 +497,16 @@ namespace AscentProfiler
 
                 }
 
+                void EnumAttitudeType()
+                {
+                        foreach (AttitudeControlType attitude in (AttitudeControlType[])Enum.GetValues(typeof(AttitudeControlType)))
+                        {
+                                attitudeLeftList.Add(attitude);
+                        }
+                        attitudeRightList.Add(module.SequenceEngine.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
+                        attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
+                        attitudeLeftList.Sort();
+                }
 
                 void SaveLoadout()
                 {

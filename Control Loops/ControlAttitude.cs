@@ -9,25 +9,15 @@ namespace AscentProfiler
         [Serializable]
         class ControlAttitude : ControlModule
         {
+                internal AttitudeControlType ActiveController;
 
                 protected float heading;
                 protected float pitch;
                 protected float roll;
 
-                private bool _enabled = false;
-                internal bool Enabled
+                internal ControlAttitude()
                 {
-                        get { return _enabled; }
-
-                        set
-                        { 
-                                if (!value)
-                                {
-                                       // module.vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false); 
-                                }
-                                
-                                _enabled = value;
-                        }
+                        
 
                 }
 
@@ -56,9 +46,7 @@ namespace AscentProfiler
                         throw new NotImplementedException();
                 }
 
-                internal ControlAttitude()
-                {
-                }
+
 
                 internal void OnUpdate()
                 {
@@ -91,10 +79,6 @@ namespace AscentProfiler
                         this.roll = roll;
                 }
 
-                public virtual void ActiveController()
-                {
-
-                }
 
 
 
