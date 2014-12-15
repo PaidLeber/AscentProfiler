@@ -366,7 +366,7 @@ namespace AscentProfiler
 
 
 
-                        if (GUILayout.Button("Save Loadout"))
+                        if (GUILayout.Button("Save Configuration"))
                         {
 
 

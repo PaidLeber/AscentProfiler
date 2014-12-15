@@ -204,7 +204,7 @@ namespace AscentProfiler
 
 
 
-                        if (GUILayout.Button("Upload Sequence(s)"))
+                        if (GUILayout.Button("Keep Configuration"))
                         {
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
