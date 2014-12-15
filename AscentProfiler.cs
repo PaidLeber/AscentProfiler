@@ -9,7 +9,7 @@ namespace AscentProfiler
 {
 
 
-        [KSPAddon(KSPAddon.Startup.Flight, false)]
+        [KSPAddon(KSPAddon.Startup.EditorVAB, false)]
         public class AscentProfiler : MonoBehaviour
         {
                 internal static string version = "0.01";

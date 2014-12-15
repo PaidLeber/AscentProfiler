@@ -37,8 +37,7 @@ namespace AscentProfiler
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
-                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-
+                
 
                 internal void InitWindow(AscentProAPGCSModule module)
                 {
@@ -49,7 +48,6 @@ namespace AscentProfiler
                 void Start()
                 {
                         labelStyle.alignment = TextAnchor.MiddleCenter;
-
                 }
 
                 void OnGUI()
@@ -97,12 +95,12 @@ namespace AscentProfiler
 
                                                 sequenceLeftScrollPosition = GUILayout.BeginScrollView(sequenceLeftScrollPosition);
 
-                                                buttonStyle.fontStyle = FontStyle.Bold;
 
+                                                GUI.skin.button.fontStyle = FontStyle.Bold;
                                                 foreach (string directory in directoryLeftList)
                                                 {
                                                         
-                                                        if (GUILayout.Button(directory.ToString(), buttonStyle))
+                                                        if (GUILayout.Button(directory.ToString()))
                                                         {
 
 
@@ -113,7 +111,7 @@ namespace AscentProfiler
 
 
                                                 }
-
+                                                GUI.skin.button.fontStyle = FontStyle.Normal;
 
 
 
@@ -201,7 +199,7 @@ namespace AscentProfiler
                         {
 
 
-                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUIControlLoadoutEditor>());
+                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
                                 
                         
                         }
