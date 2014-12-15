@@ -35,7 +35,7 @@ namespace AscentProfiler
                 List<string> fileLeftList;
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
-
+                string sequencename = "";
                 string currentPath = AscentProfiler.sequenceDir;
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
@@ -146,6 +146,7 @@ namespace AscentProfiler
                                                         {
 
                                                                 stringToEdit = sequences[file];
+                                                                sequencename = file;
 
                                                         }
                                                         GUILayout.EndHorizontal();
@@ -159,13 +160,21 @@ namespace AscentProfiler
                                         GUILayout.EndVertical();
 
 
+                                        GUILayout.BeginVertical();
 
-
+                                        GUILayout.BeginHorizontal();
+                                        GUILayout.Label("Name", GUILayout.Width(40));
+                                        GUILayout.TextField(sequencename);
+                                        GUILayout.Button("Save", GUILayout.Width(50));
+                                        GUILayout.EndHorizontal();
                                         editorLeftScrollPosition = GUILayout.BeginScrollView(editorLeftScrollPosition);
 
                                                 stringToEdit = GUILayout.TextArea( stringToEdit, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
                                         GUILayout.EndScrollView();
+
+
+                                        GUILayout.EndVertical();
 
                                         GUILayout.BeginVertical(GUILayout.Width(160));
 
