@@ -224,11 +224,11 @@ namespace AscentProfiler
                         
                         }
 
-                        GUILayout.EndVertical();
-
-                        GUILayout.Space(10);
                         mainWindowRect = ResizeWindow(id, mainWindowRect, minProfileWindowSize);
                         GUI.DragWindow(new Rect(0, 0, 10000, 20));
+                        GUILayout.EndVertical();
+
+
                 }
 
 
