@@ -27,10 +27,13 @@ namespace AscentProfiler
                 Rect resizeStart = new Rect();
                 GUIContent gcDrag = new GUIContent("><", "Drag to resize window");
 
+
                 Vector2 sequenceLeftScrollPosition;
                 Vector2 sequenceRightScrollPosition;
                 List<string> directoryLeftList;
                 List<string> fileLeftList;
+                Dictionary<string, string> sequences;
+                string stringToEdit = "";
 
                 string currentPath = AscentProfiler.sequenceDir;
 
@@ -70,7 +73,7 @@ namespace AscentProfiler
                                 sequenceLoader = new SequenceLoader();
                                 directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(currentPath));
                                 fileLeftList = new List<string>(sequenceLoader.GetFileNames(currentPath));
-                                
+                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(currentPath));
                                 
 
 
@@ -110,7 +113,6 @@ namespace AscentProfiler
 
                                                 GUILayout.Space(5);
 
-
                                                 sequenceLeftScrollPosition = GUILayout.BeginScrollView(sequenceLeftScrollPosition);
 
 
@@ -134,13 +136,15 @@ namespace AscentProfiler
 
                                                         GUILayout.BeginHorizontal();
 
-                                                        if (GUILayout.Button(file.ToString()))
+                                                        if (GUILayout.Button(file))
                                                         {
 
 
                                                         }
                                                         if (GUILayout.Button("E", GUILayout.Width(20)))
                                                         {
+
+                                                                stringToEdit = sequences[file];
 
                                                         }
                                                         GUILayout.EndHorizontal();
@@ -162,20 +166,10 @@ namespace AscentProfiler
 
 
                                         GUILayout.EndVertical();
-
-
-                        
-
-                                        //GUILayout.FlexibleSpace();
-
-                                        //GUILayout.BeginVertical();
-
-                                        GUILayout.TextArea("Hello", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-
-                                        //GUILayout.EndVertical();
-
-                                        //GUILayout.FlexibleSpace();
                                         
+                                        stringToEdit = GUILayout.TextArea( stringToEdit, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                                        
+
                                         GUILayout.BeginVertical(GUILayout.Width(160));
 
                                                 labelStyle.normal.textColor = Color.green;

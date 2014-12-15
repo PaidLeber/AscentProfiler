@@ -61,14 +61,14 @@ namespace AscentProfiler
                 {
                         List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
 
-                        Dictionary<string, string> scripts = new Dictionary<string, string>();
+                        Dictionary<string, string> sequences = new Dictionary<string, string>();
 
                         foreach (string file in files)
                         {
-                                scripts.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
+                                sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
                         }
 
-                        return scripts;
+                        return sequences;
                 }
 
 
