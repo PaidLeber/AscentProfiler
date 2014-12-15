@@ -192,7 +192,7 @@ namespace AscentProfiler
 
                                 GUILayout.BeginVertical();
 
-                                foreach (var log in Enumerable.Reverse(AscentProfiler.telemetryReceiver.missionLog.Where(p => p.IndexOf(p) <= AscentProfiler.telemetryReceiver.missionLogCurrentReadCount)))
+                                foreach (var log in Enumerable.Reverse(AscentProfilerFlight.telemetryReceiver.missionLog.Where(p => p.IndexOf(p) <= AscentProfilerFlight.telemetryReceiver.missionLogCurrentReadCount)))
                                         {
                                                 GUILayout.Label(log);
                                         }

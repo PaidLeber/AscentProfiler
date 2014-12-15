@@ -8,48 +8,33 @@ using UnityEngine;
 namespace AscentProfiler
 {
 
-
         [KSPAddon(KSPAddon.Startup.EditorVAB, false)]
-        public class AscentProfiler : MonoBehaviour
+        public class AscentProfilerVAB : AscentProfiler
         {
-                internal static string version = "0.01";
-                //Loaded Assemblies list
-                internal static List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
 
-                internal static Vessel currentVessel = null;
-                internal static string AscentProfilerDir;
-                internal static string sequenceDir;
-                internal static string telemetryDir;
 
+        }
+
+        [KSPAddon(KSPAddon.Startup.Flight, false)]
+        public class AscentProfilerFlight: AscentProfiler
+        {
                 GUIAscentProfiler guiAscentProfiler = null;
                 GUITelemetry guiTelemetry = null;
 
-                bool mainWindowEnabled = false;
-                bool telemetryWindowEnabled = false;
                 IButton mainButton;
                 IButton telemetryButton;
 
+                bool mainWindowEnabled = false;
+                bool telemetryWindowEnabled = false;
 
                 internal static TelemetryReceiver telemetryReceiver;
 
-                void Awake()
-                {
-                        Log.Level(LogType.Info, "Is Awake!");
-                }
-
-
                 void Start()
                 {
-                        CheckforAPIs();
-
-                        
                         guiAscentProfiler = new GUIAscentProfiler();
                         guiTelemetry = new GUITelemetry();
                         telemetryReceiver = new TelemetryReceiver();
 
-                        //telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
-                        
-                        
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
@@ -79,6 +64,50 @@ namespace AscentProfiler
 
                         }
 
+                }
+
+                void OnGUI()
+                {
+                        guiAscentProfiler.OnGUI();
+                        guiTelemetry.OnGUI();
+                }
+
+                void onDestroy()
+                {
+                        mainButton.Destroy();
+                        telemetryButton.Destroy();
+
+                }
+
+        }
+        
+        public class AscentProfiler : MonoBehaviour
+        {
+                internal static string version = "0.01";
+                //Loaded Assemblies list
+                internal static List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
+
+                internal static string AscentProfilerDir;
+                internal static string sequenceDir;
+                internal static string telemetryDir;
+
+                //
+
+                void Awake()
+                {
+                        Log.Level(LogType.Info, "Is Awake!");
+                }
+
+
+                void Start()
+                {
+                        CheckforAPIs();
+
+                        
+
+
+                        //telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
+                        
                         // Create user home directory paths for saves
                         AscentProfilerDir = Application.persistentDataPath + "/Ascent Profiler";
 
@@ -132,22 +161,11 @@ namespace AscentProfiler
 
                 }
 
-                void OnGUI()
-                {
-                        guiAscentProfiler.OnGUI();
-                        guiTelemetry.OnGUI();
-                }
+
 
                 void Update()
                 {
-                        telemetryReceiver.Update();
 
-                        if (FlightGlobals.ActiveVessel != currentVessel)
-                        {
-                                currentVessel = FlightGlobals.ActiveVessel;
-                                Log.Script(LogType.Info, "New Active Vessel is: " + FlightGlobals.ActiveVessel.vesselName);
-                                return;
-                        }
                 }
 
                 void FixedUpdate() {
@@ -155,12 +173,13 @@ namespace AscentProfiler
                 }
 
   
-                void onDestroy()
-                {
-                        mainButton.Destroy();
-                       
-                }
+
 
 
     }
+
+
+
+
+
 }

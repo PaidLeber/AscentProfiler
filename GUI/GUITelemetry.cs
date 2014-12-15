@@ -64,7 +64,7 @@ namespace AscentProfiler
                                 //graph.autoscale = true;
                                 //graph.SetBoundaries(0, 100, 0, 100);
                                 Color val;
-                                foreach (KeyValuePair<SensorType, List<double>> data in AscentProfiler.telemetryReceiver.telemetryData)
+                                foreach (KeyValuePair<SensorType, List<double>> data in AscentProfilerFlight.telemetryReceiver.telemetryData)
                                 {
                                         Debug.Log("DATA KEY IS: " + data.Key);
                                         Debug.Log(String.Join(" ", data.Value.ConvertAll(i => i.ToString()).ToArray()));
@@ -85,7 +85,7 @@ namespace AscentProfiler
 
                                                                 
                 
-                                                graph.AddLine(data.Key.ToString(), AscentProfiler.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray(), val);
+                                                graph.AddLine(data.Key.ToString(), AscentProfilerFlight.telemetryReceiver.telemetryData[SensorType.TIME].ToArray(), data.Value.ToArray(), val);
                                                 //graph.SetLineHorizontalScaling(data.Key.ToString(), 1);
                                                 //graph.SetLineVerticalScaling(data.Key.ToString(), 1);
                                         }
