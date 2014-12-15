@@ -85,7 +85,7 @@ namespace AscentProfiler
 
                                                 labelStyle.normal.textColor = Color.yellow;
 
-                                                GUILayout.Label("Sequence Available", labelStyle);
+                                                GUILayout.Label("Sequences Available", labelStyle);
 
                                                 GUILayout.Space(5);
 
@@ -93,7 +93,20 @@ namespace AscentProfiler
                                                 sequenceLeftScrollPosition = GUILayout.BeginScrollView(sequenceLeftScrollPosition);
 
 
+                                                foreach (string directory in directoryLeftList)
+                                                {
 
+                                                        if (GUILayout.Button(directory.ToString()))
+                                                        {
+
+
+
+
+
+                                                        }
+
+
+                                                }
 
 
 
@@ -135,7 +148,7 @@ namespace AscentProfiler
                                         GUILayout.BeginVertical(GUILayout.Width(200));
 
                                                 labelStyle.normal.textColor = Color.green;
-                                                GUILayout.Label("Sequence Loadout", labelStyle);
+                                                GUILayout.Label("Sequences Loaded", labelStyle);
 
                                                 GUILayout.Space(5);
 
