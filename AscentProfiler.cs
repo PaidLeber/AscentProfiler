@@ -17,7 +17,7 @@ namespace AscentProfiler
                 internal static List<RegisteredAddons> listRegisteredAddons = new List<RegisteredAddons>();
 
                 internal static Vessel currentVessel = null;
-                static string AscentProfilerDir;
+                internal static string AscentProfilerDir;
                 internal static string sequenceDir;
                 internal static string telemetryDir;
 

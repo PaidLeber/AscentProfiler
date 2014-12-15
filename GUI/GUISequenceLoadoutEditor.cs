@@ -67,7 +67,8 @@ namespace AscentProfiler
                                 directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(currentPath));
                                 fileLeftList = new List<string>(sequenceLoader.GetFileNames(currentPath));
 
-
+                                Debug.Log("Directory listing");
+                                Debug.Log(directoryLeftList.ToArray());
 
                                 directoryLoaded = true;
                         }
