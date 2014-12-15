@@ -29,6 +29,8 @@ namespace AscentProfiler
 
                 internal static TelemetryReceiver telemetryReceiver;
 
+                internal static Vessel currentVessel = null;
+
                 void Start()
                 {
                         guiAscentProfiler = new GUIAscentProfiler();
@@ -64,6 +66,16 @@ namespace AscentProfiler
 
                         }
 
+                }
+
+                void Update()
+                {
+                        if (FlightGlobals.ActiveVessel != currentVessel)
+                        {
+                                currentVessel = FlightGlobals.ActiveVessel;
+                                Log.Script(LogType.Info, "New Active Vessel is: " + FlightGlobals.ActiveVessel.vesselName);
+                                return;
+                        }
                 }
 
                 void OnGUI()
@@ -102,12 +114,7 @@ namespace AscentProfiler
                 void Start()
                 {
                         CheckforAPIs();
-
-                        
-
-
-                        //telemetryReceiver = gameObject.AddComponent<TelemetryReceiver>();
-                        
+                       
                         // Create user home directory paths for saves
                         AscentProfilerDir = Application.persistentDataPath + "/Ascent Profiler";
 
@@ -160,19 +167,6 @@ namespace AscentProfiler
                         }
 
                 }
-
-
-
-                void Update()
-                {
-
-                }
-
-                void FixedUpdate() {
-
-                }
-
-  
 
 
 

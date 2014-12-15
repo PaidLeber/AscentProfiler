@@ -131,7 +131,7 @@ namespace AscentProfiler
 
                         if (telemetryWindowEnabled)
                         {
-                                telemetryWindowPos = GUILayout.Window(windowId + 1, telemetryWindowPos, DrawMainWindow, "Ascent Profile for " + AscentProfiler.currentVessel.vesselName);
+                                telemetryWindowPos = GUILayout.Window(windowId + 1, telemetryWindowPos, DrawMainWindow, "Ascent Profile for " + AscentProfilerFlight.currentVessel.vesselName);
                         }
 
                 }

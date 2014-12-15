@@ -45,6 +45,13 @@ namespace AscentProfiler
                 internal List<string> GetFileNames(string path)
                 {
                         List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
+
+                        foreach (string file in files)
+                        {
+                                var i = files.FindIndex(x => x == file);
+                                files[i] = Path.GetFileNameWithoutExtension(file);
+                        }
+
                         files.Sort();
                         return files;
 
@@ -158,7 +165,7 @@ namespace AscentProfiler
 
                 bool TXAscentProAPGCSModule(string sequence, List<Command> newsequence)
                 {
-                        AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                        AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
 
                         TXRemoteTechNetwork(sequence, APGCSmodule);
 
@@ -170,9 +177,9 @@ namespace AscentProfiler
                 {
                         System.Random rng = new System.Random();
                         int port = rng.Next(4000, 20000);
-                        string vessel_ip = (AscentProfiler.currentVessel.vesselName.ToLower() + "." + AscentProfiler.currentVessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+                        string vessel_ip = (AscentProfilerFlight.currentVessel.vesselName.ToLower() + "." + AscentProfilerFlight.currentVessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
                         
-                        ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.UPPER_RIGHT));
+                        ScreenMessages.PostScreenMessage(new ScreenMessage("Transmitting sequence to " + AscentProfilerFlight.currentVessel.vesselType.ToString() + ". Please standby...", 3.0f, ScreenMessageStyle.UPPER_RIGHT));
 
                         //module.flightTelemetry.AddLog("Transmitting command sequence to " + AscentProfiler.currentVessel.vesselType.ToString() + ". Please standby...");
                         /*

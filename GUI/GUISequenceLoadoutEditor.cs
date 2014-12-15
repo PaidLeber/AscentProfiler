@@ -114,7 +114,16 @@ namespace AscentProfiler
                                                 GUI.skin.button.fontStyle = FontStyle.Normal;
 
 
+                                                foreach(string file in fileLeftList)
+                                                {
+                                                        if (GUILayout.Button(file.ToString()))
+                                                        {
 
+
+                                                        }
+
+
+                                                }
 
 
 
@@ -197,7 +206,6 @@ namespace AscentProfiler
 
                         if (GUILayout.Button("Upload Sequence(s)"))
                         {
-
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
                                 

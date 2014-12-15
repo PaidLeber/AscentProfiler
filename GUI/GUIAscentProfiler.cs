@@ -104,7 +104,7 @@ namespace AscentProfiler
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-                                AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                                AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
                                 /*        
                                 foreach (Trigger item in APGCSmodule.SequenceEngine.listTrigger)
                                 {
@@ -122,7 +122,7 @@ namespace AscentProfiler
                         
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-                                AscentProAPGCSModule APGCSmodule = AscentProfiler.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                                AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
                                 //Debug.Log(APGCSmodule.attitudeController.Enabled);
                                 //APGCSmodule.attitudeController.Enabled = !APGCSmodule.attitudeController.Enabled;
                                 
@@ -156,11 +156,11 @@ namespace AscentProfiler
                                                                 if (profileLoader.LoadSequence(pair.Key))
                                                                 {
                                                                         profileLoaded = true;
-                                                                        Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfiler.currentVessel.vesselName);
+                                                                        Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfilerFlight.currentVessel.vesselName);
                                                                 }
                                                                 else
                                                                 {
-                                                                        Log.Script(LogType.Info, "Unable to Upload Profile: " + AscentProfiler.currentVessel.vesselName);
+                                                                        Log.Script(LogType.Info, "Unable to Upload Profile: " + AscentProfilerFlight.currentVessel.vesselName);
                                                                 }
                                                         }
 
