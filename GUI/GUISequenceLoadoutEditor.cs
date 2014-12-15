@@ -18,7 +18,7 @@ namespace AscentProfiler
 
                 int windowId = 98476;
 
-                Rect WindowRect = new Rect(200, 100, 450, 600);
+                Rect WindowRect = new Rect(200, 100, 600, 450);
 
                 string windowTitle = "Sequence Upload Window";
 
@@ -47,7 +47,7 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        labelStyle.alignment = TextAnchor.MiddleCenter;
+                        
                 }
 
                 void OnGUI()
@@ -76,15 +76,29 @@ namespace AscentProfiler
                         }
 
 
-
                         GUILayout.BeginVertical();
 
                         GUILayout.Space(10);
 
                         GUILayout.BeginHorizontal();
+                        if(GUILayout.Button("<- Directory"))
+                        {
+                        
+                        }
+                        var origfont = labelStyle.fontSize;
+                        labelStyle.fontSize = 9;
+                        labelStyle.alignment = TextAnchor.LowerLeft;
+                        GUILayout.Label(currentPath, labelStyle);
+                        labelStyle.fontSize = origfont;
+                        GUILayout.EndHorizontal();
+
+                        labelStyle.alignment = TextAnchor.MiddleCenter;
+
+                        GUILayout.Space(10);
+                        GUILayout.BeginHorizontal();
 
        
-                                        GUILayout.BeginVertical(GUILayout.Width(200));
+                                        GUILayout.BeginVertical(GUILayout.Width(160));
 
                                                 labelStyle.normal.textColor = Color.yellow;
 
@@ -99,6 +113,11 @@ namespace AscentProfiler
                                                 GUI.skin.button.fontStyle = FontStyle.Bold;
                                                 foreach (string directory in directoryLeftList)
                                                 {
+                                                        GUILayout.BeginHorizontal();
+                                                        if (GUILayout.Button("E", GUILayout.Width(15)))
+                                                        {
+
+                                                        }
                                                         
                                                         if (GUILayout.Button(directory.ToString()))
                                                         {
@@ -108,7 +127,7 @@ namespace AscentProfiler
 
 
                                                         }
-
+                                                        GUILayout.EndHorizontal();
 
                                                 }
                                                 GUI.skin.button.fontStyle = FontStyle.Normal;
@@ -158,7 +177,7 @@ namespace AscentProfiler
 
                                         GUILayout.FlexibleSpace();
                                         
-                                        GUILayout.BeginVertical(GUILayout.Width(200));
+                                        GUILayout.BeginVertical(GUILayout.Width(160));
 
                                                 labelStyle.normal.textColor = Color.green;
                                                 GUILayout.Label("Sequences Loaded", labelStyle);
