@@ -18,8 +18,8 @@ namespace AscentProfiler
 
                 int windowId = 98476;
 
-                Rect mainWindowRect = new Rect(200, 100, 600, 450);
-                Vector2 minProfileWindowSize = new Vector2(600, 450);
+                Rect mainWindowRect = new Rect(200, 100, 600, 500);
+                Vector2 minProfileWindowSize = new Vector2(600, 500);
                 string windowTitle = "Sequence Upload Window";
 
                 // For resizing windows
@@ -30,6 +30,7 @@ namespace AscentProfiler
 
                 Vector2 sequenceLeftScrollPosition;
                 Vector2 sequenceRightScrollPosition;
+                Vector2 editorLeftScrollPosition;
                 List<string> directoryLeftList;
                 List<string> fileLeftList;
                 Dictionary<string, string> sequences;
@@ -151,24 +152,20 @@ namespace AscentProfiler
 
                                                 }
 
-
-
-
-
-
-
-
-
-
-
                         
                                                 GUILayout.EndScrollView();
 
 
                                         GUILayout.EndVertical();
-                                        
-                                        stringToEdit = GUILayout.TextArea( stringToEdit, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-                                        
+
+
+
+
+                                        editorLeftScrollPosition = GUILayout.BeginScrollView(editorLeftScrollPosition);
+
+                                                stringToEdit = GUILayout.TextArea( stringToEdit, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+                                        GUILayout.EndScrollView();
 
                                         GUILayout.BeginVertical(GUILayout.Width(160));
 
