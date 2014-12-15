@@ -30,6 +30,13 @@ namespace AscentProfiler
                 internal List<string> GetDirectoryNames(string path)
                 {
                         List<string> directory = new List<string>(Directory.GetDirectories(path));
+
+                        foreach (string name in directory)
+                        {
+                                var i = directory.FindIndex(x => x == name);
+                                directory[i] = Path.GetFileName(name);
+                        }
+
                         directory.Sort();
                         return directory;
                 

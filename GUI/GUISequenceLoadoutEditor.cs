@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using UnityEngine;
 using KSP.IO;
+
 
 namespace AscentProfiler
 {
@@ -35,6 +37,7 @@ namespace AscentProfiler
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
 
 
                 internal void InitWindow(AscentProAPGCSModule module)
@@ -66,10 +69,11 @@ namespace AscentProfiler
                                 sequenceLoader = new SequenceLoader();
                                 directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(currentPath));
                                 fileLeftList = new List<string>(sequenceLoader.GetFileNames(currentPath));
+                                
+                                
 
-                                Debug.Log("Directory listing");
-                                Debug.Log(directoryLeftList.ToArray());
 
+                                
                                 directoryLoaded = true;
                         }
 
@@ -93,11 +97,12 @@ namespace AscentProfiler
 
                                                 sequenceLeftScrollPosition = GUILayout.BeginScrollView(sequenceLeftScrollPosition);
 
+                                                buttonStyle.fontStyle = FontStyle.Bold;
 
                                                 foreach (string directory in directoryLeftList)
                                                 {
-
-                                                        if (GUILayout.Button(directory.ToString()))
+                                                        
+                                                        if (GUILayout.Button(directory.ToString(), buttonStyle))
                                                         {
 
 
