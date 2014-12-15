@@ -86,7 +86,8 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
                         {
-                        
+                              currentPath = Directory.GetParent(currentPath).ToString();
+                              directoryLoaded = false;
                         }
                         var origfont = labelStyle.fontSize;
                         labelStyle.fontSize = 9;
@@ -114,16 +115,13 @@ namespace AscentProfiler
 
 
                                                 GUI.skin.button.fontStyle = FontStyle.Bold;
-                                                foreach (string directory in directoryLeftList)
+                                                foreach (string folder in directoryLeftList)
                                                 {
 
-                                                        if (GUILayout.Button(directory.ToString()))
+                                                        if (GUILayout.Button(folder))
                                                         {
-
-
-
-
-
+                                                                currentPath = currentPath + "/" + folder;
+                                                                directoryLoaded = false;
                                                         }
                                                        
 
@@ -224,7 +222,7 @@ namespace AscentProfiler
 
 
 
-                        if (GUILayout.Button("Keep Configuration"))
+                        if (GUILayout.Button("Save Configuration"))
                         {
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
