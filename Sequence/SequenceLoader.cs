@@ -27,13 +27,36 @@ namespace AscentProfiler
                                 sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
                         }
                 }
-                internal List<string> GetDirectoryContents(string directory)
+                internal List<string> GetDirectoryNames(string path)
                 {
-                        List<string> files = new List<string>(Directory.GetDirectories(directory));
-
-                        return files;
+                        List<string> directory = new List<string>(Directory.GetDirectories(path));
+                        directory.Sort();
+                        return directory;
                 
                 }
+
+                internal List<string> GetFileNames(string path)
+                {
+                        List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
+                        files.Sort();
+                        return files;
+
+                }
+
+                internal Dictionary<string, string> GetFileContents(string path)
+                {
+                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
+
+                        Dictionary<string, string> scripts = new Dictionary<string, string>();
+
+                        foreach (string file in files)
+                        {
+                                scripts.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
+                        }
+
+                        return scripts;
+                }
+
 
                 internal Dictionary<string, string> GetProfiles()
                 {

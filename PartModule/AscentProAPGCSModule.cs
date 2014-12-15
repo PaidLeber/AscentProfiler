@@ -40,7 +40,8 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence Block(s)")]
                 public void ModifySequenceLoadout()
                 {
-
+                        sequenceWindow = gameObject.AddComponent<GUISequenceLoadoutEditor>();
+                        sequenceWindow.InitWindow(this);
                 }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
