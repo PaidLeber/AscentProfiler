@@ -14,7 +14,7 @@ namespace AscentProfiler
                 
                 internal Sequence SequenceEngine;
 
-                private GUIControlLoadoutEditor sequenceWindow;
+                private GUISequenceLoadoutEditor sequenceWindow;
                 private GUIControlLoadoutEditor controlWindow;
 
                 public AscentProAPGCSModule()
@@ -48,7 +48,7 @@ namespace AscentProfiler
                 public void ModifyControllerLoadout()
                 {
                         controlWindow = gameObject.AddComponent<GUIControlLoadoutEditor>();
-                        controlWindow.InitWindow(this, LoadoutType.Control, "Control Loadout Window");
+                        controlWindow.InitWindow(this);
                 }
 
 

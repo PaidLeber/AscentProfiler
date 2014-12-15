@@ -14,9 +14,7 @@ namespace AscentProfiler
 
                 Rect WindowRect = new Rect(200, 100, 450, 600);
 
-                string windowTitle;
-                LoadoutType LoadoutType;
-
+                string windowTitle = "Control Loadout Window";
 
                 Vector2 controlLeftScrollPosition;
                 Vector2 controlRightScrollPosition;
@@ -44,21 +42,13 @@ namespace AscentProfiler
 
                 }
 
-                internal void InitWindow(AscentProAPGCSModule module, LoadoutType loadouttype, string title)
+                internal void InitWindow(AscentProAPGCSModule module)
                 {
                         this.module = module;
-                        this.LoadoutType = loadouttype;
-                        this.windowTitle = title;
 
-                        switch (loadouttype)
-                        {
-                                case LoadoutType.Control:
+                        LoadFromPartModule(module);
+                        EnumTypes();
 
-                                        LoadFromPartModule(module);
-                                        EnumTypes();
-
-                                        break;
-                        }
 
                 }
 
@@ -91,7 +81,7 @@ namespace AscentProfiler
 
                                                 labelStyle.normal.textColor = Color.yellow;
 
-                                                GUILayout.Label(LoadoutType + "s Available", labelStyle);
+                                                GUILayout.Label("Controls Available", labelStyle);
 
                                                 GUILayout.Space(5);
 
@@ -142,7 +132,7 @@ namespace AscentProfiler
                                         GUILayout.BeginVertical(GUILayout.Width(200));
 
                                                 labelStyle.normal.textColor = Color.green;
-                                                GUILayout.Label(LoadoutType+" Loadout", labelStyle);
+                                                GUILayout.Label("Control Loadout", labelStyle);
 
                                                 GUILayout.Space(5);
 

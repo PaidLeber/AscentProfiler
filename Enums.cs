@@ -12,13 +12,6 @@ namespace AscentProfiler
                 RemoteTech
         }
 
-        enum LoadoutType
-        { 
-                Sensor,
-                Control,
-                Sequence
-        }
-
         enum AttitudeType
         { 
                 OFF,
