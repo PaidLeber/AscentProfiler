@@ -85,7 +85,7 @@ namespace AscentProfiler
 
                         GUILayout.BeginVertical();
 
-                        GUILayout.Space(10);
+                        GUILayout.Space(5);
 
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
@@ -93,16 +93,17 @@ namespace AscentProfiler
                               currentPath = Directory.GetParent(currentPath).ToString();
                               directoryLoaded = false;
                         }
-                        var origfont = labelStyle.fontSize;
-                        labelStyle.fontSize = 9;
-                        labelStyle.alignment = TextAnchor.LowerLeft;
-                        GUILayout.Label(currentPath, labelStyle);
-                        labelStyle.fontSize = origfont;
+                        var origfont = GUI.skin.label.fontSize;
+
+                        GUI.skin.label.alignment = TextAnchor.MiddleLeft;
+                        GUI.skin.label.fontSize = 10;
+                        GUILayout.Label(currentPath);
+                        GUI.skin.label.fontSize = origfont;
                         GUILayout.EndHorizontal();
 
                         labelStyle.alignment = TextAnchor.MiddleCenter;
 
-                        GUILayout.Space(10);
+                        GUILayout.Space(20);
                         GUILayout.BeginHorizontal();
 
        
@@ -163,7 +164,7 @@ namespace AscentProfiler
                                         GUILayout.BeginVertical();
 
                                         GUILayout.BeginHorizontal();
-                                        GUILayout.Label("Name", GUILayout.Width(40));
+                                        GUILayout.Label("Name", GUILayout.Width(35));
                                         GUILayout.TextField(sequencename);
                                         GUILayout.Button("Save", GUILayout.Width(50));
                                         GUILayout.EndHorizontal();
@@ -181,7 +182,7 @@ namespace AscentProfiler
                                                 labelStyle.normal.textColor = Color.green;
                                                 GUILayout.Label("Sequences Loaded", labelStyle);
 
-                                                GUILayout.Space(5);
+                                                GUILayout.Space(10);
 
                                                 sequenceRightScrollPosition = GUILayout.BeginScrollView(sequenceRightScrollPosition, false, false);
 
@@ -209,7 +210,7 @@ namespace AscentProfiler
                         
                                                 GUILayout.EndScrollView();
 
-                                                GUILayout.Space(10);
+                                                
 
 
 
@@ -229,7 +230,7 @@ namespace AscentProfiler
                                 
                         
                         }
-
+                        GUILayout.Space(8);
                         mainWindowRect = ResizeWindow(id, mainWindowRect, minProfileWindowSize);
                         GUI.DragWindow(new Rect(0, 0, 10000, 20));
                         GUILayout.EndVertical();
