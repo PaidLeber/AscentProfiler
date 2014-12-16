@@ -11,7 +11,7 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.EditorVAB, false)]
         public class AscentProfilerVAB : AscentProfiler
         {
-                internal static string sequencePath ="";
+                
                 
         }
 
@@ -101,8 +101,9 @@ namespace AscentProfiler
 
                 internal static string AscentProfilerDir;
                 internal static string sequenceDir;
+                internal static string sequenceLoadPath = "";
                 internal static string telemetryDir;
-
+                
                 //
 
                 void Awake()
@@ -146,6 +147,8 @@ namespace AscentProfiler
                         {
                                 Directory.CreateDirectory(telemetryDir);
                         }
+
+                        sequenceLoadPath = sequenceDir;
 
                         Log.Level(LogType.Info, "User Directory: " + AscentProfilerDir);
                         Log.Level(LogType.Info, "Sequence Directory: " + sequenceDir);

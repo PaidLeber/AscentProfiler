@@ -36,7 +36,7 @@ namespace AscentProfiler
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                string sequencePath = AscentProfiler.sequenceDir;
+                
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
@@ -72,9 +72,9 @@ namespace AscentProfiler
                         if(!directoryLoaded)
                         {
                                 sequenceLoader = new SequenceLoader();
-                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(sequencePath));
-                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(sequencePath));
-                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(sequencePath));
+                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(AscentProfiler.sequenceLoadPath));
+                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(AscentProfiler.sequenceLoadPath));
+                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(AscentProfiler.sequenceLoadPath));
                                 
 
 
@@ -90,14 +90,14 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
                         {
-                              sequencePath = Directory.GetParent(sequencePath).ToString();
+                                AscentProfiler.sequenceLoadPath = Directory.GetParent(AscentProfiler.sequenceLoadPath).ToString();
                               directoryLoaded = false;
                         }
                         var origfont = GUI.skin.label.fontSize;
 
                         GUI.skin.label.alignment = TextAnchor.MiddleLeft;
                         GUI.skin.label.fontSize = 10;
-                        GUILayout.Label(sequencePath);
+                        GUILayout.Label(AscentProfiler.sequenceLoadPath);
                         GUI.skin.label.fontSize = origfont;
                         GUILayout.EndHorizontal();
 
@@ -124,7 +124,7 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(folder))
                                                         {
-                                                                sequencePath = sequencePath + "/" + folder;
+                                                                AscentProfiler.sequenceLoadPath = AscentProfiler.sequenceLoadPath + "/" + folder;
                                                                 directoryLoaded = false;
                                                         }
                                                        
@@ -166,11 +166,16 @@ namespace AscentProfiler
                                         GUILayout.BeginHorizontal();
                                         if (GUILayout.Button("New", GUILayout.Width(50)))
                                         {
-                                        
+                                                sequencename = "";
+                                                stringToEdit = "";
                                         }
                                         GUILayout.Label("Name", GUILayout.Width(35));
-                                        GUILayout.TextField(sequencename);
-                                        GUILayout.Button("Save", GUILayout.Width(50));
+                                        sequencename = GUILayout.TextField(sequencename);
+
+                                        if (GUILayout.Button("Save", GUILayout.Width(50)))
+                                        {
+                                        
+                                        }
                                         GUILayout.EndHorizontal();
                                         editorLeftScrollPosition = GUILayout.BeginScrollView(editorLeftScrollPosition);
 
