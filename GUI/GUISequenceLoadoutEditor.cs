@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
-using KSP.IO;
 
 
 namespace AscentProfiler
@@ -72,9 +72,9 @@ namespace AscentProfiler
                         if(!directoryLoaded)
                         {
                                 sequenceLoader = new SequenceLoader();
-                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(AscentProfiler.sequenceLoadPath));
-                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(AscentProfiler.sequenceLoadPath));
-                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(AscentProfiler.sequenceLoadPath));
+                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(AscentProfilerVAB.sequenceLoadPath));
+                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(AscentProfilerVAB.sequenceLoadPath));
+                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(AscentProfilerVAB.sequenceLoadPath));
                                 
 
 
@@ -90,14 +90,14 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
                         {
-                                AscentProfiler.sequenceLoadPath = Directory.GetParent(AscentProfiler.sequenceLoadPath).ToString();
+                                AscentProfilerVAB.sequenceLoadPath = Directory.GetParent(AscentProfilerVAB.sequenceLoadPath).ToString();
                               directoryLoaded = false;
                         }
                         var origfont = GUI.skin.label.fontSize;
 
                         GUI.skin.label.alignment = TextAnchor.MiddleLeft;
                         GUI.skin.label.fontSize = 10;
-                        GUILayout.Label(AscentProfiler.sequenceLoadPath);
+                        GUILayout.Label(AscentProfilerVAB.sequenceLoadPath);
                         GUI.skin.label.fontSize = origfont;
                         GUILayout.EndHorizontal();
 
@@ -124,7 +124,7 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(folder))
                                                         {
-                                                                AscentProfiler.sequenceLoadPath = AscentProfiler.sequenceLoadPath + "/" + folder;
+                                                                AscentProfilerVAB.sequenceLoadPath = AscentProfilerVAB.sequenceLoadPath + "/" + folder;
                                                                 directoryLoaded = false;
                                                         }
                                                        
@@ -174,7 +174,29 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                        
+                                                if (!Regex.IsMatch(sequencename, @"^.*$"))
+                                                {
+                                                        sequencename = sequencename.Replace(" ", "_");
+
+                                                        string filename = AscentProfilerVAB.sequenceLoadPath + "/" + sequencename + AscentProfilerVAB.sequenceExt;
+
+                                                        if (System.IO.File.Exists(filename))
+                                                                System.IO.File.Delete(filename);
+
+                                                        System.IO.File.WriteAllText(filename, stringToEdit);
+
+                                                        directoryLoaded = false;
+
+                                                }
+                                                else
+                                                { 
+                                                        //Print Error
+                                                
+                                                }
+
+
+                                                
+
                                         }
                                         GUILayout.EndHorizontal();
                                         editorLeftScrollPosition = GUILayout.BeginScrollView(editorLeftScrollPosition);

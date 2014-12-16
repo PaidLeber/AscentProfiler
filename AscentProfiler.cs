@@ -103,8 +103,8 @@ namespace AscentProfiler
                 internal static string sequenceDir;
                 internal static string sequenceLoadPath = "";
                 internal static string telemetryDir;
+                internal static string sequenceExt = ".seq";
                 
-                //
 
                 void Awake()
                 {
