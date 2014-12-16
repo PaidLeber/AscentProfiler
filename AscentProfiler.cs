@@ -11,8 +11,8 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.EditorVAB, false)]
         public class AscentProfilerVAB : AscentProfiler
         {
-
-
+                internal static string sequencePath ="";
+                
         }
 
         [KSPAddon(KSPAddon.Startup.Flight, false)]

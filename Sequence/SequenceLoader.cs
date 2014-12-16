@@ -58,7 +58,7 @@ namespace AscentProfiler
                 }
 
                 internal Dictionary<string, string> GetFileContents(string path)
-                {
+                { 
                         List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
 
                         Dictionary<string, string> sequences = new Dictionary<string, string>();

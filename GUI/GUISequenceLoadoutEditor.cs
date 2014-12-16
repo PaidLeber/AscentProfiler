@@ -36,7 +36,7 @@ namespace AscentProfiler
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                string currentPath = AscentProfiler.sequenceDir;
+                string sequencePath = AscentProfiler.sequenceDir;
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
@@ -49,12 +49,12 @@ namespace AscentProfiler
                 internal void InitWindow(AscentProAPGCSModule module)
                 {
                         this.module = module;
-
+                        
                 }
 
                 void Start()
                 {
-                        
+                       
                 }
 
                 void OnGUI()
@@ -72,9 +72,9 @@ namespace AscentProfiler
                         if(!directoryLoaded)
                         {
                                 sequenceLoader = new SequenceLoader();
-                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(currentPath));
-                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(currentPath));
-                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(currentPath));
+                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(sequencePath));
+                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(sequencePath));
+                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(sequencePath));
                                 
 
 
@@ -90,20 +90,20 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
                         {
-                              currentPath = Directory.GetParent(currentPath).ToString();
+                              sequencePath = Directory.GetParent(sequencePath).ToString();
                               directoryLoaded = false;
                         }
                         var origfont = GUI.skin.label.fontSize;
 
                         GUI.skin.label.alignment = TextAnchor.MiddleLeft;
                         GUI.skin.label.fontSize = 10;
-                        GUILayout.Label(currentPath);
+                        GUILayout.Label(sequencePath);
                         GUI.skin.label.fontSize = origfont;
                         GUILayout.EndHorizontal();
 
                         labelStyle.alignment = TextAnchor.MiddleCenter;
 
-                        GUILayout.Space(20);
+                        GUILayout.Space(5);
                         GUILayout.BeginHorizontal();
 
        
@@ -124,7 +124,7 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(folder))
                                                         {
-                                                                currentPath = currentPath + "/" + folder;
+                                                                sequencePath = sequencePath + "/" + folder;
                                                                 directoryLoaded = false;
                                                         }
                                                        
@@ -164,6 +164,10 @@ namespace AscentProfiler
                                         GUILayout.BeginVertical();
 
                                         GUILayout.BeginHorizontal();
+                                        if (GUILayout.Button("New", GUILayout.Width(50)))
+                                        {
+                                        
+                                        }
                                         GUILayout.Label("Name", GUILayout.Width(35));
                                         GUILayout.TextField(sequencename);
                                         GUILayout.Button("Save", GUILayout.Width(50));
