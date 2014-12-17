@@ -56,16 +56,14 @@ namespace AscentProfiler
                 {
                         this.module = module;
                         Log.consolebuffer.Clear();
-                        
+                        Log.Console(cursorChar);
                 }
 
                 void Start()
                 {
 
 
-                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
-
-
+                     
 
                 }
 
@@ -100,7 +98,7 @@ namespace AscentProfiler
                                 pathStyle.alignment = TextAnchor.UpperLeft;
                                 pathStyle.wordWrap = false;
 
-                                setstyle = true;
+                                //setstyle = true;
                         }
 
                         mainWindowRect = GUILayout.Window(windowId, mainWindowRect, DrawLoadoutEditor, windowTitle);
@@ -215,9 +213,9 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                                if (!Regex.IsMatch(sequencename, @"^.*$"))
+                                                if (Regex.IsMatch(sequencename, @"^[a-zA-Z0-9]*$"))
                                                 {
-                                                        sequencename = sequencename.Replace(" ", "_");
+                                                        sequencename = MakeValidFileName(sequencename);
 
                                                         try
                                                         {
@@ -228,10 +226,9 @@ namespace AscentProfiler
 
                                                                 System.IO.File.WriteAllText(filename, stringToEdit);
                                                         }
-                                                        catch
-                                                        { 
-                                                        
-                                                        
+                                                        catch (Exception e)
+                                                        {
+                                                                Log.Console("File save error: " + e.Message + " at " + e.StackTrace);
                                                         }
 
                                                         
@@ -245,7 +242,7 @@ namespace AscentProfiler
                                                 }
                                                 else
                                                 {
-                                                        Log.Console("Error: Unable to save: No file name");
+                                                        Log.Console("Error: Unable to save to disk: Bad file name");
                                                 
                                                 }
 
@@ -418,7 +415,13 @@ namespace AscentProfiler
 
 
 
+                private static string MakeValidFileName(string name)
+                {
+                        string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+                        string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
 
+                        return System.Text.RegularExpressions.Regex.Replace(name, invalidRegStr, "_");
+                }
 
 
 
