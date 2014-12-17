@@ -18,6 +18,9 @@ namespace AscentProfiler
         internal static class Log
         {
 
+
+
+
                 static LogType loglevel = LogType.Verbose;
                 static LogType scriptlevel = LogType.Error;
 
