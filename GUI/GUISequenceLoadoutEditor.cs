@@ -61,17 +61,14 @@ namespace AscentProfiler
 
                 void Start()
                 {
-
-
-                     
-
+                        consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
                 }
 
                 void OnGUI()
                 {
                         if(!setstyle)
                         {
-                                consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
+
 
                                 labelStyle = new GUIStyle();
 
@@ -98,7 +95,7 @@ namespace AscentProfiler
                                 pathStyle.alignment = TextAnchor.UpperLeft;
                                 pathStyle.wordWrap = false;
 
-                                //setstyle = true;
+                                setstyle = true;
                         }
 
                         mainWindowRect = GUILayout.Window(windowId, mainWindowRect, DrawLoadoutEditor, windowTitle);
@@ -213,7 +210,7 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                                if (Regex.IsMatch(sequencename, @"^[a-zA-Z0-9]*$"))
+                                                if (Regex.IsMatch(sequencename, @"^[a-zA-Z0-9_]*$") && !Regex.IsMatch(sequencename, @"^\s*$"))
                                                 {
                                                         sequencename = MakeValidFileName(sequencename);
 
@@ -237,7 +234,7 @@ namespace AscentProfiler
 
                                                         directoryLoaded = false;
 
-                                                        Log.Console("Successful: "+ sequencename + ".seq saved.");
+                                                        Log.Console(sequencename + ".seq saved.");
 
                                                 }
                                                 else
@@ -364,7 +361,7 @@ namespace AscentProfiler
 
                 void Update()
                 {
-                        if (Time.time - m_TimeStamp >= 0.5)
+                        if (Time.time - m_TimeStamp >= 0.25)
                         {
                                 m_TimeStamp = Time.time;
                                 if (cursor == false)

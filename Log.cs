@@ -23,6 +23,7 @@ namespace AscentProfiler
 
                 internal static void Console(string value)
                 {
+                       
                         consolebuffer.Enqueue(value);
                         if (consolebuffer.Count > 6)
                         {
@@ -30,6 +31,7 @@ namespace AscentProfiler
                         }
 
                 }
+
 
                 static LogType loglevel = LogType.Verbose;
                 static LogType scriptlevel = LogType.Error;
