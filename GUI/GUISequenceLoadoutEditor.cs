@@ -36,7 +36,7 @@ namespace AscentProfiler
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                string terminal = "APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready";
+                string terminal = "APGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\n";
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
@@ -250,12 +250,19 @@ namespace AscentProfiler
                                         GUILayout.EndVertical();
 
                         GUILayout.EndHorizontal();
+
+                        GUILayout.BeginHorizontal();
+
+
+                        GUILayout.EndHorizontal();
                         var txtcolor = GUI.skin.label.normal.textColor;
                         var bkgcolor = GUI.skin.label.normal.background;
                         GUI.skin.label.normal.background = labeltex;
-                        GUI.skin.label.normal.textColor = new Color(255.0f, 186.0f, 0.0f);
-                        GUILayout.Label( terminal + cursorChar, GUILayout.ExpandWidth(true), GUILayout.Height(120));
+                        GUI.skin.label.normal.textColor = new Color(255, 114, 0);
+                        GUI.skin.label.alignment = TextAnchor.UpperLeft;
+                        GUILayout.Label( terminal + cursorChar, GUILayout.ExpandWidth(true), GUILayout.Height(140));
                         GUI.skin.label.normal.background = bkgcolor;
+                        GUI.skin.label.normal.textColor = txtcolor;
 
                         if (GUILayout.Button("Save Configuration"))
                         {
