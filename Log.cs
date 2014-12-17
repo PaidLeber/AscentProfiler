@@ -70,7 +70,8 @@ namespace AscentProfiler
                         UnityEngine.Debug.Log( message );
                 }
 
-                internal static void Script(LogType lType, string message)
+
+                internal static void Script1(LogType lType, string message)
                 {
                         if (lType > scriptlevel)
                         {

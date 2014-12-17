@@ -76,7 +76,7 @@ namespace AscentProfiler
                         }
                         else
                         {
-                                Log.Script(LogType.Error,"Unable to parse command line. Check Syntax. "+ "Line #" + lineNumber + ": Command: " + commandLine );
+                                Log.Console("Load Error: Unable to parse command line. Check Syntax. "+ "Line #" + lineNumber + ": Command: " + commandLine );
                         }
                         
 
@@ -127,7 +127,7 @@ namespace AscentProfiler
                         }
                         catch
                         {
-                                Log.Script(LogType.Error, "Attitude value is not a number in a valid format. Line #");
+                                Log.Console("Load Error: Attitude is not a number in a valid format.");
                         }
 
                         return new Vector3(0,0,0);
@@ -184,7 +184,7 @@ namespace AscentProfiler
                         }
                         else if ((tabcount - tabCountStack.Count) > 0)
                         {
-                                Log.Script(LogType.Error, "Unchained Trigger: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                Log.Console("Load Error: Unchained Trigger: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                         }
 
                         return linkedindex;
@@ -212,7 +212,7 @@ namespace AscentProfiler
                         }
                         catch
                         {
-                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a valid trigger parameter for " + typeof(T));
+                                Log.Console("Load Error: " + "\"" + value + "\"" + " is not a valid trigger parameter for " + typeof(T));
                         }
 
                         return (T)Enum.Parse(typeof(T), value, true);

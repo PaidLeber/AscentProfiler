@@ -55,6 +55,7 @@ namespace AscentProfiler
                 internal void InitWindow(AscentProAPGCSModule module)
                 {
                         this.module = module;
+                        Log.consolebuffer.Clear();
                         
                 }
 

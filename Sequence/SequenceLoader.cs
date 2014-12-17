@@ -110,13 +110,13 @@ namespace AscentProfiler
                         }
                         else if(sequenceStart == 0)
                         {
-                                Log.Script(LogType.Error, sequence + " START not found.");
+                                Log.Console("Load Error: " + sequence + " START not found.");
                                 // Add error log checking here then return bool
                                 //return false;
                         }
                         else if (sequenceEnd == 0)
                         {
-                                Log.Script(LogType.Error, sequence+ " END not found.");
+                                Log.Console("Load Error: " + sequence+ " END not found.");
                         }
 
                         lineCounter = 0;

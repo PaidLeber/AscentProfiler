@@ -156,11 +156,11 @@ namespace AscentProfiler
                                                                 if (profileLoader.LoadSequence(pair.Key))
                                                                 {
                                                                         profileLoaded = true;
-                                                                        Log.Script(LogType.Info, "Profile Uploaded to Vessel: " + AscentProfilerFlight.currentVessel.vesselName);
+                                                                        Log.Console("Profile Uploaded to Vessel: " + AscentProfilerFlight.currentVessel.vesselName);
                                                                 }
                                                                 else
                                                                 {
-                                                                        Log.Script(LogType.Info, "Unable to Upload Profile: " + AscentProfilerFlight.currentVessel.vesselName);
+                                                                        Log.Console("Unable to Upload Profile: " + AscentProfilerFlight.currentVessel.vesselName);
                                                                 }
                                                         }
 

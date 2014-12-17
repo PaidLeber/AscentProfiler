@@ -73,7 +73,6 @@ namespace AscentProfiler
                         if (FlightGlobals.ActiveVessel != currentVessel)
                         {
                                 currentVessel = FlightGlobals.ActiveVessel;
-                                Log.Script(LogType.Info, "New Active Vessel is: " + FlightGlobals.ActiveVessel.vesselName);
                                 return;
                         }
                 }

@@ -65,13 +65,13 @@ namespace AscentProfiler
                                 }
                                 else
                                 {
-                                        Log.Script(LogType.Error, "Unchained Action: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
+                                        Log.Console("Load Error: Unchained Action: Check Tab Structure. Line #" + linenumber + ": Command: " + commandline);                //Create loading error in flightlog window
                                 }
                                 
                         }
                         else
                         {
-                                Log.Script(LogType.Error, "Unable to parse command line. Check Syntax. Line #" + linenumber + ": Command: " + commandline);
+                                Log.Console("Load Error: Unable to parse command line. Check Syntax. Line #" + linenumber + ": Command: " + commandline);
                         }
 
                 }
@@ -91,7 +91,7 @@ namespace AscentProfiler
                         }
                         catch
                         {
-                                Log.Script(LogType.Error, "\"" + value + "\"" + " is not a valid action parameter for " + typeof(T));
+                                Log.Console("Load Error: " + "\"" + value + "\"" + " is not a valid action parameter for " + typeof(T));
                         }
 
                         return (T)Enum.Parse(typeof(T), value, true);
