@@ -18,19 +18,18 @@ namespace AscentProfiler
         internal static class Log
         {
 
-                internal static Queue<string> console = new Queue<string>();
+                internal static Queue<string> consolebuffer = new Queue<string>();
 
 
                 internal static void Console(string value)
                 {
-                        console.Enqueue(value);
-                        if (console.Count > 8)
+                        consolebuffer.Enqueue(value);
+                        if (consolebuffer.Count > 6)
                         {
-                                console.Dequeue();
+                                consolebuffer.Dequeue();
                         }
 
                 }
-
 
                 static LogType loglevel = LogType.Verbose;
                 static LogType scriptlevel = LogType.Error;
