@@ -218,19 +218,33 @@ namespace AscentProfiler
                                                 {
                                                         sequencename = sequencename.Replace(" ", "_");
 
-                                                        string filename = AscentProfilerVAB.sequenceLoadPath + "/" + sequencename + AscentProfilerVAB.sequenceExt;
+                                                        try
+                                                        {
+                                                                string filename = AscentProfilerVAB.sequenceLoadPath + "/" + sequencename + AscentProfilerVAB.sequenceExt;
 
-                                                        if (System.IO.File.Exists(filename))
-                                                                System.IO.File.Delete(filename);
+                                                                if (System.IO.File.Exists(filename))
+                                                                        System.IO.File.Delete(filename);
 
-                                                        System.IO.File.WriteAllText(filename, stringToEdit);
+                                                                System.IO.File.WriteAllText(filename, stringToEdit);
+                                                        }
+                                                        catch
+                                                        { 
+                                                        
+                                                        
+                                                        }
+
+                                                        
+
+
 
                                                         directoryLoaded = false;
 
+                                                        Log.Console("Successful: "+ sequencename + ".seq saved.");
+
                                                 }
                                                 else
-                                                { 
-                                                        //Print Error
+                                                {
+                                                        Log.Console("Error: Unable to save: No file name");
                                                 
                                                 }
 
