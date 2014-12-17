@@ -36,7 +36,7 @@ namespace AscentProfiler
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                string terminal = "APGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\nAPGCS Telecommand Sequencing Receiver Version Ready\n";
+                string terminal = "APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready";
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
@@ -56,7 +56,14 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        labeltex = MakeTexture(1024, 200, new Color(0.0f, 0.0f, 0.0f));
+                        labeltex = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
+
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+
                 }
 
                 void OnGUI()
@@ -252,9 +259,38 @@ namespace AscentProfiler
                         GUILayout.EndHorizontal();
 
                         GUILayout.BeginHorizontal();
+                                var consoleStyle = new GUIStyle();
+                                consoleStyle.normal.background = labeltex;
+                                var consoleLabelStyle = new GUIStyle(GUI.skin.label);
+                                consoleLabelStyle.margin = new RectOffset(0, 0, 0, 0);
+                                GUILayout.BeginVertical(consoleStyle, GUILayout.ExpandWidth(true), GUILayout.Height(140));
+
+                                
+                                     
+
+                                int count = 0;
+                                foreach(string message in Log.console)
+                                {
+                                        count++;
+
+                                        if (count != Log.console.Count)
+                                        {
+                                                GUILayout.Label(" Console Count: "+Log.console.Count + " count:"+ count, consoleLabelStyle, GUILayout.ExpandWidth(true));
+                                        }
+                                        else
+                                        {
+                                                GUILayout.Label("F: Console Count: " + Log.console.Count + " count:" + count + cursorChar, consoleLabelStyle, GUILayout.ExpandWidth(true));
+                                        }
+
+                                        
+                                }
 
 
+
+                                GUILayout.EndVertical();
                         GUILayout.EndHorizontal();
+
+                        /*
                         var txtcolor = GUI.skin.label.normal.textColor;
                         var bkgcolor = GUI.skin.label.normal.background;
                         GUI.skin.label.normal.background = labeltex;
@@ -263,7 +299,7 @@ namespace AscentProfiler
                         GUILayout.Label( terminal + cursorChar, GUILayout.ExpandWidth(true), GUILayout.Height(140));
                         GUI.skin.label.normal.background = bkgcolor;
                         GUI.skin.label.normal.textColor = txtcolor;
-
+                        */
                         if (GUILayout.Button("Save Configuration"))
                         {
 

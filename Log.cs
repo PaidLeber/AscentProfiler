@@ -18,7 +18,18 @@ namespace AscentProfiler
         internal static class Log
         {
 
+                internal static Queue<string> console = new Queue<string>();
 
+
+                internal static void Console(string value)
+                {
+                        console.Enqueue(value);
+                        if (console.Count > 8)
+                        {
+                                console.Dequeue();
+                        }
+
+                }
 
 
                 static LogType loglevel = LogType.Verbose;
@@ -45,6 +56,8 @@ namespace AscentProfiler
                                 }
                         }
                 }
+
+
 
                 internal static void Level(LogType lType, string message)
                 {
