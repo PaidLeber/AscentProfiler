@@ -36,12 +36,14 @@ namespace AscentProfiler
                 Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                
+                string terminal = "APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready";
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
-
-
+                private float m_TimeStamp;
+                private bool cursor = false;
+                private string cursorChar = "";
+                Texture2D labeltex;
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
                 
@@ -54,7 +56,7 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                       
+                        labeltex = MakeTexture(1024, 200, new Color(0.0f, 0.0f, 0.0f));
                 }
 
                 void OnGUI()
@@ -248,11 +250,12 @@ namespace AscentProfiler
                                         GUILayout.EndVertical();
 
                         GUILayout.EndHorizontal();
-
-                        
-
-
-
+                        var txtcolor = GUI.skin.label.normal.textColor;
+                        var bkgcolor = GUI.skin.label.normal.background;
+                        GUI.skin.label.normal.background = labeltex;
+                        GUI.skin.label.normal.textColor = new Color(255.0f, 186.0f, 0.0f);
+                        GUILayout.Label( terminal + cursorChar, GUILayout.ExpandWidth(true), GUILayout.Height(120));
+                        GUI.skin.label.normal.background = bkgcolor;
 
                         if (GUILayout.Button("Save Configuration"))
                         {
@@ -267,6 +270,44 @@ namespace AscentProfiler
                         GUILayout.EndVertical();
 
 
+                }
+
+
+
+                private Texture2D MakeTexture(int width, int height, Color col)
+                {
+                        Color[] pix = new Color[width * height];
+
+                        for (int i = 0; i < pix.Length; i++)
+                                pix[i] = col;
+
+                        Texture2D result = new Texture2D(width, height);
+                        result.SetPixels(pix);
+                        result.Apply();
+
+                        return result;
+                }
+
+
+                void Update()
+                {
+                        if (Time.time - m_TimeStamp >= 0.5)
+                        {
+                                m_TimeStamp = Time.time;
+                                if (cursor == false)
+                                {
+                                        cursor = true;
+                                        cursorChar += "_";
+                                }
+                                else
+                                {
+                                        cursor = false;
+                                        if (cursorChar.Length != 0)
+                                        {
+                                                cursorChar = cursorChar.Substring(0, cursorChar.Length - 1);
+                                        }
+                                }
+                        }
                 }
 
 
