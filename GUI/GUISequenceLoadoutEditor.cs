@@ -43,14 +43,14 @@ namespace AscentProfiler
                 private float m_TimeStamp;
                 private bool cursor = false;
                 private string cursorChar = "";
-                Texture2D labeltex;
-                
-                GUIStyle labelStyle = new GUIStyle();
-                
+                Texture2D consoleBackgroundTexture;
                 //Styles
-                GUIStyle ctextStyle;
+                GUIStyle labelStyle;
                 GUIStyle consoleStyle;
                 GUIStyle consoleLabelStyle;
+                GUIStyle ctextStyle;
+                GUIStyle pathStyle;
+                bool setstyle;
 
                 internal void InitWindow(AscentProAPGCSModule module)
                 {
@@ -60,32 +60,48 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        labeltex = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
+
 
                         Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
 
-                        consoleStyle = new GUIStyle();
-                        consoleStyle.normal.background = labeltex;
-                        consoleStyle.padding = new RectOffset(5, 5, 5, 0);
 
-                        consoleLabelStyle = new GUIStyle(GUI.skin.label);
-                        consoleLabelStyle.margin = new RectOffset(0, 0, 0, 0);
-                        consoleLabelStyle.padding = new RectOffset(0, 0, 0, 0);
-                        consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
-                        consoleLabelStyle.alignment = TextAnchor.UpperLeft;
-                        consoleLabelStyle.wordWrap = true;
-
-                        ctextStyle = new GUIStyle(GUI.skin.label);
-                        ctextStyle.padding = new RectOffset(0, 0, 0, 0);
-                        ctextStyle.margin = new RectOffset(0, 0, 0, 0);
-                        ctextStyle.normal.textColor = Color.grey;
-                        ctextStyle.fontSize = 11;
-                        ctextStyle.alignment = TextAnchor.LowerLeft;
 
                 }
 
                 void OnGUI()
                 {
+                        if(!setstyle)
+                        {
+                                consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
+
+                                labelStyle = new GUIStyle();
+
+                                consoleStyle = new GUIStyle();
+                                consoleStyle.normal.background = consoleBackgroundTexture;
+                                consoleStyle.padding = new RectOffset(5, 5, 4, 0);
+
+                                consoleLabelStyle = new GUIStyle(GUI.skin.label);
+                                consoleLabelStyle.margin = new RectOffset(0, 0, 0, 0);
+                                consoleLabelStyle.padding = new RectOffset(0, 0, 0, 0);
+                                consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
+                                consoleLabelStyle.alignment = TextAnchor.UpperLeft;
+                                consoleLabelStyle.wordWrap = true;
+
+                                ctextStyle = new GUIStyle(GUI.skin.label);
+                                ctextStyle.padding = new RectOffset(0, 0, 0, 0);
+                                ctextStyle.margin = new RectOffset(0, 0, 0, 0);
+                                ctextStyle.normal.textColor = Color.grey;
+                                ctextStyle.fontSize = 11;
+                                ctextStyle.alignment = TextAnchor.LowerLeft;
+
+                                pathStyle = new GUIStyle(GUI.skin.label);
+                                pathStyle.fontSize = 11;
+                                pathStyle.alignment = TextAnchor.UpperLeft;
+                                pathStyle.wordWrap = false;
+
+                                setstyle = true;
+                        }
+
                         mainWindowRect = GUILayout.Window(windowId, mainWindowRect, DrawLoadoutEditor, windowTitle);
                 }
 
@@ -115,17 +131,14 @@ namespace AscentProfiler
                         GUILayout.Space(5);
 
                         GUILayout.BeginHorizontal();
-                        if(GUILayout.Button("<- Directory", GUILayout.Width(160)))
+                        if(GUILayout.Button("<- Directory", GUILayout.Width(150)))
                         {
                                 AscentProfilerVAB.sequenceLoadPath = Directory.GetParent(AscentProfilerVAB.sequenceLoadPath).ToString();
                               directoryLoaded = false;
                         }
-                        var origfont = GUI.skin.label.fontSize;
 
-                        GUI.skin.label.alignment = TextAnchor.UpperLeft;
-                        GUI.skin.label.fontSize = 11;
-                        GUILayout.Label(AscentProfilerVAB.sequenceLoadPath);
-                        GUI.skin.label.fontSize = origfont;
+                        GUILayout.Label(AscentProfilerVAB.sequenceLoadPath, pathStyle);
+
                         GUILayout.EndHorizontal();
 
                         labelStyle.alignment = TextAnchor.MiddleCenter;
@@ -136,7 +149,7 @@ namespace AscentProfiler
        
                                         GUILayout.BeginVertical(GUILayout.Width(160));
 
-                                        labelStyle.normal.textColor = Color.yellow;
+                                                labelStyle.normal.textColor = Color.yellow;
 
                                                 GUILayout.Label("Sequences Available", labelStyle);
 
@@ -275,9 +288,9 @@ namespace AscentProfiler
                                         GUILayout.EndVertical();
 
                         GUILayout.EndHorizontal();
-
                         GUILayout.Label("Console:", ctextStyle);
                         GUILayout.BeginHorizontal();
+
 
 
 
@@ -303,6 +316,7 @@ namespace AscentProfiler
 
                                 GUILayout.EndVertical();
                         GUILayout.EndHorizontal();
+
 
                         if (GUILayout.Button("Save Configuration"))
                         {
