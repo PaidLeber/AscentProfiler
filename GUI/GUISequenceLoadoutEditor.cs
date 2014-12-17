@@ -63,7 +63,11 @@ namespace AscentProfiler
                         Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
                         Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
                         Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
-
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
+                        Log.Console("APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready");
                 }
 
                 void OnGUI()
@@ -118,7 +122,7 @@ namespace AscentProfiler
        
                                         GUILayout.BeginVertical(GUILayout.Width(160));
 
-                                                labelStyle.normal.textColor = Color.yellow;
+                                        labelStyle.normal.textColor = Color.yellow;
 
                                                 GUILayout.Label("Sequences Available", labelStyle);
 
@@ -261,10 +265,11 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                                 var consoleStyle = new GUIStyle();
                                 consoleStyle.normal.background = labeltex;
+                                consoleStyle.padding = new RectOffset(5, 5, 5, 0);
                                 var consoleLabelStyle = new GUIStyle(GUI.skin.label);
                                 consoleLabelStyle.margin = new RectOffset(0, 0, 0, 0);
                                 consoleLabelStyle.padding = new RectOffset(0, 0, 0, 0);
-                                consoleLabelStyle.normal.textColor = new Color(255, 114, 0);
+                                consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
                                 consoleLabelStyle.alignment = TextAnchor.UpperLeft;
                                 consoleLabelStyle.wordWrap = true;
 
@@ -277,11 +282,11 @@ namespace AscentProfiler
                                         
                                         if (count != Log.console.Count)
                                         {
-                                                GUILayout.Label(" Console Count: "+Log.console.Count + " count:"+ count, consoleLabelStyle, GUILayout.ExpandWidth(true));
+                                                GUILayout.Label(message, consoleLabelStyle, GUILayout.ExpandWidth(true));
                                         }
                                         else
                                         {
-                                                GUILayout.Label("F: Console Count: " + Log.console.Count + " count:" + count + cursorChar, consoleLabelStyle, GUILayout.ExpandWidth(true));
+                                                GUILayout.Label(message + cursorChar, consoleLabelStyle, GUILayout.ExpandWidth(true));
                                         }
 
                                         count++;
