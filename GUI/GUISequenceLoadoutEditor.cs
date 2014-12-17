@@ -263,16 +263,18 @@ namespace AscentProfiler
                                 consoleStyle.normal.background = labeltex;
                                 var consoleLabelStyle = new GUIStyle(GUI.skin.label);
                                 consoleLabelStyle.margin = new RectOffset(0, 0, 0, 0);
+                                consoleLabelStyle.padding = new RectOffset(0, 0, 0, 0);
+                                consoleLabelStyle.normal.textColor = new Color(255, 114, 0);
+                                consoleLabelStyle.alignment = TextAnchor.UpperLeft;
+                                consoleLabelStyle.wordWrap = true;
+
+
                                 GUILayout.BeginVertical(consoleStyle, GUILayout.ExpandWidth(true), GUILayout.Height(140));
 
-                                
-                                     
-
-                                int count = 0;
+                                int count = 1;
                                 foreach(string message in Log.console)
                                 {
-                                        count++;
-
+                                        
                                         if (count != Log.console.Count)
                                         {
                                                 GUILayout.Label(" Console Count: "+Log.console.Count + " count:"+ count, consoleLabelStyle, GUILayout.ExpandWidth(true));
@@ -282,7 +284,7 @@ namespace AscentProfiler
                                                 GUILayout.Label("F: Console Count: " + Log.console.Count + " count:" + count + cursorChar, consoleLabelStyle, GUILayout.ExpandWidth(true));
                                         }
 
-                                        
+                                        count++;
                                 }
 
 
