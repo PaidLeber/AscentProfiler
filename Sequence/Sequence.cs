@@ -13,7 +13,7 @@ namespace AscentProfiler
 
                 internal string ActiveSequence;
 
-                internal Dictionary<string, List<Command>> Block = new Dictionary<string, List<Command>>();
+                internal Dictionary<string, List<Command>> sequenceBlock = new Dictionary<string, List<Command>>();
 
                 internal Dictionary<string, List<Trigger>> triggerBlockBuffer     = new Dictionary<string,List<Trigger>>();
                 internal Dictionary<string, List<Action>>  actionBlockBuffer      = new Dictionary<string,List<Action>>();

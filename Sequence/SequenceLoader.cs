@@ -14,22 +14,14 @@ namespace AscentProfiler
                 TriggerFactory triggerFactory = new TriggerFactory();
                 ActionFactory actionFactory = new ActionFactory();
                 Dictionary<string, string> sequences = new Dictionary<string, string>();
+                List<string> directory;
 
 
                 int triggerIndex = 0;
 
-                internal SequenceLoader()
+                internal SequenceLoader(string path)
                 {
-                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
-
-                        foreach (string file in files)
-                        {
-                                sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
-                        }
-                }
-                internal List<string> GetDirectoryNames(string path)
-                {
-                        List<string> directory = new List<string>(Directory.GetDirectories(path));
+                        directory = new List<string>(Directory.GetDirectories(path));
 
                         foreach (string name in directory)
                         {
@@ -38,8 +30,25 @@ namespace AscentProfiler
                         }
 
                         directory.Sort();
+
+                        List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
+
+                        foreach (string file in files)
+                        {
+                                sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
+                        }
+
+
+                }
+
+                internal Dictionary<string, string> GetSequences()
+                {
+                        return sequences;
+                }
+
+                internal List<string> GetDirectoryNames()
+                {
                         return directory;
-                
                 }
 
                 internal List<string> GetFileNames(string path)
@@ -72,10 +81,7 @@ namespace AscentProfiler
                 }
 
 
-                internal Dictionary<string, string> GetProfiles()
-                {
-                        return sequences;
-                }
+
 
                 internal bool LoadSequence(string sequence)
                 {

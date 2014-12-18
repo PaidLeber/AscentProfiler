@@ -31,12 +31,8 @@ namespace AscentProfiler
                 Vector2 sequenceLeftScrollPosition;
                 Vector2 sequenceRightScrollPosition;
                 Vector2 editorLeftScrollPosition;
-                List<string> directoryLeftList;
-                List<string> fileLeftList;
-                Dictionary<string, string> sequences;
                 string stringToEdit = "";
                 string sequencename = "";
-                string terminal = "APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready";
 
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
@@ -111,14 +107,7 @@ namespace AscentProfiler
 
                         if(!directoryLoaded)
                         {
-                                sequenceLoader = new SequenceLoader();
-                                directoryLeftList = new List<string>(sequenceLoader.GetDirectoryNames(AscentProfilerVAB.sequenceLoadPath));
-                                fileLeftList = new List<string>(sequenceLoader.GetFileNames(AscentProfilerVAB.sequenceLoadPath));
-                                sequences = new Dictionary<string, string>(sequenceLoader.GetFileContents(AscentProfilerVAB.sequenceLoadPath));
-                                
-
-
-                                
+                                sequenceLoader = new SequenceLoader(AscentProfiler.sequenceLoadPath);                                
                                 directoryLoaded = true;
                         }
 
@@ -130,11 +119,11 @@ namespace AscentProfiler
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(150)))
                         {
-                                AscentProfilerVAB.sequenceLoadPath = Directory.GetParent(AscentProfilerVAB.sequenceLoadPath).ToString();
+                                AscentProfiler.sequenceLoadPath = Directory.GetParent(AscentProfiler.sequenceLoadPath).ToString();
                               directoryLoaded = false;
                         }
 
-                        GUILayout.Label(AscentProfilerVAB.sequenceLoadPath, pathStyle);
+                        GUILayout.Label(AscentProfiler.sequenceLoadPath, pathStyle);
 
                         GUILayout.EndHorizontal();
 
@@ -156,12 +145,12 @@ namespace AscentProfiler
 
 
                                                 GUI.skin.button.fontStyle = FontStyle.Bold;
-                                                foreach (string folder in directoryLeftList)
+                                                foreach (string folder in sequenceLoader.GetDirectoryNames())
                                                 {
 
                                                         if (GUILayout.Button(folder))
                                                         {
-                                                                AscentProfilerVAB.sequenceLoadPath = AscentProfilerVAB.sequenceLoadPath + "/" + folder;
+                                                                AscentProfiler.sequenceLoadPath = AscentProfiler.sequenceLoadPath + "/" + folder;
                                                                 directoryLoaded = false;
                                                         }
                                                        
@@ -170,21 +159,32 @@ namespace AscentProfiler
                                                 GUI.skin.button.fontStyle = FontStyle.Normal;
 
 
-                                                foreach(string file in fileLeftList)
+                                                foreach (KeyValuePair<string, string> pair in sequenceLoader.GetSequences())
                                                 {
 
                                                         GUILayout.BeginHorizontal();
 
-                                                        if (GUILayout.Button(file))
+                                                        if (GUILayout.Button(pair.Key))
                                                         {
+                                                                if (sequenceLoader.LoadSequence(pair.Key))
+                                                                {
+                                                                        
+                                                                        Log.Console("Sequence Uploaded to Vessel Module: " + AscentProfilerFlight.currentVessel.vesselName);
+                                                                }
+                                                                else
+                                                                {
+                                                                        Log.Console("Unable to Upload Sequence File: " + AscentProfilerFlight.currentVessel.vesselName);
+                                                                }
+
+
 
 
                                                         }
                                                         if (GUILayout.Button("E", GUILayout.Width(20)))
                                                         {
-
-                                                                stringToEdit = sequences[file];
-                                                                sequencename = file;
+                                                                sequencename = pair.Key;
+                                                                stringToEdit = pair.Value;
+                                                                
 
                                                         }
                                                         GUILayout.EndHorizontal();
@@ -217,7 +217,7 @@ namespace AscentProfiler
 
                                                         try
                                                         {
-                                                                string filename = AscentProfilerVAB.sequenceLoadPath + "/" + sequencename + AscentProfilerVAB.sequenceExt;
+                                                                string filename = AscentProfiler.sequenceLoadPath + "/" + sequencename + AscentProfiler.sequenceExt;
 
                                                                 if (System.IO.File.Exists(filename))
                                                                         System.IO.File.Delete(filename);

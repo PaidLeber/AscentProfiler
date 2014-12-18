@@ -140,7 +140,7 @@ namespace AscentProfiler
 
                                 GUILayout.BeginVertical();
 
-                                        foreach(KeyValuePair<string, string> pair in profileLoader.GetProfiles())
+                                        foreach(KeyValuePair<string, string> pair in profileLoader.GetSequences())
                                         {
                                                 GUILayout.BeginHorizontal();
                                                         if (GUILayout.Button("V", STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
