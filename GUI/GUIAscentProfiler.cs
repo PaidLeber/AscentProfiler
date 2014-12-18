@@ -135,7 +135,7 @@ namespace AscentProfiler
 
                         if (!profileLoaded)
                         {
-                                profileLoader = new SequenceLoader();
+                                profileLoader = new SequenceLoader(AscentProfiler.sequenceDir);
                                 
 
                                 GUILayout.BeginVertical();

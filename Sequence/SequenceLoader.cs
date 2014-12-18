@@ -32,12 +32,14 @@ namespace AscentProfiler
                         directory.Sort();
 
                         List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
-
+                        
+                        files.Sort();
+                        
                         foreach (string file in files)
                         {
                                 sequences.Add(Path.GetFileNameWithoutExtension(file), System.IO.File.ReadAllText(file));
                         }
-
+                        
 
                 }
 

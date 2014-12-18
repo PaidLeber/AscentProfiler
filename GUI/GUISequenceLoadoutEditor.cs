@@ -52,7 +52,9 @@ namespace AscentProfiler
                 {
                         this.module = module;
                         Log.consolebuffer.Clear();
-                        Log.Console(cursorChar);
+                        Log.Console("Kernix OS Version "+ AscentProfiler.version);
+                        Log.Console("[root@VAB]:~/sequence_loader.sh");
+                        
                 }
 
                 void Start()
@@ -78,7 +80,7 @@ namespace AscentProfiler
                                 consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
                                 consoleLabelStyle.alignment = TextAnchor.UpperLeft;
                                 consoleLabelStyle.wordWrap = true;
-                                consoleLabelStyle.fontSize = 10;
+                                consoleLabelStyle.fontSize = 11;
 
                                 ctextStyle = new GUIStyle(GUI.skin.label);
                                 ctextStyle.padding = new RectOffset(0, 0, 0, 0);
