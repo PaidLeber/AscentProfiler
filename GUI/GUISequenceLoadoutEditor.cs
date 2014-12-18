@@ -53,6 +53,7 @@ namespace AscentProfiler
                         this.module = module;
                         Log.consolebuffer.Clear();
                         Log.Console("Kernix OS Version "+ AscentProfiler.version);
+                        Log.Console("");
                         Log.Console("[root@VAB]:~/$ sequence_loader.sh");
                         Log.Console("");
                         

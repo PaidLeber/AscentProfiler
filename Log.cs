@@ -18,16 +18,22 @@ namespace AscentProfiler
         internal static class Log
         {
 
-                internal static Queue<string> consolebuffer = new Queue<string>();
+                internal static List<string> consolebuffer = new List<string>();
 
 
                 internal static void Console(string value)
                 {
+
+                        if (consolebuffer.Last() == "")
+                        {
+                                consolebuffer.RemoveAt(consolebuffer.Count - 1);
+                        }
+
+                        consolebuffer.Add(value);
                        
-                        consolebuffer.Enqueue(value);
                         if (consolebuffer.Count > 7)
                         {
-                                consolebuffer.Dequeue();
+                                consolebuffer.RemoveAt(0);
                         }
 
                 }
