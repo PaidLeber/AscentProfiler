@@ -161,6 +161,9 @@ namespace AscentProfiler
                                                 }
                                                 GUI.skin.button.fontStyle = FontStyle.Normal;
 
+                                                System.Random rng = new System.Random();
+                                                int port = rng.Next(4000, 20000);
+                                                string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
 
                                                 foreach (KeyValuePair<string, string> pair in sequenceLoader.GetSequences())
                                                 {
@@ -171,13 +174,13 @@ namespace AscentProfiler
                                                         {
                                                                 if (sequenceLoader.LoadSequence(pair.Key))
                                                                 {
-
-                                                                        System.Random rng = new System.Random();
-                                                                        int port = rng.Next(4000, 20000);
-                                                                        string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
-
-                                                                        Log.ConsoleAppendLine("$nc -uv -w " + Math.Ceiling(RemoteTech.API.GetSignalDelayToKSC(module.vessel.id)) + " " + vessel_ip + " " + port + " < " + pair.Key + ".seq");
-                                                                        Log.Console("");
+                                                                        if (HighLogic.LoadedScene == GameScenes.EDITOR)
+                                                                        {
+                                                                                Log.ConsoleAppendLine("nc -uv -w1 " + vessel_ip + " " + port + " < " + pair.Key + ".seq");
+                                                                                Log.Console("");
+                                                                        }
+                                                                        
+                                                                        
                                                                 }
                                                                 else
                                                                 {
