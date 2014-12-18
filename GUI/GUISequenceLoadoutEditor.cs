@@ -53,9 +53,8 @@ namespace AscentProfiler
                         this.module = module;
                         Log.consolebuffer.Clear();
                         Log.Console("Kernix OS Version "+ AscentProfiler.version);
-                        Log.Console("");
-                        Log.Console("[root@VAB]:~/$ sequence_loader.sh");
-                        Log.Console("");
+                        Log.Console("\n");
+                        Log.Console("[root@VAB]:~/$ ");
                         
                 }
 
@@ -172,8 +171,13 @@ namespace AscentProfiler
                                                         {
                                                                 if (sequenceLoader.LoadSequence(pair.Key))
                                                                 {
-                                                                        
-                                                                        Log.Console("Sequence Uploaded to Vessel Module: " + AscentProfilerFlight.currentVessel.vesselName);
+
+                                                                        System.Random rng = new System.Random();
+                                                                        int port = rng.Next(4000, 20000);
+                                                                        string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+
+                                                                        Log.ConsoleAppendLine("$nc -uv -w " + Math.Ceiling(RemoteTech.API.GetSignalDelayToKSC(module.vessel.id)) + " " + vessel_ip + " " + port + " < " + pair.Key + ".seq");
+                                                                        Log.Console("");
                                                                 }
                                                                 else
                                                                 {

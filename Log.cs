@@ -20,10 +20,32 @@ namespace AscentProfiler
 
                 internal static List<string> consolebuffer = new List<string>();
 
+                internal static void ConsoleAppendLine(string value)
+                {
+                        consolebuffer[consolebuffer.Count - 1] = consolebuffer[consolebuffer.Count - 1] + value;
+
+                }
 
                 internal static void Console(string value)
                 {
+                        if(value == "\n")
+                        {
+                                consolebuffer.Add("");
+                                consolebuffer.Add("");
+                                return;
+                        }
+
+                        Debug.Log("log value: " + value);
                         Debug.Log("console count: "+consolebuffer.Count+ "index: "+ (consolebuffer.Count - 1));
+
+                        if(consolebuffer.Count != 0)
+                        {
+                                if (string.IsNullOrEmpty(consolebuffer[consolebuffer.Count - 1]))
+                                {
+                                        Debug.Log("last item is empty: " + consolebuffer[consolebuffer.Count - 1]);
+                                        consolebuffer.RemoveAt(consolebuffer.Count - 1);
+                                }
+                        }
 
 
 
