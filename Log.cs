@@ -23,11 +23,8 @@ namespace AscentProfiler
 
                 internal static void Console(string value)
                 {
+                        Debug.Log("console count: "+consolebuffer.Count);
 
-                        if (consolebuffer.Last() == "")
-                        {
-                                consolebuffer.RemoveAt(consolebuffer.Count - 1);
-                        }
 
                         consolebuffer.Add(value);
                        
