@@ -82,6 +82,7 @@ namespace AscentProfiler
                                 consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
                                 consoleLabelStyle.alignment = TextAnchor.UpperLeft;
                                 consoleLabelStyle.wordWrap = true;
+                                consoleLabelStyle.fontSize = 10;
 
                                 ctextStyle = new GUIStyle(GUI.skin.label);
                                 ctextStyle.padding = new RectOffset(0, 0, 0, 0);

@@ -25,7 +25,7 @@ namespace AscentProfiler
                 {
                        
                         consolebuffer.Enqueue(value);
-                        if (consolebuffer.Count > 6)
+                        if (consolebuffer.Count > 8)
                         {
                                 consolebuffer.Dequeue();
                         }
