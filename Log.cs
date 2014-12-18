@@ -23,7 +23,8 @@ namespace AscentProfiler
 
                 internal static void Console(string value)
                 {
-                        Debug.Log("console count: "+consolebuffer.Count);
+                        Debug.Log("console count: "+consolebuffer.Count+ "index: "+ (consolebuffer.Count - 1));
+
 
 
                         consolebuffer.Add(value);
