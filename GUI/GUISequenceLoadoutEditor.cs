@@ -34,6 +34,9 @@ namespace AscentProfiler
                 string stringToEdit = "";
                 string sequencename = "";
 
+                string regexvalidfilename = @"^[a-zA-Z0-9_\-]*$";
+                string regexemptyspace = @"^\s*$";
+
                 List<ControlType> sequenceRightList = new List<ControlType>();
 
                 private float m_TimeStamp;
@@ -170,17 +173,23 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(pair.Key))
                                                         {
-                                                                if (sequenceLoader.LoadSequence(pair.Key))
+                                                                Log.ConsoleAppendLine("sequence_loader.sh " + pair.Key);
+                                                                Log.Console("");
+                                                                if (sequenceLoader.ValidateSequence(pair.Key))
                                                                 {
                                                                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                         {
                                                                                 
+
+                                                                        }
+                                                                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                                                                        {
                                                                                 System.Random rng = new System.Random();
                                                                                 int port = rng.Next(4000, 20000);
                                                                                 //string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+
+                                                                                Log.ConsoleAppendLine("nc -uv -w1 " + module.SUID + " " + port + " < " + pair.Key + AscentProfiler.sequenceExt);
                                                                                 
-                                                                                Log.ConsoleAppendLine("nc -uv -w1 "+ module.SUID +" "+ port + " < " + pair.Key + ".seq");
-                                                                                Log.Console("");
                                                                         }
                                                                         
                                                                         
@@ -225,7 +234,7 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                                if (Regex.IsMatch(sequencename, @"^[a-zA-Z0-9_]*$") && !Regex.IsMatch(sequencename, @"^\s*$"))
+                                                if (Regex.IsMatch(sequencename, regexvalidfilename) && !Regex.IsMatch(sequencename, regexemptyspace))
                                                 {
                                                         sequencename = MakeValidFileName(sequencename);
 

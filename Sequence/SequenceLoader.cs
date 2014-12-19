@@ -69,8 +69,8 @@ namespace AscentProfiler
                 }
 
                 internal Dictionary<string, string> GetFileContents(string path)
-                { 
-                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*.seq"));
+                {
+                        List<string> files = new List<string>(Directory.GetFiles(AscentProfiler.sequenceDir, "*" + AscentProfiler.sequenceExt));
 
                         Dictionary<string, string> sequences = new Dictionary<string, string>();
 
@@ -85,7 +85,7 @@ namespace AscentProfiler
 
 
 
-                internal bool LoadSequence(string sequence)
+                internal bool ValidateSequence(string sequence)
                 {
                         int sequenceStart = 0;
                         int sequenceEnd = 0;
@@ -167,7 +167,7 @@ namespace AscentProfiler
 
 
                         return true;
-                                //TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightSequence(actionFactory.GetNewActionList()));
+                                TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightSequence(actionFactory.GetNewActionList()));
 
                 }
                 
