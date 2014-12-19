@@ -85,7 +85,7 @@ namespace AscentProfiler
 
 
 
-                internal bool ValidateSequence(string sequence)
+                internal bool LoadSequence(AscentProAPGCSModule module, string sequence)
                 {
                         int sequenceStart = 0;
                         int sequenceEnd = 0;
@@ -164,10 +164,20 @@ namespace AscentProfiler
 
                         }
 
+                        if (HighLogic.LoadedScene == GameScenes.EDITOR)
+                        {
+                                return module.SequenceEngine.LoadSequenceBlock(sequence, triggerFactory.GetNewSequence(actionFactory.GetNewActionList())); 
 
+                        }
+                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                        {
+                                
 
-                        return true;
-                                TXAscentProAPGCSModule(sequence, triggerFactory.GetNewFlightSequence(actionFactory.GetNewActionList()));
+                        }
+                        
+
+                        return false;
+                                
 
                 }
                 

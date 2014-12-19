@@ -56,9 +56,14 @@ namespace AscentProfiler
                         this.module = module;
                         Log.consolebuffer.Clear();
                         Log.Console("Kernix OS Version "+ AscentProfiler.version);
+                        ConsoleReady();
+                        
+                }
+
+                void ConsoleReady()
+                {
                         Log.Console("\n");
                         Log.Console("[root@VAB]:~/$ ");
-                        
                 }
 
                 void Start()
@@ -175,13 +180,14 @@ namespace AscentProfiler
                                                         {
                                                                 Log.ConsoleAppendLine("sequence_loader.sh " + pair.Key);
                                                                 Log.Console("");
-                                                                if (sequenceLoader.ValidateSequence(pair.Key))
+                                                                if (sequenceLoader.LoadSequence(module, pair.Key))
                                                                 {
                                                                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                         {
-                                                                                
-
+                                                                                Log.Console(pair.Key + " loaded in module.");
+                                                                                ConsoleReady();
                                                                         }
+                                                                        
                                                                         if (HighLogic.LoadedScene == GameScenes.FLIGHT)
                                                                         {
                                                                                 System.Random rng = new System.Random();

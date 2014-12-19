@@ -13,12 +13,11 @@ namespace AscentProfiler
 
                 internal string ActiveSequence;
 
-                internal Dictionary<string, List<Command>> sequenceBlock = new Dictionary<string, List<Command>>();
+                Dictionary<string, List<Command>> sequenceBlock = new Dictionary<string, List<Command>>();
+                internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
 
                 internal Dictionary<string, List<Trigger>> triggerBlockBuffer     = new Dictionary<string,List<Trigger>>();
                 internal Dictionary<string, List<Action>>  actionBlockBuffer      = new Dictionary<string,List<Action>>();
-
-                internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
 
 
                 internal Sequence()
@@ -38,6 +37,25 @@ namespace AscentProfiler
                                 Debug.Log("ACTION: activated: " + item.activated + " linked index: " + item.index + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " modifier: " + item.modifier);
                         }
                          */ 
+                }
+
+                internal bool LoadSequenceBlock(string sequencename, List<Command> sequence)
+                {
+                        try
+                        {
+                                sequenceBlock.Add(sequencename, sequence);
+                        }
+                        catch (Exception e)
+                        {
+                                Log.Level(LogType.Verbose, "Sequence Vessel On Load: " + e.Message + " at " + e.StackTrace);
+                                Log.Console("Unable to load sequence on board module.");
+                                return false;
+                        }
+
+
+                        
+
+                        return true;
                 }
 
 

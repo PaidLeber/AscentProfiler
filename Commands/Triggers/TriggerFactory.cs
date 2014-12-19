@@ -83,7 +83,7 @@ namespace AscentProfiler
                         return currentIndex;
                 }
 
-                internal List<Command> GetNewFlightSequence(List<Command> newactionlist)
+                internal List<Command> GetNewSequence(List<Command> newactionlist)
                 {
                         Log.Level(LogType.Verbose, "GetNewTriggerGuardian: creating trigger guardian");
 

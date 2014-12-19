@@ -153,7 +153,8 @@ namespace AscentProfiler
                                                         if (GUILayout.Button(pair.Key, STYLE_WINDOW_BUTTON, GUILayout.Height(24)))
                                                         {
                                                                 //profileLoaded = profileLoader.LoadProfile(pair.Key);
-                                                                if (profileLoader.ValidateSequence(pair.Key))
+                                                                /*
+                                                                if (profileLoader.LoadSequence(pair.Key))
                                                                 {
                                                                         profileLoaded = true;
                                                                         Log.Console("Profile Uploaded to Vessel: " + AscentProfilerFlight.currentVessel.vesselName);
@@ -162,6 +163,7 @@ namespace AscentProfiler
                                                                 {
                                                                         Log.Console("Unable to Upload Profile: " + AscentProfilerFlight.currentVessel.vesselName);
                                                                 }
+                                                                 */ 
                                                         }
 
                                                         if (GUILayout.Button("E", STYLE_WINDOW_BUTTON, GUILayout.Width(24) , GUILayout.Height(24)))
