@@ -261,7 +261,7 @@ namespace AscentProfiler
 
                                                         directoryLoaded = false;
 
-                                                        Log.Console(sequencename + ".seq saved.");
+                                                        Log.Console(sequencename + AscentProfiler.sequenceExt + " saved.");
 
                                                 }
                                                 else
