@@ -48,7 +48,7 @@ namespace AscentProfiler
                         catch (Exception e)
                         {
                                 Log.Level(LogType.Verbose, "Sequence Vessel On Load: " + e.Message + " at " + e.StackTrace);
-                                Log.Console("Unable to load sequence on board module.");
+                                
                                 return false;
                         }
 

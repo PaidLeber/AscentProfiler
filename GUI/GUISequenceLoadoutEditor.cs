@@ -202,7 +202,8 @@ namespace AscentProfiler
                                                                 }
                                                                 else
                                                                 {
-                                                                        Log.Console("Unable to Upload Sequence File: " + AscentProfilerFlight.currentVessel.vesselName);
+                                                                        Log.Console("Unable to Upload Sequence File: " + pair.Key + AscentProfiler.sequenceExt);
+                                                                        ConsoleReady();
                                                                 }
 
 
