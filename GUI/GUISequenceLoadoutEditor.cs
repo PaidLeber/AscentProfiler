@@ -161,9 +161,7 @@ namespace AscentProfiler
                                                 }
                                                 GUI.skin.button.fontStyle = FontStyle.Normal;
 
-                                                System.Random rng = new System.Random();
-                                                int port = rng.Next(4000, 20000);
-                                                string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+
 
                                                 foreach (KeyValuePair<string, string> pair in sequenceLoader.GetSequences())
                                                 {
@@ -176,7 +174,12 @@ namespace AscentProfiler
                                                                 {
                                                                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                         {
-                                                                                Log.ConsoleAppendLine("nc -uv -w1 " + vessel_ip + " " + port + " < " + pair.Key + ".seq");
+                                                                                
+                                                                                System.Random rng = new System.Random();
+                                                                                int port = rng.Next(4000, 20000);
+                                                                                //string vessel_ip = (module.vessel.name.ToLower() + "." + module.vessel.vesselType.ToString().ToLower() + ".dsn").Replace(" ", "_");
+                                                                                
+                                                                                Log.ConsoleAppendLine("nc -uv -w1 "+ module.SUID +" "+ port + " < " + pair.Key + ".seq");
                                                                                 Log.Console("");
                                                                         }
                                                                         
@@ -239,10 +242,6 @@ namespace AscentProfiler
                                                         {
                                                                 Log.Console("File save error: " + e.Message + " at " + e.StackTrace);
                                                         }
-
-                                                        
-
-
 
                                                         directoryLoaded = false;
 
@@ -339,7 +338,7 @@ namespace AscentProfiler
                         GUILayout.EndHorizontal();
 
 
-                        if (GUILayout.Button("Save Configuration"))
+                        if (GUILayout.Button("Close"))
                         {
 
                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
