@@ -303,11 +303,25 @@ namespace AscentProfiler
      
                                                 foreach (string sequenceblock in module.SequenceEngine.sequenceBlock.Keys)
                                                 {
+                                                        GUILayout.BeginHorizontal();
+
+                                                        if (GUILayout.Button("A", GUILayout.Width(25)))
+                                                        {
+                                                                if (HighLogic.LoadedScene == GameScenes.EDITOR)
+                                                                {
+                                                                        module.ActiveSequence = sequenceblock;
+                                                                        Log.Console("New Active Sequence: " + module.ActiveSequence);
+                                                                }
+                                                                
+                                                        }
+
                                                         if (GUILayout.Button(sequenceblock))
                                                         {
                                                                 module.SequenceEngine.sequenceBlock.Remove(sequenceblock);
                                                                 Log.Console(sequenceblock + " removed.");
                                                         }
+
+                                                        GUILayout.EndHorizontal();
                                                 }
 
 

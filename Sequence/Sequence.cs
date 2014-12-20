@@ -11,8 +11,6 @@ namespace AscentProfiler
         {
                 internal bool Enabled;
 
-                internal string ActiveSequence;
-
                 internal Dictionary<string, List<Command>> sequenceBlock = new Dictionary<string, List<Command>>();
                 internal Dictionary<ControlType, ControlModule> ControllerModules = new Dictionary<ControlType, ControlModule>();
 
@@ -45,12 +43,12 @@ namespace AscentProfiler
                                 return;
 
                         
-                        foreach (Trigger trigger in triggerBlockBuffer[ActiveSequence].Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
+                        foreach (Trigger trigger in triggerBlockBuffer[module.ActiveSequence].Where(trigger => trigger.activated == false && trigger.linkedIndex == 0))
                         {
 
                                 if (trigger.Evaluate(module))                                                                   // Check & Execute Trigger(s)
                                 {
-                                        foreach (Trigger linkedtrigger in triggerBlockBuffer[ActiveSequence].Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
+                                        foreach (Trigger linkedtrigger in triggerBlockBuffer[module.ActiveSequence].Where(linkedtrigger => linkedtrigger.activated == false && linkedtrigger.linkedIndex > 0))
                                         {
                                                 if(linkedtrigger.linkedIndex == trigger.index)
                                                 {
@@ -61,7 +59,7 @@ namespace AscentProfiler
                                         Debug.Log(trigger.type);
 
                                         
-                                        foreach (var action in actionBlockBuffer[ActiveSequence].Where(action => action.activated == false && action.linkedIndex == trigger.index))           
+                                        foreach (var action in actionBlockBuffer[module.ActiveSequence].Where(action => action.activated == false && action.linkedIndex == trigger.index))           
                                         {
                                                 if (action.Evaluate(module))                                                     // Check & Execute Action(s)
                                                 {
