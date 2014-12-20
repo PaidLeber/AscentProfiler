@@ -302,7 +302,13 @@ namespace AscentProfiler
                                                 sequenceRightScrollPosition = GUILayout.BeginScrollView(sequenceRightScrollPosition, false, false);
 
      
-
+                                                foreach (string sequenceblock in module.SequenceEngine.sequenceBlock.Keys)
+                                                {
+                                                        if (GUILayout.Button(sequenceblock))
+                                                        {
+                                                                module.SequenceEngine.sequenceBlock.Remove(sequenceblock);
+                                                        }
+                                                }
 
 
 
