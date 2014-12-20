@@ -347,6 +347,10 @@ namespace AscentProfiler
                                         {
                                                 consoleLabelStyle.normal.textColor = Color.red;
                                         }
+                                        if (message.Contains("loaded"))
+                                        {
+                                                consoleLabelStyle.normal.textColor = Color.green;
+                                        }
                                         
                                         if (count != Log.consolebuffer.Count)
                                         {
