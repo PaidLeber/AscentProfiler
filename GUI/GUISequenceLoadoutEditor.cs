@@ -90,7 +90,7 @@ namespace AscentProfiler
                                 consoleLabelStyle.padding = new RectOffset(0, 0, 0, 0);
                                 consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
                                 consoleLabelStyle.alignment = TextAnchor.UpperLeft;
-                                consoleLabelStyle.wordWrap = true;
+                                consoleLabelStyle.wordWrap = false;
                                 consoleLabelStyle.fontSize = 11;
 
                                 ctextStyle = new GUIStyle(GUI.skin.label);
@@ -305,7 +305,7 @@ namespace AscentProfiler
                                                 {
                                                         GUILayout.BeginHorizontal();
 
-                                                        if (GUILayout.Button("A", GUILayout.Width(24)))
+                                                        if (GUILayout.Button("A", GUILayout.Width(25)))
                                                         {
                                                                 if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                 {

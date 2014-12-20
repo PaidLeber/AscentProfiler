@@ -74,11 +74,19 @@ namespace AscentProfiler
                                 }
 
                         }
-                        
+
+
+
+                        foreach (ControlModule controller in ControllerModules.Values.Where(x => x.Enabled))
+                        {
+                                controller.Process(module);
+                        }
+
+
 
                 }
 
-
+                
 
 
 

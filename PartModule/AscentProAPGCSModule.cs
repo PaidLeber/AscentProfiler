@@ -28,16 +28,7 @@ namespace AscentProfiler
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active")]
                 public string ActiveSequence = "";
 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence Mode")]
-                public string modeSeq = "";                                                                           // Active, Inactive, Hibernation
-
-                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change Module ID")]
-                public void GUIDChange()
-                {
-
-                }
-
-                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence Block(s)")]
+                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence(s)")]
                 public void ModifySequenceLoadout()
                 {
                         sequenceWindow = gameObject.AddComponent<GUISequenceLoadoutEditor>();
