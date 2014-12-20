@@ -25,7 +25,7 @@ namespace AscentProfiler
                 [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "SUID")]
                 public string SUID = "lander";
 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence")]
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active")]
                 public string ActiveSequence = "";
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence Mode")]

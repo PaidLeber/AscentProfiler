@@ -243,7 +243,7 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                                Log.Console("cat > " + sequencename + AscentProfiler.sequenceExt);
+                                                Log.Console("cat tmp > " + sequencename + AscentProfiler.sequenceExt);
 
                                                 if (Regex.IsMatch(sequencename, regexvalidfilename) && !Regex.IsMatch(sequencename, regexemptyspace))
                                                 {
@@ -305,12 +305,12 @@ namespace AscentProfiler
                                                 {
                                                         GUILayout.BeginHorizontal();
 
-                                                        if (GUILayout.Button("A", GUILayout.Width(25)))
+                                                        if (GUILayout.Button("A", GUILayout.Width(24)))
                                                         {
                                                                 if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                 {
                                                                         module.ActiveSequence = sequenceblock;
-                                                                        Log.Console("New Active Sequence: " + module.ActiveSequence);
+                                                                        Log.Console("Active Sequence: " + module.ActiveSequence);
                                                                 }
                                                                 
                                                         }
