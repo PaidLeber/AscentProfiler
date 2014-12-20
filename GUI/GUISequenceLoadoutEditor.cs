@@ -178,13 +178,13 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(pair.Key))
                                                         {
-                                                                Log.ConsoleAppendLine("sequence_loader.sh " + pair.Key);
+                                                                Log.ConsoleAppendLine("sequence_loader.sh " + pair.Key + AscentProfiler.sequenceExt);
                                                                 Log.Console("");
                                                                 if (sequenceLoader.LoadSequence(module, pair.Key))
                                                                 {
                                                                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                         {
-                                                                                Log.Console(pair.Key + " loaded in module.");
+                                                                                Log.Console(pair.Key + AscentProfiler.sequenceExt + " loaded in module.");
                                                                                 ConsoleReady();
                                                                         }
                                                                         
@@ -233,6 +233,7 @@ namespace AscentProfiler
                                         GUILayout.BeginHorizontal();
                                         if (GUILayout.Button("New", GUILayout.Width(50)))
                                         {
+                                                
                                                 sequencename = "";
                                                 stringToEdit = "";
                                         }
@@ -241,6 +242,9 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
+                                                Log.ConsoleAppendLine("cat > " + sequencename + AscentProfiler.sequenceExt);
+                                                Log.Console("");
+
                                                 if (Regex.IsMatch(sequencename, regexvalidfilename) && !Regex.IsMatch(sequencename, regexemptyspace))
                                                 {
                                                         sequencename = MakeValidFileName(sequencename);
@@ -253,20 +257,24 @@ namespace AscentProfiler
                                                                         System.IO.File.Delete(filename);
 
                                                                 System.IO.File.WriteAllText(filename, stringToEdit);
+
+                                                                Log.Console(sequencename + AscentProfiler.sequenceExt + " saved.");
+                                                                ConsoleReady();
+
                                                         }
                                                         catch (Exception e)
                                                         {
-                                                                Log.Console("File save error: " + e.Message + " at " + e.StackTrace);
+                                                                Log.Console("File Save Error: " + e.Message + " at " + e.StackTrace);
                                                         }
 
                                                         directoryLoaded = false;
 
-                                                        Log.Console(sequencename + AscentProfiler.sequenceExt + " saved.");
+                                                        
 
                                                 }
                                                 else
                                                 {
-                                                        Log.Console("Error: Unable to save to disk: Bad file name");
+                                                        Log.Console("File Save Error: Unable to save to disk: Bad file name");
                                                 
                                                 }
 
@@ -335,6 +343,10 @@ namespace AscentProfiler
                                 int count = 1;
                                 foreach(string message in Log.consolebuffer)
                                 {
+                                        if (message.Contains("Error"))
+                                        {
+                                                consoleLabelStyle.normal.textColor = Color.red;
+                                        }
                                         
                                         if (count != Log.consolebuffer.Count)
                                         {
@@ -345,9 +357,11 @@ namespace AscentProfiler
                                                 GUILayout.Label(message + cursorChar, consoleLabelStyle, GUILayout.ExpandWidth(true));
                                         }
 
+                                        consoleLabelStyle.normal.textColor = new Color(1F, .6F, 0F);
                                         count++;
                                 }
 
+                                
 
 
                                 GUILayout.EndVertical();

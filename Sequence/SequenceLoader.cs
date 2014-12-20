@@ -31,7 +31,7 @@ namespace AscentProfiler
 
                         directory.Sort();
 
-                        List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
+                        List<string> files = new List<string>(Directory.GetFiles(path, "*" + AscentProfiler.sequenceExt));
                         
                         files.Sort();
                         
@@ -55,7 +55,7 @@ namespace AscentProfiler
 
                 internal List<string> GetFileNames(string path)
                 {
-                        List<string> files = new List<string>(Directory.GetFiles(path, "*.seq"));
+                        List<string> files = new List<string>(Directory.GetFiles(path, "*" + AscentProfiler.sequenceExt));
 
                         foreach (string file in files)
                         {
@@ -102,12 +102,14 @@ namespace AscentProfiler
                                 if (Regex.IsMatch(line, @"^START\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT START: #" + line);
+                                        
                                         sequenceStart = lineCounter;
                                 }
 
                                 if (Regex.IsMatch(line, @"^END\s*$"))
                                 {
                                         Log.Level(LogType.Verbose, "GSCRIPT END: #" + line);
+                                        
                                         sequenceEnd = lineCounter;
                                 }
                         }
@@ -116,15 +118,18 @@ namespace AscentProfiler
                         {
                                 sequenceLines.Reverse();
                         }
-                        else if(sequenceStart == 0)
+                        
+                        if(sequenceStart == 0)
                         {
-                                Log.Console("Load Error: " + sequence + " START not found.");
+                                Log.Console("Load Error: " + sequence + AscentProfiler.sequenceExt + " START command not found.");
                                 // Add error log checking here then return bool
-                                //return false;
+                                return false;
                         }
-                        else if (sequenceEnd == 0)
+                        
+                        if (sequenceEnd == 0)
                         {
-                                Log.Console("Load Error: " + sequence+ " END not found.");
+                                Log.Console("Load Error: " + sequence + AscentProfiler.sequenceExt + " END command not found.");
+                                return false;
                         }
 
                         lineCounter = 0;
