@@ -50,15 +50,23 @@ namespace AscentProfiler
 
                 internal int CreateTrigger(TriggerType trigger, string commandLine, int lineNumber)
                 {
+                        try
+                        {
+                                //Check command line for valid syntax, if true then parse it
+                                regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);          
+                        }
+                        catch
+                        {
+                                Log.Console("Load Error: illegal command "+ trigger +". line #"+lineNumber);
+                        }
+
                         Log.Level(LogType.Verbose, "Validating Syntax: " + commandLine + " : " + triggerRegex[trigger]);
+                        
 
                         currentTrigger = trigger;
 
-                        regexGrouping = Regex.Match(commandLine, triggerRegex[trigger]);                           //Check command line for valid syntax, if true then parse it
-
                         if (regexGrouping.Success)
                         {
-
                                 if (SetTriggerMode(trigger)) { return -1; }                                              // return -1 if a trigger has no index. i.e. a bit flipper.
                                 
                                 currentIndex++;                                                                          

@@ -61,7 +61,6 @@ namespace AscentProfiler
 
         enum TriggerType
         {
-                None,
                 ASCENT,
                 DESCENT,
                 ALTITUDE,

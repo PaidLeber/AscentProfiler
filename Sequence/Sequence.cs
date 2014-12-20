@@ -39,27 +39,6 @@ namespace AscentProfiler
                          */ 
                 }
 
-                internal bool LoadSequenceBlock(string sequencename, List<Command> sequence)
-                {
-                        try
-                        {
-                                sequenceBlock.Add(sequencename, sequence);
-                        }
-                        catch (Exception e)
-                        {
-                                Log.Level(LogType.Verbose, "Sequence Vessel On Load: " + e.Message + " at " + e.StackTrace);
-                                
-                                return false;
-                        }
-
-
-                        
-
-                        return true;
-                }
-
-
-
                 internal void Process(AscentProAPGCSModule module)
                 {
                         if (!Enabled)

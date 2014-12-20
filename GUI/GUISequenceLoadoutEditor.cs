@@ -57,6 +57,8 @@ namespace AscentProfiler
                         Log.consolebuffer.Clear();
                         Log.Console("Kernix OS Version "+ AscentProfiler.version);
                         ConsoleReady();
+                        Log.ConsoleAppendLine("sequence_loader_alpha.sh -gui");
+                        Log.Console("");
                         
                 }
 
@@ -178,14 +180,13 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(pair.Key))
                                                         {
-                                                                Log.ConsoleAppendLine("sequence_loader.sh " + pair.Key + AscentProfiler.sequenceExt);
-                                                                Log.Console("");
+                                                                
                                                                 if (sequenceLoader.LoadSequence(module, pair.Key))
                                                                 {
                                                                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                                                                         {
                                                                                 Log.Console(pair.Key + AscentProfiler.sequenceExt + " loaded in module.");
-                                                                                ConsoleReady();
+                                                                                
                                                                         }
                                                                         
                                                                         if (HighLogic.LoadedScene == GameScenes.FLIGHT)
@@ -203,7 +204,7 @@ namespace AscentProfiler
                                                                 else
                                                                 {
                                                                         Log.Console("Unable to Upload Sequence File: " + pair.Key + AscentProfiler.sequenceExt);
-                                                                        ConsoleReady();
+                                                                        
                                                                 }
 
 
@@ -242,8 +243,7 @@ namespace AscentProfiler
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
                                         {
-                                                Log.ConsoleAppendLine("cat > " + sequencename + AscentProfiler.sequenceExt);
-                                                Log.Console("");
+                                                Log.Console("cat > " + sequencename + AscentProfiler.sequenceExt);
 
                                                 if (Regex.IsMatch(sequencename, regexvalidfilename) && !Regex.IsMatch(sequencename, regexemptyspace))
                                                 {
@@ -259,7 +259,6 @@ namespace AscentProfiler
                                                                 System.IO.File.WriteAllText(filename, stringToEdit);
 
                                                                 Log.Console(sequencename + AscentProfiler.sequenceExt + " saved.");
-                                                                ConsoleReady();
 
                                                         }
                                                         catch (Exception e)
@@ -307,6 +306,7 @@ namespace AscentProfiler
                                                         if (GUILayout.Button(sequenceblock))
                                                         {
                                                                 module.SequenceEngine.sequenceBlock.Remove(sequenceblock);
+                                                                Log.Console(sequenceblock + " removed.");
                                                         }
                                                 }
 
@@ -349,15 +349,15 @@ namespace AscentProfiler
                                 int count = 1;
                                 foreach(string message in Log.consolebuffer)
                                 {
-                                        if (message.Contains("Error"))
-                                        {
-                                                consoleLabelStyle.normal.textColor = Color.red;
-                                        }
+
                                         if (message.Contains("loaded"))
                                         {
                                                 consoleLabelStyle.normal.textColor = Color.green;
                                         }
-                                        
+                                        if (message.Contains("Error"))
+                                        {
+                                                consoleLabelStyle.normal.textColor = Color.red;
+                                        }
                                         if (count != Log.consolebuffer.Count)
                                         {
                                                 GUILayout.Label(message, consoleLabelStyle, GUILayout.ExpandWidth(true));

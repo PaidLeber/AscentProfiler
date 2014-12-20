@@ -87,14 +87,16 @@ namespace AscentProfiler
 
                 internal bool LoadSequence(AscentProAPGCSModule module, string sequence)
                 {
-                        int sequenceStart = 0;
-                        int sequenceEnd = 0;
 
-                        List<string> sequenceLines = new List<string>(sequences[sequence].ToUpper().Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
+
+                        List<string> sequenceLines = new List<string>(sequences[sequence].ToUpper().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None));
+                                //.Split(new string[] { "\n", "\r" }, StringSplitOptions.None));
 
                         Log.Level(LogType.Info, "Loading Sequence: " + sequence);
                         Log.Level(LogType.Verbose, sequences[sequence].ToUpper());
 
+                        int sequenceStart = 0;
+                        int sequenceEnd = 0;
                         int lineCounter = 0;
                         foreach (string line in sequenceLines)
                         {
@@ -137,7 +139,7 @@ namespace AscentProfiler
                         {
                                 
                                 lineCounter++;
-
+                                Debug.Log(lineCounter+" line: "+line);
                                 foreach (TriggerType trigger in (TriggerType[])Enum.GetValues(typeof(TriggerType)))
                                 {
                                         if ( IsRegexCommandMatch(line, trigger.ToString()) )
@@ -171,7 +173,15 @@ namespace AscentProfiler
 
                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                         {
-                                return module.SequenceEngine.LoadSequenceBlock(sequence, triggerFactory.GetNewSequence(actionFactory.GetNewActionList())); 
+                                if (module.SequenceEngine.sequenceBlock.Keys.Contains(sequence))
+                                {
+                                        Log.Console("Load Error: Sequence already loaded.");
+                                        return false;
+                                }
+
+                                module.SequenceEngine.sequenceBlock.Add(sequence, triggerFactory.GetNewSequence(actionFactory.GetNewActionList()));
+                                return true;
+ 
 
                         }
                         if (HighLogic.LoadedScene == GameScenes.FLIGHT)
