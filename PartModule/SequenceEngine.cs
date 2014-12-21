@@ -166,9 +166,6 @@ namespace AscentProfiler
                         }
 
 
-
-
-
                         if (Sequencer != null)
                         {
                                 Sequencer.Process(this);
