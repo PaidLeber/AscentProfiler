@@ -33,8 +33,6 @@ namespace AscentProfiler
                         WindowRect = GUILayout.Window(windowId, WindowRect, DrawLoadoutEditor, windowTitle);
                 }
 
-
-
                 void DrawLoadoutEditor(int id)
                 {
                         GUILayout.BeginVertical();
