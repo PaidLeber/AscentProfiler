@@ -23,9 +23,11 @@ namespace AscentProfiler
 
                 IButton mainButton;
                 IButton telemetryButton;
+                IButton missionButton;
 
                 bool mainWindowEnabled = false;
                 bool telemetryWindowEnabled = false;
+                bool missionWindowEnabled = false;
 
                 internal static TelemetryReceiver telemetryReceiver;
 
@@ -63,6 +65,17 @@ namespace AscentProfiler
                                         telemetryWindowEnabled = !telemetryWindowEnabled;
                                 };
 
+                                //Mission Log button
+                                missionWindowEnabled = false;
+                                missionButton = ToolbarManager.Instance.add("AscentProfiler", "MissionLog");
+                                missionButton.TexturePath = "AscentProfiler/Textures/missionlog_blizzy";
+                                missionButton.ToolTip = "Open Mission Log";
+                                missionButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
+                                missionButton.OnClick += (e) =>
+                                {
+                                        guiTelemetry.ChangeState(!telemetryWindowEnabled);
+                                        telemetryWindowEnabled = !telemetryWindowEnabled;
+                                };
 
                         }
 
