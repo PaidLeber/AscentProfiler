@@ -62,7 +62,7 @@
     <Compile Include="Commands\Actions\Action.cs" />
     <Compile Include="Commands\Actions\ActionFactory.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="GUI\GUISequenceLoadoutEditor.cs" />
+    <Compile Include="GUI\GUIGroundStationTerminal.cs" />
     <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
     <Compile Include="PartModule\SequenceEngine.cs" />
     <Compile Include="AscentProfiler.cs" />

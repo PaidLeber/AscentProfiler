@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AscentProfiler
 {
-        class GUISequenceLoadoutEditor : MonoBehaviour
+        class GUIGroundStationTerminal : MonoBehaviour
         {
                 SequenceLoader sequenceLoader;
                 bool directoryLoaded;
@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 Rect mainWindowRect = new Rect(200, 100, 600, 500);
                 Vector2 minProfileWindowSize = new Vector2(600, 500);
-                string windowTitle = "Ground Station Upload Window";
+                string windowTitle = "Ground Station Terminal";
 
                 // For resizing windows
                 int resizing = 0;
@@ -395,7 +395,7 @@ namespace AscentProfiler
                         if (GUILayout.Button("Close"))
                         {
 
-                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUISequenceLoadoutEditor>());
+                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUIGroundStationTerminal>());
                                 
                         
                         }

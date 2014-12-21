@@ -14,7 +14,7 @@ namespace AscentProfiler
                 
                 internal Sequence Sequencer;
                 
-                private GUISequenceLoadoutEditor sequenceWindow;
+                private GUIGroundStationTerminal sequenceWindow;
                 private GUIControlLoadoutEditor controlWindow;
 
                 public SequenceEngine()
@@ -31,7 +31,7 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence(s)")]
                 public void ModifySequenceLoadout()
                 {
-                        sequenceWindow = gameObject.AddComponent<GUISequenceLoadoutEditor>();
+                        sequenceWindow = gameObject.AddComponent<GUIGroundStationTerminal>();
                         sequenceWindow.InitWindow(this);
                 }
 
