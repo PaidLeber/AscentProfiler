@@ -29,10 +29,14 @@ namespace AscentProfiler
 
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change SUID")]
-                public void TestEvent()
+                public void ModifySUID()
                 {
-                        SUIDWindow = gameObject.AddComponent<GUISUIDEditor>();
-                        SUIDWindow.InitWindow(this);
+                        if(SUIDWindow == null)
+                        {
+                                SUIDWindow = gameObject.AddComponent<GUISUIDEditor>();
+                                SUIDWindow.InitWindow(this);
+                        }
+
 
                 }
 
@@ -49,8 +53,13 @@ namespace AscentProfiler
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
                 public void ModifyControllerLoadout()
                 {
-                        controlWindow = gameObject.AddComponent<GUIControlLoadoutEditor>();
-                        controlWindow.InitWindow(this);
+                        if(controlWindow == null)
+                        {
+                                controlWindow = gameObject.AddComponent<GUIControlLoadoutEditor>();
+                                controlWindow.InitWindow(this);
+                        }
+
+
                         
                 }
 

@@ -12,11 +12,10 @@ namespace AscentProfiler
 
                 int windowId = 98480;
 
-                Rect WindowRect = new Rect(400, 400, 200, 200);
+                Rect WindowRect = new Rect(400, 400, 240, 60);
 
-                string windowTitle = "Sequence Unique Identifier Editor";
-
-
+                string windowTitle = "Change Sequence Unique Identifier";
+                string changesuid;
 
                 //Styles
                 GUIStyle labelStyle = new GUIStyle();
@@ -25,12 +24,7 @@ namespace AscentProfiler
                 internal void InitWindow(SequenceEngine module)
                 {
                         this.module = module;
-
-                }
-
-                void Start()
-                {
-                        labelStyle.alignment = TextAnchor.MiddleCenter;
+                        changesuid = module.SUID;
 
                 }
 
@@ -41,12 +35,21 @@ namespace AscentProfiler
 
 
 
-
-
                 void DrawLoadoutEditor(int id)
                 {
+                        GUILayout.BeginVertical();
+                        GUILayout.BeginHorizontal();
+                        changesuid = GUILayout.TextField(changesuid, GUILayout.Width(220));
 
 
+                        GUILayout.EndHorizontal();
+
+                        if (GUILayout.Button("Close"))
+                        {
+                                module.SUID = changesuid;
+                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUISUIDEditor>());
+                        }
+                        GUILayout.EndVertical();
 
 
                         GUI.DragWindow(new Rect(0, 0, 10000, 20));
