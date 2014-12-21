@@ -200,7 +200,7 @@ namespace AscentProfiler
                 bool TXAscentProAEDLModule(string sequence, List<Command> newsequence)
                 {
                         SequenceEngine AEDLmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).FirstOrDefault();
-
+                       
                         TXRemoteTechNetwork(sequence, AEDLmodule);
 
                         return true;

@@ -11,7 +11,16 @@ namespace AscentProfiler
         [KSPAddon(KSPAddon.Startup.EditorVAB, false)]
         public class AscentProfilerVAB : AscentProfiler
         {
-                
+                private static int _suid = -1;
+                internal static string GetSUID
+                {
+                        get
+                        {
+                                _suid = _suid + 1;
+                                return _suid.ToString();
+                        }
+
+                }
                 
         }
 
@@ -23,8 +32,8 @@ namespace AscentProfiler
 
 
                 IButton gsButton;
-
-                bool gsEnabled;
+                GUIGroundStationTerminal gsWindow;
+                bool gsWindowEnabled;
 
                 IButton mainButton;
                 IButton telemetryButton;
@@ -47,6 +56,26 @@ namespace AscentProfiler
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
+                                gsWindowEnabled = false;
+                                gsButton = ToolbarManager.Instance.add("AscentProfiler", "groundstation");
+                                gsButton.TexturePath = "AscentProfiler/Textures/groundstation_blizzy";
+                                gsButton.ToolTip = "Open Ground Station Terminal";
+                                gsButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
+                                gsButton.OnClick += (e) =>
+                                {
+                                        if (!gsWindowEnabled)
+                                        {
+                                                gsWindow = gameObject.AddComponent<GUIGroundStationTerminal>();
+                                        }
+                                        else
+                                        {
+                                                UnityEngine.Object.Destroy(gameObject.GetComponent<GUIGroundStationTerminal>());  
+                                        }
+                                        gsWindowEnabled = !gsWindowEnabled;
+
+                                };
+
+
                                 mainWindowEnabled = false;
                                 mainButton = ToolbarManager.Instance.add("AscentProfiler", "AscentProfiler");
                                 mainButton.TexturePath = "AscentProfiler/Textures/icon_blizzy";

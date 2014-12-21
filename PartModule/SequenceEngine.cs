@@ -22,11 +22,18 @@ namespace AscentProfiler
 
                 }
                 
-                [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "SUID")]
-                public string SUID = "lander";
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence UID")]
+                public string SUID = "";
 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active")]
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active Sequence")]
                 public string ActiveSequence = "";
+
+                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "test button")]
+                public void TestEvent()
+                {
+                        ActiveSequence =  this.name;
+
+                }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence(s)")]
                 public void ModifySequenceLoadout()
@@ -40,6 +47,7 @@ namespace AscentProfiler
                 {
                         controlWindow = gameObject.AddComponent<GUIControlLoadoutEditor>();
                         controlWindow.InitWindow(this);
+                        
                 }
 
 
@@ -50,8 +58,16 @@ namespace AscentProfiler
                 {
                         Debug.Log("AEDL Systems Module OnStart");
 
+                        if (HighLogic.LoadedSceneIsEditor && string.IsNullOrEmpty(SUID))
+                        {
+                                SUID = this.part.name.Replace("(Clone)", AscentProfilerVAB.GetSUID);
+
+                        }
+
                         if(Sequencer == null)
                                 Sequencer = new Sequence();
+
+
 
 
                 }
