@@ -26,7 +26,8 @@ namespace AscentProfiler
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "SUID")]
                 public string SUID = "";
 
-
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active Sequence")]
+                public string ActiveSequence = "";
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change SUID")]
                 public void ModifySUID()
@@ -40,14 +41,15 @@ namespace AscentProfiler
 
                 }
 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active Sequence")]
-                public string ActiveSequence = "";
-
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence(s)")]
                 public void ModifySequenceLoadout()
                 {
+                        if(sequenceWindow == null)
+                        {
                         sequenceWindow = gameObject.AddComponent<GUIGroundStationTerminal>();
                         sequenceWindow.InitWindow(this);
+                        }
+                        
                 }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Controller(s)")]
