@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 Rect mainWindowRect = new Rect(200, 100, 600, 500);
                 Vector2 minProfileWindowSize = new Vector2(600, 500);
-                string windowTitle = "Ground Station Uplink Window";
+                string windowTitle = "Ground Station Upload Window";
 
                 // For resizing windows
                 int resizing = 0;

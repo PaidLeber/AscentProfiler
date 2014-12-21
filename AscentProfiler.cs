@@ -21,6 +21,11 @@ namespace AscentProfiler
                 GUIAscentProfiler guiAscentProfiler = null;
                 GUITelemetry guiTelemetry = null;
 
+
+                IButton gsButton;
+
+                bool gsEnabled;
+
                 IButton mainButton;
                 IButton telemetryButton;
                 IButton missionLogButton;
@@ -73,8 +78,7 @@ namespace AscentProfiler
                                 missionLogButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
                                 missionLogButton.OnClick += (e) =>
                                 {
-                                        guiTelemetry.ChangeState(!telemetryWindowEnabled);
-                                        telemetryWindowEnabled = !telemetryWindowEnabled;
+                                        
                                 };
 
                         }
