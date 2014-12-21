@@ -426,6 +426,7 @@ namespace AscentProfiler
 
                 void Update()
                 {
+                        // Cursor Blink
                         if (Time.time - m_TimeStamp >= 0.25)
                         {
                                 m_TimeStamp = Time.time;
