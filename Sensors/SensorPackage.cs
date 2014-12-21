@@ -13,7 +13,7 @@ namespace AscentProfiler
                 {
                 }
 
-                internal double GetSensorData(AscentProAPGCSModule module, SensorType sensor)
+                internal double GetSensorData(SequenceEngine module, SensorType sensor)
                 {
                         switch(sensor)
                         {

@@ -37,7 +37,7 @@ namespace AscentProfiler
                         throw new NotImplementedException();
                 }
 
-                internal override void Process(AscentProAPGCSModule module)
+                internal override void Process(SequenceEngine module)
                 {
                         if (!Enabled)
                                 return;
@@ -73,7 +73,7 @@ namespace AscentProfiler
 
                 }
 
-                public void ActiveController0(AscentProAPGCSModule module, FlightCtrlState s)
+                public void ActiveController0(SequenceEngine module, FlightCtrlState s)
                 {
                         
                         Quaternion attitudetarget = 

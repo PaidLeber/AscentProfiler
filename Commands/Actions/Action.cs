@@ -56,7 +56,7 @@ namespace AscentProfiler
                         this.controller = controller;
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         /*
                         switch(control)
@@ -105,7 +105,7 @@ namespace AscentProfiler
                         this.modifier = modifier;
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                                 
                         switch (telemetry)
@@ -144,7 +144,7 @@ namespace AscentProfiler
                         this.state = true;
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
 
                         if (!AscentProfiler.listRegisteredAddons.Contains(RegisteredAddons.FerramAerospaceResearch))
@@ -187,7 +187,7 @@ namespace AscentProfiler
                 
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         switch(modifier)
                         {
@@ -231,7 +231,7 @@ namespace AscentProfiler
                 }
 
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         //FlightLog.Log(desc.ToUpper() + " " + value);
                         FlightGlobals.ActiveVessel.ActionGroups.ToggleGroup(Util.SetActionGroup(value));
@@ -252,7 +252,7 @@ namespace AscentProfiler
                 }
 
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         //FlightLog.Log("STAGE SEPARATION");
                         Staging.ActivateNextStage();
@@ -273,7 +273,7 @@ namespace AscentProfiler
                 
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         //FlightLog.Log(value + " " + desc.ToUpper());
                         Staging.ActivateStage(value);
@@ -304,7 +304,7 @@ namespace AscentProfiler
 
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
 
                         FlightInputHandler.state.mainThrottle = floatvalue;

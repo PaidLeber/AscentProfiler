@@ -157,20 +157,20 @@ namespace AscentProfiler
                 void InitNewSequenceMessage()
                 {
                         /*
-                        listRXReceiverMessage.Add(new object[] { 4.0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 4.0f, 0, "RX: AEDL Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
                         listRXReceiverMessage.Add(new object[] { 3.0f, 1, "RX: Reconfiguration packets received from frame" });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 4, "RX: Checksum verification in progress, please standby " });
                         listRXReceiverMessage.Add(new object[] { 6.0f, 6, "RX: Telemetry data buffer: Reset" });
                         listRXReceiverMessage.Add(new object[] { 8.0f, 4, "RX: Reconfiguration successful: sequence loaded" });
-                        listRXReceiverMessage.Add(new object[] { 7.0f, 2, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 7.0f, 2, "RX: AEDL Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
                         */
 
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: AEDL Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
                         listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Reconfiguration packets received from frame" });
                         listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Checksum verification in progress, please standby " });
                         listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Telemetry data buffer: Reset" });
                         listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: Reconfiguration successful: sequence loaded" });
-                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: APGCS Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
+                        listRXReceiverMessage.Add(new object[] { 0f, 0, "RX: AEDL Telecommand Sequencing Receiver Version " + AscentProfiler.version + " Ready" });
 
 
                 }

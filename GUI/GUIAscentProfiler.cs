@@ -104,9 +104,9 @@ namespace AscentProfiler
 
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-                                AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                                SequenceEngine AEDLmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).FirstOrDefault();
                                 /*        
-                                foreach (Trigger item in APGCSmodule.SequenceEngine.listTrigger)
+                                foreach (Trigger item in AEDLmodule.SequenceEngine.listTrigger)
                                 {
                                         Debug.Log(item.activated + " index: " + item.index + " linked index: " + item.linkedIndex + " type: " + item.type + " desc: " + item.description + " dispvalue: " + item.displayvalue + " value: " + item.value);
                                 }
@@ -122,9 +122,9 @@ namespace AscentProfiler
                         
                         if (GUILayout.Button(loadIcon, STYLE_WINDOW_BUTTON, GUILayout.Width(24), GUILayout.Height(24)))
                         {
-                                AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
-                                //Debug.Log(APGCSmodule.attitudeController.Enabled);
-                                //APGCSmodule.attitudeController.Enabled = !APGCSmodule.attitudeController.Enabled;
+                                SequenceEngine AEDLmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).FirstOrDefault();
+                                //Debug.Log(AEDLmodule.attitudeController.Enabled);
+                                //AEDLmodule.attitudeController.Enabled = !AEDLmodule.attitudeController.Enabled;
                                 
                                 
                         }

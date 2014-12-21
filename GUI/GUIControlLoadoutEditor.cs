@@ -8,7 +8,7 @@ namespace AscentProfiler
 {
         class GUIControlLoadoutEditor : MonoBehaviour
         {
-                AscentProAPGCSModule module;
+                SequenceEngine module;
 
                 int windowId = 98473;
 
@@ -42,7 +42,7 @@ namespace AscentProfiler
 
                 }
 
-                internal void InitWindow(AscentProAPGCSModule module)
+                internal void InitWindow(SequenceEngine module)
                 {
                         this.module = module;
 
@@ -294,7 +294,7 @@ namespace AscentProfiler
                                 {
                                         if (GUILayout.Button(sensor.ToString()))
                                         {
-                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
+                                                module.Sequencer.ControllerModules[ControlType.SENSOR].AddType<SensorType>(sensor);
 
                                                 sensorLeftList.Remove(sensor);
                                                 sensorLeftList.Sort();
@@ -334,13 +334,13 @@ namespace AscentProfiler
 
                                 sensorRightScrollPosition = GUILayout.BeginScrollView(sensorRightScrollPosition, false, false);
 
-                                foreach (SensorType sensor in module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>())
+                                foreach (SensorType sensor in module.Sequencer.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>())
                                 {
 
                                         if(sensor != SensorType.TIME)
                                                 if (GUILayout.Button(sensor.ToString()))
                                                 {
-                                                        module.SequenceEngine.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
+                                                        module.Sequencer.ControllerModules[ControlType.SENSOR].RemoveType<SensorType>(sensor);
 
                                                         sensorLeftList.Add(sensor);
                                                         sensorLeftList.Sort();
@@ -384,9 +384,9 @@ namespace AscentProfiler
 
 
                 
-                void LoadFromPartModule(AscentProAPGCSModule module)
+                void LoadFromPartModule(SequenceEngine module)
                 {
-                        controlRightList = module.SequenceEngine.ControllerModules.Keys.ToList();
+                        controlRightList = module.Sequencer.ControllerModules.Keys.ToList();
                         controlRightList.Sort();
 
 
@@ -427,8 +427,8 @@ namespace AscentProfiler
                         }
 
 
-                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.SENSOR))
-                                sensorLeftList = sensorLeftList.Except(module.SequenceEngine.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>()).ToList();
+                        if (module.Sequencer.ControllerModules.ContainsKey(ControlType.SENSOR))
+                                sensorLeftList = sensorLeftList.Except(module.Sequencer.ControllerModules[ControlType.SENSOR].GetLoadedTypes<List<SensorType>>()).ToList();
 
                         sensorLeftList.Remove(SensorType.TIME);
                         sensorLeftList.Sort();
@@ -445,9 +445,9 @@ namespace AscentProfiler
                                 attitudeLeftList.Add(attitude);
                         }
 
-                        if (module.SequenceEngine.ControllerModules.ContainsKey(ControlType.ATTITUDE))
+                        if (module.Sequencer.ControllerModules.ContainsKey(ControlType.ATTITUDE))
                         {
-                                attitudeRightList.Add(module.SequenceEngine.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
+                                attitudeRightList.Add(module.Sequencer.ControllerModules[ControlType.ATTITUDE].GetLoadedTypes<AttitudeControlType>());
                                 attitudeLeftList = attitudeLeftList.Except(attitudeRightList).ToList();
                         }
 
@@ -457,7 +457,7 @@ namespace AscentProfiler
 
                 void AddControl(ControlType control)
                 {
-                        if (!module.SequenceEngine.ControllerModules.ContainsKey(control))
+                        if (!module.Sequencer.ControllerModules.ContainsKey(control))
                         {
                                 switch (control)
                                 {
@@ -466,15 +466,15 @@ namespace AscentProfiler
                                                 EnumAttitudeTypes();
                                                 break;
                                         case ControlType.SENSOR:
-                                                module.SequenceEngine.ControllerModules.Add(control, new ControlSensors());
-                                                module.SequenceEngine.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
+                                                module.Sequencer.ControllerModules.Add(control, new ControlSensors());
+                                                module.Sequencer.ControllerModules[ControlType.SENSOR].AddType<SensorType>(SensorType.TIME);  
                                                 EnumSensorTypes();
                                                 break;
                                         case ControlType.MISSIONLOG:
-                                                module.SequenceEngine.ControllerModules.Add(control, new ControlMissionLog());
+                                                module.Sequencer.ControllerModules.Add(control, new ControlMissionLog());
                                                 break;
                                         case ControlType.TELEMETRY:
-                                                module.SequenceEngine.ControllerModules.Add(control, new ControlTelemetry());
+                                                module.Sequencer.ControllerModules.Add(control, new ControlTelemetry());
                                                 break;
                                 }
                         }
@@ -485,7 +485,7 @@ namespace AscentProfiler
 
                 void RemoveControl(ControlType control)
                 {
-                        module.SequenceEngine.ControllerModules.Remove(control);
+                        module.Sequencer.ControllerModules.Remove(control);
                 }
 
                 void AddAttitudeController(AttitudeControlType controller)
@@ -493,7 +493,7 @@ namespace AscentProfiler
                         switch (controller)
                         {
                                 case AttitudeControlType.SAS:
-                                        module.SequenceEngine.ControllerModules.Add(ControlType.ATTITUDE, new SASController());
+                                        module.Sequencer.ControllerModules.Add(ControlType.ATTITUDE, new SASController());
                                         break;
 
 
@@ -504,7 +504,7 @@ namespace AscentProfiler
 
                 void RemoveAttitudeController()
                 {
-                        module.SequenceEngine.ControllerModules.Remove(ControlType.ATTITUDE);
+                        module.Sequencer.ControllerModules.Remove(ControlType.ATTITUDE);
 
                 }
 

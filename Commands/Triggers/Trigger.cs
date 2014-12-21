@@ -20,7 +20,7 @@ namespace AscentProfiler
 
                 protected double maxval;
 
-                protected bool IsAscending(AscentProAPGCSModule module)
+                protected bool IsAscending(SequenceEngine module)
                 {
                         isascending = (module.vessel.altitude > lastaltitude ? true : false);
                         lastaltitude = module.vessel.altitude;
@@ -63,7 +63,7 @@ namespace AscentProfiler
                         Log.Level(LogType.Verbose, "constructor new trigger: index: "+ index +" trigger: "+ type +" description: "+ description +" ascentmode: "+ ascentMode+" value: "+ value+" maxval: "+ maxval +" fromaxval: "+ fromaxval);
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         IsAscending(module);
 
@@ -143,7 +143,7 @@ namespace AscentProfiler
 
                 }
                 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         switch (command)
                         {
@@ -187,7 +187,7 @@ namespace AscentProfiler
                         this.value = value;
                 }
 
-                internal override bool Evaluate(AscentProAPGCSModule module)
+                internal override bool Evaluate(SequenceEngine module)
                 {
                         
                         //May need to use Timefixed.delta

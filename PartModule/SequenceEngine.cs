@@ -9,15 +9,15 @@ using UnityEngine;
 namespace AscentProfiler
 {
         
-        public class AscentProAPGCSModule : PartModule
+        public class SequenceEngine : PartModule
         {
                 
-                internal Sequence SequenceEngine;
-
+                internal Sequence Sequencer;
+                
                 private GUISequenceLoadoutEditor sequenceWindow;
                 private GUIControlLoadoutEditor controlWindow;
 
-                public AscentProAPGCSModule()
+                public SequenceEngine()
                 {
 
                 }
@@ -48,10 +48,10 @@ namespace AscentProfiler
  */
                 public override void OnStart(PartModule.StartState state)
                 {
-                        Debug.Log("APGCSModule OnStart");
+                        Debug.Log("AEDL Systems Module OnStart");
 
-                        if(SequenceEngine == null)
-                                SequenceEngine = new Sequence();
+                        if(Sequencer == null)
+                                Sequencer = new Sequence();
 
 
                 }
@@ -64,13 +64,13 @@ namespace AscentProfiler
 
                 public override void OnLoad(ConfigNode node)
                 {
-                        Debug.Log("OnLoad Loading APGCSModule...");
+                        Debug.Log("OnLoad Loading AEDL Systems Module...");
 
 
 
                         if (node.HasValue("SequenceEngine"))
                         {
-                                SequenceEngine = (Sequence)Serializer.DeserializeFromString(node.GetValue("SequenceEngine"));
+                                Sequencer = (Sequence)Serializer.DeserializeFromString(node.GetValue("SequenceEngine"));
                         }
                         else
                         {
@@ -83,19 +83,19 @@ namespace AscentProfiler
 
                 public override void OnSave(ConfigNode node)
                 {
-                        Debug.Log("Saving APGCSModule... ");
+                        Debug.Log("Saving AEDL Systems Module... ");
 
                         try
                         {
-                                if(SequenceEngine != null)
+                                if(Sequencer != null)
                                 {
-                                        node.AddValue("SequenceEngine", Serializer.SerializeToString(SequenceEngine) );
+                                        node.AddValue("SequenceEngine", Serializer.SerializeToString(Sequencer) );
                                 }
 
                         }
                         catch (Exception e)
                         {
-                                Debug.Log("Unable to save APGCSModule state: " + e.Message + " at " + e.StackTrace);
+                                Debug.Log("Unable to save AEDL Systems Module state: " + e.Message + " at " + e.StackTrace);
                         }
 
 
@@ -136,9 +136,9 @@ namespace AscentProfiler
 
 
 
-                        if (SequenceEngine != null)
+                        if (Sequencer != null)
                         {
-                                SequenceEngine.Process(this);
+                                Sequencer.Process(this);
                         }
                                 
 
@@ -200,7 +200,7 @@ namespace AscentProfiler
                  */
                 public override void OnInactive()
                 {
-                        //if (flightController != null) flightController.isEngaged = false;
+                        
 
                         Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
                             + "][" + Time.time.ToString("0.0000") + "]: OnInactive");
@@ -208,17 +208,7 @@ namespace AscentProfiler
 
 
 
-                /*
-                 * Called when the game is saving the part information.
-                 */
-                /*
-                public override void OnSave(ConfigNode node)
-                {
-                        Debug.Log("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X")
-                            + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
-                }
-                 
-                 */
+
 
 
         }

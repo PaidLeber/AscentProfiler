@@ -17,7 +17,7 @@ namespace AscentProfiler
                 internal string displayvalue;
                 internal string description;
 
-                internal abstract bool Evaluate(AscentProAPGCSModule module);
+                internal abstract bool Evaluate(SequenceEngine module);
 
         }
 }

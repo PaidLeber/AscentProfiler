@@ -37,7 +37,7 @@ namespace AscentProfiler
                          */ 
                 }
 
-                internal void Process(AscentProAPGCSModule module)
+                internal void Process(SequenceEngine module)
                 {
                         if (!Enabled)
                                 return;

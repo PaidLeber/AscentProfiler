@@ -9,7 +9,7 @@ namespace AscentProfiler
         [Serializable]
         abstract class ControlModule
         {
-                //protected AscentProAPGCSModule module;
+                //protected AscentProAEDLModule module;
 
                 internal bool Enabled;
 
@@ -17,7 +17,7 @@ namespace AscentProfiler
                 internal abstract bool AddType<T>(T enumvalue);
                 internal abstract bool RemoveType<T>(T enumvalue);
                 internal abstract void ClearTypes();
-                internal abstract void Process(AscentProAPGCSModule module);
+                internal abstract void Process(SequenceEngine module);
 
         }
 }

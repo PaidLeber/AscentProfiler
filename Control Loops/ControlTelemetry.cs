@@ -52,7 +52,7 @@ namespace AscentProfiler
                         throw new NotImplementedException();
                 }
 
-                internal override void Process(AscentProAPGCSModule module)
+                internal override void Process(SequenceEngine module)
                 {
                         throw new NotImplementedException();
                 }

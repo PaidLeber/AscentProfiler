@@ -14,7 +14,7 @@ namespace AscentProfiler
                 SequenceLoader sequenceLoader;
                 bool directoryLoaded;
 
-                AscentProAPGCSModule module;
+                SequenceEngine module;
 
                 int windowId = 98476;
 
@@ -51,7 +51,7 @@ namespace AscentProfiler
                 GUIStyle pathStyle;
                 bool setstyle;
 
-                internal void InitWindow(AscentProAPGCSModule module)
+                internal void InitWindow(SequenceEngine module)
                 {
                         this.module = module;
                         Log.consolebuffer.Clear();
@@ -301,7 +301,7 @@ namespace AscentProfiler
                                                 sequenceRightScrollPosition = GUILayout.BeginScrollView(sequenceRightScrollPosition, false, false);
 
      
-                                                foreach (string sequenceblock in module.SequenceEngine.sequenceBlock.Keys)
+                                                foreach (string sequenceblock in module.Sequencer.sequenceBlock.Keys)
                                                 {
                                                         GUILayout.BeginHorizontal();
 
@@ -317,7 +317,7 @@ namespace AscentProfiler
 
                                                         if (GUILayout.Button(sequenceblock))
                                                         {
-                                                                module.SequenceEngine.sequenceBlock.Remove(sequenceblock);
+                                                                module.Sequencer.sequenceBlock.Remove(sequenceblock);
                                                                 Log.Console(sequenceblock + " removed.");
                                                         }
 

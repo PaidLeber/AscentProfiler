@@ -85,7 +85,7 @@ namespace AscentProfiler
 
 
 
-                internal bool LoadSequence(AscentProAPGCSModule module, string sequence)
+                internal bool LoadSequence(SequenceEngine module, string sequence)
                 {
 
 
@@ -173,13 +173,13 @@ namespace AscentProfiler
 
                         if (HighLogic.LoadedScene == GameScenes.EDITOR)
                         {
-                                if (module.SequenceEngine.sequenceBlock.Keys.Contains(sequence))
+                                if (module.Sequencer.sequenceBlock.Keys.Contains(sequence))
                                 {
                                         Log.Console("Load Error: Sequence already loaded.");
                                         return false;
                                 }
 
-                                module.SequenceEngine.sequenceBlock.Add(sequence, triggerFactory.GetNewSequence(actionFactory.GetNewActionList()));
+                                module.Sequencer.sequenceBlock.Add(sequence, triggerFactory.GetNewSequence(actionFactory.GetNewActionList()));
                                 return true;
  
 
@@ -195,19 +195,19 @@ namespace AscentProfiler
                                 
 
                 }
-                
 
-                bool TXAscentProAPGCSModule(string sequence, List<Command> newsequence)
+
+                bool TXAscentProAEDLModule(string sequence, List<Command> newsequence)
                 {
-                        AscentProAPGCSModule APGCSmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<AscentProAPGCSModule>()).FirstOrDefault();
+                        SequenceEngine AEDLmodule = AscentProfilerFlight.currentVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).FirstOrDefault();
 
-                        TXRemoteTechNetwork(sequence, APGCSmodule);
+                        TXRemoteTechNetwork(sequence, AEDLmodule);
 
                         return true;
 
                 }
 
-                void TXRemoteTechNetwork(string sequence, AscentProAPGCSModule module)
+                void TXRemoteTechNetwork(string sequence, SequenceEngine module)
                 {
                         System.Random rng = new System.Random();
                         int port = rng.Next(4000, 20000);
