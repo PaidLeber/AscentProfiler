@@ -16,24 +16,28 @@ namespace AscentProfiler
                 
                 private GUIGroundStationTerminal sequenceWindow;
                 private GUIControlLoadoutEditor controlWindow;
+                private GUISUIDEditor SUIDWindow;
 
                 public SequenceEngine()
                 {
 
                 }
                 
-                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Sequence UID")]
+                [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "SUID")]
                 public string SUID = "";
+
+
+
+                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Change SUID")]
+                public void TestEvent()
+                {
+                        SUIDWindow = gameObject.AddComponent<GUISUIDEditor>();
+                        SUIDWindow.InitWindow(this);
+
+                }
 
                 [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Active Sequence")]
                 public string ActiveSequence = "";
-
-                [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "test button")]
-                public void TestEvent()
-                {
-                        ActiveSequence =  this.name;
-
-                }
 
                 [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Add Sequence(s)")]
                 public void ModifySequenceLoadout()
@@ -57,6 +61,9 @@ namespace AscentProfiler
                 public override void OnStart(PartModule.StartState state)
                 {
                         Debug.Log("AEDL Systems Module OnStart");
+                        
+                        if (Sequencer == null)
+                                Sequencer = new Sequence();
 
                         if (HighLogic.LoadedSceneIsEditor && string.IsNullOrEmpty(SUID))
                         {
@@ -64,8 +71,7 @@ namespace AscentProfiler
 
                         }
 
-                        if(Sequencer == null)
-                                Sequencer = new Sequence();
+
 
 
 

@@ -64,6 +64,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="GUI\GUIGroundStationTerminal.cs" />
     <Compile Include="GUI\GUIControlLoadoutEditor.cs" />
+    <Compile Include="GUI\GUISUIDEditor.cs" />
     <Compile Include="PartModule\SequenceEngine.cs" />
     <Compile Include="AscentProfiler.cs" />
     <Compile Include="Control Loops\ControlAttitude.cs" />
