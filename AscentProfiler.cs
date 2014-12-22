@@ -30,11 +30,6 @@ namespace AscentProfiler
                 
                 }
 
-                void Update()
-                {
-                        Log.ConsoleUpdate();
-
-                }
 
                 
         }

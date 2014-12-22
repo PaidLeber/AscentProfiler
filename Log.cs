@@ -30,8 +30,11 @@ namespace AscentProfiler
                 {
                         if(value == "\n")
                         {
+                                ConsoleUpdate();
                                 consolebuffer.Add("");
+                                ConsoleUpdate();
                                 consolebuffer.Add("");
+                                ConsoleUpdate();
                                 return;
                         }
 
