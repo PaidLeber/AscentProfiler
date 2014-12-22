@@ -51,6 +51,8 @@ namespace AscentProfiler
                 GUIStyle pathStyle;
                 bool setstyle;
 
+                List<string> modules;
+
                 internal void InitWindow(SequenceEngine module)
                 {
                         this.module = module;
@@ -70,6 +72,9 @@ namespace AscentProfiler
 
                 void Start()
                 {
+                        GetModules();
+
+
                         consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
                 }
 
@@ -112,7 +117,13 @@ namespace AscentProfiler
                 }
 
 
-
+                void GetModules()
+                {
+                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                        {
+                                modules = new List<string>(FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).Select(x => x.SUID).ToList());
+                        }
+                }
 
 
                 void DrawLoadoutEditor(int id)
@@ -129,6 +140,24 @@ namespace AscentProfiler
 
                         GUILayout.Space(5);
 
+                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                        {
+                                GUILayout.BeginHorizontal();
+
+                                foreach (string suid in modules)
+                                {
+                                        if(GUILayout.Button(suid, GUILayout.ExpandWidth(true)))
+                                        {
+                                        
+                                        }
+                                }
+
+
+                                GUILayout.EndHorizontal();
+                        }
+
+                        GUILayout.Space(5);
+                        
                         GUILayout.BeginHorizontal();
                         if(GUILayout.Button("<- Directory", GUILayout.Width(150)))
                         {
@@ -326,23 +355,6 @@ namespace AscentProfiler
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
                                                 GUILayout.EndScrollView();
 
                                                 
@@ -404,7 +416,7 @@ namespace AscentProfiler
                         GUI.DragWindow(new Rect(0, 0, 10000, 20));
                         GUILayout.EndVertical();
 
-
+                        
                 }
 
 
