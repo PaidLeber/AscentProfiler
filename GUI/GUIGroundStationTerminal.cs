@@ -188,7 +188,6 @@ namespace AscentProfiler
                                                 {
                                                         module = modules.Find(s => s.SUID == suid);
                                                         selectedmodule = suid;
-                                                        Log.Console("\n");
                                                         Log.Console(selectedmodule + " sequencer module selected.");
                                                 }
 

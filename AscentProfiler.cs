@@ -126,8 +126,6 @@ namespace AscentProfiler
 
                 void Update()
                 {
-                        Log.ConsoleUpdate();
-
                         if (FlightGlobals.ActiveVessel != currentVessel)
                         {
                                 currentVessel = FlightGlobals.ActiveVessel;
