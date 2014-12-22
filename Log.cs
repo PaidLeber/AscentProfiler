@@ -51,13 +51,17 @@ namespace AscentProfiler
 
                         consolebuffer.Add(value);
                        
+
+
+                }
+
+                internal static void ConsoleUpdate()
+                {
                         if (consolebuffer.Count > 7)
                         {
                                 consolebuffer.RemoveAt(0);
                         }
-
                 }
-
 
                 static LogType loglevel = LogType.Verbose;
                 static LogType scriptlevel = LogType.Error;

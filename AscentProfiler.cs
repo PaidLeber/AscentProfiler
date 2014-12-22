@@ -29,6 +29,13 @@ namespace AscentProfiler
                         SetPaths();
                 
                 }
+
+                void Update()
+                {
+                        Log.ConsoleUpdate();
+
+                }
+
                 
         }
 
@@ -124,6 +131,8 @@ namespace AscentProfiler
 
                 void Update()
                 {
+                        Log.ConsoleUpdate();
+
                         if (FlightGlobals.ActiveVessel != currentVessel)
                         {
                                 currentVessel = FlightGlobals.ActiveVessel;

@@ -187,7 +187,12 @@ namespace AscentProfiler
 
                                         if(GUILayout.Button(suid, moduleButtonStyle, GUILayout.ExpandWidth(true)))
                                         {
-                                        
+                                                module = modules.Find(s => s.SUID == suid);
+                                                selectedmodule = suid;
+                                                Log.Console("\n");
+                                                Log.Console(modules.FirstOrDefault().SUID + " sequencer module selected.");
+                                                ConsoleReady();
+
                                         }
 
                                         
@@ -308,7 +313,7 @@ namespace AscentProfiler
                                                 sequencename = "";
                                                 stringToEdit = "";
                                         }
-                                        //GUILayout.Label("Name", GUILayout.Width(35));
+
                                         sequencename = GUILayout.TextField(sequencename);
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
