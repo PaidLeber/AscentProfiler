@@ -47,7 +47,7 @@ namespace AscentProfiler
                         if(sequenceWindow == null)
                         {
                         sequenceWindow = gameObject.AddComponent<GUIGroundStationTerminal>();
-                        sequenceWindow.InitWindow(this);
+                        sequenceWindow.InitVAB(this);
                         }
                         
                 }

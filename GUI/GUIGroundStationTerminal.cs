@@ -13,6 +13,7 @@ namespace AscentProfiler
         {
                 SequenceLoader sequenceLoader;
                 bool directoryLoaded;
+                bool reloadmodules;
 
                 SequenceEngine module;
 
@@ -49,11 +50,12 @@ namespace AscentProfiler
                 GUIStyle consoleLabelStyle;
                 GUIStyle ctextStyle;
                 GUIStyle pathStyle;
+                GUIStyle moduleStyle;
                 bool setstyle;
 
-                List<string> modules;
+                List<SequenceEngine> modules;
 
-                internal void InitWindow(SequenceEngine module)
+                internal void InitVAB(SequenceEngine module)
                 {
                         this.module = module;
                         Log.consolebuffer.Clear();
@@ -64,6 +66,15 @@ namespace AscentProfiler
                         
                 }
 
+                internal void InitFlight()
+                {
+                        module = modules.FirstOrDefault();
+                        Log.consolebuffer.Clear();
+                        Log.Console("Kernix OS Version " + AscentProfiler.version);
+                        ConsoleReady();
+
+                }
+
                 void ConsoleReady()
                 {
                         Log.Console("\n");
@@ -72,10 +83,17 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        GetModules();
-
-
                         consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
+
+                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
+                        {
+
+                                InitFlight();
+                        }
+
+                        
+
+                        
                 }
 
                 void OnGUI()
@@ -110,6 +128,9 @@ namespace AscentProfiler
                                 pathStyle.alignment = TextAnchor.UpperLeft;
                                 pathStyle.wordWrap = false;
 
+                                moduleStyle = new GUIStyle();
+                                moduleStyle.alignment = TextAnchor.MiddleCenter;
+
                                 setstyle = true;
                         }
 
@@ -119,15 +140,25 @@ namespace AscentProfiler
 
                 void GetModules()
                 {
-                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
-                        {
-                                modules = new List<string>(FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()).Select(x => x.SUID).ToList());
-                        }
+
+                                
+                                modules = new List<SequenceEngine>(FlightGlobals.ActiveVessel.Parts.SelectMany(p => p.Modules.OfType<SequenceEngine>()));
+                                
+                        
                 }
 
 
                 void DrawLoadoutEditor(int id)
                 {
+
+                        if(!reloadmodules)
+                        {
+                                GetModules();
+                                module = modules.FirstOrDefault();
+                                Log.Console(modules.FirstOrDefault().SUID + " selected.");
+                                Log.Console("");
+                                reloadmodules = !reloadmodules;
+                        }
 
                         if(!directoryLoaded)
                         {
@@ -142,9 +173,9 @@ namespace AscentProfiler
 
                         if (HighLogic.LoadedScene == GameScenes.FLIGHT)
                         {
-                                GUILayout.BeginHorizontal();
+                                GUILayout.BeginHorizontal(moduleStyle);
 
-                                foreach (string suid in modules)
+                                foreach (string suid in modules.Select(s => s.SUID))
                                 {
                                         if(GUILayout.Button(suid, GUILayout.ExpandWidth(true)))
                                         {
