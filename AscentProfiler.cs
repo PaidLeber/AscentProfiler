@@ -41,7 +41,6 @@ namespace AscentProfiler
 
                 IButton gsButton;
                 GUIGroundStationTerminal gsWindow;
-                bool gsWindowEnabled;
 
                 IButton mainButton;
                 IButton telemetryButton;
@@ -67,14 +66,13 @@ namespace AscentProfiler
 
                         if (ToolbarManager.ToolbarAvailable)
                         {
-                                gsWindowEnabled = false;
                                 gsButton = ToolbarManager.Instance.add("AscentProfiler", "groundstation");
                                 gsButton.TexturePath = "AscentProfiler/Textures/groundstation_blizzy";
                                 gsButton.ToolTip = "Open Ground Station Terminal";
                                 gsButton.Visibility = new GameScenesVisibility(GameScenes.FLIGHT);
                                 gsButton.OnClick += (e) =>
                                 {
-                                        if (!gsWindowEnabled)
+                                        if (gsWindow == null)
                                         {
                                                 gsWindow = gameObject.AddComponent<GUIGroundStationTerminal>();
                                         }
@@ -82,7 +80,6 @@ namespace AscentProfiler
                                         {
                                                 UnityEngine.Object.Destroy(gameObject.GetComponent<GUIGroundStationTerminal>());  
                                         }
-                                        gsWindowEnabled = !gsWindowEnabled;
 
                                 };
 

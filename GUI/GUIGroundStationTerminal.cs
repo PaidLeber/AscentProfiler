@@ -155,7 +155,7 @@ namespace AscentProfiler
                                         module = modules.FirstOrDefault();
                                         InitFlight();
                                         Log.Console("\n");
-                                        Log.Console(modules.FirstOrDefault().SUID + " selected.");
+                                        Log.Console(modules.FirstOrDefault().SUID + " sequencer module selected.");
                                         ConsoleReady();
                                         reloadmodules = true;
                                 }
