@@ -153,9 +153,6 @@ namespace AscentProfiler
                                 {
                                         GetModules();
                                         InitFlight();
-                                        Log.Console("\n");
-                                        Log.Console(modules.FirstOrDefault().SUID + " sequencer module selected.");
-                                        ConsoleReady();
                                         reloadmodules = true;
                                 }
                                 
@@ -193,7 +190,6 @@ namespace AscentProfiler
                                                         selectedmodule = suid;
                                                         Log.Console("\n");
                                                         Log.Console(selectedmodule + " sequencer module selected.");
-                                                        ConsoleReady();
                                                 }
 
 
