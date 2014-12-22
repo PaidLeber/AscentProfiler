@@ -34,7 +34,7 @@ namespace AscentProfiler
                 Vector2 sequenceRightScrollPosition;
                 Vector2 editorLeftScrollPosition;
                 string stringToEdit = "";
-                string sequencename = "";
+                string sequencename = "filename";
 
                 string regexvalidfilename = @"^[a-zA-Z0-9_\-]*$";
                 string regexemptyspace = @"^\s*$";
@@ -86,13 +86,7 @@ namespace AscentProfiler
 
                 void Start()
                 {
-                        consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
-
-
-
-                        
-
-                        
+                        consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));                        
                 }
 
                 void OnGUI()
@@ -314,7 +308,7 @@ namespace AscentProfiler
                                                 sequencename = "";
                                                 stringToEdit = "";
                                         }
-                                        GUILayout.Label("Name", GUILayout.Width(35));
+                                        //GUILayout.Label("Name", GUILayout.Width(35));
                                         sequencename = GUILayout.TextField(sequencename);
 
                                         if (GUILayout.Button("Save", GUILayout.Width(50)))
