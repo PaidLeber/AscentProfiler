@@ -21,6 +21,14 @@ namespace AscentProfiler
                         }
 
                 }
+
+
+                void Start()
+                {
+                        CheckforAPIs();
+                        SetPaths();
+                
+                }
                 
         }
 
@@ -49,6 +57,9 @@ namespace AscentProfiler
 
                 void Start()
                 {
+                        CheckforAPIs();
+                        SetPaths();
+
                         guiAscentProfiler = new GUIAscentProfiler();
                         guiTelemetry = new GUITelemetry();
                         telemetryReceiver = new TelemetryReceiver();
@@ -157,10 +168,9 @@ namespace AscentProfiler
                 }
 
 
-                void Start()
+                protected void SetPaths()
                 {
-                        CheckforAPIs();
-                       
+
                         // Create user home directory paths for saves
                         AscentProfilerDir = Application.persistentDataPath + "/Ascent Profiler";
 
@@ -175,9 +185,9 @@ namespace AscentProfiler
 
                         }
 
-                        sequenceDir     = AscentProfilerDir + "/Sequences";
-                        telemetryDir   = AscentProfilerDir + "/Telemetry";
-                        
+                        sequenceDir = AscentProfilerDir + "/Sequences";
+                        telemetryDir = AscentProfilerDir + "/Telemetry";
+
                         if (!Directory.Exists(AscentProfilerDir))
                         {
                                 Directory.CreateDirectory(AscentProfilerDir);
@@ -198,9 +208,10 @@ namespace AscentProfiler
                         Log.Level(LogType.Info, "User Directory: " + AscentProfilerDir);
                         Log.Level(LogType.Info, "Sequence Directory: " + sequenceDir);
                         Log.Level(LogType.Info, "Telemetry Directory: " + telemetryDir); 
+                
                 }
 
-                void CheckforAPIs()
+                protected void CheckforAPIs()
                 {
                         foreach (var loadedAssembly in AssemblyLoader.loadedAssemblies)
                         {
