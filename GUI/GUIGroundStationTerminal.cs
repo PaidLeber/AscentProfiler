@@ -187,11 +187,16 @@ namespace AscentProfiler
 
                                         if(GUILayout.Button(suid, moduleButtonStyle, GUILayout.ExpandWidth(true)))
                                         {
-                                                module = modules.Find(s => s.SUID == suid);
-                                                selectedmodule = suid;
-                                                Log.Console("\n");
-                                                Log.Console(selectedmodule + " sequencer module selected.");
-                                                ConsoleReady();
+                                                if(suid != selectedmodule)
+                                                {
+                                                        module = modules.Find(s => s.SUID == suid);
+                                                        selectedmodule = suid;
+                                                        Log.Console("\n");
+                                                        Log.Console(selectedmodule + " sequencer module selected.");
+                                                        ConsoleReady();
+                                                }
+
+
 
                                         }
 
