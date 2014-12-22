@@ -16,6 +16,7 @@ namespace AscentProfiler
                 bool reloadmodules;
 
                 SequenceEngine module;
+                string selectedmodule;
 
                 int windowId = 98476;
 
@@ -51,6 +52,7 @@ namespace AscentProfiler
                 GUIStyle ctextStyle;
                 GUIStyle pathStyle;
                 GUIStyle moduleStyle;
+                GUIStyle moduleButtonStyle;
                 bool setstyle;
 
                 List<SequenceEngine> modules;
@@ -69,6 +71,7 @@ namespace AscentProfiler
                 internal void InitFlight()
                 {
                         module = modules.FirstOrDefault();
+                        selectedmodule = module.SUID;
                         Log.consolebuffer.Clear();
                         Log.Console("Kernix OS Version " + AscentProfiler.version);
                         ConsoleReady();
@@ -122,10 +125,13 @@ namespace AscentProfiler
                                 pathStyle = new GUIStyle(GUI.skin.label);
                                 pathStyle.fontSize = 11;
                                 pathStyle.alignment = TextAnchor.UpperLeft;
-                                pathStyle.wordWrap = false;
+                                pathStyle.wordWrap = true;
 
                                 moduleStyle = new GUIStyle();
                                 moduleStyle.alignment = TextAnchor.MiddleCenter;
+
+                                moduleButtonStyle = new GUIStyle(GUI.skin.button);
+                                
 
                                 setstyle = true;
                         }
@@ -152,7 +158,6 @@ namespace AscentProfiler
                                 if (!reloadmodules)
                                 {
                                         GetModules();
-                                        module = modules.FirstOrDefault();
                                         InitFlight();
                                         Log.Console("\n");
                                         Log.Console(modules.FirstOrDefault().SUID + " sequencer module selected.");
@@ -181,10 +186,17 @@ namespace AscentProfiler
 
                                 foreach (string suid in modules.Select(s => s.SUID))
                                 {
-                                        if(GUILayout.Button(suid, GUILayout.ExpandWidth(true)))
+                                        moduleButtonStyle.normal.textColor = Color.grey;
+
+                                        if (suid == selectedmodule)
+                                                moduleButtonStyle.normal.textColor = Color.green;
+
+                                        if(GUILayout.Button(suid, moduleButtonStyle, GUILayout.ExpandWidth(true)))
                                         {
                                         
                                         }
+
+                                        
                                 }
 
 
