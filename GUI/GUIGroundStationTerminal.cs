@@ -85,11 +85,7 @@ namespace AscentProfiler
                 {
                         consoleBackgroundTexture = MakeTexture(1080, 200, new Color(0.0f, 0.0f, 0.0f));
 
-                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
-                        {
 
-                                InitFlight();
-                        }
 
                         
 
@@ -151,14 +147,22 @@ namespace AscentProfiler
                 void DrawLoadoutEditor(int id)
                 {
 
-                        if(!reloadmodules)
+                        if (HighLogic.LoadedScene == GameScenes.FLIGHT)
                         {
-                                GetModules();
-                                module = modules.FirstOrDefault();
-                                Log.Console(modules.FirstOrDefault().SUID + " selected.");
-                                Log.Console("");
-                                reloadmodules = !reloadmodules;
+                                if (!reloadmodules)
+                                {
+                                        GetModules();
+                                        module = modules.FirstOrDefault();
+                                        InitFlight();
+                                        Log.Console("");
+                                        Log.Console(modules.FirstOrDefault().SUID + " selected.");
+                                        ConsoleReady();
+                                        reloadmodules = true;
+                                }
+                                
                         }
+
+
 
                         if(!directoryLoaded)
                         {
