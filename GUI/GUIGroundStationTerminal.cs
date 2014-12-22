@@ -154,7 +154,7 @@ namespace AscentProfiler
                                         GetModules();
                                         module = modules.FirstOrDefault();
                                         InitFlight();
-                                        Log.Console("");
+                                        Log.Console("\n");
                                         Log.Console(modules.FirstOrDefault().SUID + " selected.");
                                         ConsoleReady();
                                         reloadmodules = true;
@@ -200,7 +200,7 @@ namespace AscentProfiler
                               directoryLoaded = false;
                         }
 
-                        GUILayout.Label(AscentProfiler.sequenceLoadPath, pathStyle);
+                        GUILayout.Label(AscentProfiler.sequenceLoadPath, pathStyle, GUILayout.ExpandWidth(true));
 
                         GUILayout.EndHorizontal();
 
@@ -411,7 +411,7 @@ namespace AscentProfiler
                                 foreach(string message in Log.consolebuffer)
                                 {
 
-                                        if (message.Contains("loaded"))
+                                        if (message.Contains("loaded") || message.Contains("selected"))
                                         {
                                                 consoleLabelStyle.normal.textColor = Color.green;
                                         }
